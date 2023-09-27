@@ -1,131 +1,176 @@
-import Head from 'next/head';
-import styles from '../styles/Home.module.css';
+import Link from 'next/link';
+import { GetRestUrl } from './utils';
+import { Flex, Text, Card, Box, Table, Container } from '@radix-ui/themes';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Filler,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
 
-export default function Home() {
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Title,
+  Tooltip,
+  Legend
+);
+
+const COLORS = [
+  '#191111',
+  '#201314',
+  '#3b1219',
+  '#500f1c',
+  '#611623',
+  '#72232d',
+  '#8c333a',
+  '#b54548',
+  '#e5484d',
+  '#ec5d5e',
+  '#ff9592',
+  '#ffd1d9',
+];
+
+async function getData() {
+  const res = await fetch(GetRestUrl() + '/latest')
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error('Failed to fetch data')
+  }
+
+  return res.json()
+}
+
+Home.getInitialProps = async () => {
+  const data = await getData()
+  return { data: data }
+}
+
+export default function Home({ data }) {
+  const chartData = {
+    datasets: [],
+  }
+  const chartOptions = {
+    scales: {
+      y: {
+        stacked: true,
+      },
+      x: {}
+    }
+  }
+
+  const dsBySpecId = {}
+  let i = 0
+  data.data.forEach((metric) => {
+    /*if ((metric['chainId'] != 'CELO') && (metric['chainId'] != 'ETH1')) {
+      return
+    }*/
+
+    if (dsBySpecId[metric['chainId']] == undefined) {
+
+      dsBySpecId[metric['chainId']] = {
+        label: metric['chainId'],
+        data: [],
+        fill: false,
+        borderColor: COLORS[i],
+        backgroundColor: COLORS[i],
+      }
+      i++
+      if (i > COLORS.length - 1) {
+        i = 0
+      }
+    }
+    dsBySpecId[metric['chainId']]['data'].push({ x: metric['date'], y: metric['relaySum'] })
+  })
+
+  for (const [key, value] of Object.entries(dsBySpecId)) {
+    chartData.datasets.push(value)
+  }
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <Container>
 
-      <main>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+      <Card>
+        <Flex gap="3" align="center">
+          <Box>
+            <Text as="div" size="2" weight="bold">
+              Block {data.height}
+            </Text>
+            <Text as="div" size="2" color="gray">
+              {(new Date(data.datetime)).toTimeString()}
+            </Text>
+          </Box>
+        </Flex>
+      </Card>
 
-        <p className={styles.description}>
-          Get started by editing <code>pages/index.js</code>
-        </p>
+      <Box>
+        <Flex gap="3" justify="between">
+          <Card>
+            <Text as="div" size="2" weight="bold">
+              cu sum: {data.cuSum}
+            </Text>
+          </Card>
+          <Card>
+            <Text as="div" size="2" weight="bold">
+              relay sum: {data.relaySum}
+            </Text>
+          </Card>
+          <Card>
+            <Text as="div" size="2" weight="bold">
+              reward sum: {data.rewardSum}
+            </Text>
+          </Card>
+          <Card>
+            <Text as="div" size="2" weight="bold">
+              stake sum: {data.stakeSum}
+            </Text>
+          </Card>
+        </Flex>
+      </Box>
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+      <Box>
+        <Card>
+          <Line data={chartData} options={chartOptions}></Line>
+        </Card>
+      </Box>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+      <Card>
+        <Table.Root>
+          <Table.Header>
+            <Table.Row>
+              <Table.ColumnHeaderCell>Provider Address</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell>Moniker</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell>Total Rewards</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell>Total Services</Table.ColumnHeaderCell>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
+            </Table.Row>
+          </Table.Header>
 
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+          <Table.Body>
+            {data.topProviders.map((provider) => {
+              return (<Table.Row key={`provider_${provider.address}`}>
+                <Table.RowHeaderCell><Link href={`/provider/${provider.addr}`}>{provider.addr}</Link></Table.RowHeaderCell>
+                <Table.Cell>{provider.moniker}</Table.Cell>
+                <Table.Cell>{provider.rewardSum}</Table.Cell>
+                <Table.Cell>{provider.nStakes}</Table.Cell>
+              </Table.Row>
+              )
+            })}
+          </Table.Body>
+        </Table.Root>
+      </Card>
 
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel" className={styles.logo} />
-        </a>
-      </footer>
+    </Container>
 
-      <style jsx>{`
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-        footer {
-          width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-        footer img {
-          margin-left: 0.5rem;
-        }
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          text-decoration: none;
-          color: inherit;
-        }
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family:
-            Menlo,
-            Monaco,
-            Lucida Console,
-            Liberation Mono,
-            DejaVu Sans Mono,
-            Bitstream Vera Sans Mono,
-            Courier New,
-            monospace;
-        }
-      `}</style>
 
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family:
-            -apple-system,
-            BlinkMacSystemFont,
-            Segoe UI,
-            Roboto,
-            Oxygen,
-            Ubuntu,
-            Cantarell,
-            Fira Sans,
-            Droid Sans,
-            Helvetica Neue,
-            sans-serif;
-        }
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
-    </div>
-  );
+  )
 }
