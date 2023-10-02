@@ -95,7 +95,7 @@ export async function getStaticProps({ params }) {
     }
 
     // fetch
-    const consumer = await getConsumer(params.addr)
+    const consumer = await getConsumer(addr)
     if (consumer == null) {
         return {
             notFound: true,

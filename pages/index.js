@@ -151,10 +151,8 @@ export default function Home({ data }) {
               <Table.ColumnHeaderCell>Moniker</Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell>Total Rewards</Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell>Total Services</Table.ColumnHeaderCell>
-
             </Table.Row>
           </Table.Header>
-
           <Table.Body>
             {data.topProviders.map((provider) => {
               return (<Table.Row key={`provider_${provider.address}`}>
@@ -168,6 +166,27 @@ export default function Home({ data }) {
           </Table.Body>
         </Table.Root>
       </Card>
+
+      <Card>
+        <Table.Root>
+          <Table.Header>
+            <Table.Row>
+              <Table.ColumnHeaderCell>Spec</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell>Total Relays</Table.ColumnHeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {data.allSpecs.map((spec) => {
+              return (<Table.Row key={`spec_${spec.chainId}`}>
+                <Table.RowHeaderCell><Link href={`/spec/${spec.chainId}`}>{spec.chainId}</Link></Table.RowHeaderCell>
+                <Table.Cell>{spec.relaySum}</Table.Cell>
+              </Table.Row>
+              )
+            })}
+          </Table.Body>
+        </Table.Root>
+      </Card>
+
 
     </Container>
 
