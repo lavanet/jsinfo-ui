@@ -113,7 +113,6 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
     const specId = params.id
-    console.log(specId)
     if (specId.length <= 0) {
         return {
             notFound: true,
