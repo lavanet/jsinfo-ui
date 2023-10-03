@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { GetRestUrl } from './utils';
+import { GetRestUrl } from '../src/utils';
 import { Flex, Text, Card, Box, Table, Container } from '@radix-ui/themes';
 import {
   Chart as ChartJS,
@@ -50,9 +50,14 @@ async function getData() {
   return res.json()
 }
 
-Home.getInitialProps = async () => {
+export async function getStaticProps() {
   const data = await getData()
-  return { data: data }
+  return {
+    props: {
+      data
+    },
+    revalidate: 15,
+  }
 }
 
 export default function Home({ data }) {
@@ -71,10 +76,6 @@ export default function Home({ data }) {
   const dsBySpecId = {}
   let i = 0
   data.data.forEach((metric) => {
-    /*if ((metric['chainId'] != 'CELO') && (metric['chainId'] != 'ETH1')) {
-      return
-    }*/
-
     if (dsBySpecId[metric['chainId']] == undefined) {
 
       dsBySpecId[metric['chainId']] = {

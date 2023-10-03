@@ -1,4 +1,4 @@
-import { GetRestUrl } from '../utils';
+import { GetRestUrl } from '../../src/utils';
 import Link from 'next/link';
 import { Flex, Text, Card, Box, Table, Container } from '@radix-ui/themes';
 import {
@@ -82,6 +82,7 @@ export default function Spec({ spec }) {
                 </Card>
             </Box>
             <Card>
+                Stakes
                 <Table.Root>
                     <Table.Header>
                         <Table.Row>
@@ -131,7 +132,7 @@ export async function getStaticProps({ params }) {
         props: {
             spec
         },
-        revalidate: 10,
+        revalidate: 15,
     }
 }
 

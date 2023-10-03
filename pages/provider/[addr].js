@@ -1,4 +1,4 @@
-import { GetRestUrl } from '../utils';
+import { GetRestUrl } from '../../src/utils';
 import Link from 'next/link';
 import { Flex, Text, Card, Box, Table, Container } from '@radix-ui/themes';
 
@@ -52,6 +52,7 @@ export default function Provider({ provider }) {
             </Box>
 
             <Card>
+                Events
                 <Table.Root>
                     <Table.Header>
                         <Table.Row>
@@ -72,6 +73,7 @@ export default function Provider({ provider }) {
             </Card>
 
             <Card>
+                Stakes
                 <Table.Root>
                     <Table.Header>
                         <Table.Row>
@@ -92,6 +94,7 @@ export default function Provider({ provider }) {
             </Card>
 
             <Card>
+                Rewards
                 <Table.Root>
                     <Table.Header>
                         <Table.Row>
@@ -128,8 +131,18 @@ export default function Provider({ provider }) {
 }
 
 export async function getStaticPaths() {
+    const providers = await getProviders()
+    let paths = []
+    providers.providers.forEach(provider => {
+        paths.push({
+            params: {
+                addr: provider.address
+            }
+        })
+    });
+
     return {
-        paths: [],
+        paths: paths,
         fallback: true,
     };
 }
@@ -154,8 +167,16 @@ export async function getStaticProps({ params }) {
         props: {
             provider
         },
-        revalidate: 10,
+        revalidate: 15,
     }
+}
+
+async function getProviders() {
+    const res = await fetch(GetRestUrl() + '/providers')
+    if (!res.ok) {
+        return null
+    }
+    return res.json()
 }
 
 async function getProvider(addr) {

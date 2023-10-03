@@ -1,5 +1,28 @@
-import { GetRestUrl } from '../utils';
+import { GetRestUrl } from '../../src/utils';
 import { Flex, Text, Card, Box, Table, Container } from '@radix-ui/themes';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Filler,
+    Tooltip,
+    Legend,
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Filler,
+    Title,
+    Tooltip,
+    Legend
+);
 
 export default function Consumer({ consumer }) {
     if (consumer == undefined) {
@@ -7,6 +30,23 @@ export default function Consumer({ consumer }) {
             <div>Loading</div>
         )
     }
+
+    const chartData = {
+        datasets: [],
+    }
+    const metricData = []
+    consumer.data.forEach((metric) => {
+        metricData.push({ x: metric['date'], y: metric['relaySum'] })
+    })
+    chartData.datasets.push(
+        {
+            label: 'Relays',
+            data: metricData,
+            fill: true,
+            borderColor: '#8c333a',
+            backgroundColor: '#3b1219',
+        }
+    )
 
     return (
         <Container>
@@ -43,6 +83,35 @@ export default function Consumer({ consumer }) {
                     </Card>
                 </Flex>
             </Box>
+
+            <Box>
+                <Card>
+                    <Line data={chartData}></Line>
+                </Card>
+            </Box>
+
+            <Card>
+                Subscriptions
+                <Table.Root>
+                    <Table.Header>
+                        <Table.Row>
+                            <Table.ColumnHeaderCell>height</Table.ColumnHeaderCell>
+                            <Table.ColumnHeaderCell>duration</Table.ColumnHeaderCell>
+                            <Table.ColumnHeaderCell>plan</Table.ColumnHeaderCell>
+                        </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
+                        {consumer.subsBuy.map((subBuy) => {
+                            return (<Table.Row key={`subBuy_${subBuy.consumer}_${subBuy.blockId}_${subBuy.plan}`}>
+                                <Table.RowHeaderCell>{subBuy.blockId}</Table.RowHeaderCell>
+                                <Table.Cell>{subBuy.duration}</Table.Cell>
+                                <Table.Cell>{subBuy.plan}</Table.Cell>
+                            </Table.Row>
+                            )
+                        })}
+                    </Table.Body>
+                </Table.Root>
+            </Card>
 
             <Card>
                 Conflicts
@@ -106,7 +175,7 @@ export async function getStaticProps({ params }) {
         props: {
             consumer
         },
-        revalidate: 10,
+        revalidate: 15,
     }
 }
 
