@@ -23,9 +23,6 @@ export default function Provider({ provider }) {
                     </Box>
                 </Flex>
             </Card>
-
-
-
             <Box>
                 <Flex gap="3" justify="between">
                     <Card>
@@ -119,6 +116,33 @@ export default function Provider({ provider }) {
                                 <Table.Cell>{payment.pay} ULAVA</Table.Cell>
                                 <Table.Cell>{payment.qosSync}, {payment.qosAvailability}, {payment.qosSync}</Table.Cell>
                                 <Table.Cell>{payment.qosSyncExc}, {payment.qosAvailabilityExc}, {payment.qosSyncExc}</Table.Cell>
+                            </Table.Row>
+                            )
+                        })}
+                    </Table.Body>
+                </Table.Root>
+            </Card>
+
+            <Card>
+                Reports
+                <Table.Root>
+                    <Table.Header>
+                        <Table.Row>
+                            <Table.ColumnHeaderCell>Block</Table.ColumnHeaderCell>
+                            <Table.ColumnHeaderCell>CU</Table.ColumnHeaderCell>
+                            <Table.ColumnHeaderCell>Disconnections</Table.ColumnHeaderCell>
+                            <Table.ColumnHeaderCell>Errors</Table.ColumnHeaderCell>
+                            <Table.ColumnHeaderCell>Project</Table.ColumnHeaderCell>
+                        </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
+                        {provider.reports.map((report, i) => {
+                            return (<Table.Row key={`report_${report.provider}_${report.blockId}_${i}`}>
+                                <Table.RowHeaderCell>{report.blockId}</Table.RowHeaderCell>
+                                <Table.Cell>{report.cu}</Table.Cell>
+                                <Table.Cell>{report.disconnections}</Table.Cell>
+                                <Table.Cell>{report.errors}</Table.Cell>
+                                <Table.Cell>{report.project}</Table.Cell>
                             </Table.Row>
                             )
                         })}
