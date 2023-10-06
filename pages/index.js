@@ -65,9 +65,30 @@ export default function Home({ data }) {
     datasets: [],
   }
   const chartOptions = {
+    interaction: {
+      mode: 'index', 
+      intersect: false,
+    },
+    stacked: false,
     scales: {
       y: {
+        type: 'linear',
+        display: true,
+        position: 'left',
         stacked: true,
+      },
+      y1: {
+        type: 'linear',
+        display: true,
+        position: 'right',
+        stacked: true,
+        min: 0,
+        max: 1,
+
+        // grid line settings
+        grid: {
+          drawOnChartArea: false, // only want the grid lines for one axis to show up
+        },
       },
       x: {}
     }
@@ -77,13 +98,13 @@ export default function Home({ data }) {
   let i = 0
   data.data.forEach((metric) => {
     if (dsBySpecId[metric['chainId']] == undefined) {
-
       dsBySpecId[metric['chainId']] = {
         label: metric['chainId'],
         data: [],
         fill: false,
         borderColor: COLORS[i],
         backgroundColor: COLORS[i],
+        yAxisID: 'y',
       }
       i++
       if (i > COLORS.length - 1) {
@@ -93,6 +114,18 @@ export default function Home({ data }) {
     dsBySpecId[metric['chainId']]['data'].push({ x: metric['date'], y: metric['relaySum'] })
   })
 
+  let qosData = {
+    label: 'QoS',
+    data: [],
+    fill: false,
+    borderColor: '#AAFF00',
+    backgroundColor: '#AAFF00',
+    yAxisID: 'y1',
+  }
+  data.qosData.forEach((metric) => {
+    qosData.data.push({ x: metric['date'], y: (metric['qosSyncAvg']+metric['qosAvailabilityAvg']+metric['qosLatencyAvg'])/3})
+  })
+  chartData.datasets.push(qosData)
   for (const [key, value] of Object.entries(dsBySpecId)) {
     chartData.datasets.push(value)
   }
@@ -166,7 +199,7 @@ export default function Home({ data }) {
                 </Table.Header>
                 <Table.Body>
                   {data.topProviders.map((provider) => {
-                    return (<Table.Row key={`provider_${provider.address}`}>
+                    return (<Table.Row key={`provider_${provider.addr}`}>
                       <Table.RowHeaderCell><Link href={`/provider/${provider.addr}`}>{provider.addr}</Link></Table.RowHeaderCell>
                       <Table.Cell>{provider.moniker}</Table.Cell>
                       <Table.Cell>{provider.rewardSum}</Table.Cell>
