@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { GetRestUrl } from '../src/utils';
-import { Flex, Text, Card, Box, Table, Container } from '@radix-ui/themes';
+import { Flex, Text, Card, Box, Table, Container, Tabs } from '@radix-ui/themes';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -144,49 +144,66 @@ export default function Home({ data }) {
         </Card>
       </Box>
 
-      <Card>
-        <Table.Root>
-          <Table.Header>
-            <Table.Row>
-              <Table.ColumnHeaderCell>Provider Address</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>Moniker</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>Total Rewards</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>Total Services</Table.ColumnHeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            {data.topProviders.map((provider) => {
-              return (<Table.Row key={`provider_${provider.address}`}>
-                <Table.RowHeaderCell><Link href={`/provider/${provider.addr}`}>{provider.addr}</Link></Table.RowHeaderCell>
-                <Table.Cell>{provider.moniker}</Table.Cell>
-                <Table.Cell>{provider.rewardSum}</Table.Cell>
-                <Table.Cell>{provider.nStakes}</Table.Cell>
-              </Table.Row>
-              )
-            })}
-          </Table.Body>
-        </Table.Root>
-      </Card>
+      <Tabs.Root defaultValue="providers">
+        <Tabs.List>
+          <Tabs.Trigger value="providers">providers</Tabs.Trigger>
+          <Tabs.Trigger value="chains">chains</Tabs.Trigger>
+        </Tabs.List>
 
-      <Card>
-        <Table.Root>
-          <Table.Header>
-            <Table.Row>
-              <Table.ColumnHeaderCell>Spec</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>Total Relays</Table.ColumnHeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            {data.allSpecs.map((spec) => {
-              return (<Table.Row key={`spec_${spec.chainId}`}>
-                <Table.RowHeaderCell><Link href={`/spec/${spec.chainId}`}>{spec.chainId}</Link></Table.RowHeaderCell>
-                <Table.Cell>{spec.relaySum}</Table.Cell>
-              </Table.Row>
-              )
-            })}
-          </Table.Body>
-        </Table.Root>
-      </Card>
+        <Box px="4" pt="3" pb="2">
+          <Tabs.Content value="providers">
+
+            <Card>
+              Providers
+              <Table.Root>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.ColumnHeaderCell>Provider Address</Table.ColumnHeaderCell>
+                    <Table.ColumnHeaderCell>Moniker</Table.ColumnHeaderCell>
+                    <Table.ColumnHeaderCell>Total Rewards</Table.ColumnHeaderCell>
+                    <Table.ColumnHeaderCell>Total Services</Table.ColumnHeaderCell>
+                  </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                  {data.topProviders.map((provider) => {
+                    return (<Table.Row key={`provider_${provider.address}`}>
+                      <Table.RowHeaderCell><Link href={`/provider/${provider.addr}`}>{provider.addr}</Link></Table.RowHeaderCell>
+                      <Table.Cell>{provider.moniker}</Table.Cell>
+                      <Table.Cell>{provider.rewardSum}</Table.Cell>
+                      <Table.Cell>{provider.nStakes}</Table.Cell>
+                    </Table.Row>
+                    )
+                  })}
+                </Table.Body>
+              </Table.Root>
+            </Card>
+          </Tabs.Content>
+
+          <Tabs.Content value="chains">
+            Chains
+            <Card>
+              <Table.Root>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.ColumnHeaderCell>Spec</Table.ColumnHeaderCell>
+                    <Table.ColumnHeaderCell>Total Relays</Table.ColumnHeaderCell>
+                  </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                  {data.allSpecs.map((spec) => {
+                    return (<Table.Row key={`spec_${spec.chainId}`}>
+                      <Table.RowHeaderCell><Link href={`/spec/${spec.chainId}`}>{spec.chainId}</Link></Table.RowHeaderCell>
+                      <Table.Cell>{spec.relaySum}</Table.Cell>
+                    </Table.Row>
+                    )
+                  })}
+                </Table.Body>
+              </Table.Root>
+            </Card>
+          </Tabs.Content>
+        </Box>
+      </Tabs.Root>
+
 
 
     </Container>
