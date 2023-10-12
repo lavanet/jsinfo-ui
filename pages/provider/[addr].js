@@ -2,6 +2,44 @@ import { GetRestUrl } from '../../src/utils';
 import Link from 'next/link';
 import { Flex, Text, Card, Box, Table, Container, Tabs } from '@radix-ui/themes';
 
+function eventTypeToString (evtType) {
+    switch (evtType) {
+    case (1):
+        return 'Stake New Provider'
+    case (2):
+        return 'Stake Update Provider'
+    case (3):
+        return 'Provider Unstake Commit'
+    case (4):
+        return 'Freeze Provider'
+    case (5):
+        return 'Unfreeze Provider'
+    case (6):
+        return 'Add Key To Project'
+    case (7):
+        return 'Add Project To Subscription'
+    case (8):
+        return 'Conflict Detection Received'
+    case (9):
+        return 'Del Key From Project'
+    case (10):
+        return 'Del Project To Subscription'
+    case (11):
+        return 'Provider Jailed'
+    case (12):
+        return 'Vote Got Reveal'
+    case (13):
+        return 'Vote Reveal Started'
+    case (14):
+        return 'Detection Vote Resolved'
+    case (15):
+        return 'Detection Vote Unresolved'
+
+    default:
+        return 'Unknown Event Type'
+    }
+}
+
 export default function Provider({ provider }) {
     if (provider == undefined) {
         return (
@@ -66,13 +104,35 @@ export default function Provider({ provider }) {
                                     <Table.Row>
                                         <Table.ColumnHeaderCell>Event Type</Table.ColumnHeaderCell>
                                         <Table.ColumnHeaderCell>Block</Table.ColumnHeaderCell>
+                                        <Table.ColumnHeaderCell>b1</Table.ColumnHeaderCell>
+                                        <Table.ColumnHeaderCell>b2</Table.ColumnHeaderCell>
+                                        <Table.ColumnHeaderCell>b3</Table.ColumnHeaderCell>
+                                        <Table.ColumnHeaderCell>i1</Table.ColumnHeaderCell>
+                                        <Table.ColumnHeaderCell>i2</Table.ColumnHeaderCell>
+                                        <Table.ColumnHeaderCell>i3</Table.ColumnHeaderCell>
+                                        <Table.ColumnHeaderCell>t1</Table.ColumnHeaderCell>
+                                        <Table.ColumnHeaderCell>t2</Table.ColumnHeaderCell>
+                                        <Table.ColumnHeaderCell>t3</Table.ColumnHeaderCell>
+                                        <Table.ColumnHeaderCell>provider</Table.ColumnHeaderCell>
+                                        <Table.ColumnHeaderCell>consumer</Table.ColumnHeaderCell>
                                     </Table.Row>
                                 </Table.Header>
                                 <Table.Body>
                                     {provider.events.map((evt) => {
                                         return (<Table.Row key={`evt_${evt.id}`}>
-                                            <Table.RowHeaderCell>{evt.eventType}</Table.RowHeaderCell>
+                                            <Table.RowHeaderCell>{eventTypeToString(evt.eventType)}</Table.RowHeaderCell>
                                             <Table.Cell>{evt.blockId}</Table.Cell>
+                                            <Table.Cell>{evt.b1}</Table.Cell>
+                                            <Table.Cell>{evt.b2}</Table.Cell>
+                                            <Table.Cell>{evt.b3}</Table.Cell>
+                                            <Table.Cell>{evt.i1}</Table.Cell>
+                                            <Table.Cell>{evt.i2}</Table.Cell>
+                                            <Table.Cell>{evt.i3}</Table.Cell>
+                                            <Table.Cell>{evt.t1}</Table.Cell>
+                                            <Table.Cell>{evt.t2}</Table.Cell>
+                                            <Table.Cell>{evt.t3}</Table.Cell>
+                                            <Table.Cell>{evt.provider}</Table.Cell>
+                                            <Table.Cell>{evt.consumer}</Table.Cell>
                                         </Table.Row>
                                         )
                                     })}
@@ -177,6 +237,9 @@ export async function getStaticPaths() {
     const providers = await getProviders()
     let paths = []
     providers.providers.forEach(provider => {
+        if (!provider.address) {
+            return
+        }
         paths.push({
             params: {
                 addr: provider.address
