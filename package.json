@@ -6,8 +6,10 @@
     "start": "next start"
   },
   "dependencies": {
-    "@radix-ui/themes": "^2.0.0-rc.3",
+    "@radix-ui/react-icons": "^1.3.0",
+    "@radix-ui/themes": "^2.0.0",
     "chart.js": "^4.4.0",
+    "dayjs": "^1.11.10",
     "next": "latest",
     "next-themes": "^0.2.1",
     "react": "18.2.0",

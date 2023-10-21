@@ -1,6 +1,11 @@
 import Link from 'next/link';
 import { GetRestUrl } from '../src/utils';
-import { Flex, Text, Card, Box, Table, Container, Tabs } from '@radix-ui/themes';
+import { Flex, Text, Card, Box, Table, Tabs } from '@radix-ui/themes';
+import Dayjs from "dayjs";
+import relativeTIme from "dayjs/plugin/relativeTime";
+Dayjs.extend(relativeTIme);
+const formatter = Intl.NumberFormat("en");
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -41,7 +46,7 @@ const COLORS = [
 ];
 
 async function getData() {
-  const res = await fetch(GetRestUrl() + '/latest')
+  const res = await fetch(GetRestUrl() + '/index')
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
     throw new Error('Failed to fetch data')
@@ -66,7 +71,7 @@ export default function Home({ data }) {
   }
   const chartOptions = {
     interaction: {
-      mode: 'index', 
+      mode: 'index',
       intersect: false,
     },
     stacked: false,
@@ -90,7 +95,12 @@ export default function Home({ data }) {
           drawOnChartArea: false, // only want the grid lines for one axis to show up
         },
       },
-      x: {}
+      x: {
+        ticks: {
+          autoSkip: false,
+          callback: (t, i) => ((i % 5) && (i != 0) && (i+1 != data.qosData.length)) ? '' : data.qosData[i]['date']
+        },
+      }
     }
   }
 
@@ -123,7 +133,7 @@ export default function Home({ data }) {
     yAxisID: 'y1',
   }
   data.qosData.forEach((metric) => {
-    qosData.data.push({ x: metric['date'], y: (metric['qosSyncAvg']+metric['qosAvailabilityAvg']+metric['qosLatencyAvg'])/3})
+    qosData.data.push({ x: metric['date'], y: (metric['qosSyncAvg'] + metric['qosAvailabilityAvg'] + metric['qosLatencyAvg']) / 3 })
   })
   chartData.datasets.push(qosData)
   for (const [key, value] of Object.entries(dsBySpecId)) {
@@ -131,45 +141,44 @@ export default function Home({ data }) {
   }
 
   return (
-    <Container>
-
+    <>
       <Card>
         <Flex gap="3" align="center">
           <Box>
-            <Text as="div" size="2" weight="bold">
+            <Text size="2" weight="bold">
               Block {data.height}
             </Text>
-            <Text as="div" size="2" color="gray">
-              {(new Date(data.datetime)).toTimeString()}
-            </Text>
+            <Text size="2" color="gray"> {Dayjs(new Date(data.datetime)).fromNow()}</Text>
           </Box>
         </Flex>
       </Card>
 
-      <Box>
+      <Card>
         <Flex gap="3" justify="between">
           <Card>
             <Text as="div" size="2" weight="bold">
-              cu sum: {data.cuSum}
+              {formatter.format(data.relaySum)} Relays
+            </Text>
+          </Card>
+
+          <Card>
+            <Text as="div" size="2" weight="bold">
+              {formatter.format(data.cuSum)} CU
+            </Text>
+          </Card>
+
+          <Card>
+            <Text as="div" size="2" weight="bold">
+              Rewards: {formatter.format(data.rewardSum)} ULAVA
             </Text>
           </Card>
           <Card>
             <Text as="div" size="2" weight="bold">
-              relay sum: {data.relaySum}
-            </Text>
-          </Card>
-          <Card>
-            <Text as="div" size="2" weight="bold">
-              reward sum: {data.rewardSum}
-            </Text>
-          </Card>
-          <Card>
-            <Text as="div" size="2" weight="bold">
-              stake sum: {data.stakeSum}
+              Stake: {formatter.format(data.stakeSum)} ULAVA
             </Text>
           </Card>
         </Flex>
-      </Box>
+      </Card>
 
       <Box>
         <Card>
@@ -177,17 +186,15 @@ export default function Home({ data }) {
         </Card>
       </Box>
 
-      <Tabs.Root defaultValue="providers">
-        <Tabs.List>
-          <Tabs.Trigger value="providers">providers</Tabs.Trigger>
-          <Tabs.Trigger value="chains">chains</Tabs.Trigger>
-        </Tabs.List>
+      <Card>
+        <Tabs.Root defaultValue="providers">
+          <Tabs.List>
+            <Tabs.Trigger value="providers">providers</Tabs.Trigger>
+            <Tabs.Trigger value="chains">chains</Tabs.Trigger>
+          </Tabs.List>
 
-        <Box px="4" pt="3" pb="2">
-          <Tabs.Content value="providers">
-
-            <Card>
-              Providers
+          <Box px="4" pt="3" pb="2">
+            <Tabs.Content value="providers">
               <Table.Root>
                 <Table.Header>
                   <Table.Row>
@@ -199,22 +206,22 @@ export default function Home({ data }) {
                 </Table.Header>
                 <Table.Body>
                   {data.topProviders.map((provider) => {
-                    return (<Table.Row key={`provider_${provider.addr}`}>
-                      <Table.RowHeaderCell><Link href={`/provider/${provider.addr}`}>{provider.addr}</Link></Table.RowHeaderCell>
-                      <Table.Cell>{provider.moniker}</Table.Cell>
-                      <Table.Cell>{provider.rewardSum}</Table.Cell>
-                      <Table.Cell>{provider.nStakes}</Table.Cell>
-                    </Table.Row>
-                    )
+                    if (provider.addr) {
+                      return (
+                        <Table.Row key={`provider_${provider.addr}`}>
+                          <Table.RowHeaderCell><Link href={`/provider/${provider.addr}`}>{provider.addr}</Link></Table.RowHeaderCell>
+                          <Table.Cell>{provider.moniker}</Table.Cell>
+                          <Table.Cell>{provider.rewardSum}</Table.Cell>
+                          <Table.Cell>{provider.nStakes}</Table.Cell>
+                        </Table.Row>
+                      )
+                    }
                   })}
                 </Table.Body>
               </Table.Root>
-            </Card>
-          </Tabs.Content>
+            </Tabs.Content>
 
-          <Tabs.Content value="chains">
-            Chains
-            <Card>
+            <Tabs.Content value="chains">
               <Table.Root>
                 <Table.Header>
                   <Table.Row>
@@ -232,15 +239,10 @@ export default function Home({ data }) {
                   })}
                 </Table.Body>
               </Table.Root>
-            </Card>
-          </Tabs.Content>
-        </Box>
-      </Tabs.Root>
-
-
-
-    </Container>
-
-
+            </Tabs.Content>
+          </Box>
+        </Tabs.Root>
+      </Card>
+    </>
   )
 }
