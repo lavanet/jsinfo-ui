@@ -1,4 +1,4 @@
-import { Flex, Text, Card, Box, Table, Container, Tabs } from '@radix-ui/themes';
+import { Container } from '@radix-ui/themes';
 import { Navbar } from './navbar'
 import { Footer } from './footer'
 
