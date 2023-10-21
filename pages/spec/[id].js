@@ -13,6 +13,10 @@ import {
     Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import Dayjs from "dayjs";
+import relativeTIme from "dayjs/plugin/relativeTime";
+Dayjs.extend(relativeTIme);
+const formatter = Intl.NumberFormat("en");
 
 ChartJS.register(
     CategoryScale,
@@ -35,6 +39,38 @@ export default function Spec({ spec }) {
     const chartData = {
         datasets: [],
     }
+    const chartOptions = {
+        interaction: {
+            mode: 'index',
+            intersect: false,
+        },
+        stacked: false,
+        scales: {
+            y: {
+                type: 'linear',
+                display: true,
+                position: 'left',
+            },
+            y1: {
+                type: 'linear',
+                display: true,
+                position: 'right',
+                min: 0,
+                max: 1.01,
+
+                // grid line settings
+                grid: {
+                    drawOnChartArea: false, // only want the grid lines for one axis to show up
+                },
+            },
+            x: {
+                ticks: {
+                    autoSkip: false,
+                    callback: (t, i) => ((i % 5) && (i != 0) && (i + 1 != spec.qosData.length)) ? '' : spec.qosData[i]['date']
+                },
+            }
+        }
+    }
     const metricData = []
     spec.data.forEach((metric) => {
         metricData.push({ x: metric['date'], y: metric['relaySum'] })
@@ -43,42 +79,85 @@ export default function Spec({ spec }) {
         {
             label: spec['specId'],
             data: metricData,
-            fill: true,
+            fill: false,
             borderColor: '#8c333a',
-            backgroundColor: '#3b1219',
+            backgroundColor: '#8c333a',
         }
     )
 
+    let qosSync = {
+        label: 'Sync Score',
+        data: [],
+        fill: false,
+        borderColor: '#FFC53D',
+        backgroundColor: '#FFC53D',
+        yAxisID: 'y1',
+    }
+    let qosAvailability = {
+        label: 'Availability Score',
+        data: [],
+        fill: false,
+        borderColor: '#46A758',
+        backgroundColor: '#46A758',
+        yAxisID: 'y1',
+    }
+    let qosLatency = {
+        label: 'Latency Score',
+        data: [],
+        fill: false,
+        borderColor: '#6E56CF',
+        backgroundColor: '#6E56CF',
+        yAxisID: 'y1',
+    }
+    spec.qosData.forEach((metric) => {
+        qosSync.data.push({ x: metric['date'], y: metric['qosSyncAvg'] })
+        qosAvailability.data.push({ x: metric['date'], y: metric['qosAvailabilityAvg'] })
+        qosLatency.data.push({ x: metric['date'], y: metric['qosLatencyAvg'] })
+    })
+    chartData.datasets.push(qosSync)
+    chartData.datasets.push(qosAvailability)
+    chartData.datasets.push(qosLatency)
 
     return (
-        <Container>
-            <Box>
+        <>
+            <Card>
+                <Flex gap="3" align="center">
+                    <Box>
+                        <Text size="2" weight="bold">
+                            Block {spec.height}
+                        </Text>
+                        <Text size="2" color="gray"> {Dayjs(new Date(spec.datetime)).fromNow()}</Text>
+                    </Box>
+                </Flex>
+            </Card>
+
+            <Card>
                 <Flex gap="3" justify="between">
                     <Card>
                         <Text as="div" size="2" weight="bold">
-                            spec: {spec.specId}
+                            {spec.specId} spec
                         </Text>
                     </Card>
                     <Card>
                         <Text as="div" size="2" weight="bold">
-                            cu sum: {spec.cuSum}
+                            {formatter.format(spec.cuSum)} CU
                         </Text>
                     </Card>
                     <Card>
                         <Text as="div" size="2" weight="bold">
-                            relay sum: {spec.relaySum}
+                            {formatter.format(spec.relaySum)} Relays
                         </Text>
                     </Card>
                     <Card>
                         <Text as="div" size="2" weight="bold">
-                            reward sum: {spec.rewardSum}
+                            {formatter.format(spec.rewardSum)} ULAVA Rewards
                         </Text>
                     </Card>
                 </Flex>
-            </Box>
+            </Card>
             <Box>
                 <Card>
-                    <Line data={chartData}></Line>
+                    <Line data={chartData} options={chartOptions}></Line>
                 </Card>
             </Box>
             <Card>
@@ -101,7 +180,7 @@ export default function Spec({ spec }) {
                     </Table.Body>
                 </Table.Root>
             </Card>
-        </Container>
+        </>
     )
 }
 

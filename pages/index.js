@@ -86,9 +86,8 @@ export default function Home({ data }) {
         type: 'linear',
         display: true,
         position: 'right',
-        stacked: true,
         min: 0,
-        max: 1,
+        max: 1.01,
 
         // grid line settings
         grid: {
@@ -98,7 +97,7 @@ export default function Home({ data }) {
       x: {
         ticks: {
           autoSkip: false,
-          callback: (t, i) => ((i % 5) && (i != 0) && (i+1 != data.qosData.length)) ? '' : data.qosData[i]['date']
+          callback: (t, i) => ((i % 5) && (i != 0) && (i + 1 != data.qosData.length)) ? '' : data.qosData[i]['date']
         },
       }
     }
@@ -134,6 +133,7 @@ export default function Home({ data }) {
   }
   data.qosData.forEach((metric) => {
     qosData.data.push({ x: metric['date'], y: (metric['qosSyncAvg'] + metric['qosAvailabilityAvg'] + metric['qosLatencyAvg']) / 3 })
+
   })
   chartData.datasets.push(qosData)
   for (const [key, value] of Object.entries(dsBySpecId)) {
