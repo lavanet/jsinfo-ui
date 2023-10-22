@@ -175,7 +175,7 @@ export async function getStaticProps({ params }) {
         props: {
             consumer
         },
-        revalidate: 15,
+        revalidate: 10,
     }
 }
 

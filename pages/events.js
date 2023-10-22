@@ -1,211 +1,49 @@
-import { GetRestUrl } from '../../src/utils';
 import Link from 'next/link';
-import { Flex, Text, Card, Box, Table, Container, Tabs } from '@radix-ui/themes';
+import { GetRestUrl } from '../src/utils';
+import { Flex, Text, Card, Box, Table, Tabs } from '@radix-ui/themes';
+import { StatusToString, GeoLocationToString, EventTypeToString } from '../src/utils';
 import Dayjs from "dayjs";
 import relativeTIme from "dayjs/plugin/relativeTime";
-import { StatusToString, GeoLocationToString, EventTypeToString} from '../../src/utils';
 Dayjs.extend(relativeTIme);
 const formatter = Intl.NumberFormat("en");
 
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Filler,
-    Tooltip,
-    Legend,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
-
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Filler,
-    Title,
-    Tooltip,
-    Legend
-);
-
-const COLORS = [
-    '#191111',
-    '#201314',
-    '#3b1219',
-    '#500f1c',
-    '#611623',
-    '#72232d',
-    '#8c333a',
-    '#b54548',
-    '#e5484d',
-    '#ec5d5e',
-    '#ff9592',
-    '#ffd1d9',
-];
-
-
-export default function Provider({ provider }) {
-    if (provider == undefined) {
-        return (
-            <div>Loading</div>
-        )
+async function getData() {
+    const res = await fetch(GetRestUrl() + '/events')
+    if (!res.ok) {
+        // This will activate the closest `error.js` Error Boundary
+        throw new Error('Failed to fetch data')
     }
 
-    const chartData = {
-        datasets: [],
-    }
-    const chartOptions = {
-        interaction: {
-            mode: 'index',
-            intersect: false,
+    return res.json()
+}
+
+export async function getStaticProps() {
+    const data = await getData()
+    return {
+        props: {
+            data
         },
-        stacked: false,
-        scales: {
-            y: {
-                type: 'linear',
-                display: true,
-                position: 'left',
-                stacked: true,
-            },
-            y1: {
-                type: 'linear',
-                display: true,
-                position: 'right',
-                min: 0,
-                max: 1.01,
-
-                // grid line settings
-                grid: {
-                    drawOnChartArea: false, // only want the grid lines for one axis to show up
-                },
-            },
-            x: {
-                ticks: {
-                    autoSkip: false,
-                    callback: (t, i) => ((i % 5) && (i != 0) && (i + 1 != provider.qosData.length)) ? '' : provider.qosData[i]['date']
-                },
-            }
-        }
+        revalidate: 10,
     }
+}
 
-    const dsBySpecId = {}
-    let i = 0
-    provider.data.forEach((metric) => {
-        if (dsBySpecId[metric['chainId']] == undefined) {
-            dsBySpecId[metric['chainId']] = {
-                label: metric['chainId'],
-                data: [],
-                fill: false,
-                borderColor: COLORS[i],
-                backgroundColor: COLORS[i],
-                yAxisID: 'y',
-            }
-            i++
-            if (i > COLORS.length - 1) {
-                i = 0
-            }
-        }
-        dsBySpecId[metric['chainId']]['data'].push({ x: metric['date'], y: metric['relaySum'] })
-    })
-
-    let qosSync = {
-        label: 'Sync Score',
-        data: [],
-        fill: false,
-        borderColor: '#FFC53D',
-        backgroundColor: '#FFC53D',
-        yAxisID: 'y1',
-    }
-    let qosAvailability = {
-        label: 'Availability Score',
-        data: [],
-        fill: false,
-        borderColor: '#46A758',
-        backgroundColor: '#46A758',
-        yAxisID: 'y1',
-    }
-    let qosLatency = {
-        label: 'Latency Score',
-        data: [],
-        fill: false,
-        borderColor: '#6E56CF',
-        backgroundColor: '#6E56CF',
-        yAxisID: 'y1',
-    }
-    provider.qosData.forEach((metric) => {
-        qosSync.data.push({ x: metric['date'], y: metric['qosSyncAvg'] })
-        qosAvailability.data.push({ x: metric['date'], y: metric['qosAvailabilityAvg'] })
-        qosLatency.data.push({ x: metric['date'], y: metric['qosLatencyAvg'] })
-    })
-    chartData.datasets.push(qosSync)
-    chartData.datasets.push(qosAvailability)
-    chartData.datasets.push(qosLatency)
-    for (const [key, value] of Object.entries(dsBySpecId)) {
-        chartData.datasets.push(value)
-    }
-
-
+export default function Events({ data }) {
     return (
         <>
             <Card>
                 <Flex gap="3" align="center">
                     <Box>
                         <Text size="2" weight="bold">
-                            Block {provider.height}
+                            Block {data.height}
                         </Text>
-                        <Text size="2" color="gray"> {Dayjs(new Date(provider.datetime)).fromNow()}</Text>
+                        <Text size="2" color="gray"> {Dayjs(new Date(data.datetime)).fromNow()}</Text>
                     </Box>
                 </Flex>
             </Card>
-            <Card>
-                <Flex gap="3" align="center">
-                    <Box>
-                        <Text as="div" size="2" weight="bold">
-                            {provider.moniker}
-                        </Text>
-                        <Text as="div" size="2" color="gray">
-                            {provider.addr}
-                        </Text>
-                    </Box>
-                </Flex>
-            </Card>
-            <Card>
-                <Flex gap="3" justify="between">
-                    <Card>
-                        <Text as="div" size="2" weight="bold">
-                            {formatter.format(provider.cuSum)} CU
-                        </Text>
-                    </Card>
-                    <Card>
-                        <Text as="div" size="2" weight="bold">
-                            {formatter.format(provider.relaySum)} Relays
-                        </Text>
-                    </Card>
-                    <Card>
-                        <Text as="div" size="2" weight="bold">
-                            {formatter.format(provider.rewardSum)} ULAVA Rewards
-                        </Text>
-                    </Card>
-                    <Card>
-                        <Text as="div" size="2" weight="bold">
-                            {formatter.format(provider.stakeSum)} ULAVA Stake
-                        </Text>
-                    </Card>
-                </Flex>
-            </Card>
-            <Box>
-                <Card>
-                    <Line data={chartData} options={chartOptions}></Line>
-                </Card>
-            </Box>
             <Card>
                 <Tabs.Root defaultValue="events">
                     <Tabs.List>
                         <Tabs.Trigger value="events">events</Tabs.Trigger>
-                        <Tabs.Trigger value="stakes">stakes</Tabs.Trigger>
                         <Tabs.Trigger value="rewards">rewards</Tabs.Trigger>
                         <Tabs.Trigger value="reports">reports</Tabs.Trigger>
                     </Tabs.List>
@@ -214,6 +52,7 @@ export default function Provider({ provider }) {
                             <Table.Root>
                                 <Table.Header>
                                     <Table.Row>
+                                        <Table.ColumnHeaderCell>Provider</Table.ColumnHeaderCell>
                                         <Table.ColumnHeaderCell>Event Type</Table.ColumnHeaderCell>
                                         <Table.ColumnHeaderCell>Block</Table.ColumnHeaderCell>
                                         <Table.ColumnHeaderCell>Time</Table.ColumnHeaderCell>
@@ -229,8 +68,18 @@ export default function Provider({ provider }) {
                                     </Table.Row>
                                 </Table.Header>
                                 <Table.Body>
-                                    {provider.events.map((evt) => {
+                                    {data.events.map((evt) => {
                                         return (<Table.Row key={`evt_${evt.events.id}`}>
+                                            <Table.Cell>
+                                                {
+                                                    evt.providers ? 
+                                                    <Link href={`/provider/${evt.providers.address}`}>
+                                                        {evt.providers.moniker}
+                                                    </Link>
+                                                    :
+                                                    ''
+                                                }
+                                            </Table.Cell>
                                             <Table.RowHeaderCell>
                                                 <Link href={
                                                     evt.events.tx ?
@@ -241,7 +90,11 @@ export default function Provider({ provider }) {
                                                     {EventTypeToString(evt.events.eventType)}
                                                 </Link>
                                             </Table.RowHeaderCell>
-                                            <Table.Cell><Link href={`https://lava.explorers.guru/block/${evt.events.blockId}`}>{evt.events.blockId}</Link></Table.Cell>
+                                            <Table.Cell>
+                                                <Link href={`https://lava.explorers.guru/block/${evt.events.blockId}`}>
+                                                    {evt.events.blockId}
+                                                </Link>
+                                            </Table.Cell>
                                             <Table.Cell>{Dayjs(new Date(evt.blocks.datetime)).fromNow()}</Table.Cell>
                                             <Table.Cell>{evt.events.b1}</Table.Cell>
                                             <Table.Cell>{evt.events.b2}</Table.Cell>
@@ -259,38 +112,11 @@ export default function Provider({ provider }) {
                             </Table.Root>
                         </Tabs.Content>
 
-                        <Tabs.Content value="stakes">
-                            <Table.Root>
-                                <Table.Header>
-                                    <Table.Row>
-                                        <Table.ColumnHeaderCell>Spec</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>Status</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>Geolocation</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>Addons</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>Extensions</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>Stake</Table.ColumnHeaderCell>
-                                    </Table.Row>
-                                </Table.Header>
-                                <Table.Body>
-                                    {provider.stakes.map((stake) => {
-                                        return (<Table.Row key={`${stake.specId}${stake.provider}`}>
-                                            <Table.RowHeaderCell><Link href={`/spec/${stake.specId}`}>{stake.specId}</Link></Table.RowHeaderCell>
-                                            <Table.Cell>{StatusToString(stake.status)}</Table.Cell>
-                                            <Table.Cell>{GeoLocationToString(stake.geolocation)}</Table.Cell>
-                                            <Table.Cell>{stake.addons}</Table.Cell>
-                                            <Table.Cell>{stake.extensions}</Table.Cell>
-                                            <Table.Cell>{stake.stake}</Table.Cell>
-                                        </Table.Row>
-                                        )
-                                    })}
-                                </Table.Body>
-                            </Table.Root>
-                        </Tabs.Content>
-
                         <Tabs.Content value="rewards">
                             <Table.Root>
                                 <Table.Header>
                                     <Table.Row>
+                                        <Table.ColumnHeaderCell>Provider</Table.ColumnHeaderCell>
                                         <Table.ColumnHeaderCell>Spec</Table.ColumnHeaderCell>
                                         <Table.ColumnHeaderCell>Block</Table.ColumnHeaderCell>
                                         <Table.ColumnHeaderCell>Time</Table.ColumnHeaderCell>
@@ -303,13 +129,23 @@ export default function Provider({ provider }) {
                                     </Table.Row>
                                 </Table.Header>
                                 <Table.Body>
-                                    {provider.payments.map((payment) => {
+                                    {data.payments.map((payment) => {
                                         return (<Table.Row key={`pay_${payment.relay_payments.id}`}>
-                                            <Table.RowHeaderCell>
+                                            <Table.Cell>
+                                                {
+                                                    payment.providers ? 
+                                                    <Link href={`/provider/${payment.providers.address}`}>
+                                                        {payment.providers.moniker}
+                                                    </Link>
+                                                    :
+                                                    ''
+                                                }
+                                            </Table.Cell>
+                                            <Table.Cell>
                                                 <Link href={`/spec/${payment.relay_payments.specId}`}>
                                                     {payment.relay_payments.specId}
                                                 </Link>
-                                            </Table.RowHeaderCell>
+                                            </Table.Cell>
                                             <Table.Cell>
                                                 <Link href={
                                                     payment.relay_payments.tx ?
@@ -337,6 +173,7 @@ export default function Provider({ provider }) {
                             <Table.Root>
                                 <Table.Header>
                                     <Table.Row>
+                                        <Table.ColumnHeaderCell>Provider</Table.ColumnHeaderCell>
                                         <Table.ColumnHeaderCell>Block</Table.ColumnHeaderCell>
                                         <Table.ColumnHeaderCell>Time</Table.ColumnHeaderCell>
                                         <Table.ColumnHeaderCell>CU</Table.ColumnHeaderCell>
@@ -346,8 +183,18 @@ export default function Provider({ provider }) {
                                     </Table.Row>
                                 </Table.Header>
                                 <Table.Body>
-                                    {provider.reports.map((report, i) => {
+                                    {data.reports.map((report, i) => {
                                         return (<Table.Row key={`report_${report.provider_reported.provider}_${report.provider_reported.blockId}_${i}`}>
+                                            <Table.Cell>
+                                                {
+                                                    report.providers ? 
+                                                    <Link href={`/provider/${report.providers.address}`}>
+                                                        {report.providers.moniker}
+                                                    </Link>
+                                                    :
+                                                    ''
+                                                }
+                                            </Table.Cell>
                                             <Table.Cell>
                                                 <Link href={
                                                     report.provider_reported.tx ?
@@ -358,7 +205,6 @@ export default function Provider({ provider }) {
                                                 </Link>
                                             </Table.Cell>
                                             <Table.Cell>{Dayjs(new Date(report.blocks.datetime)).fromNow()}</Table.Cell>
-
                                             <Table.Cell>{report.provider_reported.cu}</Table.Cell>
                                             <Table.Cell>{report.provider_reported.disconnections}</Table.Cell>
                                             <Table.Cell>{report.provider_reported.errors}</Table.Cell>
@@ -372,66 +218,7 @@ export default function Provider({ provider }) {
                     </Box>
                 </Tabs.Root>
             </Card>
+
         </>
     )
-}
-
-export async function getStaticPaths() {
-    const providers = await getProviders()
-    let paths = []
-    providers.providers.forEach(provider => {
-        if (!provider.address) {
-            return
-        }
-        paths.push({
-            params: {
-                addr: provider.address
-            }
-        })
-    });
-
-    return {
-        paths: paths,
-        fallback: true,
-    };
-}
-
-export async function getStaticProps({ params }) {
-    const addr = params.addr
-    if (!addr.startsWith('lava@') || addr.length != 44) {
-        return {
-            notFound: true,
-        }
-    }
-
-    // fetch
-    const provider = await getProvider(params.addr)
-    if (provider == null) {
-        return {
-            notFound: true,
-        }
-    }
-
-    return {
-        props: {
-            provider
-        },
-        revalidate: 10,
-    }
-}
-
-async function getProviders() {
-    const res = await fetch(GetRestUrl() + '/providers')
-    if (!res.ok) {
-        return null
-    }
-    return res.json()
-}
-
-async function getProvider(addr) {
-    const res = await fetch(GetRestUrl() + '/provider/' + addr)
-    if (!res.ok) {
-        return null
-    }
-    return res.json()
 }

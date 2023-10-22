@@ -13,6 +13,7 @@ import {
     Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import { StatusToString, GeoLocationToString } from '../../src/utils';
 import Dayjs from "dayjs";
 import relativeTIme from "dayjs/plugin/relativeTime";
 Dayjs.extend(relativeTIme);
@@ -130,12 +131,16 @@ export default function Spec({ spec }) {
                     </Box>
                 </Flex>
             </Card>
-
             <Card>
                 <Flex gap="3" justify="between">
                     <Card>
                         <Text as="div" size="2" weight="bold">
                             {spec.specId} spec
+                        </Text>
+                    </Card>
+                    <Card>
+                        <Text as="div" size="2" weight="bold">
+                            {spec.stakes.length} Providers
                         </Text>
                     </Card>
                     <Card>
@@ -165,15 +170,23 @@ export default function Spec({ spec }) {
                 <Table.Root>
                     <Table.Header>
                         <Table.Row>
-                            <Table.ColumnHeaderCell>Provider Address</Table.ColumnHeaderCell>
+                            <Table.ColumnHeaderCell>Provider</Table.ColumnHeaderCell>
+                            <Table.ColumnHeaderCell>Status</Table.ColumnHeaderCell>
+                            <Table.ColumnHeaderCell>Geolocation</Table.ColumnHeaderCell>
+                            <Table.ColumnHeaderCell>Addons</Table.ColumnHeaderCell>
+                            <Table.ColumnHeaderCell>Extensions</Table.ColumnHeaderCell>
                             <Table.ColumnHeaderCell>Stake</Table.ColumnHeaderCell>
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
                         {spec.stakes.map((stake) => {
-                            return (<Table.Row key={`provider_${stake.provider}`}>
-                                <Table.RowHeaderCell><Link href={`/provider/${stake.provider}`}>{stake.provider}</Link></Table.RowHeaderCell>
-                                <Table.Cell>{stake.stake}</Table.Cell>
+                            return (<Table.Row key={`${stake.provider_stakes.specId}${stake.provider_stakes.provider}`}>
+                                <Table.Cell><Link href={`/provider/${stake.providers.address}`}>{stake.providers.moniker}</Link></Table.Cell>
+                                <Table.Cell>{StatusToString(stake.provider_stakes.status)}</Table.Cell>
+                                <Table.Cell>{GeoLocationToString(stake.provider_stakes.geolocation)}</Table.Cell>
+                                <Table.Cell>{stake.provider_stakes.addons}</Table.Cell>
+                                <Table.Cell>{stake.provider_stakes.extensions}</Table.Cell>
+                                <Table.Cell>{stake.provider_stakes.stake}</Table.Cell>
                             </Table.Row>
                             )
                         })}
@@ -211,7 +224,7 @@ export async function getStaticProps({ params }) {
         props: {
             spec
         },
-        revalidate: 15,
+        revalidate: 10,
     }
 }
 

@@ -27,10 +27,15 @@ export function Navbar() {
     return (
         <Card>
             <Flex justify={'between'}>
-                <Flex>
+                <Flex gap="3">
                     <Link href='/'>
                         <Button variant="soft">
                             Index
+                        </Button>
+                    </Link>
+                    <Link href='/events'>
+                        <Button variant="soft">
+                            Events
                         </Button>
                     </Link>
                 </Flex>
