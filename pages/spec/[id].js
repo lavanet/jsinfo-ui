@@ -78,7 +78,7 @@ export default function Spec({ spec }) {
     })
     chartData.datasets.push(
         {
-            label: spec['specId'],
+            label: spec['specId'] + ' Relays',
             data: metricData,
             fill: false,
             borderColor: '#8c333a',
@@ -181,7 +181,9 @@ export default function Spec({ spec }) {
                     <Table.Body>
                         {spec.stakes.map((stake) => {
                             return (<Table.Row key={`${stake.provider_stakes.specId}${stake.provider_stakes.provider}`}>
-                                <Table.Cell><Link href={`/provider/${stake.providers.address}`}>{stake.providers.moniker}</Link></Table.Cell>
+                                <Table.Cell><Link href={`/provider/${stake.providers.address}`}>
+                                    {stake.providers.moniker ? stake.providers.moniker : stake.providers.address}
+                                </Link></Table.Cell>
                                 <Table.Cell>{StatusToString(stake.provider_stakes.status)}</Table.Cell>
                                 <Table.Cell>{GeoLocationToString(stake.provider_stakes.geolocation)}</Table.Cell>
                                 <Table.Cell>{stake.provider_stakes.addons}</Table.Cell>

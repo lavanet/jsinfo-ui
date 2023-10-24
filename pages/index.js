@@ -108,7 +108,7 @@ export default function Home({ data }) {
   data.data.forEach((metric) => {
     if (dsBySpecId[metric['chainId']] == undefined) {
       dsBySpecId[metric['chainId']] = {
-        label: metric['chainId'],
+        label: metric['chainId'] + ' Relays',
         data: [],
         fill: false,
         borderColor: COLORS[i],

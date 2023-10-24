@@ -74,7 +74,7 @@ export default function Events({ data }) {
                                                 {
                                                     evt.providers ? 
                                                     <Link href={`/provider/${evt.providers.address}`}>
-                                                        {evt.providers.moniker}
+                                                        {evt.providers.moniker ? evt.providers.moniker : evt.providers.address}
                                                     </Link>
                                                     :
                                                     ''
@@ -135,7 +135,7 @@ export default function Events({ data }) {
                                                 {
                                                     payment.providers ? 
                                                     <Link href={`/provider/${payment.providers.address}`}>
-                                                        {payment.providers.moniker}
+                                                        {payment.providers.moniker ? payment.providers.moniker : payment.providers.address}
                                                     </Link>
                                                     :
                                                     ''
@@ -189,7 +189,7 @@ export default function Events({ data }) {
                                                 {
                                                     report.providers ? 
                                                     <Link href={`/provider/${report.providers.address}`}>
-                                                        {report.providers.moniker}
+                                                        {report.providers.moniker ? report.providers.moniker : report.providers.address}
                                                     </Link>
                                                     :
                                                     ''
