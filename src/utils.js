@@ -48,6 +48,8 @@ export function StatusToString (status) {
             return 'Frozen'
         case 3:
             return 'Unstaking'
+        case 4:
+            return 'Inactive'
         default:
             return 'Unknown'
     }
