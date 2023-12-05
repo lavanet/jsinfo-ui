@@ -202,6 +202,7 @@ export default function Home({ data }) {
                     <Table.ColumnHeaderCell>Moniker</Table.ColumnHeaderCell>
                     <Table.ColumnHeaderCell>Total Rewards</Table.ColumnHeaderCell>
                     <Table.ColumnHeaderCell>Total Services</Table.ColumnHeaderCell>
+                    <Table.ColumnHeaderCell>Total Stake</Table.ColumnHeaderCell>
                   </Table.Row>
                 </Table.Header>
                 <Table.Body>
@@ -213,6 +214,7 @@ export default function Home({ data }) {
                           <Table.Cell>{provider.moniker}</Table.Cell>
                           <Table.Cell>{provider.rewardSum}</Table.Cell>
                           <Table.Cell>{provider.nStakes}</Table.Cell>
+                          <Table.Cell>{provider.totalStake}</Table.Cell>
                         </Table.Row>
                       )
                     }

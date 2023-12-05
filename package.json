@@ -3,6 +3,7 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
+    "nodemon": "nodemon --watch server --exec 'next dev'",
     "start": "next start"
   },
   "dependencies": {
@@ -11,11 +12,11 @@
     "@vercel/analytics": "^1.1.1",
     "chart.js": "^4.4.0",
     "dayjs": "^1.11.10",
-    "next": "latest",
+    "next": "^14.0.1",
     "next-themes": "^0.2.1",
-    "react": "18.2.0",
+    "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "^18.2.0"
   },
   "engines": {
     "node": ">=18"
