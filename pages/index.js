@@ -1,10 +1,14 @@
-import Link from 'next/link';
+// jsinfo-ui/pages/index.js
+
 import { GetRestUrl } from '../src/utils';
+import React from 'react';
 import { Flex, Text, Card, Box, Table, Tabs } from '@radix-ui/themes';
 import Dayjs from "dayjs";
 import relativeTIme from "dayjs/plugin/relativeTime";
 Dayjs.extend(relativeTIme);
 const formatter = Intl.NumberFormat("en");
+import { SortableTableComponent } from '../components/sorttable';
+
 
 import {
   Chart as ChartJS,
@@ -194,54 +198,32 @@ export default function Home({ data }) {
           </Tabs.List>
 
           <Box px="4" pt="3" pb="2">
-            <Tabs.Content value="providers">
-              <Table.Root>
-                <Table.Header>
-                  <Table.Row>
-                    <Table.ColumnHeaderCell>Provider Address</Table.ColumnHeaderCell>
-                    <Table.ColumnHeaderCell>Moniker</Table.ColumnHeaderCell>
-                    <Table.ColumnHeaderCell>Total Rewards</Table.ColumnHeaderCell>
-                    <Table.ColumnHeaderCell>Total Services</Table.ColumnHeaderCell>
-                    <Table.ColumnHeaderCell>Total Stake</Table.ColumnHeaderCell>
-                  </Table.Row>
-                </Table.Header>
-                <Table.Body>
-                  {data.topProviders.map((provider) => {
-                    if (provider.addr) {
-                      return (
-                        <Table.Row key={`provider_${provider.addr}`}>
-                          <Table.RowHeaderCell><Link href={`/provider/${provider.addr}`}>{provider.addr}</Link></Table.RowHeaderCell>
-                          <Table.Cell>{provider.moniker}</Table.Cell>
-                          <Table.Cell>{provider.rewardSum}</Table.Cell>
-                          <Table.Cell>{provider.nStakes}</Table.Cell>
-                          <Table.Cell>{provider.totalStake}</Table.Cell>
-                        </Table.Row>
-                      )
-                    }
-                  })}
-                </Table.Body>
-              </Table.Root>
-            </Tabs.Content>
-
-            <Tabs.Content value="chains">
-              <Table.Root>
-                <Table.Header>
-                  <Table.Row>
-                    <Table.ColumnHeaderCell>Spec</Table.ColumnHeaderCell>
-                    <Table.ColumnHeaderCell>Total Relays</Table.ColumnHeaderCell>
-                  </Table.Row>
-                </Table.Header>
-                <Table.Body>
-                  {data.allSpecs.map((spec) => {
-                    return (<Table.Row key={`spec_${spec.chainId}`}>
-                      <Table.RowHeaderCell><Link href={`/spec/${spec.chainId}`}>{spec.chainId}</Link></Table.RowHeaderCell>
-                      <Table.Cell>{spec.relaySum}</Table.Cell>
-                    </Table.Row>
-                    )
-                  })}
-                </Table.Body>
-              </Table.Root>
-            </Tabs.Content>
+            <SortableTableComponent 
+                columns={[
+                  { key: 'addr', name: 'Provider Address' },
+                  { key: 'moniker', name: 'Moniker' },
+                  { key: 'rewardSum', name: 'Total Rewards' },
+                  { key: 'nStakes', name: 'Total Services' },
+                  { key: 'totalStake', name: 'Total Stake' },
+                ]}
+                data={data.topProviders}
+                defaultSortKey='addr'
+                tableValue='providers'
+                pkey='addr'
+                pkey_url='provider'
+              />
+              
+              <SortableTableComponent 
+                columns={[
+                  { key: 'chainId', name: 'Spec' },
+                  { key: 'relaySum', name: 'Total Relays' },
+                ]}
+                data={data.allSpecs}
+                defaultSortKey='chainId'
+                tableValue='chains'
+                pkey='chainId'
+                pkey_url='spec'
+              />
           </Box>
         </Tabs.Root>
       </Card>

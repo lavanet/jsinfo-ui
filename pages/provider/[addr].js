@@ -1,9 +1,11 @@
 import { GetRestUrl } from '../../src/utils';
 import Link from 'next/link';
-import { Flex, Text, Card, Box, Table, Container, Tabs } from '@radix-ui/themes';
+import { Flex, Text, Card, Box, Tabs } from '@radix-ui/themes';
 import Dayjs from "dayjs";
 import relativeTIme from "dayjs/plugin/relativeTime";
-import { StatusToString, GeoLocationToString, EventTypeToString} from '../../src/utils';
+import { StatusToString, GeoLocationToString, EventTypeToString } from '../../src/utils';
+import { SortableTableComponent } from '../../components/sorttable';
+
 Dayjs.extend(relativeTIme);
 const formatter = Intl.NumberFormat("en");
 
@@ -210,165 +212,139 @@ export default function Provider({ provider }) {
                         <Tabs.Trigger value="reports">reports</Tabs.Trigger>
                     </Tabs.List>
                     <Box px="4" pt="3" pb="2">
-                        <Tabs.Content value="events">
-                            <Table.Root>
-                                <Table.Header>
-                                    <Table.Row>
-                                        <Table.ColumnHeaderCell>Event Type</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>Block</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>Time</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>b1</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>b2</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>b3</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>i1</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>i2</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>i3</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>t1</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>t2</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>t3</Table.ColumnHeaderCell>
-                                    </Table.Row>
-                                </Table.Header>
-                                <Table.Body>
-                                    {provider.events.map((evt) => {
-                                        return (<Table.Row key={`evt_${evt.events.id}`}>
-                                            <Table.RowHeaderCell>
-                                                <Link href={
-                                                    evt.events.tx ?
-                                                        `https://lava.explorers.guru/transaction/${evt.events.tx}`
-                                                        :
-                                                        `https://lava.explorers.guru/block/${evt.events.blockId}`
-                                                }>
-                                                    {EventTypeToString(evt.events.eventType)}
-                                                </Link>
-                                            </Table.RowHeaderCell>
-                                            <Table.Cell><Link href={`https://lava.explorers.guru/block/${evt.events.blockId}`}>{evt.events.blockId}</Link></Table.Cell>
-                                            <Table.Cell>{Dayjs(new Date(evt.blocks.datetime)).fromNow()}</Table.Cell>
-                                            <Table.Cell>{evt.events.b1}</Table.Cell>
-                                            <Table.Cell>{evt.events.b2}</Table.Cell>
-                                            <Table.Cell>{evt.events.b3}</Table.Cell>
-                                            <Table.Cell>{evt.events.i1}</Table.Cell>
-                                            <Table.Cell>{evt.events.i2}</Table.Cell>
-                                            <Table.Cell>{evt.events.i3}</Table.Cell>
-                                            <Table.Cell>{evt.events.t1}</Table.Cell>
-                                            <Table.Cell>{evt.events.t2}</Table.Cell>
-                                            <Table.Cell>{evt.events.t3}</Table.Cell>
-                                        </Table.Row>
-                                        )
-                                    })}
-                                </Table.Body>
-                            </Table.Root>
-                        </Tabs.Content>
+                        <SortableTableComponent
+                            columns={[
+                                { key: 'providers.address', name: 'Provider Address' },
+                                { key: 'events.eventType', name: 'Event Type' },
+                                { key: 'blocks.height', name: 'Block Height' },
+                                { key: 'blocks.datetime', name: 'Time' },
+                                { key: 'events.b1', name: 'b1' },
+                                { key: 'events.b2', name: 'b2' },
+                                { key: 'events.b3', name: 'b3' },
+                                { key: 'events.i1', name: 'i1' },
+                                { key: 'events.i2', name: 'i2' },
+                                { key: 'events.i3', name: 'i3' },
+                                { key: 'events.t1', name: 't1' },
+                                { key: 'events.t2', name: 't2' },
+                                { key: 'events.t3', name: 't3' },
+                            ]}
+                            data={provider.events}
+                            defaultSortKey='blocks.datetime|desc'
+                            tableValue='events'
+                            pkey='events.id'
+                            pkey_url='none'
+                            rowFormatters={{
+                                "providers.address": (evt) => evt.providers
+                                    ? <Link href={`/provider/${evt.providers.address}`}>
+                                        {evt.providers.moniker ? evt.providers.moniker : evt.providers.address}
+                                    </Link>
+                                    : '',
+                                "events.eventType": (evt) => <Link href={
+                                    evt.events.tx
+                                        ? `https://lava.explorers.guru/transaction/${evt.events.tx}`
+                                        : `https://lava.explorers.guru/block/${evt.events.blockId}`
+                                }>
+                                    {EventTypeToString(evt.events.eventType)}
+                                </Link>,
+                                "blocks.height": (evt) => <Link href={`https://lava.explorers.guru/block/${evt.events.blockId}`}>
+                                    {evt.events.blockId}
+                                </Link>,
+                                "blocks.datetime": (evt) => Dayjs(new Date(evt.blocks.datetime)).fromNow(),
+                            }}
+                        />
 
-                        <Tabs.Content value="stakes">
-                            <Table.Root>
-                                <Table.Header>
-                                    <Table.Row>
-                                        <Table.ColumnHeaderCell>Spec</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>Status</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>Geolocation</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>Addons</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>Extensions</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>Stake</Table.ColumnHeaderCell>
-                                    </Table.Row>
-                                </Table.Header>
-                                <Table.Body>
-                                    {provider.stakes.map((stake) => {
-                                        return (<Table.Row key={`${stake.specId}${stake.provider}`}>
-                                            <Table.RowHeaderCell><Link href={`/spec/${stake.specId}`}>{stake.specId}</Link></Table.RowHeaderCell>
-                                            <Table.Cell>{StatusToString(stake.status)}</Table.Cell>
-                                            <Table.Cell>{GeoLocationToString(stake.geolocation)}</Table.Cell>
-                                            <Table.Cell>{stake.addons}</Table.Cell>
-                                            <Table.Cell>{stake.extensions}</Table.Cell>
-                                            <Table.Cell>{stake.stake}</Table.Cell>
-                                        </Table.Row>
-                                        )
-                                    })}
-                                </Table.Body>
-                            </Table.Root>
-                        </Tabs.Content>
+                        <SortableTableComponent
+                            columns={[
+                                { key: 'specId', name: 'Spec' },
+                                { key: 'status', name: 'Status' },
+                                { key: 'geolocation', name: 'Geolocation' },
+                                { key: 'addons', name: 'Addons' },
+                                { key: 'extensions', name: 'Extensions' },
+                                { key: 'stake', name: 'Stake' },
+                            ]}
+                            data={provider.stakes}
+                            defaultSortKey='specId'
+                            tableValue='stakes'
+                            pkey='specId,provider'
+                            pkey_url='spec'
+                            rowFormatters={{
+                                "status": (stake) => StatusToString(stake.status),
+                                "geolocation": (stake) => GeoLocationToString(stake.geolocation),
+                            }}
+                        />
 
-                        <Tabs.Content value="rewards">
-                            <Table.Root>
-                                <Table.Header>
-                                    <Table.Row>
-                                        <Table.ColumnHeaderCell>Spec</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>Block</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>Time</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>Consumer</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>Relays</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>CU</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>Pay</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>QoS</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>Excellence</Table.ColumnHeaderCell>
-                                    </Table.Row>
-                                </Table.Header>
-                                <Table.Body>
-                                    {provider.payments.map((payment) => {
-                                        return (<Table.Row key={`pay_${payment.relay_payments.id}`}>
-                                            <Table.RowHeaderCell>
-                                                <Link href={`/spec/${payment.relay_payments.specId}`}>
-                                                    {payment.relay_payments.specId}
-                                                </Link>
-                                            </Table.RowHeaderCell>
-                                            <Table.Cell>
-                                                <Link href={
-                                                    payment.relay_payments.tx ?
-                                                        `https://lava.explorers.guru/transaction/${payment.relay_payments.tx}`
-                                                        :
-                                                        `https://lava.explorers.guru/block/${payment.relay_payments.blockId}`}>
-                                                    {payment.relay_payments.blockId}
-                                                </Link>
-                                            </Table.Cell>
-                                            <Table.Cell>{Dayjs(new Date(payment.blocks.datetime)).fromNow()}</Table.Cell>
-                                            <Table.Cell><Link href={`/consumer/${payment.relay_payments.consumer}`}>{payment.relay_payments.consumer}</Link></Table.Cell>
-                                            <Table.Cell>{payment.relay_payments.relays}</Table.Cell>
-                                            <Table.Cell>{payment.relay_payments.cu}</Table.Cell>
-                                            <Table.Cell>{payment.relay_payments.pay} ULAVA</Table.Cell>
-                                            <Table.Cell>{payment.relay_payments.qosSync}, {payment.relay_payments.qosAvailability}, {payment.relay_payments.qosSync}</Table.Cell>
-                                            <Table.Cell>{payment.relay_payments.qosSyncExc}, {payment.relay_payments.qosAvailabilityExc}, {payment.relay_payments.qosSyncExc}</Table.Cell>
-                                        </Table.Row>
-                                        )
-                                    })}
-                                </Table.Body>
-                            </Table.Root>
-                        </Tabs.Content>
+                        <SortableTableComponent
+                            columns={[
+                                { key: 'providers.address', name: 'Provider' },
+                                { key: 'relay_payments.specId', name: 'Spec' },
+                                { key: 'relay_payments.blockId', name: 'Block' },
+                                { key: 'blocks.datetime', name: 'Time' },
+                                { key: 'relay_payments.consumer', name: 'Consumer' },
+                                { key: 'relay_payments.relays', name: 'Relays' },
+                                { key: 'relay_payments.cu', name: 'CU' },
+                                { key: 'relay_payments.pay', name: 'Pay' },
+                                { key: 'relay_payments.qosSync', name: 'QoS' },
+                                { key: 'relay_payments.qosSyncExc', name: 'Excellence' },
+                            ]}
+                            data={provider.payments}
+                            defaultSortKey='blocks.datetime|desc'
+                            tableValue='rewards'
+                            pkey='relay_payments.id'
+                            pkey_url='none'
+                            rowFormatters={{
+                                "providers.address": (payment) => payment.providers
+                                    ? <Link href={`/provider/${payment.providers.address}`}>
+                                        {payment.providers.moniker ? payment.providers.moniker : payment.providers.address}
+                                    </Link>
+                                    : '',
+                                "relay_payments.specId": (payment) => <Link href={`/spec/${payment.relay_payments.specId}`}>
+                                    {payment.relay_payments.specId}
+                                </Link>,
+                                "relay_payments.blockId": (payment) => <Link href={
+                                    payment.relay_payments.tx
+                                        ? `https://lava.explorers.guru/transaction/${payment.relay_payments.tx}`
+                                        : `https://lava.explorers.guru/block/${payment.relay_payments.blockId}`
+                                }>
+                                    {payment.relay_payments.blockId}
+                                </Link>,
+                                "blocks.datetime": (payment) => Dayjs(new Date(payment.blocks.datetime)).fromNow(),
+                                "relay_payments.consumer": (payment) => <Link href={`/consumer/${payment.relay_payments.consumer}`}>
+                                    {payment.relay_payments.consumer}
+                                </Link>,
+                                "relay_payments.relays": (payment) => payment.relay_payments.relays,
+                                "relay_payments.cu": (payment) => payment.relay_payments.cu,
+                                "relay_payments.pay": (payment) => `${payment.relay_payments.pay} ULAVA`,
+                                "relay_payments.qosSync": (payment) => `${payment.relay_payments.qosSync}, ${payment.relay_payments.qosAvailability}, ${payment.relay_payments.qosSync}`,
+                                "relay_payments.qosSyncExc": (payment) => `${payment.relay_payments.qosSyncExc}, ${payment.relay_payments.qosAvailabilityExc}, ${payment.relay_payments.qosSyncExc}`,
+                            }}
+                        />
 
-                        <Tabs.Content value="reports">
-                            <Table.Root>
-                                <Table.Header>
-                                    <Table.Row>
-                                        <Table.ColumnHeaderCell>Block</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>Time</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>CU</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>Disconnections</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>Errors</Table.ColumnHeaderCell>
-                                        <Table.ColumnHeaderCell>Project</Table.ColumnHeaderCell>
-                                    </Table.Row>
-                                </Table.Header>
-                                <Table.Body>
-                                    {provider.reports.map((report, i) => {
-                                        return (<Table.Row key={`report_${report.provider_reported.provider}_${report.provider_reported.blockId}_${i}`}>
-                                            <Table.Cell>
-                                                <Link href={
-                                                    report.provider_reported.tx ?
-                                                        `https://lava.explorers.guru/transaction/${report.provider_reported.tx}`
-                                                        :
-                                                        `https://lava.explorers.guru/block/${report.provider_reported.blockId}`}>
-                                                    {report.provider_reported.blockId}
-                                                </Link>
-                                            </Table.Cell>
-                                            <Table.Cell>{Dayjs(new Date(report.blocks.datetime)).fromNow()}</Table.Cell>
+                        <SortableTableComponent
+                            columns={[
+                                { key: 'provider_reported.blockId', name: 'Block' },
+                                { key: 'blocks.datetime', name: 'Time' },
+                                { key: 'provider_reported.cu', name: 'CU' },
+                                { key: 'provider_reported.disconnections', name: 'Disconnections' },
+                                { key: 'provider_reported.errors', name: 'Errors' },
+                                { key: 'provider_reported.project', name: 'Project' },
+                            ]}
+                            data={provider.reports}
+                            defaultSortKey='blocks.datetime|desc'
+                            tableValue='reports'
+                            pkey='provider_reported.provider,provider_reported.blockId,counter'
+                            pkey_url='none'
+                            rowFormatters={{
+                                "provider_reported.blockId": (report) => <Link href={
+                                    report.provider_reported.tx
+                                        ? `https://lava.explorers.guru/transaction/${report.provider_reported.tx}`
+                                        : `https://lava.explorers.guru/block/${report.provider_reported.blockId}`
+                                }>
+                                    {report.provider_reported.blockId}
+                                </Link>,
+                                "blocks.datetime": (report) => Dayjs(new Date(report.blocks.datetime)).fromNow(),
+                            }}
+                        />
 
-                                            <Table.Cell>{report.provider_reported.cu}</Table.Cell>
-                                            <Table.Cell>{report.provider_reported.disconnections}</Table.Cell>
-                                            <Table.Cell>{report.provider_reported.errors}</Table.Cell>
-                                            <Table.Cell>{report.provider_reported.project}</Table.Cell>
-                                        </Table.Row>
-                                        )
-                                    })}
-                                </Table.Body>
-                            </Table.Root>
-                        </Tabs.Content>
                     </Box>
                 </Tabs.Root>
             </Card>
