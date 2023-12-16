@@ -146,10 +146,10 @@ export default function Events({ data }) {
                                 { key: 'provider_reported.errors', name: 'Errors' },
                                 { key: 'provider_reported.project', name: 'Project' },
                             ]}
-                            data={data.reports} // assuming data is defined elsewhere
+                            data={data.reports}
                             defaultSortKey='blocks.datetime'
                             tableValue='reports'
-                            pkey='provider_reported.provider'
+                            pkey='provider_reported.provider,provider_reported.blockId,counter'
                             pkey_url='none'
                             rowFormatters={{
                                 "providers.address": (report) => report.providers

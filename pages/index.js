@@ -1,38 +1,14 @@
 // jsinfo-ui/pages/index.js
 
 import { GetRestUrl } from '../src/utils';
-import React from 'react';
-import { Flex, Text, Card, Box, Table, Tabs } from '@radix-ui/themes';
+import { Flex, Text, Card, Box, Tabs } from '@radix-ui/themes';
 import Dayjs from "dayjs";
 import relativeTIme from "dayjs/plugin/relativeTime";
 Dayjs.extend(relativeTIme);
 const formatter = Intl.NumberFormat("en");
 import { SortableTableComponent } from '../components/sorttable';
-
-
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Filler,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Filler,
-  Title,
-  Tooltip,
-  Legend
-);
+import { ReactiveChart } from '../components/reactivechart';
+import React from 'react';
 
 const COLORS = [
   '#191111',
@@ -184,11 +160,7 @@ export default function Home({ data }) {
         </Flex>
       </Card>
 
-      <Box>
-        <Card>
-          <Line data={chartData} options={chartOptions}></Line>
-        </Card>
-      </Box>
+      <ReactiveChart data={chartData} options={chartOptions} />
 
       <Card>
         <Tabs.Root defaultValue="providers">
@@ -198,32 +170,32 @@ export default function Home({ data }) {
           </Tabs.List>
 
           <Box px="4" pt="3" pb="2">
-            <SortableTableComponent 
-                columns={[
-                  { key: 'addr', name: 'Provider Address' },
-                  { key: 'moniker', name: 'Moniker' },
-                  { key: 'rewardSum', name: 'Total Rewards' },
-                  { key: 'nStakes', name: 'Total Services' },
-                  { key: 'totalStake', name: 'Total Stake' },
-                ]}
-                data={data.topProviders}
-                defaultSortKey='addr'
-                tableValue='providers'
-                pkey='addr'
-                pkey_url='provider'
-              />
-              
-              <SortableTableComponent 
-                columns={[
-                  { key: 'chainId', name: 'Spec' },
-                  { key: 'relaySum', name: 'Total Relays' },
-                ]}
-                data={data.allSpecs}
-                defaultSortKey='chainId'
-                tableValue='chains'
-                pkey='chainId'
-                pkey_url='spec'
-              />
+            <SortableTableComponent
+              columns={[
+                { key: 'addr', name: 'Provider Address' },
+                { key: 'moniker', name: 'Moniker' },
+                { key: 'rewardSum', name: 'Total Rewards' },
+                { key: 'nStakes', name: 'Total Services' },
+                { key: 'totalStake', name: 'Total Stake' },
+              ]}
+              data={data.topProviders}
+              defaultSortKey='addr'
+              tableValue='providers'
+              pkey='addr'
+              pkey_url='provider'
+            />
+
+            <SortableTableComponent
+              columns={[
+                { key: 'chainId', name: 'Spec' },
+                { key: 'relaySum', name: 'Total Relays' },
+              ]}
+              data={data.allSpecs}
+              defaultSortKey='chainId'
+              tableValue='chains'
+              pkey='chainId'
+              pkey_url='spec'
+            />
           </Box>
         </Tabs.Root>
       </Card>

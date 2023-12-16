@@ -2,7 +2,6 @@
 import { useState, useMemo } from 'react';
 import { Link, Table, Tabs } from '@radix-ui/themes';
 
-
 type Column = {
   key: string;
   name: string;

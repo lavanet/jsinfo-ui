@@ -1,30 +1,7 @@
 import { GetRestUrl } from '../../src/utils';
 import { Flex, Text, Card, Box, Tabs, Container } from '@radix-ui/themes';
 import { SortableTableComponent } from '../../components/sorttable';
-
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Filler,
-    Tooltip,
-    Legend,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
-
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Filler,
-    Title,
-    Tooltip,
-    Legend
-);
+import { ReactiveChart } from '../components/reactivechart';
 
 export default function Consumer({ consumer }) {
     if (consumer == undefined) {
@@ -32,7 +9,7 @@ export default function Consumer({ consumer }) {
             <div>Loading</div>
         )
     }
-
+    const chartOptions = {}
     const chartData = {
         datasets: [],
     }
@@ -88,11 +65,7 @@ export default function Consumer({ consumer }) {
                 </Flex>
             </Box>
 
-            <Box>
-                <Card>
-                    <Line data={chartData}></Line>
-                </Card>
-            </Box>
+            <ReactiveChart data={chartData} options={chartOptions} />
 
             <Tabs.Root defaultValue="subscriptions">
                 <Tabs.List>

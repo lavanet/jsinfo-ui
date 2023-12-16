@@ -1,34 +1,14 @@
 import { GetRestUrl } from '../../src/utils';
 import Link from 'next/link';
-import { Flex, Text, Card, Box, Table, Container } from '@radix-ui/themes';
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Filler,
-    Tooltip,
-    Legend,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
+import { Flex, Text, Card, Box, Tabs } from '@radix-ui/themes';
+import { ReactiveChart } from '../../components/reactivechart';
+import { SortableTableComponent } from '../../components/sorttable';
+
 import { StatusToString, GeoLocationToString } from '../../src/utils';
 import Dayjs from "dayjs";
 import relativeTIme from "dayjs/plugin/relativeTime";
 Dayjs.extend(relativeTIme);
 const formatter = Intl.NumberFormat("en");
-
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Filler,
-    Title,
-    Tooltip,
-    Legend
-);
 
 export default function Spec({ spec }) {
     if (spec == undefined) {
@@ -160,41 +140,36 @@ export default function Spec({ spec }) {
                     </Card>
                 </Flex>
             </Card>
-            <Box>
-                <Card>
-                    <Line data={chartData} options={chartOptions}></Line>
-                </Card>
-            </Box>
-            <Card>
-                Stakes
-                <Table.Root>
-                    <Table.Header>
-                        <Table.Row>
-                            <Table.ColumnHeaderCell>Provider</Table.ColumnHeaderCell>
-                            <Table.ColumnHeaderCell>Status</Table.ColumnHeaderCell>
-                            <Table.ColumnHeaderCell>Geolocation</Table.ColumnHeaderCell>
-                            <Table.ColumnHeaderCell>Addons</Table.ColumnHeaderCell>
-                            <Table.ColumnHeaderCell>Extensions</Table.ColumnHeaderCell>
-                            <Table.ColumnHeaderCell>Stake</Table.ColumnHeaderCell>
-                        </Table.Row>
-                    </Table.Header>
-                    <Table.Body>
-                        {spec.stakes.map((stake) => {
-                            return (<Table.Row key={`${stake.provider_stakes.specId}${stake.provider_stakes.provider}`}>
-                                <Table.Cell><Link href={`/provider/${stake.providers.address}`}>
-                                    {stake.providers.moniker ? stake.providers.moniker : stake.providers.address}
-                                </Link></Table.Cell>
-                                <Table.Cell>{StatusToString(stake.provider_stakes.status)}</Table.Cell>
-                                <Table.Cell>{GeoLocationToString(stake.provider_stakes.geolocation)}</Table.Cell>
-                                <Table.Cell>{stake.provider_stakes.addons}</Table.Cell>
-                                <Table.Cell>{stake.provider_stakes.extensions}</Table.Cell>
-                                <Table.Cell>{stake.provider_stakes.stake}</Table.Cell>
-                            </Table.Row>
-                            )
-                        })}
-                    </Table.Body>
-                </Table.Root>
-            </Card>
+            <ReactiveChart data={chartData} options={chartOptions} />
+            <Tabs.Root defaultValue="stakes">
+                <Tabs.List>
+                    <Tabs.Trigger value="stakes">stakes</Tabs.Trigger>
+                </Tabs.List>
+                <Box px="4" pt="3" pb="2">
+                    <SortableTableComponent
+                        columns={[
+                            { key: 'providers.address', name: 'Provider' },
+                            { key: 'provider_stakes.status', name: 'Status' },
+                            { key: 'provider_stakes.geolocation', name: 'Geolocation' },
+                            { key: 'provider_stakes.addons', name: 'Addons' },
+                            { key: 'provider_stakes.extensions', name: 'Extensions' },
+                            { key: 'provider_stakes.stake', name: 'Stake' },
+                        ]}
+                        data={spec.stakes}
+                        defaultSortKey='providers.address'
+                        tableValue='stakes'
+                        pkey="provider_stakes.specId,provider_stakes.provider"
+                        pkey_url='none'
+                        rowFormatters={{
+                            "providers.address": (stake) => <Link href={`/provider/${stake.providers.address}`}>
+                                {stake.providers.moniker ? stake.providers.moniker : stake.providers.address}
+                            </Link>,
+                            "provider_stakes.status": (stake) => StatusToString(stake.provider_stakes.status),
+                            "provider_stakes.geolocation": (stake) => GeoLocationToString(stake.provider_stakes.geolocation),
+                        }}
+                    />
+                </Box>
+            </Tabs.Root>
         </>
     )
 }

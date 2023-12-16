@@ -5,33 +5,12 @@ import Dayjs from "dayjs";
 import relativeTIme from "dayjs/plugin/relativeTime";
 import { StatusToString, GeoLocationToString, EventTypeToString } from '../../src/utils';
 import { SortableTableComponent } from '../../components/sorttable';
+import { ReactiveChart } from '../../components/reactivechart';
 
 Dayjs.extend(relativeTIme);
 const formatter = Intl.NumberFormat("en");
 
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Filler,
-    Tooltip,
-    Legend,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
 
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Filler,
-    Title,
-    Tooltip,
-    Legend
-);
 
 const COLORS = [
     '#191111',
@@ -198,11 +177,7 @@ export default function Provider({ provider }) {
                     </Card>
                 </Flex>
             </Card>
-            <Box>
-                <Card>
-                    <Line data={chartData} options={chartOptions}></Line>
-                </Card>
-            </Box>
+            <ReactiveChart data={chartData} options={chartOptions} />
             <Card>
                 <Tabs.Root defaultValue="events">
                     <Tabs.List>
@@ -214,7 +189,6 @@ export default function Provider({ provider }) {
                     <Box px="4" pt="3" pb="2">
                         <SortableTableComponent
                             columns={[
-                                { key: 'providers.address', name: 'Provider Address' },
                                 { key: 'events.eventType', name: 'Event Type' },
                                 { key: 'blocks.height', name: 'Block Height' },
                                 { key: 'blocks.datetime', name: 'Time' },
@@ -234,11 +208,6 @@ export default function Provider({ provider }) {
                             pkey='events.id'
                             pkey_url='none'
                             rowFormatters={{
-                                "providers.address": (evt) => evt.providers
-                                    ? <Link href={`/provider/${evt.providers.address}`}>
-                                        {evt.providers.moniker ? evt.providers.moniker : evt.providers.address}
-                                    </Link>
-                                    : '',
                                 "events.eventType": (evt) => <Link href={
                                     evt.events.tx
                                         ? `https://lava.explorers.guru/transaction/${evt.events.tx}`
@@ -268,6 +237,9 @@ export default function Provider({ provider }) {
                             pkey='specId,provider'
                             pkey_url='spec'
                             rowFormatters={{
+                                "specId": (stake) => <Link href={`/spec/${stake.specId}`}>
+                                    {stake.specId}
+                                </Link>,
                                 "status": (stake) => StatusToString(stake.status),
                                 "geolocation": (stake) => GeoLocationToString(stake.geolocation),
                             }}
@@ -275,7 +247,6 @@ export default function Provider({ provider }) {
 
                         <SortableTableComponent
                             columns={[
-                                { key: 'providers.address', name: 'Provider' },
                                 { key: 'relay_payments.specId', name: 'Spec' },
                                 { key: 'relay_payments.blockId', name: 'Block' },
                                 { key: 'blocks.datetime', name: 'Time' },
@@ -292,11 +263,6 @@ export default function Provider({ provider }) {
                             pkey='relay_payments.id'
                             pkey_url='none'
                             rowFormatters={{
-                                "providers.address": (payment) => payment.providers
-                                    ? <Link href={`/provider/${payment.providers.address}`}>
-                                        {payment.providers.moniker ? payment.providers.moniker : payment.providers.address}
-                                    </Link>
-                                    : '',
                                 "relay_payments.specId": (payment) => <Link href={`/spec/${payment.relay_payments.specId}`}>
                                     {payment.relay_payments.specId}
                                 </Link>,
