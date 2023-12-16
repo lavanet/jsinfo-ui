@@ -10,8 +10,6 @@ import { ReactiveChart } from '../../components/reactivechart';
 Dayjs.extend(relativeTIme);
 const formatter = Intl.NumberFormat("en");
 
-
-
 const COLORS = [
     '#191111',
     '#201314',

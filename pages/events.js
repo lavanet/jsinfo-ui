@@ -147,7 +147,7 @@ export default function Events({ data }) {
                                 { key: 'provider_reported.project', name: 'Project' },
                             ]}
                             data={data.reports}
-                            defaultSortKey='blocks.datetime'
+                            defaultSortKey='blocks.datetime|desc'
                             tableValue='reports'
                             pkey='provider_reported.provider,provider_reported.blockId,counter'
                             pkey_url='none'
