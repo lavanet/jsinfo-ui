@@ -41,7 +41,10 @@ export const ReactiveChart = ({ data, options }) => {
   useEffect(() => {
     const handleResize = () => {
       if (boxRef.current) {
-        const width = boxRef.current.offsetWidth;
+        let width = boxRef.current.offsetWidth;
+        if (width < 100) {
+          width = 100;
+        }
         boxRef.current.style.height = `${width / 2}px`;
       }
     };

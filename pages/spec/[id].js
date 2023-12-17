@@ -141,35 +141,37 @@ export default function Spec({ spec }) {
                 </Flex>
             </Card>
             <ReactiveChart data={chartData} options={chartOptions} />
-            <Tabs.Root defaultValue="stakes">
-                <Tabs.List>
-                    <Tabs.Trigger value="stakes">stakes</Tabs.Trigger>
-                </Tabs.List>
-                <Box px="4" pt="3" pb="2">
-                    <SortableTableComponent
-                        columns={[
-                            { key: 'providers.address', name: 'Provider' },
-                            { key: 'provider_stakes.status', name: 'Status' },
-                            { key: 'provider_stakes.geolocation', name: 'Geolocation' },
-                            { key: 'provider_stakes.addons', name: 'Addons' },
-                            { key: 'provider_stakes.extensions', name: 'Extensions' },
-                            { key: 'provider_stakes.stake', name: 'Stake' },
-                        ]}
-                        data={spec.stakes}
-                        defaultSortKey='providers.address'
-                        tableValue='stakes'
-                        pkey="provider_stakes.specId,provider_stakes.provider"
-                        pkey_url='none'
-                        rowFormatters={{
-                            "providers.address": (stake) => <Link href={`/provider/${stake.providers.address}`}>
-                                {stake.providers.moniker ? stake.providers.moniker : stake.providers.address}
-                            </Link>,
-                            "provider_stakes.status": (stake) => StatusToString(stake.provider_stakes.status),
-                            "provider_stakes.geolocation": (stake) => GeoLocationToString(stake.provider_stakes.geolocation),
-                        }}
-                    />
-                </Box>
-            </Tabs.Root>
+            <Card>
+                <Tabs.Root defaultValue="stakes">
+                    <Tabs.List>
+                        <Tabs.Trigger value="stakes">Stakes</Tabs.Trigger>
+                    </Tabs.List>
+                    <Box>
+                        <SortableTableComponent
+                            columns={[
+                                { key: 'providers.address', name: 'Provider' },
+                                { key: 'provider_stakes.status', name: 'Status' },
+                                { key: 'provider_stakes.geolocation', name: 'Geolocation' },
+                                { key: 'provider_stakes.addons', name: 'Addons' },
+                                { key: 'provider_stakes.extensions', name: 'Extensions' },
+                                { key: 'provider_stakes.stake', name: 'Stake' },
+                            ]}
+                            data={spec.stakes}
+                            defaultSortKey='providers.address'
+                            tableValue='stakes'
+                            pkey="provider_stakes.specId,provider_stakes.provider"
+                            pkey_url='none'
+                            rowFormatters={{
+                                "providers.address": (stake) => <Link href={`/provider/${stake.providers.address}`}>
+                                    {stake.providers.moniker ? stake.providers.moniker : stake.providers.address}
+                                </Link>,
+                                "provider_stakes.status": (stake) => StatusToString(stake.provider_stakes.status),
+                                "provider_stakes.geolocation": (stake) => GeoLocationToString(stake.provider_stakes.geolocation),
+                            }}
+                        />
+                    </Box>
+                </Tabs.Root>
+            </Card>
         </>
     )
 }

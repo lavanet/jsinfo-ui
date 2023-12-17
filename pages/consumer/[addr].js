@@ -72,8 +72,7 @@ export default function Consumer({ consumer }) {
                     <Tabs.Trigger value="subscriptions">Subscriptions</Tabs.Trigger>
                     <Tabs.Trigger value="conflicts">Conflicts</Tabs.Trigger>
                 </Tabs.List>
-                <Box px="4" pt="3" pb="2">
-
+                <Box>
                     <SortableTableComponent
                         columns={[
                             { key: 'blockId', name: 'height' },

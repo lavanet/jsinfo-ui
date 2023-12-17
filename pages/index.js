@@ -165,11 +165,10 @@ export default function Home({ data }) {
       <Card>
         <Tabs.Root defaultValue="providers">
           <Tabs.List>
-            <Tabs.Trigger value="providers">providers</Tabs.Trigger>
-            <Tabs.Trigger value="chains">chains</Tabs.Trigger>
+            <Tabs.Trigger value="providers">Providers</Tabs.Trigger>
+            <Tabs.Trigger value="chains">Chains</Tabs.Trigger>
           </Tabs.List>
-
-          <Box px="4" pt="3" pb="2">
+          <Box>
             <SortableTableComponent
               columns={[
                 { key: 'addr', name: 'Provider Address' },

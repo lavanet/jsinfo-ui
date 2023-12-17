@@ -44,11 +44,11 @@ export default function Events({ data }) {
             <Card>
                 <Tabs.Root defaultValue="events">
                     <Tabs.List>
-                        <Tabs.Trigger value="events">events</Tabs.Trigger>
-                        <Tabs.Trigger value="rewards">rewards</Tabs.Trigger>
-                        <Tabs.Trigger value="reports">reports</Tabs.Trigger>
+                        <Tabs.Trigger value="events">Events</Tabs.Trigger>
+                        <Tabs.Trigger value="rewards">Rewards</Tabs.Trigger>
+                        <Tabs.Trigger value="reports">Reports</Tabs.Trigger>
                     </Tabs.List>
-                    <Box px="4" pt="3" pb="2">
+                    <Box>
                         <SortableTableComponent
                             columns={[
                                 { key: 'providers.address', name: 'Provider Address' },

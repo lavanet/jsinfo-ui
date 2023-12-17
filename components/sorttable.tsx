@@ -112,7 +112,7 @@ function TableHeader({ columns, requestSort, sortConfig }) {
       <Table.Row>
         {columns.map((column) => (
           <Table.ColumnHeaderCell onClick={() => requestSort(column.key)}>
-            {column.name} {sortConfig && sortConfig.key === column.key ? (sortConfig.direction === 'ascending' ? '⬆️' : '⬇️') : ''}
+            {column.name} {sortConfig && sortConfig.key === column.key ? (sortConfig.direction === 'ascending' ? '↑' : '↓') : ''}
           </Table.ColumnHeaderCell>
         ))}
       </Table.Row>
@@ -133,20 +133,20 @@ function TableBody({ sortedItems, columns, tableValue, pkey, pkey_url, rowFormat
           return (
             <Table.Row key={table_row_key}>
               {columns.some(column => column.key === pkey)
-                ? <Table.RowHeaderCell>
+                ? <Table.Cell>
                   {rowFormatters && rowFormatters[pkey]
                     ? rowFormatters[pkey](provider)
                     : <Link href={`/${pkey_url}/${getNestedProperty(provider, pkey)}`}>{getNestedProperty(provider, pkey)}</Link>}
-                </Table.RowHeaderCell>
+                </Table.Cell>
                 : null
               }
               {columns.map((column) => (
                 column.key && column.key !== pkey
-                  ? <Table.RowHeaderCell>
+                  ? <Table.Cell>
                     {rowFormatters && rowFormatters[column.key]
                       ? rowFormatters[column.key](provider)
                       : getNestedProperty(provider, column.key)}
-                  </Table.RowHeaderCell>
+                  </Table.Cell>
                   : null
               ))}
             </Table.Row>
