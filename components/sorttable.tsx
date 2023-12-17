@@ -86,7 +86,7 @@ const useSortableData = (items, defaultSortKey) => {
       sortableItems.sort((a, b) => {
         let aValue = getNestedProperty(a, sortConfig.key);
         let bValue = getNestedProperty(b, sortConfig.key);
-
+      
         // Handle null or undefined values
         if (aValue === null || aValue === undefined) {
           aValue = '';
@@ -94,7 +94,14 @@ const useSortableData = (items, defaultSortKey) => {
         if (bValue === null || bValue === undefined) {
           bValue = '';
         }
-
+      
+        // If both values are numbers or can be converted to numbers, compare as numbers
+        let aValueNumber = Number(aValue);
+        let bValueNumber = Number(bValue);
+        if (!isNaN(aValueNumber) && !isNaN(bValueNumber)) {
+          return (aValueNumber - bValueNumber) * (sortConfig.direction === 'ascending' ? 1 : -1);
+        }
+      
         // Convert numbers to strings for comparison
         if (typeof aValue === 'number') {
           aValue = aValue.toString();
@@ -102,7 +109,7 @@ const useSortableData = (items, defaultSortKey) => {
         if (typeof bValue === 'number') {
           bValue = bValue.toString();
         }
-
+      
         return aValue.localeCompare(bValue) * (sortConfig.direction === 'ascending' ? 1 : -1);
       });
     }
