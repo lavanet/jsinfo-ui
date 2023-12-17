@@ -38,6 +38,20 @@ type SortableTableComponentProps = {
   rowFormatters?: RowFormatters;
 };
 
+let seenStrings = new Set();
+
+function assureUnique(str) {
+  let baseStr = str;
+  let suffix = 0;
+
+  while (seenStrings.has(str)) {
+    str = `${baseStr}${++suffix}`;
+  }
+
+  seenStrings.add(str);
+  return str;
+}
+
 function getNestedProperty(obj, key) {
   if (key.includes(',')) {
     return key.split(',').map(k => getNestedProperty(obj, k.trim())).join('_');
@@ -108,10 +122,10 @@ const useSortableData = (items, defaultSortKey) => {
 
 function TableHeader({ columns, requestSort, sortConfig }) {
   return (
-    <Table.Header>
-      <Table.Row>
+    <Table.Header key={assureUnique("TableHeader")}>
+      <Table.Row key={assureUnique("TableHeaderRaw")}>
         {columns.map((column) => (
-          <Table.ColumnHeaderCell onClick={() => requestSort(column.key)}>
+          <Table.ColumnHeaderCell key={assureUnique(`TableHeaderCol_${column.key}`)} onClick={() => requestSort(column.key)}>
             {column.name} {sortConfig && sortConfig.key === column.key ? (sortConfig.direction === 'ascending' ? '↑' : '↓') : ''}
           </Table.ColumnHeaderCell>
         ))}
@@ -119,6 +133,8 @@ function TableHeader({ columns, requestSort, sortConfig }) {
     </Table.Header>
   );
 }
+
+
 
 function TableBody({ sortedItems, columns, tableValue, pkey, pkey_url, rowFormatters }) {
   return (
@@ -128,12 +144,12 @@ function TableBody({ sortedItems, columns, tableValue, pkey, pkey_url, rowFormat
         if (pkey.endsWith(",counter")) {
             key = key.replace(",counter", "") + `_${index}`;
         }
-        const table_row_key = `${tableValue}_${key}`;
+        const table_row_key = assureUnique(`${tableValue}_${key}`);
         if (getNestedProperty(provider, pkey)) {
           return (
-            <Table.Row key={table_row_key}>
+            <Table.Row key={`${table_row_key}_row`}>
               {columns.some(column => column.key === pkey)
-                ? <Table.Cell>
+                ? <Table.Cell key={`${table_row_key}_${pkey}_cell`}>
                   {rowFormatters && rowFormatters[pkey]
                     ? rowFormatters[pkey](provider)
                     : <Link href={`/${pkey_url}/${getNestedProperty(provider, pkey)}`}>{getNestedProperty(provider, pkey)}</Link>}
@@ -142,7 +158,7 @@ function TableBody({ sortedItems, columns, tableValue, pkey, pkey_url, rowFormat
               }
               {columns.map((column) => (
                 column.key && column.key !== pkey
-                  ? <Table.Cell>
+                  ? <Table.Cell key={`${table_row_key}_${column.key}_cell`} >
                     {rowFormatters && rowFormatters[column.key]
                       ? rowFormatters[column.key](provider)
                       : getNestedProperty(provider, column.key)}
