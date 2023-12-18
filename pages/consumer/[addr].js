@@ -1,28 +1,7 @@
 import { GetRestUrl } from '../../src/utils';
-import { Flex, Text, Card, Box, Table, Container } from '@radix-ui/themes';
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Filler,
-    Tooltip,
-    Legend,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
-
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Filler,
-    Title,
-    Tooltip,
-    Legend
-);
+import { Flex, Text, Card, Box, Tabs, Container } from '@radix-ui/themes';
+import { SortableTableComponent } from '../../components/sorttable';
+import { ReactiveChart } from '../components/reactivechart';
 
 export default function Consumer({ consumer }) {
     if (consumer == undefined) {
@@ -30,7 +9,7 @@ export default function Consumer({ consumer }) {
             <div>Loading</div>
         )
     }
-
+    const chartOptions = {}
     const chartData = {
         datasets: [],
     }
@@ -47,6 +26,8 @@ export default function Consumer({ consumer }) {
             backgroundColor: '#3b1219',
         }
     )
+
+    console.log(consumer.subsBuy);
 
     return (
         <Container>
@@ -71,7 +52,7 @@ export default function Consumer({ consumer }) {
                             cu sum: {consumer.cuSum}
                         </Text>
                     </Card>
-                    <Card>
+                    <Card> 
                         <Text as="div" size="2" weight="bold">
                             relay sum: {consumer.relaySum}
                         </Text>
@@ -84,65 +65,45 @@ export default function Consumer({ consumer }) {
                 </Flex>
             </Box>
 
-            <Box>
-                <Card>
-                    <Line data={chartData}></Line>
-                </Card>
-            </Box>
+            <ReactiveChart data={chartData} options={chartOptions} />
 
-            <Card>
-                Subscriptions
-                <Table.Root>
-                    <Table.Header>
-                        <Table.Row>
-                            <Table.ColumnHeaderCell>height</Table.ColumnHeaderCell>
-                            <Table.ColumnHeaderCell>duration</Table.ColumnHeaderCell>
-                            <Table.ColumnHeaderCell>plan</Table.ColumnHeaderCell>
-                        </Table.Row>
-                    </Table.Header>
-                    <Table.Body>
-                        {consumer.subsBuy.map((subBuy) => {
-                            return (<Table.Row key={`subBuy_${subBuy.consumer}_${subBuy.blockId}_${subBuy.plan}`}>
-                                <Table.RowHeaderCell>{subBuy.blockId}</Table.RowHeaderCell>
-                                <Table.Cell>{subBuy.duration}</Table.Cell>
-                                <Table.Cell>{subBuy.plan}</Table.Cell>
-                            </Table.Row>
-                            )
-                        })}
-                    </Table.Body>
-                </Table.Root>
-            </Card>
+            <Tabs.Root defaultValue="subscriptions">
+                <Tabs.List>
+                    <Tabs.Trigger value="subscriptions">Subscriptions</Tabs.Trigger>
+                    <Tabs.Trigger value="conflicts">Conflicts</Tabs.Trigger>
+                </Tabs.List>
+                <Box>
+                    <SortableTableComponent
+                        columns={[
+                            { key: 'blockId', name: 'height' },
+                            { key: 'duration', name: 'duration' },
+                            { key: 'plan', name: 'plan' },
+                        ]}
+                        data={consumer.subsBuy} // assuming consumer is defined elsewhere
+                        defaultSortKey='blockId'
+                        tableValue='subscriptions'
+                        pkey="consumer,blockId,plan"
+                        pkey_url='none'
+                    />
 
-            <Card>
-                Conflicts
-                <Table.Root>
-                    <Table.Header>
-                        <Table.Row>
-                            <Table.ColumnHeaderCell>specId</Table.ColumnHeaderCell>
-                            <Table.ColumnHeaderCell>requestBlock</Table.ColumnHeaderCell>
-                            <Table.ColumnHeaderCell>apiInterface</Table.ColumnHeaderCell>
-                            <Table.ColumnHeaderCell>connectionType</Table.ColumnHeaderCell>
-                            <Table.ColumnHeaderCell>requestData</Table.ColumnHeaderCell>
-                            <Table.ColumnHeaderCell>apiURL</Table.ColumnHeaderCell>
-                        </Table.Row>
-                    </Table.Header>
-                    <Table.Body>
-                        {consumer.conflicts.map((conflict) => {
-                            return (<Table.Row key={`conflict_${conflict.id}`}>
-                                <Table.RowHeaderCell>{conflict.specId}</Table.RowHeaderCell>
-                                <Table.Cell>{conflict.blockId}</Table.Cell>
-                                <Table.Cell>{conflict.requestBlock}</Table.Cell>
-                                <Table.Cell>{conflict.apiInterface}</Table.Cell>
-                                <Table.Cell>{conflict.connectionType}</Table.Cell>
-                                <Table.Cell>{conflict.requestData}</Table.Cell>
-                                <Table.Cell>{conflict.apiURL}</Table.Cell>
-                            </Table.Row>
-                            )
-                        })}
-                    </Table.Body>
-                </Table.Root>
-            </Card>
+                    <SortableTableComponent
+                        columns={[
+                            { key: 'specId', name: 'specId' },
+                            { key: 'requestBlock', name: 'requestBlock' },
+                            { key: 'apiInterface', name: 'apiInterface' },
+                            { key: 'connectionType', name: 'connectionType' },
+                            { key: 'requestData', name: 'requestData' },
+                            { key: 'apiURL', name: 'apiURL' },
+                        ]}
+                        data={consumer.conflicts}
+                        defaultSortKey='requestBlock'
+                        tableValue='conflicts'
+                        pkey='id'
+                        pkey_url='none'
+                    />
 
+                </Box>
+            </Tabs.Root>
 
         </Container>
     )
