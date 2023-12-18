@@ -7,6 +7,7 @@ The web-ui for the json info project, previously named lavainfo.
 jsinfo-ui is hosted on:
 ```
 https://jsinfo-ui.vercel.app/
+https://jsinfo-ui-staging.vercel.app/
 ```
 
 jsinfo is hosted on:
