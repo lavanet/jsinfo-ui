@@ -1,7 +1,7 @@
 import { GetRestUrl } from '../../src/utils';
 import { Flex, Text, Card, Box, Tabs, Container } from '@radix-ui/themes';
 import { SortableTableComponent } from '../../components/sorttable';
-import { ReactiveChart } from '../components/reactivechart';
+import { ReactiveChart } from '../../components/reactivechart';
 
 export default function Consumer({ consumer }) {
     if (consumer == undefined) {
