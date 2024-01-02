@@ -1,4 +1,5 @@
-import { GetRestUrl } from '../../src/utils';
+// pages/provider/[addr].js
+
 import Link from 'next/link';
 import { Flex, Text, Card, Box, Tabs } from '@radix-ui/themes';
 import Dayjs from "dayjs";
@@ -6,6 +7,7 @@ import relativeTIme from "dayjs/plugin/relativeTime";
 import { StatusToString, GeoLocationToString, EventTypeToString } from '../../src/utils';
 import { SortableTableComponent } from '../../components/sorttable';
 import { ReactiveChart } from '../../components/reactivechart';
+import { useFetchDataWithUrlKey } from '../../src/hooks/useFetchData';
 
 Dayjs.extend(relativeTIme);
 const formatter = Intl.NumberFormat("en");
@@ -26,12 +28,13 @@ const COLORS = [
 ];
 
 
-export default function Provider({ provider }) {
-    if (provider == undefined) {
-        return (
-            <div>Loading</div>
-        )
-    }
+export default function Provider() {
+    const { data, loading, error } = useFetchDataWithUrlKey('provider');
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
+
+    const provider = data;
 
     const chartData = {
         datasets: [],
@@ -316,63 +319,3 @@ export default function Provider({ provider }) {
     )
 }
 
-// export async function getStaticPaths() {
-//     const providers = await getProviders()
-//     let paths = []
-//     providers.providers.forEach(provider => {
-//         if (!provider.address) {
-//             return
-//         }
-//         paths.push({
-//             params: {
-//                 addr: provider.address
-//             }
-//         })
-//     });
-
-//     return {
-//         paths: paths,
-//         fallback: 'blocking',
-//     };
-// }
-
-// export async function getStaticProps({ params }) {
-export async function getServerSideProps({ params }) {
-    const addr = params.addr
-    if (!addr.startsWith('lava@') || addr.length != 44) {
-        return {
-            notFound: true,
-        }
-    }
-
-    // fetch
-    const provider = await getProvider(params.addr)
-    if (provider == null) {
-        return {
-            notFound: true,
-        }
-    }
-
-    return {
-        props: {
-            provider
-        },
-        revalidate: 10,
-    }
-}
-
-async function getProviders() {
-    const res = await fetch(GetRestUrl() + '/providers')
-    if (!res.ok) {
-        return null
-    }
-    return res.json()
-}
-
-async function getProvider(addr) {
-    const res = await fetch(GetRestUrl() + '/provider/' + addr)
-    if (!res.ok) {
-        return null
-    }
-    return res.json()
-}

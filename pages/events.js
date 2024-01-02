@@ -8,30 +8,14 @@ Dayjs.extend(relativeTIme);
 const formatter = Intl.NumberFormat("en");
 import { SortableTableComponent } from '../components/sorttable';
 
-async function getData() {
-    const res = await fetch(GetRestUrl() + '/events')
-    if (!res.ok) {
-        // This will activate the closest `error.js` Error Boundary
-        throw new Error('Failed to fetch data')
-    }
+import { useFetchData } from '../src/hooks/useFetchData';
 
-    return res.json()
-}
+export default function Events() {
+    const { data, loading, error } = useFetchData('events');
 
-// export async function getStaticProps() {
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
 
-export async function getServerSideProps({ params }) {
-
-    const data = await getData()
-    return {
-        props: {
-            data
-        },
-        // revalidate: 10,
-    }
-}
-
-export default function Events({ data }) {
     return (
         <>
             <Card>

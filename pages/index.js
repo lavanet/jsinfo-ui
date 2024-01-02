@@ -1,6 +1,5 @@
 // jsinfo-ui/pages/index.js
 
-import { GetRestUrl } from '../src/utils';
 import { Flex, Text, Card, Box, Tabs } from '@radix-ui/themes';
 import Dayjs from "dayjs";
 import relativeTIme from "dayjs/plugin/relativeTime";
@@ -9,6 +8,7 @@ const formatter = Intl.NumberFormat("en");
 import { SortableTableComponent } from '../components/sorttable';
 import { ReactiveChart } from '../components/reactivechart';
 import React from 'react';
+import { useFetchData } from '../src/hooks/useFetchData';
 
 const COLORS = [
   '#191111',
@@ -25,28 +25,12 @@ const COLORS = [
   '#ffd1d9',
 ];
 
-async function getData() {
-  const res = await fetch(GetRestUrl() + '/index')
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error('Failed to fetch data')
-  }
+export default function Home() {
+  const { data, loading, error } = useFetchData('index');
 
-  return res.json()
-}
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
-// export async function getStaticProps() {
-export async function getServerSideProps({ params }) {
-  const data = await getData()
-  return {
-    props: {
-      data
-    },
-    // revalidate: 10,
-  }
-}
-
-export default function Home({ data }) {
   const chartData = {
     datasets: [],
   }

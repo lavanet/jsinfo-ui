@@ -1,4 +1,6 @@
-import { GetRestUrl } from '../../src/utils';
+
+// pages/spec/[id].js
+
 import Link from 'next/link';
 import { Flex, Text, Card, Box, Tabs } from '@radix-ui/themes';
 import { ReactiveChart } from '../../components/reactivechart';
@@ -7,15 +9,16 @@ import { SortableTableComponent } from '../../components/sorttable';
 import { StatusToString, GeoLocationToString } from '../../src/utils';
 import Dayjs from "dayjs";
 import relativeTIme from "dayjs/plugin/relativeTime";
+import { useFetchDataWithUrlKey } from '../../src/hooks/useFetchData';
+
 Dayjs.extend(relativeTIme);
 const formatter = Intl.NumberFormat("en");
 
-export default function Spec({ spec }) {
-    if (spec == undefined) {
-        return (
-            <div>Loading</div>
-        )
-    }
+export default function Spec() {
+    const { data, loading, error } = useFetchDataWithUrlKey('spec');
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
 
     const chartData = {
         datasets: [],
@@ -47,18 +50,21 @@ export default function Spec({ spec }) {
             x: {
                 ticks: {
                     autoSkip: false,
-                    callback: (t, i) => ((i % 5) && (i != 0) && (i + 1 != spec.qosData.length)) ? '' : spec.qosData[i]['date']
+                    callback: (t, i) => ((i % 5) && (i != 0) && (i + 1 != data.qosData.length)) ? '' : data.qosData[i]['date']
                 },
             }
         }
     }
+
     const metricData = []
-    spec.data.forEach((metric) => {
+
+    data.data.forEach((metric) => {
         metricData.push({ x: metric['date'], y: metric['relaySum'] })
     })
+
     chartData.datasets.push(
         {
-            label: spec['specId'] + ' Relays',
+            label: data['specId'] + ' Relays',
             data: metricData,
             fill: false,
             borderColor: '#8c333a',
@@ -90,7 +96,7 @@ export default function Spec({ spec }) {
         backgroundColor: '#6E56CF',
         yAxisID: 'y1',
     }
-    spec.qosData.forEach((metric) => {
+    data.qosData.forEach((metric) => {
         qosSync.data.push({ x: metric['date'], y: metric['qosSyncAvg'] })
         qosAvailability.data.push({ x: metric['date'], y: metric['qosAvailabilityAvg'] })
         qosLatency.data.push({ x: metric['date'], y: metric['qosLatencyAvg'] })
@@ -105,9 +111,9 @@ export default function Spec({ spec }) {
                 <Flex gap="3" align="center">
                     <Box>
                         <Text size="2" weight="bold">
-                            Block {spec.height}
+                            Block {data.height}
                         </Text>
-                        <Text size="2" color="gray"> {Dayjs(new Date(spec.datetime)).fromNow()}</Text>
+                        <Text size="2" color="gray"> {Dayjs(new Date(data.datetime)).fromNow()}</Text>
                     </Box>
                 </Flex>
             </Card>
@@ -115,27 +121,27 @@ export default function Spec({ spec }) {
                 <Flex gap="3" justify="between">
                     <Card>
                         <Text as="div" size="2" weight="bold">
-                            {spec.specId} spec
+                            {data.specId} spec
                         </Text>
                     </Card>
                     <Card>
                         <Text as="div" size="2" weight="bold">
-                            {spec.stakes.length} Providers
+                            {data.stakes.length} Providers
                         </Text>
                     </Card>
                     <Card>
                         <Text as="div" size="2" weight="bold">
-                            {formatter.format(spec.cuSum)} CU
+                            {formatter.format(data.cuSum)} CU
                         </Text>
                     </Card>
                     <Card>
                         <Text as="div" size="2" weight="bold">
-                            {formatter.format(spec.relaySum)} Relays
+                            {formatter.format(data.relaySum)} Relays
                         </Text>
                     </Card>
                     <Card>
                         <Text as="div" size="2" weight="bold">
-                            {formatter.format(spec.rewardSum)} ULAVA Rewards
+                            {formatter.format(data.rewardSum)} ULAVA Rewards
                         </Text>
                     </Card>
                 </Flex>
@@ -156,7 +162,7 @@ export default function Spec({ spec }) {
                                 { key: 'provider_stakes.extensions', name: 'Extensions' },
                                 { key: 'provider_stakes.stake', name: 'Stake' },
                             ]}
-                            data={spec.stakes}
+                            data={data.stakes}
                             defaultSortKey='providers.address'
                             tableValue='stakes'
                             pkey="provider_stakes.specId,provider_stakes.provider"
@@ -176,43 +182,5 @@ export default function Spec({ spec }) {
     )
 }
 
-// export async function getStaticPaths() {
-//     return {
-//         paths: [],
-//         fallback: true,
-//     };
-// }
 
-// export async function getStaticProps({ params }) {
 
-export async function getServerSideProps({ params }) {
-    const specId = params.id
-    if (specId.length <= 0) {
-        return {
-            notFound: true,
-        }
-    }
-
-    // fetch
-    const spec = await getSpec(specId)
-    if (spec == null) {
-        return {
-            notFound: true,
-        }
-    }
-
-    return {
-        props: {
-            spec
-        },
-        revalidate: 10,
-    }
-}
-
-async function getSpec(specId) {
-    const res = await fetch(GetRestUrl() + '/spec/' + specId)
-    if (!res.ok) {
-        return null
-    }
-    return res.json()
-}

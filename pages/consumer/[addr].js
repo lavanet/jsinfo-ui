@@ -1,14 +1,16 @@
-import { GetRestUrl } from '../../src/utils';
 import { Flex, Text, Card, Box, Tabs, Container } from '@radix-ui/themes';
 import { SortableTableComponent } from '../../components/sorttable';
 import { ReactiveChart } from '../../components/reactivechart';
+import { useFetchDataWithUrlKey } from '../../src/hooks/useFetchData';
 
-export default function Consumer({ consumer }) {
-    if (consumer == undefined) {
-        return (
-            <div>Loading</div>
-        )
-    }
+export default function Consumer() {
+    const { data, loading, error } = useFetchDataWithUrlKey('provider');
+    
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
+
+    const consumer = data;
+
     const chartOptions = {}
     const chartData = {
         datasets: [],
@@ -109,43 +111,3 @@ export default function Consumer({ consumer }) {
     )
 }
 
-// export async function getStaticPaths() {
-//     return {
-//         paths: [],
-//         fallback: true,
-//     };
-// }
-
-// export async function getStaticProps({ params }) {
-
-export async function getServerSideProps({ params }) {
-    const addr = params.addr
-    if (!addr.startsWith('lava@') || addr.length != 44) {
-        return {
-            notFound: true,
-        }
-    }
-
-    // fetch
-    const consumer = await getConsumer(addr)
-    if (consumer == null) {
-        return {
-            notFound: true,
-        }
-    }
-
-    return {
-        props: {
-            consumer
-        },
-        revalidate: 10,
-    }
-}
-
-async function getConsumer(addr) {
-    const res = await fetch(GetRestUrl() + '/consumer/' + addr)
-    if (!res.ok) {
-        return null
-    }
-    return res.json()
-}
