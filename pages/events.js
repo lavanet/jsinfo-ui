@@ -18,13 +18,16 @@ async function getData() {
     return res.json()
 }
 
-export async function getStaticProps() {
+// export async function getStaticProps() {
+
+export async function getServerSideProps({ params }) {
+
     const data = await getData()
     return {
         props: {
             data
         },
-        revalidate: 10,
+        // revalidate: 10,
     }
 }
 

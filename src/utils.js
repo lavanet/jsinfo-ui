@@ -1,5 +1,5 @@
 export function GetRestUrl () {
-    return process.env['REST_URL']
+    return process.env['REST_URL'] || "https://jsinfo.lavanet.xyz"
 }
 
 export function EventTypeToString(evtType) {

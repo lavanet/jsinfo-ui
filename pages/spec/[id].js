@@ -176,14 +176,16 @@ export default function Spec({ spec }) {
     )
 }
 
-export async function getStaticPaths() {
-    return {
-        paths: [],
-        fallback: true,
-    };
-}
+// export async function getStaticPaths() {
+//     return {
+//         paths: [],
+//         fallback: true,
+//     };
+// }
 
-export async function getStaticProps({ params }) {
+// export async function getStaticProps({ params }) {
+
+export async function getServerSideProps({ params }) {
     const specId = params.id
     if (specId.length <= 0) {
         return {

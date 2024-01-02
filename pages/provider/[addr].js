@@ -316,27 +316,28 @@ export default function Provider({ provider }) {
     )
 }
 
-export async function getStaticPaths() {
-    const providers = await getProviders()
-    let paths = []
-    providers.providers.forEach(provider => {
-        if (!provider.address) {
-            return
-        }
-        paths.push({
-            params: {
-                addr: provider.address
-            }
-        })
-    });
+// export async function getStaticPaths() {
+//     const providers = await getProviders()
+//     let paths = []
+//     providers.providers.forEach(provider => {
+//         if (!provider.address) {
+//             return
+//         }
+//         paths.push({
+//             params: {
+//                 addr: provider.address
+//             }
+//         })
+//     });
 
-    return {
-        paths: paths,
-        fallback: 'blocking',
-    };
-}
+//     return {
+//         paths: paths,
+//         fallback: 'blocking',
+//     };
+// }
 
-export async function getStaticProps({ params }) {
+// export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
     const addr = params.addr
     if (!addr.startsWith('lava@') || addr.length != 44) {
         return {
