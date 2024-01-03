@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { GetRestUrl } from '../src/utils';
 import { Flex, Text, Card, Box, Tabs } from '@radix-ui/themes';
 import { EventTypeToString } from '../src/utils';
 import Dayjs from "dayjs";
@@ -8,12 +7,13 @@ Dayjs.extend(relativeTIme);
 const formatter = Intl.NumberFormat("en");
 import { SortableTableComponent } from '../components/sorttable';
 
-import { useFetchData } from '../src/hooks/useFetchData';
+import { useCachedFetch } from '../src/hooks/useCachedFetch';
+import Loading from '../components/loading';
 
 export default function Events() {
-    const { data, loading, error } = useFetchData('events');
+    const { data, loading, error } = useCachedFetch('events');
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <Loading loadingText="Loading events page"/>;
     if (error) return <div>Error: {error}</div>;
 
     return (

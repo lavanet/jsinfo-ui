@@ -9,15 +9,17 @@ import { SortableTableComponent } from '../../components/sorttable';
 import { StatusToString, GeoLocationToString } from '../../src/utils';
 import Dayjs from "dayjs";
 import relativeTIme from "dayjs/plugin/relativeTime";
-import { useFetchDataWithUrlKey } from '../../src/hooks/useFetchData';
+import { useCachedFetchWithUrlKey } from '../../src/hooks/useCachedFetch';
 
 Dayjs.extend(relativeTIme);
 const formatter = Intl.NumberFormat("en");
 
-export default function Spec() {
-    const { data, loading, error } = useFetchDataWithUrlKey('spec');
+import Loading from '../../components/loading';
 
-    if (loading) return <div>Loading...</div>;
+export default function Spec() {
+    const { data, loading, error } = useCachedFetchWithUrlKey('spec');
+
+    if (loading) return <Loading loadingText="Loading spec page"/>;
     if (error) return <div>Error: {error}</div>;
 
     const chartData = {

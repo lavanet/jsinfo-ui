@@ -8,7 +8,8 @@ const formatter = Intl.NumberFormat("en");
 import { SortableTableComponent } from '../components/sorttable';
 import { ReactiveChart } from '../components/reactivechart';
 import React from 'react';
-import { useFetchData } from '../src/hooks/useFetchData';
+import { useCachedFetch } from '../src/hooks/useCachedFetch';
+import Loading from '../components/loading';
 
 const COLORS = [
   '#191111',
@@ -26,9 +27,9 @@ const COLORS = [
 ];
 
 export default function Home() {
-  const { data, loading, error } = useFetchData('index');
+  const { data, loading, error } = useCachedFetch('index');
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loading/>;
   if (error) return <div>Error: {error}</div>;
 
   const chartData = {

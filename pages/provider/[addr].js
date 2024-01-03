@@ -7,7 +7,8 @@ import relativeTIme from "dayjs/plugin/relativeTime";
 import { StatusToString, GeoLocationToString, EventTypeToString } from '../../src/utils';
 import { SortableTableComponent } from '../../components/sorttable';
 import { ReactiveChart } from '../../components/reactivechart';
-import { useFetchDataWithUrlKey } from '../../src/hooks/useFetchData';
+import { useCachedFetchWithUrlKey } from '../../src/hooks/useCachedFetch';
+import Loading from '../../components/loading';
 
 Dayjs.extend(relativeTIme);
 const formatter = Intl.NumberFormat("en");
@@ -29,9 +30,9 @@ const COLORS = [
 
 
 export default function Provider() {
-    const { data, loading, error } = useFetchDataWithUrlKey('provider');
+    const { data, loading, error } = useCachedFetchWithUrlKey('provider');
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <Loading loadingText="Loading provider page"/>;
     if (error) return <div>Error: {error}</div>;
 
     const provider = data;
