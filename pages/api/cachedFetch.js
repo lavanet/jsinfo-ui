@@ -17,31 +17,24 @@ setInterval(() => {
 }, 5 * 60 * 1000);
 
 async function getDataFromCacheOrFetch(apiUrlPath, apiUrlKey) {
-  const cachedData = cache[apiUrlPath] && cache[apiUrlPath][apiUrlKey];
-  if (cachedData) {
-      console.log(`Fetching data from cache for apiUrlPath: ${apiUrlPath} and apiUrlKey: ${apiUrlKey}`);
-      if (cachedData.expiry > Date.now()) {
-          fetchAndCacheData(apiUrlPath, apiUrlKey);
-          return cachedData.data;
-      }
-  }
+    const cachedData = cache[apiUrlPath] && cache[apiUrlPath][apiUrlKey];
+    if (cachedData && cachedData.expiry > Date.now()) {
+        console.log(`Fetching data from cache for apiUrlPath: ${apiUrlPath} and apiUrlKey: ${apiUrlKey}`);
+        return cachedData.data;
+    }
 
-  return fetchAndCacheData(apiUrlPath, apiUrlKey);
-}
+    const url = GetRestUrl() + "/" + (!apiUrlKey || apiUrlKey.trim() === '' ? apiUrlPath : apiUrlPath + '/' + apiUrlKey);
+    const res = await fetch(url);
+    if (!res.ok) {
+        console.error(`Error fetching data from URL: ${url}`);
+        return null;
+    }
 
-async function fetchAndCacheData(apiUrlPath, apiUrlKey) {
-  const url = GetRestUrl() + "/" + (!apiUrlKey || apiUrlKey.trim() === '' ? apiUrlPath : apiUrlPath + '/' + apiUrlKey);
-  const res = await fetch(url);
-  if (!res.ok) {
-      console.error(`Error fetching data from URL: ${url}`);
-      return null;
-  }
-
-  const spec = await res.json();
-  const expiry = Date.now() + Math.floor(Math.random() * 60 + 60) * 1000;
-  cache[apiUrlPath] = { ...cache[apiUrlPath], [apiUrlKey]: { data: spec, expiry } };
-  console.log(`Data fetched and cached for apiUrlPath: ${apiUrlPath} and apiUrlKey: ${apiUrlKey}`);
-  return spec;
+    const spec = await res.json();
+    const expiry = Date.now() + Math.floor(Math.random() * 60 + 60) * 1000;
+    cache[apiUrlPath] = { ...cache[apiUrlPath], [apiUrlKey]: { data: spec, expiry } };
+    console.log(`Data fetched and cached for apiUrlPath: ${apiUrlPath} and apiUrlKey: ${apiUrlKey}`);
+    return spec;
 }
 
 export default async function handler(req, res) {
