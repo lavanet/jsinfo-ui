@@ -18,34 +18,45 @@ setInterval(() => {
 
 async function getDataFromCacheOrFetch(apiUrlPath, apiUrlKey) {
     const cachedData = cache[apiUrlPath] && cache[apiUrlPath][apiUrlKey];
-    if (cachedData && cachedData.expiry > Date.now()) {
+    if (cachedData) {
         console.log(`Fetching data from cache for apiUrlPath: ${apiUrlPath} and apiUrlKey: ${apiUrlKey}`);
-        return cachedData.data;
+        if (cachedData.expiry > Date.now()) {
+            fetchAndCacheData(apiUrlPath, apiUrlKey); // Fetch new data in the background
+            return cachedData.data;
+        }
     }
 
-    const url = GetRestUrl() + "/" + (!apiUrlKey || apiUrlKey.trim() === '' ? apiUrlPath : apiUrlPath + '/' + apiUrlKey);
-    const res = await fetch(url);
-    if (!res.ok) {
-        console.error(`Error fetching data from URL: ${url}`);
-        return null;
-    }
+    return fetchAndCacheData(apiUrlPath, apiUrlKey);
+}
 
-    const spec = await res.json();
-    const expiry = Date.now() + Math.floor(Math.random() * 60 + 60) * 1000;
-    cache[apiUrlPath] = { ...cache[apiUrlPath], [apiUrlKey]: { data: spec, expiry } };
-    console.log(`Data fetched and cached for apiUrlPath: ${apiUrlPath} and apiUrlKey: ${apiUrlKey}`);
-    return spec;
+async function fetchAndCacheData(apiUrlPath, apiUrlKey) {
+  const url = GetRestUrl() + "/" + (!apiUrlKey || apiUrlKey.trim() === '' ? apiUrlPath : apiUrlPath + '/' + apiUrlKey);
+  try {
+      const res = await axios.get(url, { timeout: 5000 }); // 5 seconds timeout
+      const resData = res.data;
+      const expiry = Date.now() + Math.floor(Math.random() * 60 + 60) * 1000;
+      cache[apiUrlPath] = { ...cache[apiUrlPath], [apiUrlKey]: { data: resData, expiry } };
+      console.log(`CachedFetch: Data fetched and cached for apiUrlPath: ${apiUrlPath} and apiUrlKey: ${apiUrlKey}`);
+      return resData;
+  } catch (error) {
+      if (error.code === 'ECONNABORTED') {
+          console.error(`CachedFetch: Timeout error. The request for ${url} took longer than 5000ms to respond.`);
+      } else {
+          console.error(`CachedFetch: Error fetching data from URL: ${url}. Error: ${error.message}`);
+      }
+      return null;
+  }
 }
 
 export default async function handler(req, res) {
   const { apiUrlPath, apiUrlKey } = req.query;
-  const spec = await getDataFromCacheOrFetch(apiUrlPath, apiUrlKey);
+  const resData = await getDataFromCacheOrFetch(apiUrlPath, apiUrlKey);
 
-  if (spec == null) {
+  if (resData == null) {
     console.error(`Data not found for apiUrlPath: ${apiUrlPath} and apiUrlKey: ${apiUrlKey}`);
     res.status(404).json({ error: 'Data not found' });
   } else {
     console.log(`Data found for apiUrlPath: ${apiUrlPath} and apiUrlKey: ${apiUrlKey}`);
-    res.status(200).json(spec);
+    res.status(200).json(resData);
   }
 }
