@@ -2,6 +2,11 @@
 
 import { GetRestUrl } from '../../src/utils';
 
+import axios from 'axios';
+import axiosRetry from 'axios-retry';
+
+axiosRetry(axios, { retries: 3 });
+
 let cache = {};
 
 // Clear expired entries from the cache every 5 minutes

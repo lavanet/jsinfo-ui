@@ -19,7 +19,7 @@ export function useCachedFetchWithUrlKey(dataKey) {
 
             const fetchData = async () => {
                 try {
-                    const res = await axios.get(apiUrl);
+                    const res = await axios.get(apiUrl, { timeout: 5000 }); // 5 seconds timeout
                     const data = res.data;
 
                     if (!data || Object.keys(data).length === 0) {
