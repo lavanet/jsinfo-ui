@@ -6,10 +6,10 @@ import axiosRetry from 'axios-retry';
 
 axiosRetry(axios, { retries: 3 });
 
-const handleEmptyData = (retryCount, retryTimeout, fetchData, setError, setLoading) => {
+const handleEmptyData = (retryCount, retryTimeout, fetchDataWithRetry, setError, setLoading) => {
     if (retryCount.current < 10) { // If retryCount is less than 10
         // If data is an empty object, retry after retryTimeout milliseconds
-        setTimeout(fetchData, retryTimeout.current);
+        setTimeout(fetchDataWithRetry, retryTimeout.current);
         // Increase the retry timeout by 1 second for the next potential retry
         retryTimeout.current += 1000;
         // Increment retryCount
@@ -41,7 +41,11 @@ const fetchData = async (apiUrl, setData, setLoading, setError, retryCount, retr
             handleData(data, setData, setLoading);
         }
     } catch (error) {
-        handleError(error, setError, setLoading);
+        if (error?.code === 'ECONNABORTED' || (error + "").includes('timeout')) { // If error is a timeout error
+            handleEmptyData(retryCount, retryTimeout, () => fetchData(apiUrl, setData, setLoading, setError, retryCount, retryTimeout), setError, setLoading);
+        } else {
+            handleError(error, setError, setLoading);
+        }
     }
 };
 
@@ -57,7 +61,7 @@ export function useCachedFetchWithUrlKey(dataKey) {
         if (typeof window !== 'undefined') {
             const apiKey = window.location.pathname.split('/').pop() || '';
             const apiUrl = `/api/cachedFetch?apiUrlPath=${encodeURIComponent(dataKey)}&apiUrlKey=${encodeURIComponent(apiKey)}`;
-            fetchData(apiUrl, setData, setLoading, setError, retryCount, retryTimeout);
+            fetchDataWithRetry(apiUrl, setData, setLoading, setError, retryCount, retryTimeout);
         }
     }, [dataKey]); // Remove retryTimeout from the dependency array
 
@@ -74,7 +78,7 @@ export function useCachedFetch(dataKey) {
 
     useEffect(() => {
         const apiUrl = `/api/cachedFetch?apiUrlPath=${encodeURIComponent(dataKey)}`;
-        fetchData(apiUrl, setData, setLoading, setError, retryCount, retryTimeout);
+        fetchDataWithRetry(apiUrl, setData, setLoading, setError, retryCount, retryTimeout);
     }, [dataKey]); // Re-run the effect when `dataKey` changes
 
     return { data, loading, error };
