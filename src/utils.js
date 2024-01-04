@@ -1,6 +1,5 @@
 export function GetRestUrl () {
-    const restUrl = process.env['REST_URL'];
-    return "https://jsinfo.lava-cybertron.xyz";
+    return process.env['REST_URL'];
 }
 
 export function EventTypeToString(evtType) {
