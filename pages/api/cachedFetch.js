@@ -9,7 +9,7 @@ axiosRetry(axios, { retries: 3 });
 
 let cache = {};
 
-// Clear expired entries from the cache every 5 minutes
+// Clear expired entries from the cache every minute
 setInterval(() => {
   console.log('Clearing expired entries from cache');
   for (const apiUrlPath in cache) {
@@ -19,7 +19,7 @@ setInterval(() => {
           }
       }
   }
-}, 5 * 60 * 1000);
+}, 1 * 60 * 1000);
 
 async function getDataFromCacheOrFetch(apiUrlPath, apiUrlKey) {
     const cachedData = cache[apiUrlPath] && cache[apiUrlPath][apiUrlKey];
