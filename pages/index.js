@@ -29,7 +29,7 @@ const COLORS = [
 export default function Home() {
   const { data, loading, error } = useCachedFetch('index');
 
-  if (loading) return <Loading/>;
+  if (loading) return <Loading loadingText="Loading page"/>;
   if (error) return <div>Error: {error}</div>;
 
   const chartData = {
@@ -92,7 +92,7 @@ export default function Home() {
   let qosData = {
     label: 'QoS',
     data: [],
-    fill: false,
+    fill: false, 
     borderColor: '#AAFF00',
     backgroundColor: '#AAFF00',
     yAxisID: 'y1',
