@@ -1,6 +1,6 @@
 // hooks/useCachedFetch.js
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
 
@@ -10,6 +10,8 @@ export function useCachedFetchWithUrlKey(dataKey) {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const retryTimeout = useRef(1000); // Initial retry timeout is 1 second
+    const retryCount = useRef(0); // Use useRef for retryCount
 
     useEffect(() => {
         // Ensure we're in the client
@@ -23,8 +25,17 @@ export function useCachedFetchWithUrlKey(dataKey) {
                     const data = res.data;
 
                     if (!data || Object.keys(data).length === 0) {
-                        // If data is an empty object, retry after 1 second
-                        setTimeout(fetchData, 1000);
+                        if (retryCount.current < 10) { // If retryCount is less than 10
+                            // If data is an empty object, retry after retryTimeout milliseconds
+                            setTimeout(fetchData, retryTimeout.current);
+                            // Increase the retry timeout by 1 second for the next potential retry
+                            retryTimeout.current += 1000;
+                            // Increment retryCount
+                            retryCount.current += 1;
+                        } else { // If retryCount is 10 or more
+                            setError('Request timed out'); // Set error message to "Request timed out"
+                            setLoading(false);
+                        }
                     } else {
                         setData(data);
                         setLoading(false);
@@ -37,7 +48,7 @@ export function useCachedFetchWithUrlKey(dataKey) {
 
             fetchData();
         }
-    }, [dataKey]);
+    }, [dataKey]); // Remove retryTimeout from the dependency array
 
     return { data, loading, error };
 }
@@ -47,6 +58,8 @@ export function useCachedFetch(dataKey) {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const retryTimeout = useRef(1000); // Initial retry timeout is 1 second
+    const retryCount = useRef(0); // Use useRef for retryCount
 
     useEffect(() => {
         const apiUrl = `/api/cachedFetch?apiUrlPath=${encodeURIComponent(dataKey)}`;
@@ -57,8 +70,17 @@ export function useCachedFetch(dataKey) {
                 const data = res.data;
 
                 if (!data || Object.keys(data).length === 0) {
-                    // If data is an empty object, retry after 1 second
-                    setTimeout(fetchData, 1000);
+                    if (retryCount.current < 10) { // If retryCount is less than 10
+                        // If data is an empty object, retry after retryTimeout milliseconds
+                        setTimeout(fetchData, retryTimeout.current);
+                        // Increase the retry timeout by 1 second for the next potential retry
+                        retryTimeout.current += 1000;
+                        // Increment retryCount
+                        retryCount.current += 1;
+                    } else { // If retryCount is 10 or more
+                        setError('Request timed out'); // Set error message to "Request timed out"
+                        setLoading(false);
+                    }
                 } else {
                     setData(data);
                     setLoading(false);
