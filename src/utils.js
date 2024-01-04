@@ -1,5 +1,5 @@
 export function GetRestUrl () {
-    return process.env['REST_URL']
+    return process.env['REST_URL'];
 }
 
 export function EventTypeToString(evtType) {
