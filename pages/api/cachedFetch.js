@@ -45,7 +45,11 @@ async function fetchAndCacheData(apiUrlPath, apiUrlKey) {
       return {};
     }
 
-    const expiry = Date.now() + Math.floor(Math.random() * 60 + 60) * 1000;
+    // generates a random number between 25 and 35
+    // blocks are 30 seconds . from gil: if the latest block is 30 seconds old, refresh the cache
+    // adding a 5 second margin to not make all the quries at the same time
+    const expiry = Date.now() + Math.floor(Math.random() * 10 + 25) * 1000;
+
     cache[apiUrlPath] = { ...cache[apiUrlPath], [apiUrlKey]: { data: resData, expiry } };
     console.log(`CachedFetch: Data fetched and cached for apiUrlPath: ${apiUrlPath} and apiUrlKey: ${apiUrlKey}`);
     return resData;
