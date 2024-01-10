@@ -1,5 +1,6 @@
 // hooks/useCachedFetch.js
 
+import { GetRestUrl } from '../../src/utils';
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
@@ -11,7 +12,7 @@ const handleEmptyData = (retryCount, retryTimeout, fetchDataWithRetry, setError,
         // If data is an empty object, retry after retryTimeout milliseconds
         setTimeout(fetchDataWithRetry, retryTimeout.current);
         // Increase the retry timeout by 1 second for the next potential retry
-        retryTimeout.current += 1000;
+        retryTimeout.current += 500;
         // Increment retryCount
         retryCount.current += 1;
     } else { // If retryCount is 10 or more
@@ -60,10 +61,10 @@ export function useCachedFetchWithUrlKey(dataKey) {
         // Ensure we're in the client
         if (typeof window !== 'undefined') {
             const apiKey = window.location.pathname.split('/').pop() || '';
-            const apiUrl = `/api/cachedFetch?apiUrlPath=${encodeURIComponent(dataKey)}&apiUrlKey=${encodeURIComponent(apiKey)}`;
+            const apiUrl = GetRestUrl() + "/" + dataKey + "/" + apiKey;
             fetchDataWithRetry(apiUrl, setData, setLoading, setError, retryCount, retryTimeout);
         }
-    }, [dataKey]); // Remove retryTimeout from the dependency array
+    }, [dataKey]); 
 
     return { data, loading, error };
 }
@@ -73,11 +74,11 @@ export function useCachedFetch(dataKey) {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const retryTimeout = useRef(1000); // Initial retry timeout is 1 second
+    const retryTimeout = useRef(500); // Initial retry timeout is 0.5 seconds
     const retryCount = useRef(0); // Use useRef for retryCount
 
     useEffect(() => {
-        const apiUrl = `/api/cachedFetch?apiUrlPath=${encodeURIComponent(dataKey)}`;
+        const apiUrl = GetRestUrl() + "/" + dataKey;
         fetchDataWithRetry(apiUrl, setData, setLoading, setError, retryCount, retryTimeout);
     }, [dataKey]); // Re-run the effect when `dataKey` changes
 
