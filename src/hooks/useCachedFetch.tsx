@@ -1,6 +1,6 @@
 // hooks/useCachedFetch.js
 
-import { GetRestUrl } from '../../src/utils';
+import { GetRestUrl } from '../utils.js';
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
