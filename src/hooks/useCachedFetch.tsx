@@ -8,7 +8,7 @@ import axiosRetry from 'axios-retry';
 axiosRetry(axios, { retries: 3 });
 
 const handleEmptyData = (retryCount, retryTimeout, fetchDataWithRetry, setError, setLoading) => {
-    if (retryCount.current < 10) { // If retryCount is less than 10
+    if (retryCount.current < 10) {
         // If data is an empty object, retry after retryTimeout milliseconds
         setTimeout(fetchDataWithRetry, retryTimeout.current);
         // Increase the retry timeout by 1 second for the next potential retry
