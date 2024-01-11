@@ -1,0 +1,8 @@
+{
+    "crons": [
+      {
+        "path": "/api/refreshCacheFetch",
+        "schedule": "*/5 * * * *"
+      }
+    ]
+  }
