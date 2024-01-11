@@ -62,7 +62,7 @@ export function useCachedFetchWithUrlKey(dataKey) {
     const retryCount = useRef(0); // Use useRef for retryCount
 
     useEffect(() => {
-        // Ensure we're in the client
+        // Ensure we're in the client 
         if (typeof window !== 'undefined') {
             const apiKey = window.location.pathname.split('/').pop() || '';
             const apiUrl = dataKey + "/" + apiKey;
