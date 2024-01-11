@@ -3,53 +3,91 @@
 import { GetRestUrl } from '../../src/utils';
 const axios = require('axios');
 
+let logs = [];
+
+const log = (message) => {
+    console.log(message);
+    logs.push(message);
+    if (logs.length > 500) {
+        logs.shift();
+    }
+};
+
+const log_error = (message, err) => {
+    console.error(message, err);
+    log(`${message} ${err}`);
+};
+
 const restUrl = GetRestUrl();
-console.log(`RevalidateCache - REST_URL: ${restUrl}`);
+log(`RevalidateCache - REST_URL: ${restUrl}`);
 
 const axiosInstance = axios.create({
     baseURL: restUrl,
+    timeout: 500,
 });
 
-const retryAxiosGet = async (url, retries = 2) => {
+const retryAxiosGet = async (url, retries = 5) => {
     for (let i = 0; i < retries; i++) {
-        const response = await axiosInstance.get(url);
-        if (Object.keys(response.data).length !== 0) {
-            return response;
+        try {
+            const response = await axiosInstance.get(url);
+            if (Object.keys(response.data).length !== 0) {
+                return response;
+            }
+        } catch (error) {
+            log_error(`Error fetching data from ${url}:`, error?.message);
         }
+
+        // Wait for 500ms before the next try
+        await new Promise(resolve => setTimeout(resolve, 500));
     }
     return null;
 };
 
 const revalidateCacheForSpecs = async () => {
-    console.log(`RevalidateCache - ${new Date().toISOString()} - Revalidating cache for specs...`);
+    log(`RevalidateCache - ${new Date().toISOString()} - Revalidating cache for specs...`);
     const response = await retryAxiosGet('/specs');
-    if (!response) return;
+    if (!response || !response.data.specs) return;
     const specs = response.data.specs;
 
     for (const spec of specs) {
-        await axiosInstance.get(`/spec/${spec.id}`);
+        if (!spec.id) continue;
+        try {
+            await axiosInstance.get(`/spec/${spec.id}`);
+        } catch (error) {
+            log_error(`Error fetching spec ${spec.id}:`, error?.message);
+        }
     }
 };
 
 const revalidateCacheForConsumers = async () => {
-    console.log(`RevalidateCache - ${new Date().toISOString()} - Revalidating cache for consumers...`);
+    log(`RevalidateCache - ${new Date().toISOString()} - Revalidating cache for consumers...`);
     const response = await retryAxiosGet('/consumers');
-    if (!response) return;
+    if (!response || !response.data.consumers) return;
     const consumers = response.data.consumers;
 
     for (const consumer of consumers) {
-        await axiosInstance.get(`/consumer/${consumer.address}`);
+        if (!consumer.address) continue;
+        try {
+            await axiosInstance.get(`/consumer/${consumer.address}`);
+        } catch (error) {
+            log_error(`Error fetching consumer ${consumer.address}:`, error?.message);
+        }
     }
 };
 
 const revalidateCacheForProviders = async () => {
-    console.log(`RevalidateCache - ${new Date().toISOString()} - Revalidating cache for providers...`);
+    log(`RevalidateCache - ${new Date().toISOString()} - Revalidating cache for providers...`);
     const response = await retryAxiosGet('/providers');
-    if (!response) return;
+    if (!response || !response.data.providers) return;
     const providers = response.data.providers;
 
     for (const provider of providers) {
-        await axiosInstance.get(`/provider/${provider.address}`);
+        if (!provider.address) continue;
+        try {
+            await axiosInstance.get(`/provider/${provider.address}`);
+        } catch (error) {
+            log_error(`Error fetching provider ${provider.address}:`, error?.message);
+        }
     }
 };
 
@@ -69,11 +107,15 @@ const revalidateCache = async () => {
         throw new Error('This code should not be run on the client-side.');
     }
 
-    console.log(`RevalidateCache - ${new Date().toISOString()} - Starting revalidation of cache...`);
-    await revalidateCacheForSpecs();
-    await revalidateCacheForConsumers();
-    await revalidateCacheForProviders();
-    console.log(`RevalidateCache - ${new Date().toISOString()} - Finished revalidation of cache.`);
+    try {
+        log(`RevalidateCache - ${new Date().toISOString()} - Starting revalidation of cache...`);
+        await revalidateCacheForSpecs();
+        await revalidateCacheForConsumers();
+        await revalidateCacheForProviders();
+        log(`RevalidateCache - ${new Date().toISOString()} - Finished revalidation of cache.`);
+    } catch (error) {
+        log_error(`RevalidateCache - ${new Date().toISOString()} - Error during revalidation of cache:`, error);
+    }
 
     // Set the flag to false to indicate that the revalidation has finished
     isRevalidating = false;
@@ -100,5 +142,5 @@ StartRevalidateCacheLoop();
 
 export default async function handler(req, res) {
     StartRevalidateCacheLoop();
-    res.status(200).json({ message: 'refreshCacheFetch called' });
+    res.status(200).send(logs.join('\n'));
 }
