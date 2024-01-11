@@ -3,7 +3,7 @@
 import { GetRestUrl } from '../../src/utils';
 const axios = require('axios');
 
-const restUrl = GetRestUrl()];
+const restUrl = GetRestUrl();
 console.log(`RevalidateCache - REST_URL: ${restUrl}`);
 
 const axiosInstance = axios.create({
