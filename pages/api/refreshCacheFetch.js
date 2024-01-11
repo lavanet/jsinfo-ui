@@ -98,7 +98,7 @@ const StartRevalidateCacheLoop = () => {
 
 StartRevalidateCacheLoop();
 
-export default async function handler(req, res) {
+export default (req, res) => {
     StartRevalidateCacheLoop();
-    res.status(200).json({ message: 'refreshCacheFetch called' });
-}
+    res.status(200).json({ message: 'Cache refreshed' });
+};
