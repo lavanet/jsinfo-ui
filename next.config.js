@@ -1,7 +1,7 @@
 // next.config.js
 
 // Move to vercel cron job
-require('./src/refreshCacheFetch.js');
+if (process.env.NODE_OPTIONS) require('./src/refreshCacheFetch.js');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
