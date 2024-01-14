@@ -3,11 +3,8 @@
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
-import { GetRestUrl } from '../utils.js';
 
-const axiosInstance = axios.create({
-    baseURL: GetRestUrl(),
-});
+const axiosInstance = axios.create();
 
 axiosRetry(axiosInstance, { retries: 5 });
 
@@ -19,7 +16,7 @@ const handleEmptyData = (retryCount, retryTimeout, fetchDataWithRetry, setError,
         retryTimeout.current += 500;
         // Increment retryCount
         retryCount.current += 1;
-    } else { // If retryCount is 10 or more
+    } else { 
         setError('Request timed out'); // Set error message to "Request timed out"
         setLoading(false);
     }
@@ -65,7 +62,7 @@ export function useCachedFetchWithUrlKey(dataKey) {
         // Ensure we're in the client 
         if (typeof window !== 'undefined') {
             const apiKey = window.location.pathname.split('/').pop() || '';
-            const apiUrl = dataKey + "/" + apiKey;
+            const apiUrl = `/api/cachedFetch?apiUrlPath=${encodeURIComponent(dataKey)}&apiUrlKey=${encodeURIComponent(apiKey)}`;
             fetchDataWithRetry(apiUrl, setData, setLoading, setError, retryCount, retryTimeout);
         }
     }, [dataKey]);
@@ -82,7 +79,7 @@ export function useCachedFetch(dataKey) {
     const retryCount = useRef(0); // Use useRef for retryCount
 
     useEffect(() => {
-        const apiUrl = dataKey;
+        const apiUrl = `/api/cachedFetch?apiUrlPath=${encodeURIComponent(dataKey)}`;
         fetchDataWithRetry(apiUrl, setData, setLoading, setError, retryCount, retryTimeout);
     }, [dataKey]); 
 
