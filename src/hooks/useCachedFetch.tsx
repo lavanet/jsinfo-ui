@@ -7,6 +7,7 @@ import { GetRestUrl } from '../utils.js';
 
 const axiosInstance = axios.create({
     baseURL: GetRestUrl(),
+    headers: { 'Accept-Encoding': 'br' },
 });
 
 axiosRetry(axiosInstance, { retries: 5 });
