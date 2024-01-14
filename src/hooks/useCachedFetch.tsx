@@ -9,10 +9,10 @@ const axiosInstance = axios.create({
     baseURL: GetRestUrl(),
 });
 
-axiosRetry(axiosInstance, { retries: 3 });
+axiosRetry(axiosInstance, { retries: 5 });
 
 const handleEmptyData = (retryCount, retryTimeout, fetchDataWithRetry, setError, setLoading) => {
-    if (retryCount.current < 10) {
+    if (retryCount.current < 20) {
         // If data is an empty object, retry after retryTimeout milliseconds
         setTimeout(fetchDataWithRetry, retryTimeout.current);
         // Increase the retry timeout by 1 second for the next potential retry
