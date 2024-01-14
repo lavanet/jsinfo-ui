@@ -3,8 +3,11 @@
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
+import { GetRestUrl } from '../utils.js';
 
-const axiosInstance = axios.create();
+const axiosInstance = axios.create({
+    baseURL: GetRestUrl(),
+});
 
 axiosRetry(axiosInstance, { retries: 5 });
 
@@ -62,7 +65,7 @@ export function useCachedFetchWithUrlKey(dataKey) {
         // Ensure we're in the client 
         if (typeof window !== 'undefined') {
             const apiKey = window.location.pathname.split('/').pop() || '';
-            const apiUrl = `/api/cachedFetch?apiUrlPath=${encodeURIComponent(dataKey)}&apiUrlKey=${encodeURIComponent(apiKey)}`;
+            const apiUrl = dataKey + "/" + apiKey;
             fetchDataWithRetry(apiUrl, setData, setLoading, setError, retryCount, retryTimeout);
         }
     }, [dataKey]);
@@ -79,7 +82,7 @@ export function useCachedFetch(dataKey) {
     const retryCount = useRef(0); // Use useRef for retryCount
 
     useEffect(() => {
-        const apiUrl = `/api/cachedFetch?apiUrlPath=${encodeURIComponent(dataKey)}`;
+        const apiUrl = dataKey;
         fetchDataWithRetry(apiUrl, setData, setLoading, setError, retryCount, retryTimeout);
     }, [dataKey]); 
 
