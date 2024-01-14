@@ -40,7 +40,10 @@ const fetchDataWithRetry = async (apiUrl, setData, setLoading, setError, retryCo
         const res = await axiosInstance.get( apiUrl, { timeout: 3000 }); // 3 seconds timeout
         const data = res.data;
 
-        if (!data || Object.keys(data).length === 0) {
+        if (data && data.error) {
+            setError(data.error);
+            setLoading(false);
+        } else if (!data || Object.keys(data).length === 0) {
             handleEmptyData(retryCount, retryTimeout, () => fetchDataWithRetry(apiUrl, setData, setLoading, setError, retryCount, retryTimeout), setError, setLoading);
         } else {
             handleData(data, setData, setLoading);
