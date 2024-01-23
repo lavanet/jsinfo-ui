@@ -13,13 +13,13 @@ jsinfo is hosted on:
 ```
 # testnet
 https://jsinfo.lavanet.xyz/spec/eth1
-# staging
-https://jsinfo.lava-cybertron.xyz/latest
 ```
 
 ### Env
 
-cat `.env.local`
+```bash
+cat .env.local`
+```
 ```
 #REST_URL=https://jsinfo.lavanet.xyz
 REST_URL=http://localhost:3000/
