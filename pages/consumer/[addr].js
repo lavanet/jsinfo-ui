@@ -16,10 +16,12 @@ export default function Consumer() {
     const chartData = {
         datasets: [],
     }
+    
     const metricData = []
     consumer.data.forEach((metric) => {
         metricData.push({ x: metric['date'], y: metric['relaySum'] })
     })
+
     chartData.datasets.push(
         {
             label: 'Relays',
@@ -29,8 +31,6 @@ export default function Consumer() {
             backgroundColor: '#3b1219',
         }
     )
-
-    console.log(consumer.subsBuy);
 
     return (
         <Container>
