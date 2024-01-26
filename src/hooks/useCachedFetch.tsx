@@ -7,8 +7,6 @@ import { GetRestUrl } from '../utils.js';
 
 const axiosInstance = axios.create({
     baseURL: GetRestUrl(),
-    // this is enabled on chrome by default - uncomment if this is server side, query supports it
-    // headers: { 'Accept-Encoding': 'br' }
 });
 
 axiosRetry(axiosInstance, { retries: 5 });
