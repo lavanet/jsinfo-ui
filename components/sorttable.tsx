@@ -18,20 +18,6 @@ type RowFormatters = {
   [key: string]: (rowData: any) => JSX.Element;
 };
 
-let seenStrings = new Set();
-
-function assureUnique(str) {
-  let baseStr = str;
-  let suffix = 0;
-
-  while (seenStrings.has(str)) {
-    str = `${baseStr}${++suffix}`;
-  }
-
-  seenStrings.add(str);
-  return str;
-}
-
 function getNestedProperty(obj, key) {
   if (key.includes(',')) {
     return key.split(',').map(k => getNestedProperty(obj, k.trim())).join('_');
@@ -113,12 +99,16 @@ const useSortableData = (items: any[], defaultSortKey: string): SortableData => 
   return { tableData, requestSort, sortConfig };
 };
 interface SortableTableHeaderProps {
+  tableName: string;
   columns: Column[];
   requestSort: (key: string) => void;
   sortConfig: SortConfig | null;
 }
 
 const SortableTableHeader: React.FC<SortableTableHeaderProps> = (props) => {
+  if (typeof props.tableName !== 'string') {
+    throw new Error(`Invalid prop: tableName should be a string, but received type ${typeof props.tableName} with value ${props.tableName}`);
+  }
   if (!Array.isArray(props.columns)) {
     throw new Error('Invalid prop: columns should be an array');
   }
@@ -130,10 +120,10 @@ const SortableTableHeader: React.FC<SortableTableHeaderProps> = (props) => {
   }
 
   return (
-    <Table.Header key={assureUnique("TableHeader")}>
-      <Table.Row key={assureUnique("TableHeaderRaw")}>
+    <Table.Header key={`SortatableHeader_${props.tableName}`}>
+      <Table.Row key={`SortatableHeaderColRow_${props.tableName}`}>
         {props.columns.map((column) => (
-          <Table.ColumnHeaderCell key={assureUnique(`TableHeaderCol_${column.key}`)} onClick={() => props.requestSort(column.key)}>
+          <Table.ColumnHeaderCell key={`SortatableHeaderCol_${props.tableName}_${column.key}`} onClick={() => props.requestSort(column.key)}>
             {column.name} {props.sortConfig && props.sortConfig.key === column.key ? (props.sortConfig.direction === 'ascending' ? '↑' : '↓') : ''}
           </Table.ColumnHeaderCell>
         ))}
@@ -183,7 +173,7 @@ const SortableTableRowCell: React.FC<SortableTableRowCellProps> = (props) => {
   }
 
   return (
-    <Table.Cell key={`${props.tableRowKey}_${props.columnName}_cell`}>
+    <Table.Cell key={`SortatableCell_${props.tableRowKey}_${props.columnName}`}>
       {cellContent}
     </Table.Cell>
   );
@@ -225,10 +215,7 @@ const SortableTableRow: React.FC<SortableTableRowProps> = (props) => {
   }
 
   let key = getNestedProperty(props.rowData, props.pkey);
-  if (props.pkey.endsWith(",counter")) {
-    key = key.replace(",counter", "") + `_${props.index}`;
-  }
-  const tableRowKey = assureUnique(`${props.tableName}_${key}`);
+  const tableRowKey = `SorttableRow_${props.tableName}_${props.tableName}_${props.index}_${key}`;
 
   // dont show rows that have an empty pkey
   if (!getNestedProperty(props.rowData, props.pkey)) return null;
@@ -236,12 +223,12 @@ const SortableTableRow: React.FC<SortableTableRowProps> = (props) => {
   return (
     <Table.Row key={`${tableRowKey}_row`}>
       {props.firstColumn && 
-        <SortableTableRowCell columnName={props.firstColumn} tableRowKey={tableRowKey} rowData={props.rowData} rowFormatters={props.rowFormatters ?? null} pkey={props.pkey} pkeyUrl={props.pkeyUrl} />}
+        <SortableTableRowCell key={`${tableRowKey}_row_1`} columnName={props.firstColumn} tableRowKey={tableRowKey} rowData={props.rowData} rowFormatters={props.rowFormatters ?? null} pkey={props.pkey} pkeyUrl={props.pkeyUrl} />}
       {props.columns.some(column => column.key === props.pkey) && 
-        <SortableTableRowCell columnName={props.pkey} tableRowKey={tableRowKey} rowData={props.rowData} rowFormatters={props.rowFormatters ?? null} pkey={props.pkey} pkeyUrl={props.pkeyUrl}/>}
+        <SortableTableRowCell key={`${tableRowKey}_row_2`} columnName={props.pkey} tableRowKey={tableRowKey} rowData={props.rowData} rowFormatters={props.rowFormatters ?? null} pkey={props.pkey} pkeyUrl={props.pkeyUrl}/>}
       {props.columns.map((column) => (
         column.key && column.key !== props.pkey && column.key !== props.firstColumn && 
-          <SortableTableRowCell columnName={column.key} tableRowKey={tableRowKey} rowData={props.rowData} rowFormatters={props.rowFormatters ?? null} pkey={props.pkey} pkeyUrl={props.pkeyUrl}/>
+          <SortableTableRowCell key={`${tableRowKey}_row_1_${column.key}`} columnName={column.key} tableRowKey={tableRowKey} rowData={props.rowData} rowFormatters={props.rowFormatters ?? null} pkey={props.pkey} pkeyUrl={props.pkeyUrl}/>
       ))}
     </Table.Row>
   );
@@ -281,9 +268,10 @@ const SortableTableBody: React.FC<SortableTableBodyProps> = (props) => {
   }
 
   return (
-    <Table.Body>
+    <Table.Body key={`SortatableTableBody_${props.tableName}`}>
       {props.tableData.map((rowData, index) => (
         <SortableTableRow 
+          key={`SortableTableRow_${props.tableName}_${index}`}
           rowData={rowData} 
           index={index} 
           pkey={props.pkey} 
@@ -336,7 +324,7 @@ const SortableTableContent: React.FC<SortableTableProps> = (props) => {
   return (
     <Tabs.Content value={props.tableName}>
       <Table.Root>
-        <SortableTableHeader columns={props.columns} requestSort={props.requestSort} sortConfig={props.sortConfig} />
+        <SortableTableHeader tableName={props.tableName} columns={props.columns} requestSort={props.requestSort} sortConfig={props.sortConfig} />
         <SortableTableBody {...props} />
       </Table.Root>
     </Tabs.Content>

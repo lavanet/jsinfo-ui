@@ -299,7 +299,7 @@ export default function Provider() {
                             data={provider.reports}
                             defaultSortKey='blocks.datetime|desc'
                             tableName='reports'
-                            pkey='provider_reported.provider,provider_reported.blockId,counter'
+                            pkey='provider_reported.provider,provider_reported.blockId'
                             pkeyUrl='none'
                             rowFormatters={{
                                 "provider_reported.blockId": (report) => <Link href={

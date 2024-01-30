@@ -47,8 +47,7 @@ export default function Consumer() {
                 </Flex>
             </Card>
 
-
-            <Box>
+            <Card>
                 <Flex gap="3" justify="between">
                     <Card>
                         <Text as="div" size="2" weight="bold">
@@ -66,7 +65,7 @@ export default function Consumer() {
                         </Text>
                     </Card>
                 </Flex>
-            </Box>
+            </Card>
 
             <ReactiveChart data={chartData} options={chartOptions} />
 
