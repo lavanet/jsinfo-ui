@@ -11,12 +11,19 @@ const axiosInstance = axios.create({
 
 axiosRetry(axiosInstance, { retries: 5 });
 
-const handleEmptyData = (retryCount, retryTimeout, fetchDataWithRetry, setError, setLoading) => {
-    if (retryCount.current < 20) {
+const handleEmptyData = (
+    retryCount: React.MutableRefObject<number>, 
+    retryTimeout: React.MutableRefObject<number>, 
+    fetchDataWithRetry: () => void, 
+    setError: React.Dispatch<React.SetStateAction<string | null>>, 
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  ): void => {
+    // total retry time = 132500 ~ 2 minutes
+    if (retryCount.current < 50) {
         // If data is an empty object, retry after retryTimeout milliseconds
         setTimeout(fetchDataWithRetry, retryTimeout.current);
         // Increase the retry timeout by 1 second for the next potential retry
-        retryTimeout.current += 500;
+        retryTimeout.current += 100;
         // Increment retryCount
         retryCount.current += 1;
     } else { 
@@ -25,17 +32,27 @@ const handleEmptyData = (retryCount, retryTimeout, fetchDataWithRetry, setError,
     }
 };
 
-const handleData = (data, setData, setLoading) => {
+// Assuming data can be of any type
+const handleData = (data: any, setData: React.Dispatch<React.SetStateAction<any>>, setLoading: React.Dispatch<React.SetStateAction<boolean>>): void => {
     setData(data);
     setLoading(false);
 };
 
-const handleError = (error, setError, setLoading) => {
+// Assuming error is of type Error
+const handleError = (error: Error, setError: React.Dispatch<React.SetStateAction<string | null>>, setLoading: React.Dispatch<React.SetStateAction<boolean>>): void => {
     setError(error.message);
     setLoading(false);
 };
 
-const fetchDataWithRetry = async (apiUrl, setData, setLoading, setError, retryCount, retryTimeout) => {
+const fetchDataWithRetry = async (
+  apiUrl: string, 
+  setData: React.Dispatch<React.SetStateAction<any>>, 
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>, 
+  setError: React.Dispatch<React.SetStateAction<string | null>>, 
+  retryCount: React.MutableRefObject<number>, 
+  retryTimeout: React.MutableRefObject<number>, 
+  errorCount: React.MutableRefObject<number>
+): Promise<void> => {
     try {
         const res = await axiosInstance.get( apiUrl, { timeout: 3000 }); // 3 seconds timeout
         const data = res.data;
@@ -44,32 +61,38 @@ const fetchDataWithRetry = async (apiUrl, setData, setLoading, setError, retryCo
             setError(data.error);
             setLoading(false);
         } else if (!data || Object.keys(data).length === 0) {
-            handleEmptyData(retryCount, retryTimeout, () => fetchDataWithRetry(apiUrl, setData, setLoading, setError, retryCount, retryTimeout), setError, setLoading);
+            handleEmptyData(retryCount, retryTimeout, () => fetchDataWithRetry(apiUrl, setData, setLoading, setError, retryCount, retryTimeout, errorCount), setError, setLoading);
         } else {
             handleData(data, setData, setLoading);
         }
-    } catch (error) {
+    } catch (error: any) {
         if (error?.code === 'ECONNABORTED' || (error + "").includes('timeout')) { // If error is a timeout error
-            handleEmptyData(retryCount, retryTimeout, () => fetchDataWithRetry(apiUrl, setData, setLoading, setError, retryCount, retryTimeout), setError, setLoading);
+            handleEmptyData(retryCount, retryTimeout, () => fetchDataWithRetry(apiUrl, setData, setLoading, setError, retryCount, retryTimeout, errorCount), setError, setLoading);
         } else {
-            handleError(error, setError, setLoading);
+            errorCount.current++;
+            if (errorCount.current <= 2) {
+                handleEmptyData(retryCount, retryTimeout, () => fetchDataWithRetry(apiUrl, setData, setLoading, setError, retryCount, retryTimeout, errorCount), setError, setLoading);
+            } else {
+                handleError(error, setError, setLoading);
+            }
         }
     }
 };
 
-export function useCachedFetchWithUrlKey(dataKey) {
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const retryTimeout = useRef(1000); // Initial retry timeout is 1 second
-    const retryCount = useRef(0); // Use useRef for retryCount
+export function useCachedFetchWithUrlKey(dataKey: string) {
+    const [data, setData] = useState<any>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+    const retryTimeout = useRef<number>(1000); 
+    const retryCount = useRef<number>(0);
+    const errorCount = useRef<number>(0);
 
     useEffect(() => {
         // Ensure we're in the client 
         if (typeof window !== 'undefined') {
             const apiKey = window.location.pathname.split('/').pop() || '';
             const apiUrl = dataKey + "/" + apiKey;
-            fetchDataWithRetry(apiUrl, setData, setLoading, setError, retryCount, retryTimeout);
+            fetchDataWithRetry(apiUrl, setData, setLoading, setError, retryCount, retryTimeout, errorCount);
         }
     }, [dataKey]);
 
@@ -77,16 +100,17 @@ export function useCachedFetchWithUrlKey(dataKey) {
 }
 
 
-export function useCachedFetch(dataKey) {
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const retryTimeout = useRef(500); // Initial retry timeout is 0.5 seconds
-    const retryCount = useRef(0); // Use useRef for retryCount
+export function useCachedFetch(dataKey: string) {
+    const [data, setData] = useState<any>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+    const retryTimeout = useRef<number>(1000); 
+    const retryCount = useRef<number>(0);
+    const errorCount = useRef<number>(0);
 
     useEffect(() => {
         const apiUrl = dataKey;
-        fetchDataWithRetry(apiUrl, setData, setLoading, setError, retryCount, retryTimeout);
+        fetchDataWithRetry(apiUrl, setData, setLoading, setError, retryCount, retryTimeout, errorCount);
     }, [dataKey]); 
 
     return { data, loading, error };

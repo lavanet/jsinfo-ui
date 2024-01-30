@@ -54,9 +54,9 @@ export default function Events() {
                             ]}
                             data={data.events} 
                             defaultSortKey='blocks.datetime|desc'
-                            tableValue='events'
+                            tableName='events'
                             pkey='events.id'
-                            pkey_url='none'
+                            pkeyUrl='none'
                             rowFormatters={{
                                 "providers.address": (evt) => evt.providers
                                     ? <Link href={`/provider/${evt.providers.address}`}>
@@ -92,9 +92,9 @@ export default function Events() {
                             ]}
                             data={data.payments}
                             defaultSortKey='blocks.datetime|desc'
-                            tableValue='rewards'
+                            tableName='rewards'
                             pkey='relay_payments.id'
-                            pkey_url='none'
+                            pkeyUrl='none'
                             rowFormatters={{
                                 "providers.address": (payment) => payment.providers
                                     ? <Link href={`/provider/${payment.providers.address}`}>
@@ -135,9 +135,9 @@ export default function Events() {
                             ]}
                             data={data.reports}
                             defaultSortKey='blocks.datetime|desc'
-                            tableValue='reports'
+                            tableName='reports'
                             pkey='provider_reported.provider,provider_reported.blockId,counter'
-                            pkey_url='none'
+                            pkeyUrl='none'
                             rowFormatters={{
                                 "providers.address": (report) => report.providers
                                     ? <Link href={`/provider/${report.providers.address}`}>

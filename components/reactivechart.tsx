@@ -1,3 +1,5 @@
+// jsinfo-ui/components/reactivechart.tsx
+
 import React, { useRef, useEffect } from 'react';
 import { Box, Card } from '@radix-ui/themes';
 import { Line } from 'react-chartjs-2';

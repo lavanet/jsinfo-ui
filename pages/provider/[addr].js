@@ -206,9 +206,9 @@ export default function Provider() {
                             ]}
                             data={provider.events}
                             defaultSortKey='blocks.datetime|desc'
-                            tableValue='events'
+                            tableName='events'
                             pkey='events.id'
-                            pkey_url='none'
+                            pkeyUrl='none'
                             rowFormatters={{
                                 "events.eventType": (evt) => <Link href={
                                     evt.events.tx
@@ -235,9 +235,9 @@ export default function Provider() {
                             ]}
                             data={provider.stakes}
                             defaultSortKey='specId'
-                            tableValue='stakes'
+                            tableName='stakes'
                             pkey='specId,provider'
-                            pkey_url='spec'
+                            pkeyUrl='spec'
                             rowFormatters={{
                                 "specId": (stake) => <Link href={`/spec/${stake.specId}`}>
                                     {stake.specId}
@@ -261,9 +261,9 @@ export default function Provider() {
                             ]}
                             data={provider.payments}
                             defaultSortKey='blocks.datetime|desc'
-                            tableValue='rewards'
+                            tableName='rewards'
                             pkey='relay_payments.id'
-                            pkey_url='none'
+                            pkeyUrl='none'
                             rowFormatters={{
                                 "relay_payments.specId": (payment) => <Link href={`/spec/${payment.relay_payments.specId}`}>
                                     {payment.relay_payments.specId}
@@ -298,9 +298,9 @@ export default function Provider() {
                             ]}
                             data={provider.reports}
                             defaultSortKey='blocks.datetime|desc'
-                            tableValue='reports'
+                            tableName='reports'
                             pkey='provider_reported.provider,provider_reported.blockId,counter'
-                            pkey_url='none'
+                            pkeyUrl='none'
                             rowFormatters={{
                                 "provider_reported.blockId": (report) => <Link href={
                                     report.provider_reported.tx

@@ -166,9 +166,9 @@ export default function Spec() {
                             ]}
                             data={data.stakes}
                             defaultSortKey='providers.address'
-                            tableValue='stakes'
+                            tableName='stakes'
                             pkey="provider_stakes.specId,provider_stakes.provider"
-                            pkey_url='none'
+                            pkeyUrl='none'
                             rowFormatters={{
                                 "providers.address": (stake) => <Link href={`/provider/${stake.providers.address}`}>
                                     {stake.providers.moniker ? stake.providers.moniker : stake.providers.address}

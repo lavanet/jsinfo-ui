@@ -84,9 +84,9 @@ export default function Consumer() {
                         ]}
                         data={consumer.subsBuy} // assuming consumer is defined elsewhere
                         defaultSortKey='blockId'
-                        tableValue='subscriptions'
+                        tableName='subscriptions'
                         pkey="consumer,blockId,plan"
-                        pkey_url='none'
+                        pkeyUrl='none'
                     />
 
                     <SortableTableComponent
@@ -100,9 +100,9 @@ export default function Consumer() {
                         ]}
                         data={consumer.conflicts}
                         defaultSortKey='requestBlock'
-                        tableValue='conflicts'
+                        tableName='conflicts'
                         pkey='id'
-                        pkey_url='none'
+                        pkeyUrl='none'
                     />
 
                 </Box>
