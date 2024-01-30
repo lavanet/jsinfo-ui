@@ -7,6 +7,7 @@ import React from 'react';
 type Column = {
   key: string;
   name: string;
+  altKey?: string;
 }
 
 type SortConfig = {
@@ -399,6 +400,23 @@ export const SortableTableComponent: React.FC<SortableTableComponentProps> = (pr
 
   if (props.firstColumn && !props.columns.some(column => column.key === props.firstColumn)) {
     throw new Error(`firstColumn "${props.firstColumn}" is not included in columns`);
+  }
+
+  if (props.data && props.data.length > 0) {
+    const firstEntry = props.data[0];
+    for (let column of props.columns) {
+      // skip the keys the go deep
+      if (column.key.includes('.')) {
+        continue
+      }
+      if (!(column.key in firstEntry)) {
+        if (column.altKey && column.altKey in firstEntry) {
+          column.key = column.altKey;
+        } else {
+          throw new Error(`Column is not present in the first entry of data. Column object: ${JSON.stringify(column)}. First entry: ${JSON.stringify(props.data[0])} of type "${typeof props.data[0]}"`);
+        }
+      }
+    }
   }
 
   const { tableData, requestSort, sortConfig }: SortableData = useSortableData(props.data, props.defaultSortKey);

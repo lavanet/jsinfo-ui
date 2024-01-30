@@ -194,8 +194,8 @@ export default function Home() {
                 { key: 'moniker', name: 'Moniker' },
                 { key: 'addr', name: 'Provider Address' },
                 { key: 'rewardSum', name: 'Total Rewards' },
-                { key: 'totalServices', name: 'Total Services' },
-                { key: 'totalStake', name: 'Total Stake' },
+                { key: 'totalServices', name: 'Total Services', altKey: "nStakes" },
+                { key: 'totalStake', name: 'Total Stake'},
               ]}
               data={data.topProviders}
               defaultSortKey='totalStake'
