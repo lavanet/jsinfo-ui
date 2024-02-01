@@ -7,7 +7,7 @@ import relativeTIme from "dayjs/plugin/relativeTime";
 import { StatusToString, GeoLocationToString, EventTypeToString } from '../../src/utils';
 import { SortableTableComponent } from '../../components/sorttable';
 import { ReactiveChart } from '../../components/reactivechart';
-import { useCachedFetchWithUrlKey } from '../../src/hooks/useCachedFetch';
+import { useCachedFetch } from '../../src/hooks/useCachedFetch';
 import Loading from '../../components/loading';
 
 Dayjs.extend(relativeTIme);
@@ -30,7 +30,7 @@ const COLORS = [
 
 
 export default function Provider() {
-    const { data, loading, error } = useCachedFetchWithUrlKey('provider');
+    const { data, loading, error } = useCachedFetch({ dataKey: 'provider', useLastUrlPathInKey: true });
 
     if (loading) return <Loading loadingText="Loading provider page"/>;
     if (error) return <div>Error: {error}</div>;
@@ -181,10 +181,10 @@ export default function Provider() {
             </Card>
             <ReactiveChart data={chartData} options={chartOptions} />
             <Card>
-                <Tabs.Root defaultValue="events">
+                <Tabs.Root defaultValue="stakes">
                     <Tabs.List>
-                        <Tabs.Trigger value="events">Events</Tabs.Trigger>
                         <Tabs.Trigger value="stakes">Stakes</Tabs.Trigger>
+                        <Tabs.Trigger value="events">Events</Tabs.Trigger>
                         <Tabs.Trigger value="rewards">Rewards</Tabs.Trigger>
                         <Tabs.Trigger value="reports">Reports</Tabs.Trigger>
                     </Tabs.List>
@@ -206,9 +206,9 @@ export default function Provider() {
                             ]}
                             data={provider.events}
                             defaultSortKey='blocks.datetime|desc'
-                            tableValue='events'
+                            tableName='events'
                             pkey='events.id'
-                            pkey_url='none'
+                            pkeyUrl='none'
                             rowFormatters={{
                                 "events.eventType": (evt) => <Link href={
                                     evt.events.tx
@@ -235,9 +235,9 @@ export default function Provider() {
                             ]}
                             data={provider.stakes}
                             defaultSortKey='specId'
-                            tableValue='stakes'
+                            tableName='stakes'
                             pkey='specId,provider'
-                            pkey_url='spec'
+                            pkeyUrl='spec'
                             rowFormatters={{
                                 "specId": (stake) => <Link href={`/spec/${stake.specId}`}>
                                     {stake.specId}
@@ -255,15 +255,15 @@ export default function Provider() {
                                 { key: 'relay_payments.consumer', name: 'Consumer' },
                                 { key: 'relay_payments.relays', name: 'Relays' },
                                 { key: 'relay_payments.cu', name: 'CU' },
-                                { key: 'relay_payments.pay', name: 'Pay' },
+                                // { key: 'relay_payments.pay', name: 'Pay' },
                                 { key: 'relay_payments.qosSync', name: 'QoS' },
                                 { key: 'relay_payments.qosSyncExc', name: 'Excellence' },
                             ]}
                             data={provider.payments}
                             defaultSortKey='blocks.datetime|desc'
-                            tableValue='rewards'
+                            tableName='rewards'
                             pkey='relay_payments.id'
-                            pkey_url='none'
+                            pkeyUrl='none'
                             rowFormatters={{
                                 "relay_payments.specId": (payment) => <Link href={`/spec/${payment.relay_payments.specId}`}>
                                     {payment.relay_payments.specId}
@@ -298,9 +298,9 @@ export default function Provider() {
                             ]}
                             data={provider.reports}
                             defaultSortKey='blocks.datetime|desc'
-                            tableValue='reports'
-                            pkey='provider_reported.provider,provider_reported.blockId,counter'
-                            pkey_url='none'
+                            tableName='reports'
+                            pkey='provider_reported.provider,provider_reported.blockId'
+                            pkeyUrl='none'
                             rowFormatters={{
                                 "provider_reported.blockId": (report) => <Link href={
                                     report.provider_reported.tx

@@ -27,9 +27,9 @@ const COLORS = [
 ];
 
 export default function Home() {
-  const { data, loading, error } = useCachedFetch('index');
+  const { data, loading, error } = useCachedFetch({ dataKey: 'index'});
 
-  if (loading) return <Loading loadingText="Loading page"/>;
+  if (loading) return <Loading loadingText="Loading page" />;
   if (error) return <div>Error: {error}</div>;
 
   const chartData = {
@@ -66,7 +66,23 @@ export default function Home() {
           callback: (t, i) => ((i % 5) && (i != 0) && (i + 1 != data.qosData.length)) ? '' : data.qosData[i]['date']
         },
       }
-    }
+    },
+    elements: {
+      point: {
+        // the last point is an estimation - make it small - make it be dotted just there is a little annoying
+        // the property is applied on the whole chart line
+        radius: function(context) {
+          const index = context.dataIndex;
+          const count = context.dataset.data.length;
+          return index === count - 1 ? 2 : 1;  
+        },
+        pointStyle: function(context) {
+          const index = context.dataIndex;
+          const count = context.dataset.data.length;
+          return index === count - 1 ? 'dash': 'circle';
+        },
+      },
+    },
   }
 
   const dsBySpecId = {}
@@ -92,7 +108,7 @@ export default function Home() {
   let qosData = {
     label: 'QoS',
     data: [],
-    fill: false, 
+    fill: false,
     borderColor: '#AAFF00',
     backgroundColor: '#AAFF00',
     yAxisID: 'y1',
@@ -101,10 +117,28 @@ export default function Home() {
     qosData.data.push({ x: metric['date'], y: (metric['qosSyncAvg'] + metric['qosAvailabilityAvg'] + metric['qosLatencyAvg']) / 3 })
 
   })
+
   chartData.datasets.push(qosData)
   for (const [key, value] of Object.entries(dsBySpecId)) {
     chartData.datasets.push(value)
   }
+
+  chartData.datasets.forEach(dataset => {
+    const previousDataPoints = dataset.data.slice(0, -1);
+    const sortedDataPoints = previousDataPoints.sort((a, b) => parseFloat(a.y) - parseFloat(b.y));
+    let median;
+
+    if (sortedDataPoints.length % 2 === 0) {
+      median = (parseFloat(sortedDataPoints[sortedDataPoints.length / 2 - 1].y) + parseFloat(sortedDataPoints[sortedDataPoints.length / 2].y)) / 2;
+    } else {
+      median = parseFloat(sortedDataPoints[(sortedDataPoints.length - 1) / 2].y);
+    }
+
+    const lastDataPoint = dataset.data[dataset.data.length - 1];
+    lastDataPoint.y = median;
+  });
+
+  // console.log(chartData.datasets)
 
   return (
     <>
@@ -157,17 +191,18 @@ export default function Home() {
           <Box>
             <SortableTableComponent
               columns={[
-                { key: 'addr', name: 'Provider Address' },
                 { key: 'moniker', name: 'Moniker' },
+                { key: 'addr', name: 'Provider Address' },
                 { key: 'rewardSum', name: 'Total Rewards' },
-                { key: 'nStakes', name: 'Total Services' },
-                { key: 'totalStake', name: 'Total Stake' },
+                { key: 'totalServices', name: 'Total Services', altKey: "nStakes" },
+                { key: 'totalStake', name: 'Total Stake'},
               ]}
               data={data.topProviders}
-              defaultSortKey='addr'
-              tableValue='providers'
+              defaultSortKey='totalStake'
+              tableName='providers'
               pkey='addr'
-              pkey_url='provider'
+              pkeyUrl='provider'
+              firstColumn='moniker'
             />
 
             <SortableTableComponent
@@ -177,9 +212,9 @@ export default function Home() {
               ]}
               data={data.allSpecs}
               defaultSortKey='chainId'
-              tableValue='chains'
+              tableName='chains'
               pkey='chainId'
-              pkey_url='spec'
+              pkeyUrl='spec'
             />
           </Box>
         </Tabs.Root>

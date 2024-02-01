@@ -4,14 +4,13 @@ import { EventTypeToString } from '../src/utils';
 import Dayjs from "dayjs";
 import relativeTIme from "dayjs/plugin/relativeTime";
 Dayjs.extend(relativeTIme);
-const formatter = Intl.NumberFormat("en");
 import { SortableTableComponent } from '../components/sorttable';
 
 import { useCachedFetch } from '../src/hooks/useCachedFetch';
 import Loading from '../components/loading';
 
 export default function Events() {
-    const { data, loading, error } = useCachedFetch('events');
+    const { data, loading, error } = useCachedFetch({ dataKey: 'events' });
 
     if (loading) return <Loading loadingText="Loading events page"/>;
     if (error) return <div>Error: {error}</div>;
@@ -54,9 +53,9 @@ export default function Events() {
                             ]}
                             data={data.events} 
                             defaultSortKey='blocks.datetime|desc'
-                            tableValue='events'
+                            tableName='events'
                             pkey='events.id'
-                            pkey_url='none'
+                            pkeyUrl='none'
                             rowFormatters={{
                                 "providers.address": (evt) => evt.providers
                                     ? <Link href={`/provider/${evt.providers.address}`}>
@@ -86,15 +85,15 @@ export default function Events() {
                                 { key: 'relay_payments.consumer', name: 'Consumer' },
                                 { key: 'relay_payments.relays', name: 'Relays' },
                                 { key: 'relay_payments.cu', name: 'CU' },
-                                { key: 'relay_payments.pay', name: 'Pay' },
+                                // { key: 'relay_payments.pay', name: 'Pay' },
                                 { key: 'relay_payments.qosSync', name: 'QoS' },
                                 { key: 'relay_payments.qosSyncExc', name: 'Excellence' },
                             ]}
                             data={data.payments}
                             defaultSortKey='blocks.datetime|desc'
-                            tableValue='rewards'
+                            tableName='rewards'
                             pkey='relay_payments.id'
-                            pkey_url='none'
+                            pkeyUrl='none'
                             rowFormatters={{
                                 "providers.address": (payment) => payment.providers
                                     ? <Link href={`/provider/${payment.providers.address}`}>
@@ -135,9 +134,9 @@ export default function Events() {
                             ]}
                             data={data.reports}
                             defaultSortKey='blocks.datetime|desc'
-                            tableValue='reports'
-                            pkey='provider_reported.provider,provider_reported.blockId,counter'
-                            pkey_url='none'
+                            tableName='reports'
+                            pkey='provider_reported.provider,provider_reported.blockId'
+                            pkeyUrl='none'
                             rowFormatters={{
                                 "providers.address": (report) => report.providers
                                     ? <Link href={`/provider/${report.providers.address}`}>

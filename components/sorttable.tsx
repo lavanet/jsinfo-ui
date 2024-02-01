@@ -1,10 +1,13 @@
-// useSortableData.js
+// jsinfo-ui/components/sorttable.tsx
+
 import { useState, useMemo } from 'react';
 import { Link, Table, Tabs } from '@radix-ui/themes';
+import React from 'react';
 
 type Column = {
   key: string;
   name: string;
+  altKey?: string;
 }
 
 type SortConfig = {
@@ -12,45 +15,9 @@ type SortConfig = {
   direction: 'ascending' | 'descending';
 }
 
-
-type SortableTableProps = {
-  sortedItems: any[],
-  requestSort: Function,
-  sortConfig: SortConfig,
-  columns: Column[],
-  tableValue: string,
-  pkey: string,
-  pkey_url: string,
-  rowFormatters?: RowFormatters;
-};
-
 type RowFormatters = {
   [key: string]: (rowData: any) => JSX.Element;
 };
-
-type SortableTableComponentProps = {
-  columns: Column[];
-  data: any[];
-  defaultSortKey: string;
-  tableValue: string;
-  pkey: string;
-  pkey_url: string;
-  rowFormatters?: RowFormatters;
-};
-
-let seenStrings = new Set();
-
-function assureUnique(str) {
-  let baseStr = str;
-  let suffix = 0;
-
-  while (seenStrings.has(str)) {
-    str = `${baseStr}${++suffix}`;
-  }
-
-  seenStrings.add(str);
-  return str;
-}
 
 function getNestedProperty(obj, key) {
   if (key.includes(',')) {
@@ -65,22 +32,28 @@ function getNestedProperty(obj, key) {
   }, obj);
 }
 
-const useSortableData = (items, defaultSortKey) => {
+interface SortableData {
+  tableData: any[];
+  requestSort: (key: string) => void;
+  sortConfig: SortConfig;
+}
+
+const useSortableData = (items: any[], defaultSortKey: string): SortableData => {
   if (!Array.isArray(items)) {
     console.error('Invalid type for items. Expected array, received', items);
     throw new Error(`Invalid type for items. Expected array, received ${Object.prototype.toString.call(items)}`);
   }
 
-  let initialDirection = 'ascending';
+  let initialDirection: "ascending" | "descending" = 'ascending';
   let initialKey = defaultSortKey;
   if (defaultSortKey.endsWith('|desc')) {
     initialDirection = 'descending';
     initialKey = defaultSortKey.slice(0, -5); 
   }
   
-  const [sortConfig, setSortConfig] = useState({ key: initialKey, direction: initialDirection });
+  const [sortConfig, setSortConfig] = useState<SortConfig>({ key: initialKey, direction: initialDirection });
 
-  const sortedItems = useMemo(() => {
+  const tableData = useMemo(() => {
     let sortableItems = [...items];
     if (sortConfig !== null) {
       sortableItems.sort((a, b) => {
@@ -117,23 +90,42 @@ const useSortableData = (items, defaultSortKey) => {
   }, [items, sortConfig]);
 
   const requestSort = key => {
-    let direction = 'ascending';
+    let direction: "ascending" | "descending" = 'ascending';
     if (sortConfig.key === key && sortConfig.direction === 'ascending') {
       direction = 'descending';
     }
     setSortConfig({ key, direction });
   };
 
-  return { sortedItems, requestSort, sortConfig };
+  return { tableData, requestSort, sortConfig };
 };
+interface SortableTableHeaderProps {
+  tableName: string;
+  columns: Column[];
+  requestSort: (key: string) => void;
+  sortConfig: SortConfig | null;
+}
 
-function TableHeader({ columns, requestSort, sortConfig }) {
+const SortableTableHeader: React.FC<SortableTableHeaderProps> = (props) => {
+  if (typeof props.tableName !== 'string') {
+    throw new Error(`Invalid prop: tableName should be a string, but received type ${typeof props.tableName} with value ${props.tableName}`);
+  }
+  if (!Array.isArray(props.columns)) {
+    throw new Error('Invalid prop: columns should be an array');
+  }
+  if (typeof props.requestSort !== 'function') {
+    throw new Error('Invalid prop: requestSort should be a function');
+  }
+  if (props.sortConfig !== null && typeof props.sortConfig !== 'object') {
+    throw new Error('Invalid prop: sortConfig should be an object or null');
+  }
+
   return (
-    <Table.Header key={assureUnique("TableHeader")}>
-      <Table.Row key={assureUnique("TableHeaderRaw")}>
-        {columns.map((column) => (
-          <Table.ColumnHeaderCell key={assureUnique(`TableHeaderCol_${column.key}`)} onClick={() => requestSort(column.key)}>
-            {column.name} {sortConfig && sortConfig.key === column.key ? (sortConfig.direction === 'ascending' ? '↑' : '↓') : ''}
+    <Table.Header key={`SortatableHeader_${props.tableName}`}>
+      <Table.Row key={`SortatableHeaderColRow_${props.tableName}`}>
+        {props.columns.map((column) => (
+          <Table.ColumnHeaderCell key={`SortatableHeaderCol_${props.tableName}_${column.key}`} onClick={() => props.requestSort(column.key)}>
+            {column.name} {props.sortConfig && props.sortConfig.key === column.key ? (props.sortConfig.direction === 'ascending' ? '↑' : '↓') : ''}
           </Table.ColumnHeaderCell>
         ))}
       </Table.Row>
@@ -141,91 +133,239 @@ function TableHeader({ columns, requestSort, sortConfig }) {
   );
 }
 
+interface SortableTableRowCellProps {
+  columnName: string;
+  rowData: Record<any, any>;
+  rowFormatters: RowFormatters | null;
+  tableRowKey: string;
+  pkey: string;
+  pkeyUrl: string | null;
+}
 
+const SortableTableRowCell: React.FC<SortableTableRowCellProps> = (props) => {
 
-function TableBody({ sortedItems, columns, tableValue, pkey, pkey_url, rowFormatters }) {
+  if (typeof props.columnName !== 'string') {
+    throw new Error(`Invalid prop: key should be a string, but received type ${typeof props.columnName} with value ${props.columnName}`);
+  }
+  if (typeof props.rowData !== 'object') {
+    throw new Error(`Invalid prop: rowData should be an object, but received type ${typeof props.rowData} with value ${JSON.stringify(props.rowData)}`);
+  }
+  if (props.rowFormatters && typeof props.rowFormatters !== 'object') {
+    throw new Error(`Invalid prop: rowFormatters should be an object or null, but received type ${typeof props.rowFormatters} with value ${JSON.stringify(props.rowFormatters)}`);
+  }
+  if (typeof props.tableRowKey !== 'string') {
+    throw new Error(`Invalid prop: tableRowKey should be a string, but received type ${typeof props.tableRowKey} with value ${props.tableRowKey}`);
+  }
+  if (typeof props.pkey !== 'string') {
+    throw new Error(`Invalid prop: pkey should be a string, but received type ${typeof props.pkey} with value ${props.pkey}`);
+  }
+  if (props.pkeyUrl && typeof props.pkeyUrl !== 'string') {
+    throw new Error(`Invalid prop: pkeyUrl should be a string, but received type ${typeof props.pkeyUrl} with value ${props.pkeyUrl}`);
+  }
+
+  let cellContent;
+
+  if (props.rowFormatters && props.rowFormatters[props.columnName]) {
+    cellContent = props.rowFormatters[props.columnName](props.rowData);
+  } else if (props.columnName === props.pkey && props.pkeyUrl) {
+    cellContent = <Link href={`/${props.pkeyUrl}/${getNestedProperty(props.rowData, props.pkey)}`}>{getNestedProperty(props.rowData, props.pkey)}</Link>;
+  } else {
+    cellContent = getNestedProperty(props.rowData, props.columnName);
+  }
+
   return (
-    <Table.Body>
-      {sortedItems.map((provider, index) => {
-        let key = getNestedProperty(provider, pkey);
-        if (pkey.endsWith(",counter")) {
-            key = key.replace(",counter", "") + `_${index}`;
-        }
-        const table_row_key = assureUnique(`${tableValue}_${key}`);
-        if (getNestedProperty(provider, pkey)) {
-          return (
-            <Table.Row key={`${table_row_key}_row`}>
-              {columns.some(column => column.key === pkey)
-                ? <Table.Cell key={`${table_row_key}_${pkey}_cell`}>
-                  {rowFormatters && rowFormatters[pkey]
-                    ? rowFormatters[pkey](provider)
-                    : <Link href={`/${pkey_url}/${getNestedProperty(provider, pkey)}`}>{getNestedProperty(provider, pkey)}</Link>}
-                </Table.Cell>
-                : null
-              }
-              {columns.map((column) => (
-                column.key && column.key !== pkey
-                  ? <Table.Cell key={`${table_row_key}_${column.key}_cell`} >
-                    {rowFormatters && rowFormatters[column.key]
-                      ? rowFormatters[column.key](provider)
-                      : getNestedProperty(provider, column.key)}
-                  </Table.Cell>
-                  : null
-              ))}
-            </Table.Row>
-          )
-        }
-      })}
+    <Table.Cell key={`SortatableCell_${props.tableRowKey}_${props.columnName}`}>
+      {cellContent}
+    </Table.Cell>
+  );
+
+}
+
+interface SortableTableRowProps {
+  rowData: any;
+  index: number;
+  pkey: string;
+  pkeyUrl: string | null;
+  tableName: string;
+  firstColumn: string | null;
+  columns: any[];
+  rowFormatters?: RowFormatters | null;
+}
+
+const SortableTableRow: React.FC<SortableTableRowProps> = (props) => {
+  if (typeof props.rowData !== 'object') {
+    throw new Error(`Invalid prop: rowData should be an object, but received type ${typeof props.rowData} with value ${props.rowData}`);
+  }
+  if (typeof props.index !== 'number') {
+    throw new Error(`Invalid prop: index should be a number, but received type ${typeof props.index} with value ${props.index}`);
+  }
+  if (typeof props.pkey !== 'string') {
+    throw new Error(`Invalid prop: pkey should be a string, but received type ${typeof props.pkey} with value ${props.pkey}`);
+  }
+  if (typeof props.tableName !== 'string') {
+    throw new Error(`Invalid prop: tableName should be a string, but received type ${typeof props.tableName} with value ${props.tableName}`);
+  }
+  if (props.firstColumn && typeof props.firstColumn !== 'string') {
+    throw new Error(`Invalid prop: firstColumn should be a string or null, but received type ${typeof props.firstColumn} with value ${props.firstColumn}`);
+  }
+  if (!Array.isArray(props.columns)) {
+    throw new Error(`Invalid prop: columns should be an array, but received type ${typeof props.columns} with value ${props.columns}`);
+  }
+  if (props.rowFormatters && typeof props.rowFormatters !== 'object') {
+    throw new Error(`Invalid prop: rowFormatters should be an object or null, but received type ${typeof props.rowFormatters} with value ${props.rowFormatters}`);
+  }
+
+  let key = getNestedProperty(props.rowData, props.pkey);
+  const tableRowKey = `SorttableRow_${props.tableName}_${props.tableName}_${props.index}_${key}`;
+
+  // dont show rows that have an empty pkey
+  if (!getNestedProperty(props.rowData, props.pkey)) return null;
+
+  return (
+    <Table.Row key={`${tableRowKey}_row`}>
+      {props.firstColumn && 
+        <SortableTableRowCell key={`${tableRowKey}_row_1`} columnName={props.firstColumn} tableRowKey={tableRowKey} rowData={props.rowData} rowFormatters={props.rowFormatters ?? null} pkey={props.pkey} pkeyUrl={props.pkeyUrl} />}
+      {props.columns.some(column => column.key === props.pkey) && 
+        <SortableTableRowCell key={`${tableRowKey}_row_2`} columnName={props.pkey} tableRowKey={tableRowKey} rowData={props.rowData} rowFormatters={props.rowFormatters ?? null} pkey={props.pkey} pkeyUrl={props.pkeyUrl}/>}
+      {props.columns.map((column) => (
+        column.key && column.key !== props.pkey && column.key !== props.firstColumn && 
+          <SortableTableRowCell key={`${tableRowKey}_row_1_${column.key}`} columnName={column.key} tableRowKey={tableRowKey} rowData={props.rowData} rowFormatters={props.rowFormatters ?? null} pkey={props.pkey} pkeyUrl={props.pkeyUrl}/>
+      ))}
+    </Table.Row>
+  );
+}
+interface SortableTableBodyProps {
+  tableData: any[];
+  columns: Column[];
+  tableName: string;
+  pkey: string;
+  pkeyUrl?: string | null;
+  rowFormatters?: RowFormatters | null;
+  firstColumn?: string | null;
+}
+
+const SortableTableBody: React.FC<SortableTableBodyProps> = (props) => {
+
+  if (!Array.isArray(props.tableData)) {
+    throw new Error('Invalid prop: tableData should be an array');
+  }
+  if (!Array.isArray(props.columns)) {
+    throw new Error('Invalid prop: columns should be an array');
+  }
+  if (typeof props.tableName !== 'string') {
+    throw new Error('Invalid prop: tableName should be a string');
+  }
+  if (typeof props.pkey !== 'string') {
+    throw new Error('Invalid prop: pkey should be a string');
+  }
+  if (props.pkeyUrl && typeof props.pkeyUrl !== 'string') {
+    throw new Error('Invalid prop: pkeyUrl should be a string or null');
+  }
+  if (props.rowFormatters && typeof props.rowFormatters !== 'object') {
+    throw new Error('Invalid prop: rowFormatters should be an object or null');
+  }
+  if (props.firstColumn && typeof props.firstColumn !== 'string') {
+    throw new Error('Invalid prop: firstColumn should be a string or null');
+  }
+
+  return (
+    <Table.Body key={`SortatableTableBody_${props.tableName}`}>
+      {props.tableData.map((rowData, index) => (
+        <SortableTableRow 
+          key={`SortableTableRow_${props.tableName}_${index}`}
+          rowData={rowData} 
+          index={index} 
+          pkey={props.pkey} 
+          pkeyUrl={props.pkeyUrl ?? null} 
+          tableName={props.tableName} 
+          firstColumn={props.firstColumn ?? null} 
+          columns={props.columns} 
+          rowFormatters={props.rowFormatters ?? null} 
+        />
+      ))}
     </Table.Body>
   );
 }
 
-function SortableTable(props: SortableTableProps) {
+type SortableTableProps = {
+  tableData: any[],
+  requestSort: (key: string) => void,
+  sortConfig: SortConfig,
+  columns: Column[],
+  tableName: string,
+  pkey: string,
+  pkeyUrl?: string | null,
+  rowFormatters?: RowFormatters;
+  firstColumn?: string;
+};
+
+const SortableTableContent: React.FC<SortableTableProps> = (props) => {
+  if (!Array.isArray(props.tableData)) {
+    throw new Error(`Invalid prop: tableData should be an array, but received type ${typeof props.tableData} with value ${props.tableData}`);
+  }
   if (!Array.isArray(props.columns)) {
-    throw new Error(`Invalid type for columns. Expected array, received ${typeof props.columns}`);
+    throw new Error(`Invalid prop: columns should be an array, but received type ${typeof props.columns} with value ${props.columns}`);
+  }
+  if (typeof props.tableName !== 'string') {
+    throw new Error(`Invalid prop: tableName should be a string, but received type ${typeof props.tableName} with value ${props.tableName}`);
+  }
+  if (typeof props.pkey !== 'string') {
+    throw new Error(`Invalid prop: pkey should be a string, but received type ${typeof props.pkey} with value ${props.pkey}`);
+  }
+  if (props.pkeyUrl && typeof props.pkeyUrl !== 'string') {
+    throw new Error(`Invalid prop: pkeyUrl should be a string or null, but received type ${typeof props.pkeyUrl} with value ${props.pkeyUrl}`);
+  }
+  if (props.rowFormatters && typeof props.rowFormatters !== 'object') {
+    throw new Error(`Invalid prop: rowFormatters should be an object or null, but received type ${typeof props.rowFormatters} with value ${props.rowFormatters}`);
+  }
+  if (props.firstColumn && typeof props.firstColumn !== 'string') {
+    throw new Error(`Invalid prop: firstColumn should be a string or null, but received type ${typeof props.firstColumn} with value ${props.firstColumn}`);
   }
 
   return (
-    <Tabs.Content value={props.tableValue}>
+    <Tabs.Content value={props.tableName}>
       <Table.Root>
-        <TableHeader columns={props.columns} requestSort={props.requestSort} sortConfig={props.sortConfig} />
-        <TableBody {...props} />
+        <SortableTableHeader tableName={props.tableName} columns={props.columns} requestSort={props.requestSort} sortConfig={props.sortConfig} />
+        <SortableTableBody {...props} />
       </Table.Root>
     </Tabs.Content>
   );
 }
 
-export function SortableTableComponent({
-  columns,
-  data,
-  defaultSortKey,
-  tableValue,
-  pkey,
-  pkey_url,
-  rowFormatters
-}: SortableTableComponentProps) {
+type SortableTableComponentProps = {
+  columns: Column[];
+  data: any[];
+  defaultSortKey: string;
+  tableName: string;
+  pkey: string;
+  pkeyUrl?: string | null;
+  rowFormatters?: RowFormatters;
+  firstColumn?: string;
+};
+
+export const SortableTableComponent: React.FC<SortableTableComponentProps> = (props) => {
 
   // Check if data is an array
-  if (!Array.isArray(data)) {
+  if (!Array.isArray(props.data)) {
     throw new Error("Data is not an array");
   }
 
-  if (data.length > 0) {
+  if (props.data.length > 0) {
     // Check if the first item in the array is an object
-    if (typeof data[0] !== 'object') {
-      console.error("First item in the data array is not an object:", data);
+    if (typeof props.data[0] !== 'object') {
+      console.error("First item in the data array is not an object:", props.data);
       throw new Error("First item in the data array is not an object");
     }
 
     // Check if the second item in the array is an object
-    if (data.length > 1 && typeof data[1] !== 'object') {
+    if (props.data.length > 1 && typeof props.data[1] !== 'object') {
       throw new Error("Second item in the data array is not an object");
     }
 
     // Check if the first and second items have the same keys
-    if (data.length > 1) {
-      const firstItemKeys = Object.keys(data[0]).sort();
-      const secondItemKeys = Object.keys(data[1]).sort();
+    if (props.data.length > 1) {
+      const firstItemKeys = Object.keys(props.data[0]).sort();
+      const secondItemKeys = Object.keys(props.data[1]).sort();
 
       if (JSON.stringify(firstItemKeys) !== JSON.stringify(secondItemKeys)) {
         throw new Error("First and second items in the data array do not have the same keys");
@@ -233,39 +373,65 @@ export function SortableTableComponent({
     }
   }
 
-  if (!columns || !Array.isArray(columns)) {
-    console.error("Invalid type for columns:", columns);
-    throw new Error(`Invalid type for columns. Expected array, received ${columns}`);
+  if (!props.columns || !Array.isArray(props.columns)) {
+    console.error("Invalid type for columns:", props.columns);
+    throw new Error(`Invalid type for columns. Expected array, received ${props.columns}`);
   }
 
-  if (typeof defaultSortKey !== 'string') {
-    throw new Error(`Invalid type for defaultSortKey. Expected string, received ${defaultSortKey}`);
+  if (typeof props.defaultSortKey !== 'string') {
+    throw new Error(`Invalid type for defaultSortKey. Expected string, received ${props.defaultSortKey}`);
   }
 
-  if (typeof tableValue !== 'string') {
-    throw new Error(`Invalid type for tableValue. Expected string, received ${tableValue}`);
+  if (typeof props.tableName !== 'string') {
+    throw new Error(`Invalid type for tableName. Expected string, received ${props.tableName}`);
   }
 
-  if (typeof pkey !== 'string') {
-    throw new Error(`Invalid type for pkey. Expected string, received ${pkey}`);
+  if (typeof props.pkey !== 'string') {
+    throw new Error(`Invalid type for pkey. Expected string, received ${props.pkey}`);
   }
 
-  if (typeof pkey_url !== 'string') {
-    throw new Error(`Invalid type for pkey_url. Expected string, received ${typeof pkey_url}`);
+  if (props.pkeyUrl && typeof props.pkeyUrl !== 'string') {
+    throw new Error(`Invalid type for pkeyUrl. Expected string, received ${typeof props.pkeyUrl}`);
   }
 
-  const { sortedItems, requestSort, sortConfig }: { sortedItems: any[], requestSort: Function, sortConfig: SortConfig } = useSortableData(data, defaultSortKey);
+  if (props.firstColumn && typeof props.firstColumn !== 'string') {
+    throw new Error(`Invalid type for firstColumn. Expected string?, received ${typeof props.pkeyUrl}`);
+  }
+
+  if (props.firstColumn && !props.columns.some(column => column.key === props.firstColumn)) {
+    throw new Error(`firstColumn "${props.firstColumn}" is not included in columns`);
+  }
+
+  if (props.data && props.data.length > 0) {
+    const firstEntry = props.data[0];
+    for (let column of props.columns) {
+      // skip the keys the go deep
+      if (column.key.includes('.')) {
+        continue
+      }
+      if (!(column.key in firstEntry)) {
+        if (column.altKey && column.altKey in firstEntry) {
+          column.key = column.altKey;
+        } else {
+          throw new Error(`Column is not present in the first entry of data. Column object: ${JSON.stringify(column)}. First entry: ${JSON.stringify(props.data[0])} of type "${typeof props.data[0]}"`);
+        }
+      }
+    }
+  }
+
+  const { tableData, requestSort, sortConfig }: SortableData = useSortableData(props.data, props.defaultSortKey);
 
   return (
-    <SortableTable
-      sortedItems={sortedItems}
+    <SortableTableContent
+      tableData={tableData}
       requestSort={requestSort}
       sortConfig={sortConfig}
-      columns={[...columns]}
-      tableValue={tableValue}
-      pkey={pkey}
-      pkey_url={pkey_url}
-      rowFormatters={rowFormatters}
+      columns={[...props.columns]}
+      tableName={props.tableName}
+      pkey={props.pkey}
+      pkeyUrl={props.pkeyUrl}
+      rowFormatters={props.rowFormatters}
+      firstColumn={props.firstColumn}
     />
   );
 }
