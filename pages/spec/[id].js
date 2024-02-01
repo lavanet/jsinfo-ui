@@ -55,7 +55,23 @@ export default function Spec() {
                     callback: (t, i) => ((i % 5) && (i != 0) && (i + 1 != data.qosData.length)) ? '' : data.qosData[i]['date']
                 },
             }
-        }
+        },
+        elements: {
+            point: {
+              // the last point is an estimation - make it small - make it be dotted just there is a little annoying
+              // the property is applied on the whole chart line
+              radius: function(context) {
+                const index = context.dataIndex;
+                const count = context.dataset.data.length;
+                return index === count - 1 ? 2 : 1;  
+              },
+              pointStyle: function(context) {
+                const index = context.dataIndex;
+                const count = context.dataset.data.length;
+                return index === count - 1 ? 'dash': 'circle';
+              },
+            },
+        },
     }
 
     const metricData = []
@@ -106,6 +122,21 @@ export default function Spec() {
     chartData.datasets.push(qosSync)
     chartData.datasets.push(qosAvailability)
     chartData.datasets.push(qosLatency)
+
+    chartData.datasets.forEach(dataset => {
+        const previousDataPoints = dataset.data.slice(0, -1);
+        const sortedDataPoints = previousDataPoints.sort((a, b) => parseFloat(a.y) - parseFloat(b.y));
+        let median;
+    
+        if (sortedDataPoints.length % 2 === 0) {
+          median = (parseFloat(sortedDataPoints[sortedDataPoints.length / 2 - 1].y) + parseFloat(sortedDataPoints[sortedDataPoints.length / 2].y)) / 2;
+        } else {
+          median = parseFloat(sortedDataPoints[(sortedDataPoints.length - 1) / 2].y);
+        }
+    
+        const lastDataPoint = dataset.data[dataset.data.length - 1];
+        lastDataPoint.y = median;
+      });
 
     return (
         <>

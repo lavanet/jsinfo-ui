@@ -198,7 +198,7 @@ export default function Home() {
                 { key: 'totalStake', name: 'Total Stake'},
               ]}
               data={data.topProviders}
-              defaultSortKey='totalStake'
+              defaultSortKey='totalStake|desc'
               tableName='providers'
               pkey='addr'
               pkeyUrl='provider'
