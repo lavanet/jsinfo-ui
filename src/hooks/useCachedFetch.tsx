@@ -25,6 +25,7 @@ type FetchState = {
 };
 
 const handleEmptyData = async (state: FetchState): Promise<void> => {
+    if (state.wasOneFetchDone.current) return;
     if (state.retryCount.current < 50) {
         setTimeout(() => fetchDataWithRetry(state), state.retryTimeout.current);
         state.retryTimeout.current += 100;
@@ -45,6 +46,7 @@ const handleData = async (data: any, state: FetchState): Promise<void> => {
 };
 
 const handleError = async (error: Error, state: FetchState): Promise<void> => {
+    if (state.wasOneFetchDone.current) return;
     state.isFetching.current = false;
     state.setError(error.message);
     state.setLoading(false);
