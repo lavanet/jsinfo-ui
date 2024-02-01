@@ -1,12 +1,12 @@
 import { Flex, Text, Card, Box, Tabs, Container } from '@radix-ui/themes';
 import { SortableTableComponent } from '../../components/sorttable';
 import { ReactiveChart } from '../../components/reactivechart';
-import { useCachedFetchWithUrlKey } from '../../src/hooks/useCachedFetch';
+import { useCachedFetch } from '../../src/hooks/useCachedFetch';
 import Loading from '../../components/loading';
 
 export default function Consumer() {
-    const { data, loading, error } = useCachedFetchWithUrlKey('consumer');
-    
+    const { data, loading, error } = useCachedFetch({ dataKey: 'consumer', useLastUrlPathInKey: true });
+
     if (loading) return <Loading loadingText="Loading consumer page"/>;
     if (error) return <div>Error: {error}</div>;
 

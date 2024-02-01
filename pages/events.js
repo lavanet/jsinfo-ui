@@ -4,14 +4,13 @@ import { EventTypeToString } from '../src/utils';
 import Dayjs from "dayjs";
 import relativeTIme from "dayjs/plugin/relativeTime";
 Dayjs.extend(relativeTIme);
-const formatter = Intl.NumberFormat("en");
 import { SortableTableComponent } from '../components/sorttable';
 
 import { useCachedFetch } from '../src/hooks/useCachedFetch';
 import Loading from '../components/loading';
 
 export default function Events() {
-    const { data, loading, error } = useCachedFetch('events');
+    const { data, loading, error } = useCachedFetch({ dataKey: 'events' });
 
     if (loading) return <Loading loadingText="Loading events page"/>;
     if (error) return <div>Error: {error}</div>;
@@ -86,7 +85,7 @@ export default function Events() {
                                 { key: 'relay_payments.consumer', name: 'Consumer' },
                                 { key: 'relay_payments.relays', name: 'Relays' },
                                 { key: 'relay_payments.cu', name: 'CU' },
-                                { key: 'relay_payments.pay', name: 'Pay' },
+                                // { key: 'relay_payments.pay', name: 'Pay' },
                                 { key: 'relay_payments.qosSync', name: 'QoS' },
                                 { key: 'relay_payments.qosSyncExc', name: 'Excellence' },
                             ]}

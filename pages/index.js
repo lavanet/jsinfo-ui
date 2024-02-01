@@ -27,7 +27,7 @@ const COLORS = [
 ];
 
 export default function Home() {
-  const { data, loading, error } = useCachedFetch('index');
+  const { data, loading, error } = useCachedFetch({ dataKey: 'index'});
 
   if (loading) return <Loading loadingText="Loading page" />;
   if (error) return <div>Error: {error}</div>;
