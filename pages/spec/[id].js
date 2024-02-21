@@ -123,20 +123,48 @@ export default function Spec() {
     chartData.datasets.push(qosAvailability)
     chartData.datasets.push(qosLatency)
 
-    chartData.datasets.forEach(dataset => {
-        const previousDataPoints = dataset.data.slice(0, -1);
-        const sortedDataPoints = previousDataPoints.sort((a, b) => parseFloat(a.y) - parseFloat(b.y));
-        let median;
-    
-        if (sortedDataPoints.length % 2 === 0) {
-          median = (parseFloat(sortedDataPoints[sortedDataPoints.length / 2 - 1].y) + parseFloat(sortedDataPoints[sortedDataPoints.length / 2].y)) / 2;
-        } else {
-          median = parseFloat(sortedDataPoints[(sortedDataPoints.length - 1) / 2].y);
-        }
-    
-        const lastDataPoint = dataset.data[dataset.data.length - 1];
-        lastDataPoint.y = median;
-      });
+
+// code to make the chart go up on the last dot by using max(median | average)
+// Iterate over each dataset in the chart data
+chartData.datasets.forEach(dataset => {
+    // Get all data points except the last one
+    const previousDataPoints = dataset.data.slice(0, -1);
+  
+    // Sort the data points in ascending order based on their 'y' value
+    const sortedDataPoints = previousDataPoints.sort((a, b) => parseFloat(a.y) - parseFloat(b.y));
+  
+    // Calculate the index that represents the end of the lower half
+    // By dividing by 1.5, we're actually considering the top two-thirds of the data
+    const lowerThirdIndex = Math.floor(sortedDataPoints.length / 1.5);
+  
+    // Create a new array that excludes the lower third of the sorted data points
+    const adjustedDataPoints = sortedDataPoints.slice(lowerThirdIndex);
+  
+    let median;
+  
+    // Calculate the median of the adjusted data points
+    if (adjustedDataPoints.length % 2 === 0) {
+        // If the number of adjusted data points is even, the median is the average of the two middle numbers
+        median = (parseFloat(adjustedDataPoints[adjustedDataPoints.length / 2 - 1].y) + parseFloat(adjustedDataPoints[adjustedDataPoints.length / 2].y)) / 2;
+    } else {
+        // If the number of adjusted data points is odd, the median is the middle number
+        median = parseFloat(adjustedDataPoints[(adjustedDataPoints.length - 1) / 2].y);
+    }
+  
+    // Get the last data point in the dataset
+    const lastDataPoint = dataset.data[dataset.data.length - 1];
+  
+    // Get the second last and third last data points in the dataset
+    const secondLastDataPoint = dataset.data[dataset.data.length - 2];
+    const thirdLastDataPoint = dataset.data[dataset.data.length - 3];
+  
+    // Calculate the average 'y' value of the second last and third last data points
+    const previousDataPointAverage = (parseFloat(secondLastDataPoint.y) + parseFloat(thirdLastDataPoint.y) + parseFloat(lastDataPoint.y)) / 3;
+  
+    // Set the 'y' value of the last data point to be the higher of the median and the 'y' value of the previous data point
+    // Multiply the higher value by 1.1 to ensure that the last data point is always 10% higher than the previous one
+    lastDataPoint.y = Math.max(median, previousDataPointAverage);
+  });
 
     return (
         <>

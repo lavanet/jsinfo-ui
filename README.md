@@ -31,4 +31,5 @@ REST_URL=http://localhost:3000/
 PORT=4000 npm run dev
 # checks for changing files
 PORT=4000 npm run nodemon
+REST_URL=https://jsinfo.lavanet.xyz PORT=4000 npm run nodemon
 ```

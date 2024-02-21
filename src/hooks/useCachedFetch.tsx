@@ -37,7 +37,6 @@ const handleEmptyData = async (state: FetchState): Promise<void> => {
 };
 
 const handleData = async (data: any, state: FetchState): Promise<void> => {
-    state.isFetching.current = false;
     state.wasOneFetchDone.current = true;
     state.setData(data);
     state.setLoading(false);
@@ -47,7 +46,6 @@ const handleData = async (data: any, state: FetchState): Promise<void> => {
 
 const handleError = async (error: Error, state: FetchState): Promise<void> => {
     if (state.wasOneFetchDone.current) return;
-    state.isFetching.current = false;
     state.setError(error.message);
     state.setLoading(false);
 };
@@ -56,8 +54,10 @@ const fetchDataWithRetry = async (state: FetchState): Promise<void> => {
     try {
         if (state.isFetching.current) return;
         state.isFetching.current = true;
+
         const res = await axiosInstance.get(state.apiurl, { timeout: 3000 });
         const data = res.data;
+        state.isFetching.current = false;
 
         if (data && data.error) {
             state.setError(data.error);
@@ -67,7 +67,11 @@ const fetchDataWithRetry = async (state: FetchState): Promise<void> => {
         } else {
             await handleData(data, state);
         }
+
     } catch (error: any) {
+
+        state.isFetching.current = false;
+
         if (error?.code === 'ECONNABORTED' || (error + "").includes('timeout')) {
             await handleEmptyData(state);
         } else {
