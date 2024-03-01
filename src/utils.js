@@ -1,5 +1,5 @@
 export function GetRestUrl() {
-  return process.env["EST_URL_CYBERTRON"];
+  return process.env["REST_URL_CYBERTRON"];
 }
 
 export function EventTypeToString(evtType) {
