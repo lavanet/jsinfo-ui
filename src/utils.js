@@ -1,5 +1,12 @@
 export function GetRestUrl() {
-  return process.env["REST_URL"];
+  const url = new URL(window.location.href);
+  const subdomain = url.hostname.split(".")[0];
+
+  if (subdomain.toLowerCase().includes("cybertron")) {
+    return process.env["REST_URL_CYBERTRON"];
+  } else {
+    return process.env["REST_URL"];
+  }
 }
 
 export function EventTypeToString(evtType) {
