@@ -1,15 +1,17 @@
-import { Analytics } from '@vercel/analytics/react';
-import { Container } from '@radix-ui/themes';
-import { Navbar } from './navbar'
-import { Footer } from './footer'
+import { Analytics } from "@vercel/analytics/react";
+import { Container } from "@radix-ui/themes";
+import { Navbar } from "./navbar";
+import { Footer } from "./footer";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export default function Layout({ children }) {
   return (
     <Container>
-      <Navbar/>
+      <SpeedInsights />
+      <Navbar />
       <main>{children}</main>
-      <Footer/>
+      <Footer />
       <Analytics />
     </Container>
-  )
+  );
 }

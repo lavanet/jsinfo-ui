@@ -1,15 +1,17 @@
-### Oveview 
+### Oveview
 
 The web-ui for the json info project, previously named lavainfo.
 
 ### Hosting
 
 jsinfo-ui is hosted on:
+
 ```
 https://jsinfo-ui.vercel.app/
 ```
 
 jsinfo is hosted on:
+
 ```
 # testnet
 https://jsinfo.lavanet.xyz/spec/eth1
@@ -20,9 +22,10 @@ https://jsinfo.lavanet.xyz/spec/eth1
 ```bash
 cat .env.local`
 ```
+
 ```
 #REST_URL=https://jsinfo.lavanet.xyz
-REST_URL=http://localhost:3000/
+REST_URL=http://localhost:8081/
 ```
 
 ### Running the project
