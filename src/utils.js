@@ -90,16 +90,11 @@ export function GeoLocationToString(geo) {
 
 export function SetLastDotHighInChartData(chartData) {
   chartData.datasets.forEach((dataset, datasetIndex) => {
-    if (dataset.data.length < 3) {
-      console.error(`Dataset ${datasetIndex} has less than 3 data points.`);
-      return;
-    }
-
     const previousDataPoints = dataset.data.slice(0, -1);
     const sortedDataPoints = previousDataPoints.sort((a, b) => {
       if (a.y === undefined || b.y === undefined) {
-        console.error(
-          `Data point's y property is undefined. Data points: ${JSON.stringify(
+        console.info(
+          `SetLastDotHighInChartData:: Data point's y property is undefined. Data points: ${JSON.stringify(
             a
           )}, ${JSON.stringify(b)}`
         );
@@ -113,9 +108,31 @@ export function SetLastDotHighInChartData(chartData) {
 
     let median;
     if (adjustedDataPoints.length % 2 === 0) {
+      const midIndex1 = adjustedDataPoints.length / 2 - 1;
+      const midIndex2 = adjustedDataPoints.length / 2;
+
+      if (
+        !(
+          adjustedDataPoints[midIndex1] &&
+          adjustedDataPoints[midIndex1].y &&
+          adjustedDataPoints[midIndex2] &&
+          adjustedDataPoints[midIndex2].y
+        )
+      ) {
+        console.info(
+          "SetLastDotHighInChartData:: adjustedDataPoints does not have valid elements at indices " +
+            midIndex1 +
+            " and " +
+            midIndex2 +
+            ". adjustedDataPoints: ",
+          adjustedDataPoints
+        );
+        return;
+      }
+
       median =
-        (parseFloat(adjustedDataPoints[adjustedDataPoints.length / 2 - 1].y) +
-          parseFloat(adjustedDataPoints[adjustedDataPoints.length / 2].y)) /
+        (parseFloat(adjustedDataPoints[midIndex1].y) +
+          parseFloat(adjustedDataPoints[midIndex2].y)) /
         2;
     } else {
       median = parseFloat(
@@ -124,38 +141,56 @@ export function SetLastDotHighInChartData(chartData) {
     }
 
     const lastDataPoint = dataset.data[dataset.data.length - 1];
-    const secondLastDataPoint = dataset.data[dataset.data.length - 2];
-    const thirdLastDataPoint = dataset.data[dataset.data.length - 3];
 
-    if (!secondLastDataPoint || !thirdLastDataPoint || !lastDataPoint) {
-      console.error(
-        `One of the last three data points in dataset ${datasetIndex} is undefined.`
+    if (!lastDataPoint) {
+      console.info(
+        `SetLastDotHighInChartData:: The last data point in dataset ${datasetIndex} is undefined.`
       );
       return;
     }
 
-    if (
-      secondLastDataPoint.y === undefined ||
-      thirdLastDataPoint.y === undefined ||
-      lastDataPoint.y === undefined
-    ) {
-      console.error(
-        `One of the last three data points' y property in dataset ${datasetIndex} is undefined. Data points: ${JSON.stringify(
-          secondLastDataPoint
-        )}, ${JSON.stringify(thirdLastDataPoint)}, ${JSON.stringify(
+    if (lastDataPoint.y === undefined) {
+      console.info(
+        `SetLastDotHighInChartData:: The last data point's y property in dataset ${datasetIndex} is undefined. Data point: ${JSON.stringify(
           lastDataPoint
         )}`
       );
       return;
     }
 
-    const previousDataPointAverage =
-      (parseFloat(secondLastDataPoint.y) +
-        parseFloat(thirdLastDataPoint.y) +
-        parseFloat(lastDataPoint.y)) /
-      3;
+    if (dataset.data.length < 3) {
+      lastDataPoint.y = Math.max(median, parseFloat(lastDataPoint.y));
+    } else {
+      const secondLastDataPoint = dataset.data[dataset.data.length - 2];
+      const thirdLastDataPoint = dataset.data[dataset.data.length - 3];
 
-    lastDataPoint.y = Math.max(median, previousDataPointAverage);
+      if (!secondLastDataPoint || !thirdLastDataPoint) {
+        console.info(
+          `SetLastDotHighInChartData:: One of the last three data points in dataset ${datasetIndex} is undefined.`
+        );
+        return;
+      }
+
+      if (
+        secondLastDataPoint.y === undefined ||
+        thirdLastDataPoint.y === undefined
+      ) {
+        console.info(
+          `SetLastDotHighInChartData:: One of the last three data points' y property in dataset ${datasetIndex} is undefined. Data points: ${JSON.stringify(
+            secondLastDataPoint
+          )}, ${JSON.stringify(thirdLastDataPoint)}`
+        );
+        return;
+      }
+
+      const previousDataPointAverage =
+        (parseFloat(secondLastDataPoint.y) +
+          parseFloat(thirdLastDataPoint.y) +
+          parseFloat(lastDataPoint.y)) /
+        3;
+
+      lastDataPoint.y = Math.max(median, previousDataPointAverage);
+    }
   });
 }
 
@@ -185,4 +220,20 @@ export function SetLastPointToLineInChartOptions(chartOptions) {
   }
 
   return chartOptions;
+}
+
+export function getNestedProperty(obj, key) {
+  if (key.includes(",")) {
+    return key
+      .split(",")
+      .map((k) => getNestedProperty(obj, k.trim()))
+      .join("_");
+  }
+
+  return key.split(".").reduce((o, i) => {
+    if (o === null || o === undefined || !o.hasOwnProperty(i)) {
+      return "";
+    }
+    return o[i];
+  }, obj);
 }
