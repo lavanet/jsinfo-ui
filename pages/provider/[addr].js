@@ -19,6 +19,8 @@ import { ReactiveChart } from "../../components/reactivechart";
 import { useCachedFetch } from "../../src/hooks/useCachedFetch";
 import Loading from "../../components/loading";
 
+import { GetRestUrl } from "../../src/utils";
+
 Dayjs.extend(relativeTIme);
 const formatter = Intl.NumberFormat("en");
 
@@ -154,6 +156,8 @@ export default function Provider() {
 
   SetLastDotHighInChartData(chartData);
 
+  const providerAddr = window.location.pathname.split("/").pop() || "";
+
   return (
     <>
       <Card>
@@ -209,7 +213,22 @@ export default function Provider() {
       <Card>
         <Tabs.Root defaultValue="health">
           <Tabs.List>
-            <Tabs.Trigger value="health">Health</Tabs.Trigger>
+            <Tabs.Trigger value="health">
+              Health
+              <a
+                href={`${GetRestUrl()}/providerHealthCsv/${providerAddr}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  width="20"
+                  height="20"
+                  src="https://img.icons8.com/ios-filled/20/D3580C/export-csv.png"
+                  alt="export-csv"
+                  style={{ paddingLeft: "10px", paddingTop: "5px" }}
+                />
+              </a>
+            </Tabs.Trigger>
             <Tabs.Trigger value="stakes">Stakes</Tabs.Trigger>
             <Tabs.Trigger value="events">Events</Tabs.Trigger>
             <Tabs.Trigger value="rewards">Rewards</Tabs.Trigger>

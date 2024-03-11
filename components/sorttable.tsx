@@ -7,7 +7,7 @@ import { CachedPaginationFetcher } from '../src/hooks/useCachedFetch';
 import Loading from './loading';
 import { Column, SortConfig, RowFormatters, SortableData, SortAndPaginationConfig, ConvertToSortConfig } from '../src/types';
 import { ErrorBoundary } from '../src/classes';
-import { getNestedProperty } from '../src/utils';
+import { GetNestedProperty } from '../src/utils';
 
 const useSortableData = (items: any[], defaultSortKey: string): SortableData => {
   if (!Array.isArray(items)) {
@@ -28,8 +28,8 @@ const useSortableData = (items: any[], defaultSortKey: string): SortableData => 
     let sortableItems = [...items];
     if (sortConfig !== null) {
       sortableItems.sort((a, b) => {
-        let aValue = getNestedProperty(a, sortConfig.key);
-        let bValue = getNestedProperty(b, sortConfig.key);
+        let aValue = GetNestedProperty(a, sortConfig.key);
+        let bValue = GetNestedProperty(b, sortConfig.key);
 
         // Handle null or undefined values
         if (aValue === null || aValue === undefined) {
@@ -156,9 +156,9 @@ const SortableTableRowCell: React.FC<SortableTableRowCellProps> = (props) => {
   if (props.rowFormatters && props.rowFormatters[props.columnName]) {
     cellContent = props.rowFormatters[props.columnName](props.rowData);
   } else if (props.columnName === props.pkey && props.pkeyUrl) {
-    cellContent = <Link href={`/${props.pkeyUrl}/${getNestedProperty(props.rowData, props.pkey)}`}>{getNestedProperty(props.rowData, props.pkey)}</Link>;
+    cellContent = <Link href={`/${props.pkeyUrl}/${GetNestedProperty(props.rowData, props.pkey)}`}>{GetNestedProperty(props.rowData, props.pkey)}</Link>;
   } else {
-    cellContent = getNestedProperty(props.rowData, props.columnName);
+    cellContent = GetNestedProperty(props.rowData, props.columnName);
   }
 
   return (
@@ -203,13 +203,13 @@ const SortableTableRow: React.FC<SortableTableRowProps> = (props) => {
     throw new Error(`Invalid prop: rowFormatters should be an object or null, but received type ${typeof props.rowFormatters} with value ${props.rowFormatters}`);
   }
 
-  let key = getNestedProperty(props.rowData, props.pkey);
+  let key = GetNestedProperty(props.rowData, props.pkey);
   const tableRowKey = `SorttableRow_${props.tableAndTabName}_${props.tableAndTabName}_${props.index}_${key}`;
 
-  // console.log("Print 40000", props.tableAndTabName, "props", props, "getNestedProperty", getNestedProperty(props.rowData, props.pkey))
+  // console.log("Print 40000", props.tableAndTabName, "props", props, "GetNestedProperty", GetNestedProperty(props.rowData, props.pkey))
 
   // dont show rows that have an empty pkey
-  if (!getNestedProperty(props.rowData, props.pkey)) return null;
+  if (!GetNestedProperty(props.rowData, props.pkey)) return null;
 
 
   return (
@@ -321,21 +321,36 @@ const SortableTableContent: React.FC<SortableTableProps> = (props) => {
     if (props.tableData.length > 3 && columnLengthPercentagesRef.current === null) {
       let maxColumnLengths: { [key: string]: number } = {};
 
-      props.tableData.forEach(row => {
-        props.columns.forEach(column => {
+      // TODO: better logic for this
+      for (const row of props.tableData) {
+        for (const column of props.columns) {
           let columnValue = row[column.key];
-          if (columnValue) {
-            // Check if columnValue is an ISO 8601 date string
-            if (!isNaN(Date.parse(columnValue))) {
-              // Estimate length as "2 minutes ago"
-              columnValue = "2 minutes ago";
-            }
-            if (columnValue.length > (maxColumnLengths[column.key] || 0)) {
-              maxColumnLengths[column.key] = columnValue.length;
+          const lowerCaseKey = column.key.toLowerCase();
+          console.log("dasd", props.tableAndTabName, lowerCaseKey, lowerCaseKey.includes("spec"))
+          if (!columnValue) continue;
+
+          if (lowerCaseKey.includes("date") || lowerCaseKey.includes("time")) {
+            columnValue = "abcdefghij";
+          } else if (lowerCaseKey.includes("spec") || lowerCaseKey.includes("chain")) {
+            columnValue = "abcdefghij";
+          } else if (lowerCaseKey.includes("message")) {
+            columnValue = "abcdefghijklmnopqrstuvwxyz1234567890abcdefghij"; // 50 chars
+          } else {
+            columnValue = columnValue.toString().replace(/\<.*?\>/g, '');
+
+            const iso8601Pattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z$/;
+            if (iso8601Pattern.test(columnValue)) {
+              columnValue = "abcdefghij";
             }
           }
-        });
-      });
+
+          if (columnValue.length <= 10) columnValue = "abcdefghij"
+
+          if (columnValue.length > (maxColumnLengths[column.key] || 0)) {
+            maxColumnLengths[column.key] = columnValue.length;
+          }
+        }
+      }
 
       const totalLength = Object.values(maxColumnLengths).reduce((a, b) => a + b, 0);
       const columnLengthPercentages: { [key: string]: number } = {};

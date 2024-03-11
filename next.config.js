@@ -6,7 +6,6 @@ const nextConfig = {
   transpilePackages: ["@radix-ui/themes"],
   env: {
     REST_URL: process.env.REST_URL,
-    REST_URL_CYBERTRON: process.env.REST_URL_CYBERTRON,
   },
 };
 

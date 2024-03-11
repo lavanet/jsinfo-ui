@@ -13,6 +13,7 @@ import Loading from "../components/loading";
 import {
   SetLastDotHighInChartData,
   SetLastPointToLineInChartOptions,
+  ConvertToChainName,
 } from "../src/utils";
 
 const COLORS = [
@@ -125,6 +126,41 @@ export default function Home() {
 
   SetLastDotHighInChartData(chartData);
 
+  function transformRelayDataForRelayTable(data) {
+    if (!data) return [];
+    const chainSums = {};
+    data.forEach((item) => {
+      if (!chainSums[item.chainId]) {
+        chainSums[item.chainId] = {
+          chainId: item.chainId,
+          cuSum: 0,
+          relaySum: 0,
+        };
+      }
+      chainSums[item.chainId].cuSum += Number(item.cuSum);
+      chainSums[item.chainId].relaySum += Number(item.relaySum);
+    });
+    return Object.values(chainSums).map((item) => ({
+      chainId: item.chainId,
+      cuSum: Math.round(item.cuSum),
+      relaySum: Math.round(item.relaySum),
+    }));
+  }
+
+  const transformedRelayDataForRelayTable = transformRelayDataForRelayTable(
+    data.data
+  );
+
+  function transformSpecsData(data) {
+    if (!data) return [];
+    return data.map((item) => ({
+      ...item,
+      chainName: ConvertToChainName(item.chainId),
+    }));
+  }
+
+  const transformedSpecData = transformSpecsData(data.allSpecs);
+
   return (
     <>
       <Card>
@@ -148,16 +184,9 @@ export default function Home() {
               {formatter.format(data.relaySum)} Relays
             </Text>
           </Card>
-
           <Card>
             <Text as="div" size="2" weight="bold">
               {formatter.format(data.cuSum)} CU
-            </Text>
-          </Card>
-
-          <Card>
-            <Text as="div" size="2" weight="bold">
-              Rewards: {formatter.format(data.rewardSum)} ULAVA
             </Text>
           </Card>
           <Card>
@@ -174,6 +203,7 @@ export default function Home() {
         <Tabs.Root defaultValue="providers">
           <Tabs.List>
             <Tabs.Trigger value="providers">Providers</Tabs.Trigger>
+            <Tabs.Trigger value="relays">Relays</Tabs.Trigger>
             <Tabs.Trigger value="chains">Chains</Tabs.Trigger>
           </Tabs.List>
           <Box>
@@ -199,10 +229,24 @@ export default function Home() {
 
             <SortableTableInATabComponent
               columns={[
+                { key: "chainId", name: "Chain ID" },
+                { key: "relaySum", name: "Total Relays" },
+                { key: "cuSum", name: "CU Sum" },
+              ]}
+              data={transformedRelayDataForRelayTable}
+              defaultSortKey="relaySum|desc"
+              tableAndTabName="relays"
+              pkey="chainId"
+              pkeyUrl="chain"
+            />
+
+            <SortableTableInATabComponent
+              columns={[
                 { key: "chainId", name: "Spec" },
+                { key: "chainName", name: "Chain Name" },
                 { key: "relaySum", name: "Total Relays" },
               ]}
-              data={data.allSpecs}
+              data={transformedSpecData}
               defaultSortKey="relaySum|desc"
               tableAndTabName="chains"
               pkey="chainId"
