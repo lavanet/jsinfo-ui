@@ -222,11 +222,11 @@ export function SetLastPointToLineInChartOptions(chartOptions) {
   return chartOptions;
 }
 
-export function getNestedProperty(obj, key) {
+export function GetNestedProperty(obj, key) {
   if (key.includes(",")) {
     return key
       .split(",")
-      .map((k) => getNestedProperty(obj, k.trim()))
+      .map((k) => GetNestedProperty(obj, k.trim()))
       .join("_");
   }
 
@@ -236,4 +236,73 @@ export function getNestedProperty(obj, key) {
     }
     return o[i];
   }, obj);
+}
+
+export function ConvertToChainName(abbreviation) {
+  const mapping = {
+    ETH1: "Ethereum",
+    EVMOS: "Evmos",
+    NEAR: "Near Protocol",
+    NEART: "Near Protocol Testnet",
+    EVMOST: "Evmos Testnet",
+    ARB1: "Arbitrum",
+    POLYGON1: "Polygon",
+    CELO: "Celo",
+    STRK: "Strike",
+    AXELAR: "Axelar",
+    AXELART: "Axelar Testnet",
+    COS5: "Cosmos",
+    STRKT: "Strike Testnet",
+    BERAT: "Berachain Testnet",
+    APT1: "Aptos",
+    SOLANA: "Solana",
+    POLYGON1T: "Polygon Testnet",
+    OPTM: "Optimism",
+    BASE: "Base",
+    ARBN: "Arbitrum Nova",
+    AVAX: "Avalanche",
+    LAV1: "Lavachain",
+    GTH1: "Goerli Testnet (Ethereum)",
+    COS3: "Cosmos SDK v3",
+    SEP1: "Sepolia Testnet (Ethereum)",
+    AGRT: "Agoric Testnet",
+    AGR: "Agoric",
+    FTM250: "Fantom",
+    CANTO: "Canto",
+    BASET: "Base Testnet",
+    JUN1: "Juno",
+    OPTMT: "Optimism Testnet",
+    ALFAJORES: "Celo Alfajores Testnet",
+    BLAST: "Blastchain",
+    FVM: "FuelVM",
+    COS4: "Cosmos SDK v4",
+    SOLANAT: "Solana Testnet",
+    STRKS: "Strike SDK",
+    BSC: "Binance Smart Chain",
+    JUNT1: "Juno Testnet",
+    COSMOSWASM: "Cosmos Wasm",
+    KOII: "Koii",
+    KOIIT: "Koii Testnet",
+    BSCT: "Binance Smart Chain Testnet",
+    IBC: "Inter-Blockchain Communication",
+    MANTLE: "Mantle",
+    STRGZ: "Stargaze",
+    STRGZT: "Stargaze Testnet",
+    AGR: "Agoric",
+    AGRT: "Agoric Testnet",
+    BLASTSP: "Blastchain Special",
+    CELO: "Celo",
+    COS5T: "Cosmos Testnet",
+    OPTMS: "Optimism Staging",
+    ARBS: "Arbitrum Staging",
+    FUSE: "Fuse",
+    SUIT: "Sui",
+    COSMOSSDKFULL: "Cosmos SDK Full",
+    COSMOSSDK: "Cosmos SDK",
+    SQDSUBGRAPH: "Squad Subgraph",
+    FTM4002: "Fantom Testnet",
+    MORALIS: "Moralis",
+  };
+
+  return mapping[abbreviation] || "";
 }

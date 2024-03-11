@@ -285,11 +285,11 @@ export class CachedPaginationFetcher {
     }
 
     static deserialize(paginationString: string): CachedPaginationFetcher {
-        const [sortKey, direction, page, itemCountPerPage] = CachedPaginationFetcher.parsePaginationString(paginationString);
+        const [sortKey, direction, page, itemCountPerPage] = CachedPaginationFetcher.ParsePaginationString(paginationString);
         return new CachedPaginationFetcher(sortKey === '-' ? '' : sortKey, direction, Number(page), Number(itemCountPerPage));
     }
 
-    private static parsePaginationString(paginationString: string): [string, "ascending" | "descending", string, string] {
+    private static ParsePaginationString(paginationString: string): [string, "ascending" | "descending", string, string] {
         let parts = paginationString.split(',');
 
         if (parts.length === 3) {
