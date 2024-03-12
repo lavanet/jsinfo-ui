@@ -51,7 +51,7 @@ export default function Home() {
         type: "linear",
         display: true,
         position: "left",
-        stacked: false,
+        stacked: true,
       },
       y1: {
         type: "linear",
@@ -64,6 +64,11 @@ export default function Home() {
         grid: {
           drawOnChartArea: false, // only want the grid lines for one axis to show up
         },
+      },
+      y2: {
+        type: "linear",
+        display: false, // hide this axis
+        stacked: false, // not stacked
       },
       x: {
         ticks: {
@@ -87,7 +92,7 @@ export default function Home() {
         fill: false,
         borderColor: COLORS[i],
         backgroundColor: COLORS[i],
-        yAxisID: "y",
+        yAxisID: metric["chainId"] === "All Chains" ? "y2" : "y",
       };
       i++;
       if (i > COLORS.length - 1) {
