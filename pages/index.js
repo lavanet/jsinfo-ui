@@ -51,7 +51,7 @@ export default function Home() {
         type: "linear",
         display: true,
         position: "left",
-        stacked: true,
+        stacked: false,
       },
       y1: {
         type: "linear",
