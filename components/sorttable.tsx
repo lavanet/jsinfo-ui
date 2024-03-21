@@ -9,6 +9,8 @@ import { Column, SortConfig, RowFormatters, SortableData, SortAndPaginationConfi
 import { ErrorBoundary } from '../src/classes';
 import { GetNestedProperty } from '../src/utils';
 
+const JSINFO_QUERY_DEFAULT_ITEMS_PER_PAGE = 20
+
 const useSortableData = (items: any[], defaultSortKey: string): SortableData => {
   if (!Array.isArray(items)) {
     console.error('Invalid type for items. Expected array, received', items);
@@ -326,7 +328,7 @@ const SortableTableContent: React.FC<SortableTableProps> = (props) => {
         for (const column of props.columns) {
           let columnValue = row[column.key];
           const lowerCaseKey = column.key.toLowerCase();
-          console.log("dasd", props.tableAndTabName, lowerCaseKey, lowerCaseKey.includes("spec"))
+          // console.log("dasd", props.tableAndTabName, lowerCaseKey, lowerCaseKey.includes("spec"))
           if (!columnValue) continue;
 
           if (lowerCaseKey.includes("date") || lowerCaseKey.includes("time")) {
@@ -491,6 +493,7 @@ export const SortableTableComponent: React.FC<SortableTableComponentProps> = (pr
 type DataKeySortableTableComponentProps = {
   columns: Column[];
   dataKey: string;
+  useLastUrlPathInKey: boolean;
   defaultSortKey: string;
   tableAndTabName: string;
   pkey: string;
@@ -583,16 +586,19 @@ export const DataKeySortableTableComponent: React.FC<DataKeySortableTableCompone
 
   const [sortAndPaginationConfig, setSortAndPaginationConfig] = useState<SortAndPaginationConfig | null>(null);
   const { data, loading, error, requestSort, setPage } =
-    CachedPaginationFetcher.usePagination({ paginationString: props.defaultSortKey + ",1,20", dataKey: props.dataKey, setSortAndPaginationConfig });
+    CachedPaginationFetcher.usePagination({
+      paginationString: props.defaultSortKey + ",1," + JSINFO_QUERY_DEFAULT_ITEMS_PER_PAGE,
+      dataKey: props.dataKey,
+      useLastUrlPathInKey: props.useLastUrlPathInKey,
+      setSortAndPaginationConfig: setSortAndPaginationConfig,
+    });
 
   const [componentData, setComponentData] = useState(<div></div>);
   const [loadingTimeout, setLoadingTimeout] = useState<NodeJS.Timeout | null>(null);
 
   const loadingRef = useRef(loading);
-  const dataRef = useRef(sortAndPaginationConfig && data);
 
   loadingRef.current = loading;
-  dataRef.current = sortAndPaginationConfig && data;
 
   // console.log("DataKeySortableTableComponent", props.tableAndTabName, {
   //   sortAndPaginationConfig,
@@ -617,10 +623,14 @@ export const DataKeySortableTableComponent: React.FC<DataKeySortableTableCompone
       if (error) {
         setComponentData(<div>Error: {error}</div>);
       } else if (sortAndPaginationConfig && data) {
+        let dataObject = data;
+        if (typeof data === 'object' && Object.keys(data).length === 1 && 'data' in data) {
+          dataObject = data.data;
+        }
         setComponentData(
           <ErrorBoundary>
             <SortableTableContent
-              tableData={data}
+              tableData={dataObject}
               requestSort={requestSort}
               sortConfig={ConvertToSortConfig(sortAndPaginationConfig)}
               columns={[...props.columns]}
@@ -674,6 +684,7 @@ export const SortableTableInATabComponent: React.FC<SortableTableInATabComponent
 type DataKeySortableTableInATabComponentProps = {
   columns: Column[];
   dataKey: string;
+  useLastUrlPathInKey: boolean;
   defaultSortKey: string;
   tableAndTabName: string;
   pkey: string;
@@ -688,6 +699,7 @@ export const DataKeySortableTableInATabComponent: React.FC<DataKeySortableTableI
       <DataKeySortableTableComponent
         columns={props.columns}
         dataKey={props.dataKey}
+        useLastUrlPathInKey={props.useLastUrlPathInKey}
         defaultSortKey={props.defaultSortKey}
         tableAndTabName={props.tableAndTabName}
         pkey={props.pkey}

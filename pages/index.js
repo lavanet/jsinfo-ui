@@ -5,7 +5,10 @@ import Dayjs from "dayjs";
 import relativeTIme from "dayjs/plugin/relativeTime";
 Dayjs.extend(relativeTIme);
 const formatter = Intl.NumberFormat("en");
-import { SortableTableInATabComponent } from "../components/sorttable";
+import {
+  SortableTableInATabComponent,
+  DataKeySortableTableInATabComponent,
+} from "../components/sorttable";
 import { ReactiveChart } from "../components/reactivechart";
 import React from "react";
 import { useCachedFetch } from "../src/hooks/useCachedFetch";
@@ -15,6 +18,8 @@ import {
   SetLastPointToLineInChartOptions,
   ConvertToChainName,
 } from "../src/utils";
+
+import { GetRestUrl } from "../src/utils";
 
 const COLORS = [
   "#191111",
@@ -207,12 +212,27 @@ export default function Home() {
       <Card>
         <Tabs.Root defaultValue="providers">
           <Tabs.List>
-            <Tabs.Trigger value="providers">Providers</Tabs.Trigger>
+            <Tabs.Trigger value="providers">
+              Providers
+              <a
+                href={`${GetRestUrl()}/indexProvidersCsv`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  width="20"
+                  height="20"
+                  src="https://img.icons8.com/ios-filled/20/D3580C/export-csv.png"
+                  alt="export-csv"
+                  style={{ paddingLeft: "10px", paddingTop: "5px" }}
+                />
+              </a>
+            </Tabs.Trigger>
             <Tabs.Trigger value="relays">Relays</Tabs.Trigger>
             <Tabs.Trigger value="chains">Chains</Tabs.Trigger>
           </Tabs.List>
           <Box>
-            <SortableTableInATabComponent
+            <DataKeySortableTableInATabComponent
               columns={[
                 { key: "moniker", name: "Moniker" },
                 { key: "addr", name: "Provider Address" },
@@ -224,12 +244,13 @@ export default function Home() {
                 },
                 { key: "totalStake", name: "Total Stake" },
               ]}
-              data={data.topProviders}
               defaultSortKey="totalStake|desc"
               tableAndTabName="providers"
               pkey="addr"
               pkeyUrl="provider"
               firstColumn="moniker"
+              dataKey="indexProviders"
+              useLastUrlPathInKey={false}
             />
 
             <SortableTableInATabComponent
