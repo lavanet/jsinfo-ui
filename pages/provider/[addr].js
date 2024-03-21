@@ -11,10 +11,7 @@ import {
   SetLastDotHighInChartData,
   SetLastPointToLineInChartOptions,
 } from "../../src/utils";
-import {
-  SortableTableInATabComponent,
-  DataKeySortableTableInATabComponent,
-} from "../../components/sorttable";
+import { DataKeySortableTableInATabComponent } from "../../components/sorttable";
 import { ReactiveChart } from "../../components/reactivechart";
 import { useCachedFetch } from "../../src/hooks/useCachedFetch";
 import Loading from "../../components/loading";
@@ -229,10 +226,70 @@ export default function Provider() {
                 />
               </a>
             </Tabs.Trigger>
-            <Tabs.Trigger value="stakes">Stakes</Tabs.Trigger>
-            <Tabs.Trigger value="events">Events</Tabs.Trigger>
-            <Tabs.Trigger value="rewards">Rewards</Tabs.Trigger>
-            <Tabs.Trigger value="reports">Reports</Tabs.Trigger>
+            <Tabs.Trigger value="stakes">
+              Stakes
+              <a
+                href={`${GetRestUrl()}/providerStakesCsv/${providerAddr}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  width="20"
+                  height="20"
+                  src="https://img.icons8.com/ios-filled/20/D3580C/export-csv.png"
+                  alt="export-csv"
+                  style={{ paddingLeft: "10px", paddingTop: "5px" }}
+                />
+              </a>
+            </Tabs.Trigger>
+            <Tabs.Trigger value="events">
+              Events
+              <a
+                href={`${GetRestUrl()}/providerEventsCsv/${providerAddr}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  width="20"
+                  height="20"
+                  src="https://img.icons8.com/ios-filled/20/D3580C/export-csv.png"
+                  alt="export-csv"
+                  style={{ paddingLeft: "10px", paddingTop: "5px" }}
+                />
+              </a>
+            </Tabs.Trigger>
+            <Tabs.Trigger value="rewards">
+              Rewards
+              <a
+                href={`${GetRestUrl()}/providerRewardsCsv/${providerAddr}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  width="20"
+                  height="20"
+                  src="https://img.icons8.com/ios-filled/20/D3580C/export-csv.png"
+                  alt="export-csv"
+                  style={{ paddingLeft: "10px", paddingTop: "5px" }}
+                />
+              </a>
+            </Tabs.Trigger>
+            <Tabs.Trigger value="reports">
+              Reports
+              <a
+                href={`${GetRestUrl()}/providerReportsCsv/${providerAddr}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  width="20"
+                  height="20"
+                  src="https://img.icons8.com/ios-filled/20/D3580C/export-csv.png"
+                  alt="export-csv"
+                  style={{ paddingLeft: "10px", paddingTop: "5px" }}
+                />
+              </a>
+            </Tabs.Trigger>
           </Tabs.List>
           <Box>
             <DataKeySortableTableInATabComponent
@@ -244,6 +301,7 @@ export default function Provider() {
                 { key: "message", name: "Message" },
               ]}
               dataKey="providerHealth"
+              useLastUrlPathInKey={true}
               defaultSortKey="timestamp|desc"
               tableAndTabName="health"
               pkey="id"
@@ -273,7 +331,7 @@ export default function Provider() {
               }}
             />
 
-            <SortableTableInATabComponent
+            <DataKeySortableTableInATabComponent
               columns={[
                 { key: "events.eventType", name: "Event Type" },
                 { key: "blocks.height", name: "Block Height" },
@@ -288,7 +346,8 @@ export default function Provider() {
                 { key: "events.t2", name: "t2" },
                 { key: "events.t3", name: "t3" },
               ]}
-              data={provider.events}
+              dataKey="providerEvents"
+              useLastUrlPathInKey={true}
               defaultSortKey="blocks.datetime|desc"
               tableAndTabName="events"
               pkey="events.id"
@@ -317,7 +376,7 @@ export default function Provider() {
               }}
             />
 
-            <SortableTableInATabComponent
+            <DataKeySortableTableInATabComponent
               columns={[
                 { key: "specId", name: "Spec" },
                 { key: "status", name: "Status" },
@@ -326,7 +385,8 @@ export default function Provider() {
                 { key: "extensions", name: "Extensions" },
                 { key: "stake", name: "Stake" },
               ]}
-              data={provider.stakes}
+              dataKey="providerStakes"
+              useLastUrlPathInKey={true}
               defaultSortKey="specId"
               tableAndTabName="stakes"
               pkey="specId,provider"
@@ -340,7 +400,7 @@ export default function Provider() {
               }}
             />
 
-            <SortableTableInATabComponent
+            <DataKeySortableTableInATabComponent
               columns={[
                 { key: "relay_payments.specId", name: "Spec" },
                 { key: "relay_payments.blockId", name: "Block" },
@@ -352,7 +412,8 @@ export default function Provider() {
                 { key: "relay_payments.qosSync", name: "QoS" },
                 { key: "relay_payments.qosSyncExc", name: "Excellence" },
               ]}
-              data={provider.payments}
+              dataKey="providerRewards"
+              useLastUrlPathInKey={true}
               defaultSortKey="blocks.datetime|desc"
               tableAndTabName="rewards"
               pkey="relay_payments.id"
@@ -393,7 +454,7 @@ export default function Provider() {
               }}
             />
 
-            <SortableTableInATabComponent
+            <DataKeySortableTableInATabComponent
               columns={[
                 { key: "provider_reported.blockId", name: "Block" },
                 { key: "blocks.datetime", name: "Time" },
@@ -405,7 +466,8 @@ export default function Provider() {
                 { key: "provider_reported.errors", name: "Errors" },
                 { key: "provider_reported.project", name: "Project" },
               ]}
-              data={provider.reports}
+              dataKey="providerReports"
+              useLastUrlPathInKey={true}
               defaultSortKey="blocks.datetime|desc"
               tableAndTabName="reports"
               pkey="provider_reported.provider,provider_reported.blockId"

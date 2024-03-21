@@ -188,6 +188,10 @@ async function fetchItemCount(apiurl: string, updateItemCount: (count: number) =
     const maxRetries = 3;
     let retries = 0;
 
+    if (apiurl.endsWith("/")) {
+        apiurl = apiurl.slice(0, -1);
+    }
+
     while (retries < maxRetries) {
         try {
             const res = await axiosInstance.get("item-count/" + apiurl, {
@@ -346,11 +350,14 @@ export class CachedPaginationFetcher {
     }
 
     static usePagination(
-        { paginationString, dataKey, setSortAndPaginationConfig }:
-            { paginationString: string, dataKey: string, setSortAndPaginationConfig: React.Dispatch<React.SetStateAction<SortAndPaginationConfig | null>> }) {
+        { paginationString, dataKey, setSortAndPaginationConfig, useLastUrlPathInKey }:
+            {
+                paginationString: string, dataKey: string, useLastUrlPathInKey: boolean,
+                setSortAndPaginationConfig: React.Dispatch<React.SetStateAction<SortAndPaginationConfig | null>>
+            }) {
 
         const [cachedPaginationFetcher, setCachedPaginationFetcher] = useState<CachedPaginationFetcher>(() => CachedPaginationFetcher.deserialize(paginationString));
-        const { data, loading, error } = useCachedFetch({ dataKey: dataKey, useLastUrlPathInKey: true, cachedPaginationFetcher: cachedPaginationFetcher });
+        const { data, loading, error } = useCachedFetch({ dataKey: dataKey, useLastUrlPathInKey: useLastUrlPathInKey, cachedPaginationFetcher: cachedPaginationFetcher });
 
         const [totalItemCount, setTotalItemCount] = useState<number | null>(null);
 
