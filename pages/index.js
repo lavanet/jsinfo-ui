@@ -228,7 +228,6 @@ export default function Home() {
                 />
               </a>
             </Tabs.Trigger>
-            <Tabs.Trigger value="relays">Relays</Tabs.Trigger>
             <Tabs.Trigger value="chains">Chains</Tabs.Trigger>
           </Tabs.List>
           <Box>
@@ -251,19 +250,6 @@ export default function Home() {
               firstColumn="moniker"
               dataKey="indexProviders"
               useLastUrlPathInKey={false}
-            />
-
-            <SortableTableInATabComponent
-              columns={[
-                { key: "chainId", name: "Chain ID" },
-                { key: "relaySum", name: "Total Relays" },
-                { key: "cuSum", name: "CU Sum" },
-              ]}
-              data={transformedRelayDataForRelayTable}
-              defaultSortKey="relaySum|desc"
-              tableAndTabName="relays"
-              pkey="chainId"
-              pkeyUrl="chain"
             />
 
             <SortableTableInATabComponent
