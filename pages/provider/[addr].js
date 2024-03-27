@@ -226,7 +226,7 @@ export default function Provider() {
                 />
               </a>
             </Tabs.Trigger>
-            <Tabs.Trigger value="errors">
+            {/* <Tabs.Trigger value="errors">
               Errors
               <a
                 href={`${GetRestUrl()}/providerErrorsCsv/${providerAddr}`}
@@ -241,7 +241,7 @@ export default function Provider() {
                   style={{ paddingLeft: "10px", paddingTop: "5px" }}
                 />
               </a>
-            </Tabs.Trigger>
+            </Tabs.Trigger> */}
             <Tabs.Trigger value="stakes">
               Stakes
               <a
@@ -347,7 +347,7 @@ export default function Provider() {
               }}
             />
 
-            <DataKeySortableTableInATabComponent
+            {/* <DataKeySortableTableInATabComponent
               columns={[
                 { key: "date", name: "Date" },
                 { key: "spec", name: "Spec" },
@@ -362,7 +362,7 @@ export default function Provider() {
               rowFormatters={{
                 date: (data) => Dayjs(new Date(data.timestamp)).fromNow(),
               }}
-            />
+            /> */}
 
             <DataKeySortableTableInATabComponent
               columns={[
