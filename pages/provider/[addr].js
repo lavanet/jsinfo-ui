@@ -226,6 +226,22 @@ export default function Provider() {
                 />
               </a>
             </Tabs.Trigger>
+            <Tabs.Trigger value="errors">
+              Errors
+              <a
+                href={`${GetRestUrl()}/providerErrorsCsv/${providerAddr}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  width="20"
+                  height="20"
+                  src="https://img.icons8.com/ios-filled/20/D3580C/export-csv.png"
+                  alt="export-csv"
+                  style={{ paddingLeft: "10px", paddingTop: "5px" }}
+                />
+              </a>
+            </Tabs.Trigger>
             <Tabs.Trigger value="stakes">
               Stakes
               <a
@@ -328,6 +344,23 @@ export default function Provider() {
                   ) : (
                     data.status
                   ),
+              }}
+            />
+
+            <DataKeySortableTableInATabComponent
+              columns={[
+                { key: "date", name: "Date" },
+                { key: "spec", name: "Spec" },
+                { key: "error", name: "Error" },
+              ]}
+              dataKey="providerErrors"
+              useLastUrlPathInKey={true}
+              defaultSortKey="timestamp|desc"
+              tableAndTabName="errors"
+              pkey="id"
+              pkeyUrl="none"
+              rowFormatters={{
+                date: (data) => Dayjs(new Date(data.timestamp)).fromNow(),
               }}
             />
 
