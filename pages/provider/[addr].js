@@ -360,7 +360,7 @@ export default function Provider() {
               pkey="id"
               pkeyUrl="none"
               rowFormatters={{
-                date: (data) => Dayjs(new Date(data.timestamp)).fromNow(),
+                date: (data) => Dayjs(new Date(data.date)).fromNow(),
               }}
             />
 
