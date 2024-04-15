@@ -360,7 +360,13 @@ export default function Provider() {
               pkey="id"
               pkeyUrl="none"
               rowFormatters={{
-                date: (data) => Dayjs(new Date(data.date)).fromNow(),
+                date: (data) => {
+                  const minutesAgo = Dayjs().diff(
+                    Dayjs(new Date(data.date)),
+                    "minute"
+                  );
+                  return `${minutesAgo} minutes ago`;
+                },
               }}
             />
 
