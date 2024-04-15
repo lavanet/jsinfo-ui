@@ -1,8 +1,13 @@
-import { Flex, Text, Card, Box, Tabs, Container } from "@radix-ui/themes";
-import { SortableTableInATabComponent } from "../../components/sorttable";
-import { ReactiveChart } from "../../components/reactivechart";
+import { Flex, Text, Card, Box, Tabs } from "@radix-ui/themes";
+
 import { useCachedFetch } from "../../src/hooks/useCachedFetch";
-import Loading from "../../components/loading";
+
+import { SortableTableInATabComponent } from "../../components/SortTable";
+import { ReactiveChart } from "../../components/ReactiveChart";
+import Loading from "../../components/Loading";
+
+import dayjs from "dayjs";
+
 import {
   SetLastDotHighInChartData,
   SetLastPointToLineInChartOptions,
@@ -27,7 +32,8 @@ export default function Consumer() {
 
   const metricData = [];
   consumer.data.forEach((metric) => {
-    metricData.push({ x: metric["date"], y: metric["relaySum"] });
+    const formattedDate = dayjs(metric["date"]).format("MMM D");
+    metricData.push({ x: formattedDate, y: metric["relaySum"] });
   });
 
   chartData.datasets.push({
@@ -41,7 +47,7 @@ export default function Consumer() {
   SetLastDotHighInChartData(chartData);
 
   return (
-    <Container>
+    <>
       <Card>
         <Flex gap="3" align="center">
           <Box>
@@ -76,43 +82,44 @@ export default function Consumer() {
       </Card>
 
       <ReactiveChart data={chartData} options={chartOptions} />
+      <Card>
+        <Tabs.Root defaultValue="subscriptions">
+          <Tabs.List>
+            <Tabs.Trigger value="subscriptions">Subscriptions</Tabs.Trigger>
+            <Tabs.Trigger value="conflicts">Conflicts</Tabs.Trigger>
+          </Tabs.List>
+          <Box>
+            <SortableTableInATabComponent
+              columns={[
+                { key: "blockId", name: "height" },
+                { key: "duration", name: "duration" },
+                { key: "plan", name: "plan" },
+              ]}
+              data={consumer.subsBuy}
+              defaultSortKey="blockId"
+              tableAndTabName="subscriptions"
+              pkey="consumer,blockId,plan"
+              pkeyUrl="none"
+            />
 
-      <Tabs.Root defaultValue="subscriptions">
-        <Tabs.List>
-          <Tabs.Trigger value="subscriptions">Subscriptions</Tabs.Trigger>
-          <Tabs.Trigger value="conflicts">Conflicts</Tabs.Trigger>
-        </Tabs.List>
-        <Box>
-          <SortableTableInATabComponent
-            columns={[
-              { key: "blockId", name: "height" },
-              { key: "duration", name: "duration" },
-              { key: "plan", name: "plan" },
-            ]}
-            data={consumer.subsBuy} // assuming consumer is defined elsewhere
-            defaultSortKey="blockId"
-            tableAndTabName="subscriptions"
-            pkey="consumer,blockId,plan"
-            pkeyUrl="none"
-          />
-
-          <SortableTableInATabComponent
-            columns={[
-              { key: "specId", name: "specId" },
-              { key: "requestBlock", name: "requestBlock" },
-              { key: "apiInterface", name: "apiInterface" },
-              { key: "connectionType", name: "connectionType" },
-              { key: "requestData", name: "requestData" },
-              { key: "apiURL", name: "apiURL" },
-            ]}
-            data={consumer.conflicts}
-            defaultSortKey="requestBlock"
-            tableAndTabName="conflicts"
-            pkey="id"
-            pkeyUrl="none"
-          />
-        </Box>
-      </Tabs.Root>
-    </Container>
+            <SortableTableInATabComponent
+              columns={[
+                { key: "specId", name: "specId" },
+                { key: "requestBlock", name: "requestBlock" },
+                { key: "apiInterface", name: "apiInterface" },
+                { key: "connectionType", name: "connectionType" },
+                { key: "requestData", name: "requestData" },
+                { key: "apiURL", name: "apiURL" },
+              ]}
+              data={consumer.conflicts}
+              defaultSortKey="requestBlock"
+              tableAndTabName="conflicts"
+              pkey="id"
+              pkeyUrl="none"
+            />
+          </Box>
+        </Tabs.Root>
+      </Card>
+    </>
   );
 }

@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect, useRef } from 'react';
 import { Link, Table, Tabs } from '@radix-ui/themes';
 import React from 'react';
 import { CachedPaginationFetcher } from '../src/hooks/useCachedFetch';
-import Loading from './loading';
+import Loading from './Loading';
 import { Column, SortConfig, RowFormatters, SortableData, SortAndPaginationConfig, ConvertToSortConfig } from '../src/types';
 import { ErrorBoundary } from '../src/classes';
 import { GetNestedProperty } from '../src/utils';

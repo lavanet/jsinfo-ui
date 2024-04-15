@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { Flex, Text, Card, Box, Tabs } from "@radix-ui/themes";
-import { ReactiveChart } from "../../components/reactivechart";
-import { SortableTableInATabComponent } from "../../components/sorttable";
+import { ReactiveChart } from "../../components/ReactiveChart";
+import { SortableTableInATabComponent } from "../../components/SortTable";
 
 import {
   StatusToString,
@@ -12,14 +12,12 @@ import {
   SetLastPointToLineInChartOptions,
 } from "../../src/utils";
 
-import Dayjs from "dayjs";
-import relativeTIme from "dayjs/plugin/relativeTime";
+import { FormatTimeDifference } from "../../src/utils";
 import { useCachedFetch } from "../../src/hooks/useCachedFetch";
 
-Dayjs.extend(relativeTIme);
 const formatter = Intl.NumberFormat("en");
 
-import Loading from "../../components/loading";
+import Loading from "../../components/Loading";
 
 export default function Spec() {
   const { data, loading, error } = useCachedFetch({
@@ -132,7 +130,7 @@ export default function Spec() {
             </Text>
             <Text size="2" color="gray">
               {" "}
-              {Dayjs(new Date(data.datetime)).fromNow()}
+              {FormatTimeDifference(data.datetime)}
             </Text>
           </Box>
         </Flex>

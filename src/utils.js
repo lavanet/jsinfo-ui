@@ -1,3 +1,8 @@
+import Dayjs from "dayjs";
+import relativeTIme from "dayjs/plugin/relativeTime";
+Dayjs.extend(relativeTIme);
+const formatter = Intl.NumberFormat("en");
+
 export function GetRestUrl() {
   return process.env["REST_URL"];
 }
@@ -306,3 +311,18 @@ export function ConvertToChainName(abbreviation) {
 
   return mapping[abbreviation] || "";
 }
+
+export const FormatTimeDifference = (date) => {
+  const minutesAgo = Dayjs().diff(Dayjs(new Date(date)), "minute");
+  if (minutesAgo < 60) {
+    return `${minutesAgo} minutes ago`;
+  } else if (minutesAgo < 1440) {
+    // 1440 minutes in a day
+    let hoursAgo = (minutesAgo / 60).toFixed(1);
+    hoursAgo = hoursAgo.endsWith(".0") ? hoursAgo.slice(0, -2) : hoursAgo;
+    return `${hoursAgo} hours ago`;
+  }
+  let daysAgo = (minutesAgo / 1440).toFixed(1);
+  daysAgo = daysAgo.endsWith(".0") ? daysAgo.slice(0, -2) : daysAgo;
+  return `${daysAgo} days ago`;
+};

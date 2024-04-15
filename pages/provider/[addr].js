@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { Flex, Text, Card, Box, Tabs } from "@radix-ui/themes";
-import Dayjs from "dayjs";
-import relativeTIme from "dayjs/plugin/relativeTime";
+
 import {
   StatusToString,
   GeoLocationToString,
@@ -11,14 +10,14 @@ import {
   SetLastDotHighInChartData,
   SetLastPointToLineInChartOptions,
 } from "../../src/utils";
-import { DataKeySortableTableInATabComponent } from "../../components/sorttable";
-import { ReactiveChart } from "../../components/reactivechart";
+
+import { DataKeySortableTableInATabComponent } from "../../components/SortTable";
+import { ReactiveChart } from "../../components/ReactiveChart";
 import { useCachedFetch } from "../../src/hooks/useCachedFetch";
-import Loading from "../../components/loading";
+import Loading from "../../components/Loading";
+import CsvButtonTabTrigger from "../../components/CsvButtonTabTrigger";
+import { FormatTimeDifference } from "../../src/utils";
 
-import { GetRestUrl } from "../../src/utils";
-
-Dayjs.extend(relativeTIme);
 const formatter = Intl.NumberFormat("en");
 
 const COLORS = [
@@ -165,7 +164,7 @@ export default function Provider() {
             </Text>
             <Text size="2" color="gray">
               {" "}
-              {Dayjs(new Date(provider.datetime)).fromNow()}
+              {FormatTimeDifference(provider.datetime)}
             </Text>
           </Box>
         </Flex>
@@ -210,102 +209,42 @@ export default function Provider() {
       <Card>
         <Tabs.Root defaultValue="health">
           <Tabs.List>
-            <Tabs.Trigger value="health">
+            <CsvButtonTabTrigger
+              value="health"
+              csvDownloadLink={`providerHealthCsv/${providerAddr}`}
+            >
               Health
-              <a
-                href={`${GetRestUrl()}/providerHealthCsv/${providerAddr}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  width="20"
-                  height="20"
-                  src="https://img.icons8.com/ios-filled/20/D3580C/export-csv.png"
-                  alt="export-csv"
-                  style={{ paddingLeft: "10px", paddingTop: "5px" }}
-                />
-              </a>
-            </Tabs.Trigger>
-            <Tabs.Trigger value="errors">
+            </CsvButtonTabTrigger>
+            <CsvButtonTabTrigger
+              value="errors"
+              csvDownloadLink={`providerErrorsCsv/${providerAddr}`}
+            >
               Errors
-              <a
-                href={`${GetRestUrl()}/providerErrorsCsv/${providerAddr}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  width="20"
-                  height="20"
-                  src="https://img.icons8.com/ios-filled/20/D3580C/export-csv.png"
-                  alt="export-csv"
-                  style={{ paddingLeft: "10px", paddingTop: "5px" }}
-                />
-              </a>
-            </Tabs.Trigger>
-            <Tabs.Trigger value="stakes">
+            </CsvButtonTabTrigger>
+            <CsvButtonTabTrigger
+              value="stakes"
+              csvDownloadLink={`providerStakesCsv/${providerAddr}`}
+            >
               Stakes
-              <a
-                href={`${GetRestUrl()}/providerStakesCsv/${providerAddr}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  width="20"
-                  height="20"
-                  src="https://img.icons8.com/ios-filled/20/D3580C/export-csv.png"
-                  alt="export-csv"
-                  style={{ paddingLeft: "10px", paddingTop: "5px" }}
-                />
-              </a>
-            </Tabs.Trigger>
-            <Tabs.Trigger value="events">
+            </CsvButtonTabTrigger>
+            <CsvButtonTabTrigger
+              value="events"
+              csvDownloadLink={`providerEventsCsv/${providerAddr}`}
+            >
               Events
-              <a
-                href={`${GetRestUrl()}/providerEventsCsv/${providerAddr}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  width="20"
-                  height="20"
-                  src="https://img.icons8.com/ios-filled/20/D3580C/export-csv.png"
-                  alt="export-csv"
-                  style={{ paddingLeft: "10px", paddingTop: "5px" }}
-                />
-              </a>
-            </Tabs.Trigger>
-            <Tabs.Trigger value="rewards">
+            </CsvButtonTabTrigger>
+            <CsvButtonTabTrigger
+              value="rewards"
+              csvDownloadLink={`providerRewardsCsv/${providerAddr}`}
+            >
               Rewards
-              <a
-                href={`${GetRestUrl()}/providerRewardsCsv/${providerAddr}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  width="20"
-                  height="20"
-                  src="https://img.icons8.com/ios-filled/20/D3580C/export-csv.png"
-                  alt="export-csv"
-                  style={{ paddingLeft: "10px", paddingTop: "5px" }}
-                />
-              </a>
-            </Tabs.Trigger>
-            <Tabs.Trigger value="reports">
+            </CsvButtonTabTrigger>
+            <CsvButtonTabTrigger
+              value="reports"
+              csvDownloadLink={`providerReportsCsv/${providerAddr}`}
+            >
               Reports
-              <a
-                href={`${GetRestUrl()}/providerReportsCsv/${providerAddr}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  width="20"
-                  height="20"
-                  src="https://img.icons8.com/ios-filled/20/D3580C/export-csv.png"
-                  alt="export-csv"
-                  style={{ paddingLeft: "10px", paddingTop: "5px" }}
-                />
-              </a>
-            </Tabs.Trigger>
+            </CsvButtonTabTrigger>
           </Tabs.List>
           <Box>
             <DataKeySortableTableInATabComponent
@@ -323,7 +262,9 @@ export default function Provider() {
               pkey="id"
               pkeyUrl="none"
               rowFormatters={{
-                timestamp: (data) => Dayjs(new Date(data.timestamp)).fromNow(),
+                timestamp: (data) => {
+                  return FormatTimeDifference(data.timestamp);
+                },
                 spec: (data) => (
                   <Link href={`/spec/${data.spec}`}>{data.spec}</Link>
                 ),
@@ -355,17 +296,25 @@ export default function Provider() {
               ]}
               dataKey="providerErrors"
               useLastUrlPathInKey={true}
-              defaultSortKey="timestamp|desc"
+              defaultSortKey="date|desc"
               tableAndTabName="errors"
               pkey="id"
               pkeyUrl="none"
               rowFormatters={{
                 date: (data) => {
-                  const minutesAgo = Dayjs().diff(
-                    Dayjs(new Date(data.date)),
-                    "minute"
+                  return FormatTimeDifference(data.date);
+                },
+                error: (data) => {
+                  return (
+                    <div
+                      style={{
+                        wordBreak: "break-all",
+                        whiteSpace: "pre-wrap",
+                      }}
+                    >
+                      {data.error}
+                    </div>
                   );
-                  return `${minutesAgo} minutes ago`;
                 },
               }}
             />
@@ -411,7 +360,7 @@ export default function Provider() {
                   </Link>
                 ),
                 "blocks.datetime": (evt) =>
-                  Dayjs(new Date(evt.blocks.datetime)).fromNow(),
+                  FormatTimeDifference(evt.blocks.datetime),
               }}
             />
 
@@ -447,7 +396,6 @@ export default function Provider() {
                 { key: "relay_payments.consumer", name: "Consumer" },
                 { key: "relay_payments.relays", name: "Relays" },
                 { key: "relay_payments.cu", name: "CU" },
-                // { key: 'relay_payments.pay', name: 'Pay' },
                 { key: "relay_payments.qosSync", name: "QoS" },
                 { key: "relay_payments.qosSyncExc", name: "Excellence" },
               ]}
@@ -475,7 +423,7 @@ export default function Provider() {
                   </Link>
                 ),
                 "blocks.datetime": (payment) =>
-                  Dayjs(new Date(payment.blocks.datetime)).fromNow(),
+                  FormatTimeDifference(payment.blocks.datetime),
                 "relay_payments.consumer": (payment) => (
                   <Link href={`/consumer/${payment.relay_payments.consumer}`}>
                     {payment.relay_payments.consumer}
@@ -524,7 +472,7 @@ export default function Provider() {
                   </Link>
                 ),
                 "blocks.datetime": (report) =>
-                  Dayjs(new Date(report.blocks.datetime)).fromNow(),
+                  FormatTimeDifference(report.blocks.datetime),
               }}
             />
           </Box>

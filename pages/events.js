@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { Flex, Text, Card, Box, Tabs } from "@radix-ui/themes";
 import { EventTypeToString } from "../src/utils";
-import Dayjs from "dayjs";
-import relativeTIme from "dayjs/plugin/relativeTime";
-Dayjs.extend(relativeTIme);
-import { SortableTableInATabComponent } from "../components/sorttable";
+
+import { FormatTimeDifference } from "../src/utils";
+
+import { SortableTableInATabComponent } from "../components/SortTable";
 
 import { useCachedFetch } from "../src/hooks/useCachedFetch";
-import Loading from "../components/loading";
+import Loading from "../components/Loading";
 
 export default function Events() {
   const { data, loading, error } = useCachedFetch({ dataKey: "events" });
@@ -25,7 +25,7 @@ export default function Events() {
             </Text>
             <Text size="2" color="gray">
               {" "}
-              {Dayjs(new Date(data.datetime)).fromNow()}
+              {FormatTimeDifference(data.datetime)}
             </Text>
           </Box>
         </Flex>
@@ -89,7 +89,7 @@ export default function Events() {
                   </Link>
                 ),
                 "blocks.datetime": (evt) =>
-                  Dayjs(new Date(evt.blocks.datetime)).fromNow(),
+                  FormatTimeDifference(evt.blocks.datetime),
               }}
             />
 
@@ -102,7 +102,6 @@ export default function Events() {
                 { key: "relay_payments.consumer", name: "Consumer" },
                 { key: "relay_payments.relays", name: "Relays" },
                 { key: "relay_payments.cu", name: "CU" },
-                // { key: 'relay_payments.pay', name: 'Pay' },
                 { key: "relay_payments.qosSync", name: "QoS" },
                 { key: "relay_payments.qosSyncExc", name: "Excellence" },
               ]}
@@ -139,7 +138,7 @@ export default function Events() {
                   </Link>
                 ),
                 "blocks.datetime": (payment) =>
-                  Dayjs(new Date(payment.blocks.datetime)).fromNow(),
+                  FormatTimeDifference(payment.blocks.datetime),
                 "relay_payments.consumer": (payment) => (
                   <Link href={`/consumer/${payment.relay_payments.consumer}`}>
                     {payment.relay_payments.consumer}
@@ -198,7 +197,7 @@ export default function Events() {
                   </Link>
                 ),
                 "blocks.datetime": (report) =>
-                  Dayjs(new Date(report.blocks.datetime)).fromNow(),
+                  FormatTimeDifference(report.blocks.datetime),
                 "provider_reported.cu": (report) => report.provider_reported.cu,
                 "provider_reported.disconnections": (report) =>
                   report.provider_reported.disconnections,

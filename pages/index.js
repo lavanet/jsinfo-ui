@@ -1,25 +1,26 @@
 // jsinfo-ui/pages/index.js
 
 import { Flex, Text, Card, Box, Tabs } from "@radix-ui/themes";
-import Dayjs from "dayjs";
-import relativeTIme from "dayjs/plugin/relativeTime";
-Dayjs.extend(relativeTIme);
+
 const formatter = Intl.NumberFormat("en");
+
 import {
   SortableTableInATabComponent,
   DataKeySortableTableInATabComponent,
-} from "../components/sorttable";
-import { ReactiveChart } from "../components/reactivechart";
+} from "../components/SortTable";
+import { ReactiveChart } from "../components/ReactiveChart";
 import React from "react";
 import { useCachedFetch } from "../src/hooks/useCachedFetch";
-import Loading from "../components/loading";
+import Loading from "../components/Loading";
 import {
   SetLastDotHighInChartData,
   SetLastPointToLineInChartOptions,
   ConvertToChainName,
 } from "../src/utils";
 
-import { GetRestUrl } from "../src/utils";
+import CsvButtonTabTrigger from "../components/CsvButtonTabTrigger";
+
+import { FormatTimeDifference } from "../src/utils";
 
 const COLORS = [
   "#191111",
@@ -136,31 +137,6 @@ export default function Home() {
 
   SetLastDotHighInChartData(chartData);
 
-  function transformRelayDataForRelayTable(data) {
-    if (!data) return [];
-    const chainSums = {};
-    data.forEach((item) => {
-      if (!chainSums[item.chainId]) {
-        chainSums[item.chainId] = {
-          chainId: item.chainId,
-          cuSum: 0,
-          relaySum: 0,
-        };
-      }
-      chainSums[item.chainId].cuSum += Number(item.cuSum);
-      chainSums[item.chainId].relaySum += Number(item.relaySum);
-    });
-    return Object.values(chainSums).map((item) => ({
-      chainId: item.chainId,
-      cuSum: Math.round(item.cuSum),
-      relaySum: Math.round(item.relaySum),
-    }));
-  }
-
-  const transformedRelayDataForRelayTable = transformRelayDataForRelayTable(
-    data.data
-  );
-
   function transformSpecsData(data) {
     if (!data) return [];
     return data.map((item) => ({
@@ -181,7 +157,7 @@ export default function Home() {
             </Text>
             <Text size="2" color="gray">
               {" "}
-              {Dayjs(new Date(data.datetime)).fromNow()}
+              {FormatTimeDifference(data.datetime)}
             </Text>
           </Box>
         </Flex>
@@ -212,22 +188,12 @@ export default function Home() {
       <Card>
         <Tabs.Root defaultValue="providers">
           <Tabs.List>
-            <Tabs.Trigger value="providers">
+            <CsvButtonTabTrigger
+              value="providers"
+              csvDownloadLink="indexProvidersCsv"
+            >
               Providers
-              <a
-                href={`${GetRestUrl()}/indexProvidersCsv`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  width="20"
-                  height="20"
-                  src="https://img.icons8.com/ios-filled/20/D3580C/export-csv.png"
-                  alt="export-csv"
-                  style={{ paddingLeft: "10px", paddingTop: "5px" }}
-                />
-              </a>
-            </Tabs.Trigger>
+            </CsvButtonTabTrigger>
             <Tabs.Trigger value="chains">Chains</Tabs.Trigger>
           </Tabs.List>
           <Box>
