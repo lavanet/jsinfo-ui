@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Flex, Text, Card, Box, Tabs } from "@radix-ui/themes";
+import { Card, Box, Tabs } from "@radix-ui/themes";
 import { EventTypeToString } from "../src/utils";
 
 import { FormatTimeDifference } from "../src/utils";
@@ -8,6 +8,7 @@ import { SortableTableInATabComponent } from "../components/SortTable";
 
 import { useCachedFetch } from "../src/hooks/useCachedFetch";
 import Loading from "../components/Loading";
+import BlockWithDateCard from "../components/BlockWithDateCard";
 
 export default function Events() {
   const { data, loading, error } = useCachedFetch({ dataKey: "events" });
@@ -17,19 +18,7 @@ export default function Events() {
 
   return (
     <>
-      <Card>
-        <Flex gap="3" align="center">
-          <Box>
-            <Text size="2" weight="bold">
-              Block {data.height}
-            </Text>
-            <Text size="2" color="gray">
-              {" "}
-              {FormatTimeDifference(data.datetime)}
-            </Text>
-          </Box>
-        </Flex>
-      </Card>
+      <BlockWithDateCard blockData={data} />
       <Card>
         <Tabs.Root defaultValue="events">
           <Tabs.List>

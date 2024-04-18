@@ -12,7 +12,8 @@ import {
   SetLastPointToLineInChartOptions,
 } from "../../src/utils";
 
-import { FormatTimeDifference } from "../../src/utils";
+import BlockWithDateCard from "../../components/BlockWithDateCard";
+import TitledCard from "../../components/TitledCard";
 import { useCachedFetch } from "../../src/hooks/useCachedFetch";
 
 const formatter = Intl.NumberFormat("en");
@@ -122,46 +123,17 @@ export default function Spec() {
 
   return (
     <>
-      <Card>
-        <Flex gap="3" align="center">
-          <Box>
-            <Text size="2" weight="bold">
-              Block {data.height}
-            </Text>
-            <Text size="2" color="gray">
-              {" "}
-              {FormatTimeDifference(data.datetime)}
-            </Text>
-          </Box>
-        </Flex>
-      </Card>
+      <BlockWithDateCard blockData={data} />
       <Card>
         <Flex gap="3" justify="between">
-          <Card>
-            <Text as="div" size="2" weight="bold">
-              {data.specId} spec
-            </Text>
-          </Card>
-          <Card>
-            <Text as="div" size="2" weight="bold">
-              {data.stakes.length} Providers
-            </Text>
-          </Card>
-          <Card>
-            <Text as="div" size="2" weight="bold">
-              {formatter.format(data.cuSum)} CU
-            </Text>
-          </Card>
-          <Card>
-            <Text as="div" size="2" weight="bold">
-              {formatter.format(data.relaySum)} Relays
-            </Text>
-          </Card>
-          <Card>
-            <Text as="div" size="2" weight="bold">
-              {formatter.format(data.rewardSum)} ULAVA Rewards
-            </Text>
-          </Card>
+          <TitledCard title="spec" value={data.specId} />
+          <TitledCard title="Providers" value={data.stakes.length} />
+          <TitledCard title="CU" value={formatter.format(data.cuSum)} />
+          <TitledCard title="Relays" value={formatter.format(data.relaySum)} />
+          <TitledCard
+            title="Rewards"
+            value={`${formatter.format(data.rewardSum)} ULAVA`}
+          />
         </Flex>
       </Card>
       <ReactiveChart data={chartData} options={chartOptions} />

@@ -459,7 +459,7 @@ export const SortableTableComponent: React.FC<SortableTableComponentProps> = (pr
   if (props.data && props.data.length > 0) {
     const firstEntry = props.data[0];
     for (let column of props.columns) {
-      // skip the keys the go deep
+      // skip the keys that go deep
       if (column.key.includes('.')) {
         continue
       }
@@ -471,6 +471,14 @@ export const SortableTableComponent: React.FC<SortableTableComponentProps> = (pr
         }
       }
     }
+  }
+
+  if (props.data.length === 0) {
+    return (
+      <div style={{ padding: '1em', textAlign: 'center' }}>
+        <h2>No <span style={{ fontWeight: 'bold', textTransform: 'capitalize', color: 'grey' }}>{props.tableAndTabName}</span> data available</h2>
+      </div>
+    )
   }
 
   const { tableData, requestSort, sortConfig }: SortableData = useSortableData(props.data, props.defaultSortKey);
@@ -609,45 +617,65 @@ export const DataKeySortableTableComponent: React.FC<DataKeySortableTableCompone
   // });
 
   useEffect(() => {
-    if (loading) {
+    if (error) {
+      setComponentData(<div>Error: {error}</div>);
+      return
+    }
+
+    if (loading && !loadingTimeout) {
       setLoadingTimeout(setTimeout(() => {
         if (loadingRef.current) {
-          setComponentData(<Loading loadingText={`Loading ${props.tableAndTabName} data`} />);
+          setComponentData(<Loading loadingText={`Loading ${props.tableAndTabName.charAt(0).toUpperCase() + props.tableAndTabName.slice(1)} data`} />);
         }
       }, 200));
-    } else {
-      if (loadingTimeout) {
-        clearTimeout(loadingTimeout);
-        setLoadingTimeout(null);
-      }
-      if (error) {
-        setComponentData(<div>Error: {error}</div>);
-      } else if (sortAndPaginationConfig && data) {
-        let dataObject = data;
-        if (typeof data === 'object' && Object.keys(data).length === 1 && 'data' in data) {
-          dataObject = data.data;
-        }
+      return
+    }
+
+    if (loadingTimeout) {
+      clearTimeout(loadingTimeout);
+      setLoadingTimeout(null);
+    }
+
+    if (!data || !sortAndPaginationConfig) {
+      setComponentData(<div></div>)
+      return
+    }
+
+    let dataObject = data;
+    if (typeof data === 'object' && Object.keys(data).length === 1 && 'data' in data) {
+      dataObject = data.data;
+    }
+
+    if (dataObject.length === 0) {
+      if (dataObject.length === 0) {
         setComponentData(
-          <ErrorBoundary>
-            <SortableTableContent
-              tableData={dataObject}
-              requestSort={requestSort}
-              sortConfig={ConvertToSortConfig(sortAndPaginationConfig)}
-              columns={[...props.columns]}
-              tableAndTabName={props.tableAndTabName}
-              pkey={props.pkey}
-              pkeyUrl={props.pkeyUrl}
-              rowFormatters={props.rowFormatters}
-              firstColumn={props.firstColumn}
-            />
-            <PaginationControl
-              sortAndPaginationConfig={sortAndPaginationConfig}
-              setPage={setPage}
-            />
-          </ErrorBoundary>
+          <div style={{ padding: '1em', textAlign: 'center' }}>
+            <h2>No <span style={{ fontWeight: 'bold', textTransform: 'capitalize', color: 'grey' }}>{props.tableAndTabName}</span> data available</h2>
+          </div>
         );
+        return;
       }
     }
+
+    setComponentData(
+      <ErrorBoundary>
+        <SortableTableContent
+          tableData={dataObject}
+          requestSort={requestSort}
+          sortConfig={ConvertToSortConfig(sortAndPaginationConfig)}
+          columns={[...props.columns]}
+          tableAndTabName={props.tableAndTabName}
+          pkey={props.pkey}
+          pkeyUrl={props.pkeyUrl}
+          rowFormatters={props.rowFormatters}
+          firstColumn={props.firstColumn}
+        />
+        <PaginationControl
+          sortAndPaginationConfig={sortAndPaginationConfig}
+          setPage={setPage}
+        />
+      </ErrorBoundary>
+    );
   }, [loading, error, data, sortAndPaginationConfig]);
 
   return componentData;

@@ -5,7 +5,7 @@ import { useCachedFetch } from "../../src/hooks/useCachedFetch";
 import { SortableTableInATabComponent } from "../../components/SortTable";
 import { ReactiveChart } from "../../components/ReactiveChart";
 import Loading from "../../components/Loading";
-
+import TitledCard from "../../components/TitledCard";
 import dayjs from "dayjs";
 
 import {
@@ -50,12 +50,12 @@ export default function Consumer() {
     <>
       <Card>
         <Flex gap="3" align="center">
-          <Box>
-            <Text as="div" size="2" weight="bold">
-              {consumer.addr}
-            </Text>
+          <Box style={{ paddingLeft: "5px" }}>
             <Text as="div" size="2" color="gray">
               Consumer
+            </Text>
+            <Text as="div" size="2" weight="bold">
+              {consumer.addr}
             </Text>
           </Box>
         </Flex>
@@ -63,21 +63,9 @@ export default function Consumer() {
 
       <Card>
         <Flex gap="3" justify="between">
-          <Card>
-            <Text as="div" size="2" weight="bold">
-              cu sum: {consumer.cuSum}
-            </Text>
-          </Card>
-          <Card>
-            <Text as="div" size="2" weight="bold">
-              relay sum: {consumer.relaySum}
-            </Text>
-          </Card>
-          <Card>
-            <Text as="div" size="2" weight="bold">
-              pay sum: {consumer.rewardSum}
-            </Text>
-          </Card>
+          <TitledCard title="cu sum" value={consumer.cuSum} />
+          <TitledCard title="relay sum" value={consumer.relaySum} />
+          <TitledCard title="pay sum" value={consumer.rewardSum} />
         </Flex>
       </Card>
 

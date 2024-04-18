@@ -20,7 +20,8 @@ import {
 
 import CsvButtonTabTrigger from "../components/CsvButtonTabTrigger";
 
-import { FormatTimeDifference } from "../src/utils";
+import BlockWithDateCard from "../components/BlockWithDateCard";
+import TitledCard from "../components/TitledCard";
 
 const COLORS = [
   "#191111",
@@ -149,37 +150,19 @@ export default function Home() {
 
   return (
     <>
-      <Card>
-        <Flex gap="3" align="center">
-          <Box>
-            <Text size="2" weight="bold">
-              Block {data.height}
-            </Text>
-            <Text size="2" color="gray">
-              {" "}
-              {FormatTimeDifference(data.datetime)}
-            </Text>
-          </Box>
-        </Flex>
-      </Card>
+      <BlockWithDateCard blockData={data} />
 
       <Card>
         <Flex gap="3" justify="between">
-          <Card>
-            <Text as="div" size="2" weight="bold">
-              {formatter.format(data.relaySum)} Relays
-            </Text>
-          </Card>
-          <Card>
-            <Text as="div" size="2" weight="bold">
-              {formatter.format(data.cuSum)} CU
-            </Text>
-          </Card>
-          <Card>
-            <Text as="div" size="2" weight="bold">
-              Stake: {formatter.format(data.stakeSum)} ULAVA
-            </Text>
-          </Card>
+          <TitledCard
+            title="Relays"
+            value={`${formatter.format(data.relaySum)} Relays`}
+          />
+          <TitledCard title="CU" value={`${formatter.format(data.cuSum)} CU`} />
+          <TitledCard
+            title="Stake"
+            value={`Stake: ${formatter.format(data.stakeSum)} ULAVA`}
+          />
         </Flex>
       </Card>
 

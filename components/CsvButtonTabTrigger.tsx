@@ -19,11 +19,11 @@ const CsvButtonTabTrigger = ({ value, csvDownloadLink, children }) => {
                 rel="noopener noreferrer"
             >
                 <img
-                    width="20"
-                    height="20"
-                    src="https://img.icons8.com/ios-filled/20/D3580C/export-csv.png"
+                    width="40"
+                    height="40"
+                    src="/file-csv-thin.svg"
                     alt="export-csv"
-                    style={{ paddingLeft: "10px", paddingTop: "5px" }}
+                    style={{ paddingTop: "5px" }}
                 />
             </a>
         </Tabs.Trigger>

@@ -1,7 +1,7 @@
 // pages/provider/[addr].js
 
 import Link from "next/link";
-import { Flex, Text, Card, Box, Tabs } from "@radix-ui/themes";
+import { Flex, Card, Box, Tabs } from "@radix-ui/themes";
 
 import {
   StatusToString,
@@ -17,6 +17,9 @@ import { useCachedFetch } from "../../src/hooks/useCachedFetch";
 import Loading from "../../components/Loading";
 import CsvButtonTabTrigger from "../../components/CsvButtonTabTrigger";
 import { FormatTimeDifference } from "../../src/utils";
+import BlockWithDateCard from "../../components/BlockWithDateCard";
+import ProviderCard from "../../components/ProviderCard";
+import TitledCard from "../../components/TitledCard";
 
 const formatter = Intl.NumberFormat("en");
 
@@ -156,55 +159,26 @@ export default function Provider() {
 
   return (
     <>
-      <Card>
-        <Flex gap="3" align="center">
-          <Box>
-            <Text size="2" weight="bold">
-              Block {provider.height}
-            </Text>
-            <Text size="2" color="gray">
-              {" "}
-              {FormatTimeDifference(provider.datetime)}
-            </Text>
-          </Box>
-        </Flex>
-      </Card>
-      <Card>
-        <Flex gap="3" align="center">
-          <Box>
-            <Text as="div" size="2" weight="bold">
-              {provider.moniker}
-            </Text>
-            <Text as="div" size="2" color="gray">
-              {provider.addr}
-            </Text>
-          </Box>
-        </Flex>
-      </Card>
+      <BlockWithDateCard blockData={data} />
+      <ProviderCard provider={provider} />
       <Card>
         <Flex gap="3" justify="between">
-          <Card>
-            <Text as="div" size="2" weight="bold">
-              {formatter.format(provider.cuSum)} CU
-            </Text>
-          </Card>
-          <Card>
-            <Text as="div" size="2" weight="bold">
-              {formatter.format(provider.relaySum)} Relays
-            </Text>
-          </Card>
-          <Card>
-            <Text as="div" size="2" weight="bold">
-              {formatter.format(provider.rewardSum)} ULAVA Rewards
-            </Text>
-          </Card>
-          <Card>
-            <Text as="div" size="2" weight="bold">
-              {formatter.format(provider.stakeSum)} ULAVA Stake
-            </Text>
-          </Card>
+          <TitledCard title="CU" value={formatter.format(provider.cuSum)} />
+          <TitledCard
+            title="Relays"
+            value={formatter.format(provider.relaySum)}
+          />
+          <TitledCard
+            title="Rewards"
+            value={`${formatter.format(provider.rewardSum)} ULAVA`}
+          />
+          <TitledCard
+            title="Stake"
+            value={`${formatter.format(provider.stakeSum)} ULAVA`}
+          />
         </Flex>
       </Card>
+
       <ReactiveChart data={chartData} options={chartOptions} />
       <Card>
         <Tabs.Root defaultValue="health">
