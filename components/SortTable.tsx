@@ -622,12 +622,14 @@ export const DataKeySortableTableComponent: React.FC<DataKeySortableTableCompone
       return
     }
 
-    if (loading && !loadingTimeout) {
-      setLoadingTimeout(setTimeout(() => {
-        if (loadingRef.current) {
-          setComponentData(<Loading loadingText={`Loading ${props.tableAndTabName.charAt(0).toUpperCase() + props.tableAndTabName.slice(1)} data`} />);
-        }
-      }, 200));
+    if (loading) {
+      if (!loadingTimeout) {
+        setLoadingTimeout(setTimeout(() => {
+          if (loadingRef.current) {
+            setComponentData(<Loading loadingText={`Loading ${props.tableAndTabName.charAt(0).toUpperCase() + props.tableAndTabName.slice(1)} data`} />);
+          }
+        }, 200));
+      }
       return
     }
 
