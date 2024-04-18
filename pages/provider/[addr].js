@@ -324,15 +324,15 @@ export default function Provider() {
                 { key: "events.eventType", name: "Event Type" },
                 { key: "blocks.height", name: "Block Height" },
                 { key: "blocks.datetime", name: "Time" },
-                { key: "events.b1", name: "b1" },
-                { key: "events.b2", name: "b2" },
-                { key: "events.b3", name: "b3" },
-                { key: "events.i1", name: "i1" },
-                { key: "events.i2", name: "i2" },
-                { key: "events.i3", name: "i3" },
-                { key: "events.t1", name: "t1" },
-                { key: "events.t2", name: "t2" },
-                { key: "events.t3", name: "t3" },
+                { key: "events.t1", name: "Text1" },
+                { key: "events.t2", name: "Text2" },
+                { key: "events.t3", name: "Text3" },
+                { key: "events.b1", name: "BigInt1" },
+                { key: "events.b2", name: "BigInt2" },
+                { key: "events.b3", name: "BigInt3" },
+                { key: "events.i1", name: "Int1" },
+                { key: "events.i2", name: "Int2" },
+                { key: "events.i3", name: "Int3" },
               ]}
               dataKey="providerEvents"
               useLastUrlPathInKey={true}
@@ -361,6 +361,42 @@ export default function Provider() {
                 ),
                 "blocks.datetime": (evt) =>
                   FormatTimeDifference(evt.blocks.datetime),
+                text1: (evt) => {
+                  return (
+                    <div
+                      style={{
+                        wordBreak: "break-all",
+                        whiteSpace: "pre-wrap",
+                      }}
+                    >
+                      {evt.events.t1}
+                    </div>
+                  );
+                },
+                text2: (evt) => {
+                  return (
+                    <div
+                      style={{
+                        wordBreak: "break-all",
+                        whiteSpace: "pre-wrap",
+                      }}
+                    >
+                      {evt.events.t2}
+                    </div>
+                  );
+                },
+                text3: (evt) => {
+                  return (
+                    <div
+                      style={{
+                        wordBreak: "break-all",
+                        whiteSpace: "pre-wrap",
+                      }}
+                    >
+                      {evt.events.t3}
+                    </div>
+                  );
+                },
               }}
             />
 

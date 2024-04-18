@@ -1,4 +1,4 @@
-import { Flex, Text, Card, Box, Tabs } from "@radix-ui/themes";
+import { Flex, Text, Card, Box, Tabs, Link } from "@radix-ui/themes";
 
 import { useCachedFetch } from "../../src/hooks/useCachedFetch";
 
@@ -116,6 +116,11 @@ export default function Consumer() {
               tableAndTabName="conflicts"
               pkey="id"
               pkeyUrl="none"
+              rowFormatters={{
+                specId: (data) => (
+                  <Link href={`/spec/${data.specId}`}>{data.specId}</Link>
+                ),
+              }}
             />
           </Box>
         </Tabs.Root>
