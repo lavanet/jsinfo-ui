@@ -18,7 +18,7 @@ import { useCachedFetch } from "../../src/hooks/useCachedFetch";
 
 const formatter = Intl.NumberFormat("en");
 
-import Loading from "../../components/Loading";
+import LoadingIndicator from "../../components/LoadingIndicator";
 
 export default function Spec() {
   const { data, loading, error } = useCachedFetch({
@@ -26,7 +26,7 @@ export default function Spec() {
     useLastUrlPathInKey: true,
   });
 
-  if (loading) return <Loading loadingText="Loading spec page" />;
+  if (loading) return <LoadingIndicator loadingText="Loading spec page" />;
   if (error) return <div>Error: {error}</div>;
 
   const chartData = {
@@ -139,7 +139,7 @@ export default function Spec() {
       <ReactiveChart data={chartData} options={chartOptions} />
       <Card>
         <Tabs.Root defaultValue="stakes">
-          <Tabs.List>
+          <Tabs.List style={{ overflow: "hidden" }}>
             <Tabs.Trigger value="stakes">Stakes</Tabs.Trigger>
           </Tabs.List>
           <Box>

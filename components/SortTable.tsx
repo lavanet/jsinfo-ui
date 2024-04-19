@@ -4,10 +4,11 @@ import { useState, useMemo, useEffect, useRef } from 'react';
 import { Link, Table, Tabs } from '@radix-ui/themes';
 import React from 'react';
 import { CachedPaginationFetcher } from '../src/hooks/useCachedFetch';
-import Loading from './Loading';
+import LoadingIndicator from './LoadingIndicator';
 import { Column, SortConfig, RowFormatters, SortableData, SortAndPaginationConfig, ConvertToSortConfig } from '../src/types';
 import { ErrorBoundary } from '../src/classes';
 import { GetNestedProperty } from '../src/utils';
+import PaginationControl from './PaginationControl';
 
 const JSINFO_QUERY_DEFAULT_ITEMS_PER_PAGE = 20
 
@@ -510,53 +511,6 @@ type DataKeySortableTableComponentProps = {
   firstColumn?: string;
 };
 
-export function PaginationControl({ sortAndPaginationConfig, setPage }) {
-
-  const totalPages = Math.ceil(sortAndPaginationConfig.totalItemCount / sortAndPaginationConfig.itemCountPerPage) || 3;
-  const pageNumbers: number[] = [];
-
-  for (let i = 1; i <= totalPages; i++) {
-    if (i <= 3 || i > totalPages - 3 || (i >= sortAndPaginationConfig.page - 1 && i <= sortAndPaginationConfig.page + 1)) {
-      pageNumbers.push(i);
-    }
-  }
-
-  const handleSetPage = (page: number) => {
-    // console.log(`Setting page to ${page}, sortAndPaginationConfig: ${JSON.stringify(sortAndPaginationConfig)}`);
-    setPage(page);
-  };
-
-  const buttonStyle: React.CSSProperties = {
-    padding: '10px',
-    margin: '5px',
-    borderRadius: '5px',
-    border: 'none',
-    cursor: 'pointer',
-    width: '60px', // Set a fixed width that's wide enough for 3 digits
-    textAlign: 'center', // Center the text
-    fontFamily: 'monospace', // Use a monospace font
-  };
-
-  const activeStyle: React.CSSProperties = {
-    ...buttonStyle,
-    fontWeight: 'bold',
-  };
-
-  return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px', paddingTop: '10px' }}>
-      <button style={buttonStyle} onClick={() => handleSetPage(1)} disabled={sortAndPaginationConfig.page === 1}>&lt;&lt;</button>
-      <button style={buttonStyle} onClick={() => handleSetPage(Math.max(1, sortAndPaginationConfig.page - 1))} disabled={sortAndPaginationConfig.page === 1}>&lt;</button>
-      {pageNumbers.map(number =>
-        number === sortAndPaginationConfig.page
-          ? <span key={number} style={activeStyle}>{number}</span>
-          : <button style={buttonStyle} key={number} onClick={() => handleSetPage(number)}>{number}</button>
-      )}
-      <button style={buttonStyle} onClick={() => handleSetPage(Math.min(totalPages, sortAndPaginationConfig.page + 1))} disabled={sortAndPaginationConfig.page === totalPages}>&gt;</button>
-      <button style={buttonStyle} onClick={() => handleSetPage(totalPages)} disabled={sortAndPaginationConfig.page === totalPages}>&gt;&gt;</button>
-    </div>
-  );
-}
-
 export const DataKeySortableTableComponent: React.FC<DataKeySortableTableComponentProps> = (props) => {
 
   if (!props.columns || !Array.isArray(props.columns)) {
@@ -626,7 +580,7 @@ export const DataKeySortableTableComponent: React.FC<DataKeySortableTableCompone
       if (!loadingTimeout) {
         setLoadingTimeout(setTimeout(() => {
           if (loadingRef.current) {
-            setComponentData(<Loading loadingText={`Loading ${props.tableAndTabName.charAt(0).toUpperCase() + props.tableAndTabName.slice(1)} data`} />);
+            setComponentData(<LoadingIndicator loadingText={`LoadingIndicator ${props.tableAndTabName.charAt(0).toUpperCase() + props.tableAndTabName.slice(1)} data`} />);
           }
         }, 200));
       }

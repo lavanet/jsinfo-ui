@@ -4,7 +4,7 @@ import { useCachedFetch } from "../../src/hooks/useCachedFetch";
 
 import { SortableTableInATabComponent } from "../../components/SortTable";
 import { ReactiveChart } from "../../components/ReactiveChart";
-import Loading from "../../components/Loading";
+import LoadingIndicator from "../../components/LoadingIndicator";
 import TitledCard from "../../components/TitledCard";
 import dayjs from "dayjs";
 
@@ -19,8 +19,8 @@ export default function Consumer() {
     useLastUrlPathInKey: true,
   });
 
-  if (loading) return <Loading loadingText="Loading consumer page" />;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return <LoadingIndicator loadingText="Loading consumer page" />;
+  if (error) return <div>Error: {error} </div>;
 
   const consumer = data;
 

@@ -7,13 +7,13 @@ import { FormatTimeDifference } from "../src/utils";
 import { SortableTableInATabComponent } from "../components/SortTable";
 
 import { useCachedFetch } from "../src/hooks/useCachedFetch";
-import Loading from "../components/Loading";
+import LoadingIndicator from "../components/LoadingIndicator";
 import BlockWithDateCard from "../components/BlockWithDateCard";
 
 export default function Events() {
   const { data, loading, error } = useCachedFetch({ dataKey: "events" });
 
-  if (loading) return <Loading loadingText="Loading events page" />;
+  if (loading) return <LoadingIndicator loadingText="Loading events page" />;
   if (error) return <div>Error: {error}</div>;
 
   return (
@@ -21,7 +21,7 @@ export default function Events() {
       <BlockWithDateCard blockData={data} />
       <Card>
         <Tabs.Root defaultValue="events">
-          <Tabs.List>
+          <Tabs.List style={{ overflow: "hidden" }}>
             <Tabs.Trigger value="events">Events</Tabs.Trigger>
             <Tabs.Trigger value="rewards">Rewards</Tabs.Trigger>
             <Tabs.Trigger value="reports">Reports</Tabs.Trigger>

@@ -14,7 +14,7 @@ import {
 import { DataKeySortableTableInATabComponent } from "../../components/SortTable";
 import { ReactiveChart } from "../../components/ReactiveChart";
 import { useCachedFetch } from "../../src/hooks/useCachedFetch";
-import Loading from "../../components/Loading";
+import LoadingIndicator from "../../components/LoadingIndicator";
 import CsvButtonTabTrigger from "../../components/CsvButtonTabTrigger";
 import { FormatTimeDifference } from "../../src/utils";
 import BlockWithDateCard from "../../components/BlockWithDateCard";
@@ -44,7 +44,7 @@ export default function Provider() {
     useLastUrlPathInKey: true,
   });
 
-  if (loading) return <Loading loadingText="Loading provider page" />;
+  if (loading) return <LoadingIndicator loadingText="Loading provider page" />;
   if (error) return <div>Error: {error}</div>;
 
   const provider = data;
@@ -182,7 +182,7 @@ export default function Provider() {
       <ReactiveChart data={chartData} options={chartOptions} />
       <Card>
         <Tabs.Root defaultValue="health">
-          <Tabs.List>
+          <Tabs.List style={{ overflow: "hidden" }}>
             <CsvButtonTabTrigger
               value="health"
               csvDownloadLink={`providerHealthCsv/${providerAddr}`}

@@ -11,7 +11,7 @@ import {
 import { ReactiveChart } from "../components/ReactiveChart";
 import React from "react";
 import { useCachedFetch } from "../src/hooks/useCachedFetch";
-import Loading from "../components/Loading";
+import LoadingIndicator from "../components/LoadingIndicator";
 import {
   SetLastDotHighInChartData,
   SetLastPointToLineInChartOptions,
@@ -41,7 +41,7 @@ const COLORS = [
 export default function Home() {
   const { data, loading, error } = useCachedFetch({ dataKey: "index" });
 
-  if (loading) return <Loading loadingText="Loading page" />;
+  if (loading) return <LoadingIndicator loadingText="Loading page" />;
   if (error) return <div>Error: {error}</div>;
 
   const chartData = {
@@ -170,7 +170,7 @@ export default function Home() {
 
       <Card>
         <Tabs.Root defaultValue="providers">
-          <Tabs.List>
+          <Tabs.List style={{ overflow: "hidden" }}>
             <CsvButtonTabTrigger
               value="providers"
               csvDownloadLink="indexProvidersCsv"
