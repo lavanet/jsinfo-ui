@@ -28,32 +28,35 @@ function PaginationControl({ sortAndPaginationConfig, setPage }: PaginationContr
     };
 
     const buttonStyle: React.CSSProperties = {
-        padding: '10px',
+        padding: '5px',
         margin: '5px',
-        borderRadius: '5px',
+        borderRadius: '15px',
         border: 'none',
         cursor: 'pointer',
-        width: '60px', // Set a fixed width that's wide enough for 3 digits
+        width: '50px', // Set a smaller fixed width
         textAlign: 'center', // Center the text
         fontFamily: 'monospace', // Use a monospace font
+        color: 'white',
+        backgroundColor: '#cc2f00ff',
     };
 
     const activeStyle: React.CSSProperties = {
         ...buttonStyle,
         fontWeight: 'bold',
+        backgroundColor: 'transparent',
     };
 
     return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px', paddingTop: '10px' }}>
-            <button style={buttonStyle} onClick={() => handleSetPage(1)} disabled={sortAndPaginationConfig.page === 1}>&lt;&lt;</button>
-            <button style={buttonStyle} onClick={() => handleSetPage(Math.max(1, sortAndPaginationConfig.page - 1))} disabled={sortAndPaginationConfig.page === 1}>&lt;</button>
+            <button style={activeStyle} onClick={() => handleSetPage(1)} disabled={sortAndPaginationConfig.page === 1}>|&lt;</button>
+            <button style={activeStyle} onClick={() => handleSetPage(Math.max(1, sortAndPaginationConfig.page - 1))} disabled={sortAndPaginationConfig.page === 1}>&lt;</button>
             {pageNumbers.map(number =>
                 number === sortAndPaginationConfig.page
                     ? <span key={number} style={activeStyle}>{number}</span>
                     : <button style={buttonStyle} key={number} onClick={() => handleSetPage(number)}>{number}</button>
             )}
-            <button style={buttonStyle} onClick={() => handleSetPage(Math.min(totalPages, sortAndPaginationConfig.page + 1))} disabled={sortAndPaginationConfig.page === totalPages}>&gt;</button>
-            <button style={buttonStyle} onClick={() => handleSetPage(totalPages)} disabled={sortAndPaginationConfig.page === totalPages}>&gt;&gt;</button>
+            <button style={activeStyle} onClick={() => handleSetPage(Math.min(totalPages, sortAndPaginationConfig.page + 1))} disabled={sortAndPaginationConfig.page === totalPages}>&gt;</button>
+            <button style={activeStyle} onClick={() => handleSetPage(totalPages)} disabled={sortAndPaginationConfig.page === totalPages}>&gt;|</button>
         </div>
     );
 }

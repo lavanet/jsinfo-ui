@@ -1,4 +1,4 @@
-/* :root {
+:root {
     --color-primary/key-600: #290900ff;
     --color-primary/key-300: #ff3900ff; 
     --color-primary/key-200: #ff6839ff; 
@@ -50,7 +50,7 @@
     --color-label-(chart-&-projects)/caribbean-green: #00d7b0ff; 
     --color-label-(chart-&-projects)/dark-pastel-green: #0eba53ff; 
     --color-label-(chart-&-projects)/selective-yellow: #ffbc0aff; 
-  } */
+}
 
 .no-hover:hover {
   /* background-color: initial !important;
