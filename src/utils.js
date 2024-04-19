@@ -39,6 +39,18 @@ export function EventTypeToString(evtType) {
       return "Detection Vote Resolved";
     case 15:
       return "Detection Vote Unresolved";
+    case 16:
+      return "Delegation To Provider";
+    case 17:
+      return "Subscription Expired";
+    case 18:
+      return "Freeze From Unbond";
+    case 19:
+      return "Ubnond From Provider";
+    case 20:
+      return "Unstake From Unbound";
+    case 21:
+      return "Redelegate Between Providers";
 
     default:
       return "Unknown Event Type";
