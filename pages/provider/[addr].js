@@ -15,11 +15,12 @@ import { DataKeySortableTableInATabComponent } from "../../components/SortTable"
 import { ReactiveChart } from "../../components/ReactiveChart";
 import { useCachedFetch } from "../../src/hooks/useCachedFetch";
 import LoadingIndicator from "../../components/LoadingIndicator";
-import CsvButtonTabTrigger from "../../components/CsvButtonTabTrigger";
+import CsvButton from "../../components/CsvButton";
 import { FormatTimeDifference } from "../../src/utils";
 import BlockWithDateCard from "../../components/BlockWithDateCard";
 import ProviderCard from "../../components/ProviderCard";
 import TitledCard from "../../components/TitledCard";
+import AnimatedTabsList from "../../components/AnimatedTabsList";
 
 const formatter = Intl.NumberFormat("en");
 
@@ -182,44 +183,70 @@ export default function Provider() {
       <ReactiveChart data={chartData} options={chartOptions} />
       <Card>
         <Tabs.Root defaultValue="health">
-          <Tabs.List style={{ overflow: "hidden" }}>
-            <CsvButtonTabTrigger
-              value="health"
-              csvDownloadLink={`providerHealthCsv/${providerAddr}`}
-            >
-              Health
-            </CsvButtonTabTrigger>
-            <CsvButtonTabTrigger
-              value="errors"
-              csvDownloadLink={`providerErrorsCsv/${providerAddr}`}
-            >
-              Errors
-            </CsvButtonTabTrigger>
-            <CsvButtonTabTrigger
-              value="stakes"
-              csvDownloadLink={`providerStakesCsv/${providerAddr}`}
-            >
-              Stakes
-            </CsvButtonTabTrigger>
-            <CsvButtonTabTrigger
-              value="events"
-              csvDownloadLink={`providerEventsCsv/${providerAddr}`}
-            >
-              Events
-            </CsvButtonTabTrigger>
-            <CsvButtonTabTrigger
-              value="rewards"
-              csvDownloadLink={`providerRewardsCsv/${providerAddr}`}
-            >
-              Rewards
-            </CsvButtonTabTrigger>
-            <CsvButtonTabTrigger
-              value="reports"
-              csvDownloadLink={`providerReportsCsv/${providerAddr}`}
-            >
-              Reports
-            </CsvButtonTabTrigger>
-          </Tabs.List>
+          <AnimatedTabsList
+            tabs={[
+              {
+                value: "health",
+                content: (
+                  <CsvButton
+                    csvDownloadLink={`providerHealthCsv/${providerAddr}`}
+                  >
+                    Health
+                  </CsvButton>
+                ),
+              },
+              {
+                value: "errors",
+                content: (
+                  <CsvButton
+                    csvDownloadLink={`providerErrorsCsv/${providerAddr}`}
+                  >
+                    Errors
+                  </CsvButton>
+                ),
+              },
+              {
+                value: "stakes",
+                content: (
+                  <CsvButton
+                    csvDownloadLink={`providerStakesCsv/${providerAddr}`}
+                  >
+                    Stakes
+                  </CsvButton>
+                ),
+              },
+              {
+                value: "events",
+                content: (
+                  <CsvButton
+                    csvDownloadLink={`providerEventsCsv/${providerAddr}`}
+                  >
+                    Events
+                  </CsvButton>
+                ),
+              },
+              {
+                value: "rewards",
+                content: (
+                  <CsvButton
+                    csvDownloadLink={`providerRewardsCsv/${providerAddr}`}
+                  >
+                    Rewards
+                  </CsvButton>
+                ),
+              },
+              {
+                value: "reports",
+                content: (
+                  <CsvButton
+                    csvDownloadLink={`providerReportsCsv/${providerAddr}`}
+                  >
+                    Reports
+                  </CsvButton>
+                ),
+              },
+            ]}
+          />
           <Box>
             <DataKeySortableTableInATabComponent
               columns={[

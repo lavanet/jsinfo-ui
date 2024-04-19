@@ -18,10 +18,11 @@ import {
   ConvertToChainName,
 } from "../src/utils";
 
-import CsvButtonTabTrigger from "../components/CsvButtonTabTrigger";
+import CsvButton from "../components/CsvButton";
 
 import BlockWithDateCard from "../components/BlockWithDateCard";
 import TitledCard from "../components/TitledCard";
+import AnimatedTabsList from "../components/AnimatedTabsList";
 
 const COLORS = [
   "#191111",
@@ -170,15 +171,25 @@ export default function Home() {
 
       <Card>
         <Tabs.Root defaultValue="providers">
-          <Tabs.List style={{ overflow: "hidden" }}>
-            <CsvButtonTabTrigger
-              value="providers"
-              csvDownloadLink="indexProvidersCsv"
-            >
-              Providers
-            </CsvButtonTabTrigger>
-            <Tabs.Trigger value="chains">Chains</Tabs.Trigger>
-          </Tabs.List>
+          <AnimatedTabsList
+            tabs={[
+              {
+                value: "providers",
+                content: (
+                  <CsvButton
+                    value="providers"
+                    csvDownloadLink="indexProvidersCsv"
+                  >
+                    Providers
+                  </CsvButton>
+                ),
+              },
+              {
+                value: "chains",
+                content: "Chains",
+              },
+            ]}
+          />
           <Box>
             <DataKeySortableTableInATabComponent
               columns={[

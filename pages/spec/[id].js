@@ -20,6 +20,8 @@ const formatter = Intl.NumberFormat("en");
 
 import LoadingIndicator from "../../components/LoadingIndicator";
 
+import AnimatedTabsList from "../../components/AnimatedTabsList";
+
 export default function Spec() {
   const { data, loading, error } = useCachedFetch({
     dataKey: "spec",
@@ -139,9 +141,14 @@ export default function Spec() {
       <ReactiveChart data={chartData} options={chartOptions} />
       <Card>
         <Tabs.Root defaultValue="stakes">
-          <Tabs.List style={{ overflow: "hidden" }}>
-            <Tabs.Trigger value="stakes">Stakes</Tabs.Trigger>
-          </Tabs.List>
+          <AnimatedTabsList
+            tabs={[
+              {
+                value: "stakes",
+                content: "Stakes",
+              },
+            ]}
+          />
           <Box>
             <SortableTableInATabComponent
               columns={[

@@ -6,6 +6,7 @@ import { SortableTableInATabComponent } from "../../components/SortTable";
 import { ReactiveChart } from "../../components/ReactiveChart";
 import LoadingIndicator from "../../components/LoadingIndicator";
 import TitledCard from "../../components/TitledCard";
+import AnimatedTabsList from "../../components/AnimatedTabsList";
 import dayjs from "dayjs";
 
 import {
@@ -72,10 +73,18 @@ export default function Consumer() {
       <ReactiveChart data={chartData} options={chartOptions} />
       <Card>
         <Tabs.Root defaultValue="subscriptions">
-          <Tabs.List>
-            <Tabs.Trigger value="subscriptions">Subscriptions</Tabs.Trigger>
-            <Tabs.Trigger value="conflicts">Conflicts</Tabs.Trigger>
-          </Tabs.List>
+          <AnimatedTabsList
+            tabs={[
+              {
+                value: "subscriptions",
+                content: "Subscriptions",
+              },
+              {
+                value: "conflicts",
+                content: "Conflicts",
+              },
+            ]}
+          />
           <Box>
             <SortableTableInATabComponent
               columns={[

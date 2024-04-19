@@ -9,6 +9,7 @@ import { SortableTableInATabComponent } from "../components/SortTable";
 import { useCachedFetch } from "../src/hooks/useCachedFetch";
 import LoadingIndicator from "../components/LoadingIndicator";
 import BlockWithDateCard from "../components/BlockWithDateCard";
+import AnimatedTabsList from "../components/AnimatedTabsList";
 
 export default function Events() {
   const { data, loading, error } = useCachedFetch({ dataKey: "events" });
@@ -21,11 +22,22 @@ export default function Events() {
       <BlockWithDateCard blockData={data} />
       <Card>
         <Tabs.Root defaultValue="events">
-          <Tabs.List style={{ overflow: "hidden" }}>
-            <Tabs.Trigger value="events">Events</Tabs.Trigger>
-            <Tabs.Trigger value="rewards">Rewards</Tabs.Trigger>
-            <Tabs.Trigger value="reports">Reports</Tabs.Trigger>
-          </Tabs.List>
+          <AnimatedTabsList
+            tabs={[
+              {
+                value: "events",
+                content: "Events",
+              },
+              {
+                value: "rewards",
+                content: "Rewards",
+              },
+              {
+                value: "reports",
+                content: "Reports",
+              },
+            ]}
+          />
           <Box>
             <SortableTableInATabComponent
               columns={[
