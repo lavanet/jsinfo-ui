@@ -1,4 +1,4 @@
-:root {
+/* :root {
     --color-primary/key-600: #290900ff;
     --color-primary/key-300: #ff3900ff; 
     --color-primary/key-200: #ff6839ff; 
@@ -51,8 +51,16 @@
     --color-label-(chart-&-projects)/dark-pastel-green: #0eba53ff; 
     --color-label-(chart-&-projects)/selective-yellow: #ffbc0aff; 
 }
+*/
 
-.no-hover:hover {
-  /* background-color: initial !important;
-  color: initial !important; */
+@media (max-width: 600px) {
+  .hide-on-mobile {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    zoom: 0.8;
+  }
 }

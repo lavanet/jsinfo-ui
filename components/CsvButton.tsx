@@ -1,7 +1,6 @@
 // jsinfo-ui/components/CsvButton.tsx
 
 import React from 'react';
-import { Tabs } from "@radix-ui/themes";
 import { GetRestUrl } from '../src/utils';
 
 const CsvButton = ({ value, csvDownloadLink, children }) => {
@@ -12,12 +11,14 @@ const CsvButton = ({ value, csvDownloadLink, children }) => {
     const separator = restUrl.endsWith('/') || csvDownloadLink.startsWith('/') ? '' : '/';
     return (
         <>
-            {children}
+            <div>
+                {children}
+            </div>
             <a
                 href={`${restUrl}${separator}${csvDownloadLink}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="no-hover"
+                className="hide-on-mobile"
             >
                 <img
                     width="40"
@@ -26,7 +27,7 @@ const CsvButton = ({ value, csvDownloadLink, children }) => {
                     alt="export-csv"
                     style={{ marginTop: '5px' }}
                 />
-            </a>
+            </a >
         </>
     );
 };
