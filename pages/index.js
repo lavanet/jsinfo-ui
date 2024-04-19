@@ -157,12 +157,12 @@ export default function Home() {
         <Flex gap="3" justify="between">
           <TitledCard
             title="Relays"
-            value={`${formatter.format(data.relaySum)} Relays`}
+            value={`${formatter.format(data.relaySum)}`}
           />
-          <TitledCard title="CU" value={`${formatter.format(data.cuSum)} CU`} />
+          <TitledCard title="CU" value={`${formatter.format(data.cuSum)}`} />
           <TitledCard
             title="Stake"
-            value={`Stake: ${formatter.format(data.stakeSum)} ULAVA`}
+            value={`${formatter.format(data.stakeSum)} ULAVA`}
           />
         </Flex>
       </Card>
