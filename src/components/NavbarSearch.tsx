@@ -125,6 +125,9 @@ export function NavbarSearch() {
         if (searchRef.current) {
             searchRef.current.style.width = (isHovered || isFocused) ? width : '300px';
         }
+        if (!preventChange) if (!(isFocused || isHovered)) {
+            deFocus()
+        }
     }, [windowWidth, isHovered, isFocused]);
 
     function deFocus() {
@@ -142,7 +145,7 @@ export function NavbarSearch() {
     }
 
     useEffect(() => {
-        const inputElement: HTMLInputElement | null = document.querySelector('#search input[data-test="search-input"]');
+        const inputElement: HTMLInputElement | null = document.querySelector('.search input[data-test="search-input"]');
         if (!inputElement) return;
         (inputElement as any)["data-lpignore"] = 'true';
         (inputElement as any)["spellcheck"] = 'false';
@@ -151,12 +154,12 @@ export function NavbarSearch() {
                 const inputValue = (event.target as HTMLInputElement).value;
                 handleOnSelect(inputValue);
             }
-            else if (event.key === 'Escape') {
+            if (event.key === 'Escape') {
                 deFocus()
             }
         });
 
-    }, [handleOnSelect]);
+    }, []);
 
     const { currentPage } = usePageContext();
 
@@ -167,7 +170,7 @@ export function NavbarSearch() {
     return (
         <div
             ref={searchRef}
-            className="search"
+            className={`search ${items && items.length > 0 ? '' : 'hidden'}`}
             onMouseEnter={() => {
                 if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
                 if (!preventChange) setIsHovered(true);
