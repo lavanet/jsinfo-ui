@@ -1,4 +1,5 @@
 // src/app/context/PageContext.tsx
+"use client"
 
 import { createContext, useContext } from 'react';
 

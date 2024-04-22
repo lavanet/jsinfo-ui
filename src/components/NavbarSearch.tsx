@@ -2,11 +2,9 @@
 "use client";
 
 import { useRouter } from 'next/navigation';
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useCachedFetch } from '@jsinfo/hooks/useCachedFetch';
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
-import { useState } from 'react';
-import { useEffect } from 'react';
 import { usePageContext } from '@jsinfo/context/PageContext';
 
 export function NavbarSearch() {
@@ -132,9 +130,10 @@ export function NavbarSearch() {
     function deFocus() {
         setPreventChange(true);
         setTimeout(() => setPreventChange(false), 300);
+        const searchElement = document.querySelector('button');
+        (searchElement as HTMLButtonElement)?.focus();
+        (searchElement as HTMLButtonElement)?.blur();
         document.body.focus();
-        const inputElement = document.querySelector('#search input[data-test="search-input"]');
-        (inputElement as HTMLInputElement)?.blur();
         setIsHovered(false);
         setIsFocused(false);
         if (searchRef.current) {

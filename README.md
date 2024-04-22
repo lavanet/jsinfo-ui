@@ -14,5 +14,6 @@ https://jsinfo-ui.vercel.app/
 ### Running the project
 
 ```
+pnpm install
 make testnet_run
 ```

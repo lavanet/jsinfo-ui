@@ -31,6 +31,7 @@ function LoadingIndicator({ loadingText = 'Loading', width = 20, height = 20 }: 
         height={height}
         alt='loader-white'
         className="rounded-full"
+        unoptimized={true}
       />
     </div>
   );

@@ -3,7 +3,14 @@ const nextConfig = {
   reactStrictMode: true,
   transpilePackages: ["@radix-ui/themes"],
   images: {
-    domains: ["lava-fe-assets.s3.amazonaws.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "lava-fe-assets.s3.amazonaws.com",
+        port: "",
+        pathname: "/**",
+      },
+    ],
   },
   env: {
     REST_URL: process.env.REST_URL,
