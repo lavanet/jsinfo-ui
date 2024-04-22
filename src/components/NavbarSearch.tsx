@@ -58,13 +58,13 @@ export function NavbarSearch() {
 
     const formatResult = (item: Item) => {
         const type = `${item.type.charAt(0).toUpperCase()}${item.type.slice(1)}`;
-        const id = item.id;
+        const name = item.name;
         const moniker = item.moniker;
 
         return (
             <>
                 <span style={{ display: 'block', textAlign: 'left', fontSize: '1.3em', color: 'grey' }}>
-                    {type}: {id}
+                    {type}: {name}
                 </span>
                 {moniker && (
                     <span style={{ display: 'block', textAlign: 'left', fontSize: '1.3em', color: 'grey' }}>
