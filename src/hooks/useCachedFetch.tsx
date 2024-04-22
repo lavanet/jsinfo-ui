@@ -1,10 +1,18 @@
 // hooks/useCachedFetch.tsx
+"use client";
+
+// APR 22 2024
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-hooks/rules-of-hooks */
+// This file was working properly before the upgrade from pages to app router
+// It was tested on testnet and staging for a month with no issues
+// These warnings appeared after the upgrade to app router
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
-import { GetRestUrl } from '../utils.js';
-import { SortAndPaginationConfig, SortConfig } from '../types.js';
+import { GetRestUrl } from '@jsinfo/common/utils';
+import { SortAndPaginationConfig } from '@jsinfo/common/types.jsx';
 
 const axiosInstance = axios.create({
     baseURL: GetRestUrl(),
@@ -137,7 +145,10 @@ const fetchDataWithRetry = async (state: FetchState): Promise<void> => {
 
         state.isFetching.current = false;
 
-        if (error?.code === 'ECONNABORTED' || (error + "").includes('timeout')) {
+        if (error.response && error.response.data && error.response.data.error) {
+            state.setError(error.response.data.error);
+            state.setLoading(false);
+        } else if (error?.code === 'ECONNABORTED' || (error + "").includes('timeout')) {
             await handleEmptyData(state);
         } else {
             state.errorCount.current++;
@@ -177,6 +188,7 @@ async function fetchLastUpdatedDate(state: FetchState): Promise<Date | null> {
 
         const lastUpdatedDate = new Date(lastUpdated);
         console.log('Last updated:', lastUpdatedDate);
+
         return lastUpdatedDate;
     } catch (error) {
         console.error('Error fetching last updated date:', error);
@@ -200,7 +212,7 @@ async function fetchItemCount(apiurl: string, updateItemCount: (count: number) =
 
             const itemCount = res.data && res.data['itemCount'];
 
-            if (!itemCount) {
+            if (!itemCount && itemCount !== 0) {
                 console.log('fetchItemCount: No record count, server response: ' + JSON.stringify(res.data) + ', Function arguments: ' + JSON.stringify({ apiurl, retryCount }));
                 throw new Error();
             }
