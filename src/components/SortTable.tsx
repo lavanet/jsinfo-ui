@@ -1,8 +1,9 @@
 // src/components/SortTable.tsx
 "use client";
 
+import Link from 'next/link'
 import { useState, useMemo, useEffect, useRef } from 'react';
-import { Link, Table, Tabs } from '@radix-ui/themes';
+import { Table, Tabs } from '@radix-ui/themes';
 import React from 'react';
 import { CachedPaginationFetcher } from '@jsinfo/hooks/useCachedFetch';
 import LoadingIndicator from './LoadingIndicator';

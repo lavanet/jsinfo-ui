@@ -1,7 +1,8 @@
 // src/app/provider/[lavaid]/page.tsx
 "use client";
 
-import { Flex, Card, Box, Tabs, Link } from "@radix-ui/themes";
+import Link from 'next/link'
+import { Flex, Card, Box, Tabs } from "@radix-ui/themes";
 
 import {
   StatusToString,

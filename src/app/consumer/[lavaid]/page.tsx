@@ -1,7 +1,8 @@
 // src/app/consumer/page.tsx
 "use client";
 
-import { Flex, Text, Card, Box, Tabs, Link } from "@radix-ui/themes";
+import Link from 'next/link'
+import { Flex, Text, Card, Box, Tabs } from "@radix-ui/themes";
 import dayjs from "dayjs";
 
 import { useCachedFetch } from "@jsinfo/hooks/useCachedFetch";

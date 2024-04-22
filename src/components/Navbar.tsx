@@ -1,6 +1,7 @@
 // src/components/Navbar.tsx
 
-import { Button, Card, Link } from '@radix-ui/themes';
+import Link from 'next/link'
+import { Button, Card } from '@radix-ui/themes';
 import { NavbarSearch } from './NavbarSearch';
 
 export function Navbar() {

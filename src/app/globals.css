@@ -164,3 +164,18 @@ iframe {
 .hidden {
   display: none;
 }
+
+a {
+  cursor: var(--cursor-link);
+  text-decoration-line: none;
+  text-decoration-style: solid;
+  text-decoration-thickness: min(2px, max(1px, 0.05em));
+  text-underline-offset: calc(0.025em + 2px);
+  text-decoration-color: var(--accent-a5);
+  text-decoration-color: #551b17;
+  color: var(--accent-a11);
+}
+
+a:hover {
+  text-decoration-line: underline;
+}
