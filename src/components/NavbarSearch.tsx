@@ -126,11 +126,14 @@ export function NavbarSearch() {
         if (searchRef.current) {
             if (isHovered || isFocused) {
                 searchRef.current.style.width = width
+                searchRef.current.style.maxWidth = ''
             } else {
                 if (windowWidth <= 650) {
                     searchRef.current.style.width = '150px'
+                    searchRef.current.style.maxWidth = '150px'
                 } else {
                     searchRef.current.style.width = '300px'
+                    searchRef.current.style.maxWidth = ''
                 }
             }
         }

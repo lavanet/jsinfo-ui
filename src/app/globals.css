@@ -99,6 +99,13 @@ body {
   }
 }
 
+@media (max-width: 600px) {
+  .rt-BaseTabListTriggerInner,
+  .rt-BaseTabListTriggerInnerHidden {
+    padding: 4px;
+  }
+}
+
 .navbar {
   contain: "none";
   overflow: "visible";
@@ -107,7 +114,6 @@ body {
 .search {
   position: relative;
   z-index: 9999;
-  width: 300px;
   transition: width 0.3s ease-in-out; /* Add this line */
 }
 
@@ -116,9 +122,6 @@ body {
 }
 
 @media (max-width: 600px) {
-  .search {
-    width: 150px;
-  }
   .search * {
     font-size: 9px;
   }
