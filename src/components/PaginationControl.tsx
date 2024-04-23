@@ -49,7 +49,7 @@ function PaginationControl({ sortAndPaginationConfig, setPage }: PaginationContr
 
     return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px', paddingTop: '10px' }}>
-            <button style={activeStyle} onClick={() => handleSetPage(1)} disabled={sortAndPaginationConfig.page === 1}>|&lt;</button>
+            <button style={{ ...activeStyle, whiteSpace: 'nowrap' }} onClick={() => handleSetPage(1)} disabled={sortAndPaginationConfig.page === 1}>|&lt;</button>
             <button style={activeStyle} onClick={() => handleSetPage(Math.max(1, sortAndPaginationConfig.page - 1))} disabled={sortAndPaginationConfig.page === 1}>&lt;</button>
             {pageNumbers.map(number =>
                 number === sortAndPaginationConfig.page
@@ -57,7 +57,7 @@ function PaginationControl({ sortAndPaginationConfig, setPage }: PaginationContr
                     : <button style={buttonStyle} key={number} onClick={() => handleSetPage(number)}>{number}</button>
             )}
             <button style={activeStyle} onClick={() => handleSetPage(Math.min(totalPages, sortAndPaginationConfig.page + 1))} disabled={sortAndPaginationConfig.page === totalPages}>&gt;</button>
-            <button style={activeStyle} onClick={() => handleSetPage(totalPages)} disabled={sortAndPaginationConfig.page === totalPages}>&gt;|</button>
+            <button style={{ ...activeStyle, whiteSpace: 'nowrap' }} onClick={() => handleSetPage(totalPages)} disabled={sortAndPaginationConfig.page === totalPages}>&gt;|</button>
         </div>
     );
 }

@@ -112,7 +112,9 @@ export const ChartJsReactiveLineChart: React.FC<ChartJsReactiveLineChartProps> =
             priority={true}
           />
           <h2>No chart data available for:</h2>
-          <h2><span style={{ color: 'grey' }}>{labels}</span></h2>
+          <h2 style={{ display: 'flex', alignItems: 'center' }}>
+            <span style={{ color: 'grey' }}>{labels}</span>
+          </h2>
         </div>
       </Card>
     );
@@ -133,13 +135,14 @@ export const ChartJsReactiveLineChart: React.FC<ChartJsReactiveLineChartProps> =
 };
 
 export const CHARTJS_COLORS = [
-  "#191111",
-  "#201314",
-  "#3b1219",
-  "#500f1c",
-  "#611623",
-  "#72232d",
-  "#8c333a",
+  "#ff3900",
+  "#ff1d70",
+  "#ec25f4",
+  "#7679ff",
+  "#0082fb",
+  "#00d7b0",
+  "#0eba53",
+  "#ffbc0a",
   "#b54548",
   "#e5484d",
   "#ec5d5e",
