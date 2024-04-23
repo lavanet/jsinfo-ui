@@ -117,7 +117,7 @@ body {
 
 @media (max-width: 600px) {
   .search {
-    width: 200px;
+    width: 150px;
   }
   .search * {
     font-size: 9px;

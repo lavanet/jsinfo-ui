@@ -128,7 +128,7 @@ export function NavbarSearch() {
                 searchRef.current.style.width = width
             } else {
                 if (windowWidth <= 650) {
-                    searchRef.current.style.width = '200px'
+                    searchRef.current.style.width = '150px'
                 } else {
                     searchRef.current.style.width = '300px'
                 }
