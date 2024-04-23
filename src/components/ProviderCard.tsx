@@ -26,11 +26,11 @@ const ProviderCard: React.FC<ProviderCardProps> = ({ provider }) => (
                             alt="user"
                         />
                     </div>
-                    <Text as="div" size="2" weight="bold" style={{ marginLeft: '10px' }}>
+                    <Text as="div" size="2" weight="bold" style={{ marginLeft: '10px', whiteSpace: 'nowrap' }}>
                         {provider.moniker}
                     </Text>
                 </div>
-                <Text as="div" size="2" color="gray">
+                <Text as="div" size="2" color="gray" style={{ whiteSpace: 'nowrap' }}>
                     {provider.addr}
                 </Text>
             </Box>

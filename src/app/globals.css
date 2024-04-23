@@ -115,6 +115,15 @@ body {
   font-size: 10px;
 }
 
+@media (max-width: 600px) {
+  .search {
+    width: 200px;
+  }
+  .search * {
+    font-size: 9px;
+  }
+}
+
 /* #ac4c39 this is the color from the radix-ui theme */
 
 .search > div > .wrapper {

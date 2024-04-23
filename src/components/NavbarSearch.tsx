@@ -124,7 +124,15 @@ export function NavbarSearch() {
         }
 
         if (searchRef.current) {
-            searchRef.current.style.width = (isHovered || isFocused) ? width : '300px';
+            if (isHovered || isFocused) {
+                searchRef.current.style.width = width
+            } else {
+                if (windowWidth <= 650) {
+                    searchRef.current.style.width = '200px'
+                } else {
+                    searchRef.current.style.width = '300px'
+                }
+            }
         }
         if (!preventChange) if (!(isFocused || isHovered)) {
             deFocus()

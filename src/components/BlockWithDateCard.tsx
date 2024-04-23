@@ -26,9 +26,9 @@ const BlockWithDateCard: FC<BlockWithDateCardProps> = ({ blockData }) => (
                         alt="export-csv"
                         style={{ display: 'inline-block', verticalAlign: 'middle', margin: '-15px', paddingBottom: '2px' }}
                     />
-                    <span style={{ marginLeft: '10px' }}>Block {blockData.height}</span>
+                    <span style={{ marginLeft: '10px', whiteSpace: 'nowrap' }}>Block {blockData.height}</span>
                 </Text>
-                <Text size="1" color="gray" style={{ marginLeft: '6px' }}>
+                <Text size="1" color="gray" style={{ marginLeft: '6px', whiteSpace: 'nowrap' }}>
                     {FormatTimeDifference(blockData.datetime)}
                 </Text>
             </Box>
