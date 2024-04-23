@@ -98,19 +98,7 @@ export function NavbarSearch() {
     const searchRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        const widthMap: Record<number, string> = {
-            350: '189vw',
-            400: '190vw',
-            450: '193vw',
-            500: '194vw',
-            550: '195vw',
-            600: '197vw',
-            650: '156vw',
-        };
-
-        const windowWidths = Object.keys(widthMap).map(Number).sort((a, b) => a - b);
-        const widthKey = windowWidths.find(w => windowWidth < w) || 800;
-        const width = widthKey === 800 ? '800px' : widthMap[widthKey];
+        document.querySelector('button');
 
         const navbarButtons = document.getElementById('NavBarButtons');
         if (navbarButtons) {
@@ -122,6 +110,19 @@ export function NavbarSearch() {
                 navbarButtons.style.visibility = 'visible';
             }
         }
+
+        let width = "800px"
+        if (windowWidth <= 600) {
+            width = (windowWidth / 0.8 - 35) + "px";
+        } else if (windowWidth <= 650) {
+            width = (windowWidth - 35) + "px";
+        } else if (windowWidth <= 900) {
+            console.log("2", windowWidth)
+            const eventsbtn = document.querySelector('#eventsbtn')
+            if (!eventsbtn) return;
+            width = (windowWidth - eventsbtn.getBoundingClientRect().right - 30) + "px";
+        }
+
         if (searchRef.current) {
             searchRef.current.style.width = (isHovered || isFocused) ? width : '300px';
         }

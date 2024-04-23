@@ -108,8 +108,11 @@ body {
   position: relative;
   z-index: 9999;
   width: 300px;
-  zoom: 0.6;
   transition: width 0.3s ease-in-out; /* Add this line */
+}
+
+.search * {
+  font-size: 10px;
 }
 
 /* #ac4c39 this is the color from the radix-ui theme */
@@ -118,6 +121,7 @@ body {
   color: #d1aca4;
   background-color: #3e1e1d;
   border-color: transparent;
+  border-radius: 20px;
 }
 
 .search > div > .wrapper:hover,
@@ -139,11 +143,15 @@ body {
   border-top-color: #ac4c39;
 }
 
+.search > div > .wrapper > div {
+  min-height: 27px;
+}
+
 #NavBarButtons {
   transition: opacity 0.5s, visibility 0.5s;
 }
 
-@media (max-width: 300px) {
+@media (max-width: 380px) {
   .search {
     visibility: hidden;
   }
@@ -151,10 +159,21 @@ body {
 
 .search > div > .wrapper:first-child svg {
   fill: #ff8e6c !important;
+  width: 15px;
+  height: 15px;
+}
+
+.search > div > .wrapper:first-child svg.search-icon {
+  margin-left: 10px;
 }
 
 .search > div > .wrapper:first-child input {
+  padding: 0 0 0 7px;
   font-size: 1.3em;
+}
+
+.search > div > .wrapper:first-child div.clear-icon {
+  margin: 2px 9px 0 0;
 }
 
 iframe {
