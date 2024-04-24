@@ -16,9 +16,17 @@ function PaginationControl({ sortAndPaginationConfig, setPage }: PaginationContr
     const totalPages = Math.ceil(sortAndPaginationConfig.totalItemCount / sortAndPaginationConfig.itemCountPerPage) || 3;
     const pageNumbers: number[] = [];
 
+    const isMobile = window.innerWidth <= 768;
+
     for (let i = 1; i <= totalPages; i++) {
-        if (i <= 3 || i > totalPages - 3 || (i >= sortAndPaginationConfig.page - 1 && i <= sortAndPaginationConfig.page + 1)) {
-            pageNumbers.push(i);
+        if (isMobile) {
+            if (i >= sortAndPaginationConfig.page - 1 && i <= sortAndPaginationConfig.page + 1) {
+                pageNumbers.push(i);
+            }
+        } else {
+            if (i <= 3 || i > totalPages - 3 || (i >= sortAndPaginationConfig.page - 1 && i <= sortAndPaginationConfig.page + 1)) {
+                pageNumbers.push(i);
+            }
         }
     }
 
@@ -27,37 +35,17 @@ function PaginationControl({ sortAndPaginationConfig, setPage }: PaginationContr
         setPage(page);
     };
 
-    const buttonStyle: React.CSSProperties = {
-        padding: '5px',
-        margin: '5px',
-        borderRadius: '15px',
-        border: 'none',
-        cursor: 'pointer',
-        width: '35px', // Set a smaller fixed width
-        textAlign: 'center', // Center the text
-        fontFamily: 'monospace', // Use a monospace font
-        color: 'white',
-        backgroundColor: '#cc2f00ff',
-        fontSize: '9px',
-    };
-
-    const activeStyle: React.CSSProperties = {
-        ...buttonStyle,
-        fontWeight: 'bold',
-        backgroundColor: 'transparent',
-    };
-
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px', paddingTop: '10px' }}>
-            <button style={{ ...activeStyle, whiteSpace: 'nowrap' }} onClick={() => handleSetPage(1)} disabled={sortAndPaginationConfig.page === 1}>|&lt;</button>
-            <button style={activeStyle} onClick={() => handleSetPage(Math.max(1, sortAndPaginationConfig.page - 1))} disabled={sortAndPaginationConfig.page === 1}>&lt;</button>
+        <div className="paginationcontrol">
+            <button className="active nowrap" onClick={() => handleSetPage(1)} disabled={sortAndPaginationConfig.page === 1}>|&lt;</button>
+            <button className="active" onClick={() => handleSetPage(Math.max(1, sortAndPaginationConfig.page - 1))} disabled={sortAndPaginationConfig.page === 1}>&lt;</button>
             {pageNumbers.map(number =>
                 number === sortAndPaginationConfig.page
-                    ? <span key={number} style={activeStyle}>{number}</span>
-                    : <button style={buttonStyle} key={number} onClick={() => handleSetPage(number)}>{number}</button>
+                    ? <span key={number} className="active">{number}</span>
+                    : <button key={number} onClick={() => handleSetPage(number)}>{number}</button>
             )}
-            <button style={activeStyle} onClick={() => handleSetPage(Math.min(totalPages, sortAndPaginationConfig.page + 1))} disabled={sortAndPaginationConfig.page === totalPages}>&gt;</button>
-            <button style={{ ...activeStyle, whiteSpace: 'nowrap' }} onClick={() => handleSetPage(totalPages)} disabled={sortAndPaginationConfig.page === totalPages}>&gt;|</button>
+            <button className="active" onClick={() => handleSetPage(Math.min(totalPages, sortAndPaginationConfig.page + 1))} disabled={sortAndPaginationConfig.page === totalPages}>&gt;</button>
+            <button className="active nowrap" onClick={() => handleSetPage(totalPages)} disabled={sortAndPaginationConfig.page === totalPages}>&gt;|</button>
         </div>
     );
 }
