@@ -46,10 +46,10 @@ export const FormatTimeDifference = (date: Date): string => {
     return `${minutesAgo}min ago`;
   } else if (minutesAgo < 1440) {
     // 1440 minutes in a day
-    let hoursAgo = (minutesAgo / 60);
+    let hoursAgo = (minutesAgo / 60).toFixed(0);
     return `${hoursAgo}hrs ago`;
   }
-  let daysAgo = (minutesAgo / 1440);
+  let daysAgo = (minutesAgo / 1440).toFixed(0);
   return `${daysAgo}d ago`;
 };
 
