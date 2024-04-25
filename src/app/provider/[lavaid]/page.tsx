@@ -22,6 +22,8 @@ import { useCachedFetch } from "@jsinfo/hooks/useCachedFetch";
 import { useEffect } from "react";
 import { usePageContext } from "@jsinfo/context/PageContext";
 
+import { FormatNumberWithString } from '@jsinfo/common/utils';
+
 import {
   CHARTJS_COLORS,
   ChartjsSetLastDotHighInChartData,
@@ -35,6 +37,7 @@ import ProviderCard from "@jsinfo/components/ProviderCard";
 import TitledCard from "@jsinfo/components/TitledCard";
 import AnimatedTabsList from "@jsinfo/components/AnimatedTabsList";
 import TimeTooltip from '@jsinfo/components/TimeTooltip';
+
 
 export default function Provider({ params }: { params: { lavaid: string } }) {
 
@@ -179,7 +182,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
       <BlockWithDateCard blockData={data} />
       <ProviderCard provider={provider} />
       <Card>
-        <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-4">
+        <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-5">
           <TitledCard
             title="CU"
             value={provider.cuSum}
@@ -201,6 +204,12 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
           <TitledCard
             title="Stake"
             value={`${provider.stakeSum} ULAVA`}
+            className="col-span-2 md:col-span-1"
+            formatNumber={true}
+          />
+          <TitledCard
+            title="Claimable Rewards"
+            value={provider.claimableRewards.toUpperCase()}
             className="col-span-2 md:col-span-1"
             formatNumber={true}
           />
@@ -269,6 +278,16 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                     csvDownloadLink={`providerReportsCsv/${providerAddr}`}
                   >
                     Reports
+                  </CsvButton>
+                ),
+              },
+              {
+                value: "delegatorRewards",
+                content: (
+                  <CsvButton
+                    csvDownloadLink={`providerDelegatorRewardsCsv/${providerAddr}`}
+                  >
+                    Delegator Rewards
                   </CsvButton>
                 ),
               },
@@ -533,6 +552,27 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                 ),
                 "blocks.datetime": (report) =>
                   (<TimeTooltip datetime={report.blocks.datetime} />),
+              }}
+            />
+
+            <DataKeySortableTableInATabComponent
+              columns={[
+                { key: "timestamp", name: "Date" },
+                { key: "chain_id", name: "Spec" },
+                { key: "amount", name: "Amount" },
+              ]}
+              dataKey="providerDelegatorRewards"
+              useLastUrlPathInKey={true}
+              defaultSortKey="timestamp|desc"
+              tableAndTabName="delegatorRewards"
+              pkey="id"
+              pkeyUrl="none"
+              rowFormatters={{
+                timestamp: (data) => (<TimeTooltip datetime={data.timestamp} />),
+                chain_id: (stake) => (
+                  <Link href={`/spec/${stake.chain_id}`}>{stake.chain_id}</Link>
+                ),
+                amount: (data) => FormatNumberWithString(data.amount.toUpperCase()),
               }}
             />
           </Box>

@@ -59,3 +59,18 @@ export function ConvertToSortConfig(config: SortAndPaginationConfig): SortConfig
     direction: config.direction
   };
 }
+
+const formatter = new Intl.NumberFormat('en-US');
+export function FormatNumber(value: number): string {
+  return formatter.format(value)
+}
+
+export function FormatNumberWithString(value: string | number): string {
+  // Convert value to string before extracting the number part and the string part
+  const valueString = value.toString();
+  const numberPart = parseFloat(valueString);
+  const stringPart = isNaN(numberPart) ? valueString : valueString.replace(numberPart.toString(), '');
+
+  // Apply the formatter to the number part and append the string part
+  return !isNaN(numberPart) ? FormatNumber(numberPart) + stringPart : valueString;
+}
