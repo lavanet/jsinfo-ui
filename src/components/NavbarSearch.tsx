@@ -116,8 +116,7 @@ export function NavbarSearch() {
             width = (windowWidth / 0.8 - 35) + "px";
         } else if (windowWidth <= 650) {
             width = (windowWidth - 35) + "px";
-        } else if (windowWidth <= 900) {
-            console.log("2", windowWidth)
+        } else if (windowWidth <= 1000) {
             const eventsbtn = document.querySelector('#eventsbtn')
             if (!eventsbtn) return;
             width = (windowWidth - eventsbtn.getBoundingClientRect().right - 30) + "px";
