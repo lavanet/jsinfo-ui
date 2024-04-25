@@ -43,16 +43,16 @@ export function GetNestedProperty(obj: Record<string, any>, key: string): any {
 export const FormatTimeDifference = (date: Date | string): string => {
   const minutesAgo = Dayjs().diff(Dayjs(new Date(date)), "minute");
   if (minutesAgo < 60) {
-    return `${minutesAgo} minutes ago`;
+    return `${minutesAgo}min ago`;
   } else if (minutesAgo < 1440) {
     // 1440 minutes in a day
     let hoursAgo = (minutesAgo / 60).toFixed(1);
-    hoursAgo = hoursAgo.endsWith(".0") ? hoursAgo.slice(0, -2) : hoursAgo;
-    return `${hoursAgo} hours ago`;
+    //hoursAgo = hoursAgo.endsWith(".0") ? hoursAgo.slice(0, -2) : hoursAgo;
+    return `${hoursAgo}hrs ago`;
   }
   let daysAgo = (minutesAgo / 1440).toFixed(1);
-  daysAgo = daysAgo.endsWith(".0") ? daysAgo.slice(0, -2) : daysAgo;
-  return `${daysAgo} days ago`;
+  //daysAgo = daysAgo.endsWith(".0") ? daysAgo.slice(0, -2) : daysAgo;
+  return `${daysAgo}d ago`;
 };
 
 export function ConvertToSortConfig(config: SortAndPaginationConfig): SortConfig {
