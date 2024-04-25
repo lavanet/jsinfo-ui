@@ -182,7 +182,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
       <BlockWithDateCard blockData={data} />
       <ProviderCard provider={provider} />
       <Card>
-        <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-5">
+        <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-4">
           <TitledCard
             title="CU"
             value={provider.cuSum}
@@ -207,12 +207,12 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
             className="col-span-2 md:col-span-1"
             formatNumber={true}
           />
-          <TitledCard
+          {/* <TitledCard
             title="Claimable Rewards"
             value={provider.claimableRewards.toUpperCase()}
             className="col-span-2 md:col-span-1"
             formatNumber={true}
-          />
+          /> */}
         </Flex>
       </Card>
 
