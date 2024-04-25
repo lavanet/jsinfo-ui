@@ -19,7 +19,8 @@ import {
   ChartJsSpecIdToDatasetMap
 } from "@jsinfo/components/ChartJsReactiveLineChart";
 import { useCachedFetch } from "@jsinfo/hooks/useCachedFetch";
-import { FormatTimeDifference } from "@jsinfo/common/utils";
+import { useEffect } from "react";
+import { usePageContext } from "@jsinfo/context/PageContext";
 
 import {
   CHARTJS_COLORS,
@@ -33,8 +34,7 @@ import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
 import ProviderCard from "@jsinfo/components/ProviderCard";
 import TitledCard from "@jsinfo/components/TitledCard";
 import AnimatedTabsList from "@jsinfo/components/AnimatedTabsList";
-import { useEffect } from "react";
-import { usePageContext } from "@jsinfo/context/PageContext";
+import TimeTooltip from '@jsinfo/components/TimeTooltip';
 
 export default function Provider({ params }: { params: { lavaid: string } }) {
 
@@ -290,9 +290,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
               pkey="id"
               pkeyUrl="none"
               rowFormatters={{
-                timestamp: (data) => {
-                  return FormatTimeDifference(data.timestamp);
-                },
+                timestamp: (data) => (<TimeTooltip datetime={data.timestamp} />),
                 spec: (data) => (
                   <Link href={`/spec/${data.spec}`}>{data.spec}</Link>
                 ),
@@ -329,9 +327,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
               pkey="id"
               pkeyUrl="none"
               rowFormatters={{
-                date: (data) => {
-                  return FormatTimeDifference(data.date);
-                },
+                date: (data) => (<TimeTooltip datetime={data.date} />),
                 error: (data) => {
                   return (
                     <div
@@ -388,7 +384,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                   </Link>
                 ),
                 "blocks.datetime": (evt) =>
-                  FormatTimeDifference(evt.blocks.datetime),
+                  (<TimeTooltip datetime={evt.blocks.datetime} />),
                 text1: (evt) => {
                   return (
                     <div
@@ -487,7 +483,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                   </Link>
                 ),
                 "blocks.datetime": (payment) =>
-                  FormatTimeDifference(payment.blocks.datetime),
+                  (<TimeTooltip datetime={payment.blocks.datetime} />),
                 "relay_payments.consumer": (payment) => (
                   <Link href={`/consumer/${payment.relay_payments.consumer}`}>
                     {payment.relay_payments.consumer}
@@ -536,7 +532,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                   </Link>
                 ),
                 "blocks.datetime": (report) =>
-                  FormatTimeDifference(report.blocks.datetime),
+                  (<TimeTooltip datetime={report.blocks.datetime} />),
               }}
             />
           </Box>

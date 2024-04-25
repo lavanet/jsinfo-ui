@@ -2,9 +2,8 @@
 
 import React, { FC } from 'react';
 import { Flex, Text, Card, Box } from "@radix-ui/themes";
-import { FormatTimeDifference } from "@jsinfo/common/utils";
 import Image from 'next/image';
-
+import TimeTooltip from './TimeTooltip';
 interface BlockData {
     height: number;
     datetime: Date | string;
@@ -30,7 +29,7 @@ const BlockWithDateCard: FC<BlockWithDateCardProps> = ({ blockData }) => (
                         <span style={{ marginLeft: '10px', whiteSpace: 'nowrap' }}>Block {blockData.height}</span>
                     </Text>
                     <Text size="1" color="gray" style={{ marginLeft: '6px', whiteSpace: 'nowrap' }}>
-                        {FormatTimeDifference(blockData.datetime)}
+                        <TimeTooltip datetime={blockData.datetime} />
                     </Text>
                 </div>
             </Box>

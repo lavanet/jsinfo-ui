@@ -40,18 +40,16 @@ export function GetNestedProperty(obj: Record<string, any>, key: string): any {
   }, obj);
 }
 
-export const FormatTimeDifference = (date: Date | string): string => {
-  const minutesAgo = Dayjs().diff(Dayjs(new Date(date)), "minute");
+export const FormatTimeDifference = (date: Date): string => {
+  const minutesAgo = Dayjs().diff(Dayjs(date), "minute");
   if (minutesAgo < 60) {
     return `${minutesAgo}min ago`;
   } else if (minutesAgo < 1440) {
     // 1440 minutes in a day
-    let hoursAgo = (minutesAgo / 60).toFixed(1);
-    //hoursAgo = hoursAgo.endsWith(".0") ? hoursAgo.slice(0, -2) : hoursAgo;
+    let hoursAgo = (minutesAgo / 60);
     return `${hoursAgo}hrs ago`;
   }
-  let daysAgo = (minutesAgo / 1440).toFixed(1);
-  //daysAgo = daysAgo.endsWith(".0") ? daysAgo.slice(0, -2) : daysAgo;
+  let daysAgo = (minutesAgo / 1440);
   return `${daysAgo}d ago`;
 };
 

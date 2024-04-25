@@ -7,14 +7,14 @@ import { Card, Box, Tabs } from "@radix-ui/themes";
 import { useCachedFetch } from "@jsinfo/hooks/useCachedFetch";
 
 import { EventTypeToString } from "@jsinfo/common/convertors";
-import { FormatTimeDifference } from "@jsinfo/common/utils";
 import { SortableTableInATabComponent } from "@jsinfo/components/SortTable";
+import { useEffect } from "react";
+import { usePageContext } from "@jsinfo/context/PageContext";
 
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
 import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
 import AnimatedTabsList from "@jsinfo/components/AnimatedTabsList";
-import { usePageContext } from "@jsinfo/context/PageContext";
-import { useEffect } from "react";
+import TimeTooltip from '@jsinfo/components/TimeTooltip';
 
 export default function Events() {
 
@@ -104,7 +104,7 @@ export default function Events() {
                   </Link>
                 ),
                 "blocks.datetime": (evt) =>
-                  FormatTimeDifference(evt.blocks.datetime),
+                  (<TimeTooltip datetime={evt.blocks.datetime} />),
                 text1: (evt) => {
                   return (
                     <div
@@ -189,7 +189,7 @@ export default function Events() {
                   </Link>
                 ),
                 "blocks.datetime": (payment) =>
-                  FormatTimeDifference(payment.blocks.datetime),
+                  (<TimeTooltip datetime={payment.blocks.datetime} />),
                 "relay_payments.consumer": (payment) => (
                   <Link href={`/consumer/${payment.relay_payments.consumer}`}>
                     {payment.relay_payments.consumer}
@@ -248,7 +248,7 @@ export default function Events() {
                   </Link>
                 ),
                 "blocks.datetime": (report) =>
-                  FormatTimeDifference(report.blocks.datetime),
+                  (<TimeTooltip datetime={report.blocks.datetime} />),
                 "provider_reported.cu": (report) => report.provider_reported.cu,
                 "provider_reported.disconnections": (report) =>
                   report.provider_reported.disconnections,

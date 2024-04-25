@@ -8,6 +8,10 @@
   }
 }
 
+.rt-Card:where(.rt-variant-surface) {
+  --card-background-color: initial;
+}
+
 /* :root {
     --color-primary/key-600: #290900ff;
     --color-primary/key-300: #ff3900ff; 
