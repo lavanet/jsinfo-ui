@@ -74,3 +74,13 @@ export function FormatNumberWithString(value: string | number): string {
   // Apply the formatter to the number part and append the string part
   return !isNaN(numberPart) ? FormatNumber(numberPart) + stringPart : valueString;
 }
+
+export function AddSpacesBeforeCapsAndCapitalize(text: string): string {
+  // Add a space before capital letters
+  let formattedText = text.replace(/([A-Z])/g, ' $1');
+
+  // Capitalize the first letter of each word
+  formattedText = formattedText.replace(/\b\w/g, char => char.toUpperCase());
+
+  return formattedText;
+}

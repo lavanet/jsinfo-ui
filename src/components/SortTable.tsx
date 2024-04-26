@@ -8,7 +8,7 @@ import React from 'react';
 import { CachedPaginationFetcher } from '@jsinfo/hooks/useCachedFetch';
 import LoadingIndicator from './LoadingIndicator';
 import { Column, SortConfig, RowFormatters, SortableData, SortAndPaginationConfig } from '@jsinfo/common/types';
-import { ConvertToSortConfig, GetNestedProperty } from '@jsinfo/common/utils';
+import { AddSpacesBeforeCapsAndCapitalize, ConvertToSortConfig, GetNestedProperty } from '@jsinfo/common/utils';
 import { ErrorBoundary } from '@jsinfo/components/ErrorBoundary';
 import PaginationControl from './PaginationControl';
 
@@ -479,9 +479,9 @@ export const SortableTableComponent: React.FC<SortableTableComponentProps> = (pr
   if (props.data.length === 0) {
     return (
       <div style={{ padding: '1em', textAlign: 'center' }}>
-        <h2>No <span style={{ fontWeight: 'bold', textTransform: 'capitalize', color: 'grey' }}>{props.tableAndTabName}</span> data available</h2>
+        <h2>No <span style={{ fontWeight: 'bold', color: 'grey' }}>{AddSpacesBeforeCapsAndCapitalize(props.tableAndTabName)}</span> data available</h2>
       </div>
-    )
+    );
   }
 
   const { tableData, requestSort, sortConfig }: SortableData = useSortableData(props.data, props.defaultSortKey);
@@ -564,14 +564,6 @@ export const DataKeySortableTableComponent: React.FC<DataKeySortableTableCompone
 
   loadingRef.current = loading;
 
-  // console.log("DataKeySortableTableComponent", props.tableAndTabName, {
-  //   sortAndPaginationConfig,
-  //   data,
-  //   loading,
-  //   error,
-  //   componentData
-  // });
-
   useEffect(() => {
     if (error) {
       setComponentData(<div style={{ margin: '5px' }}>Error: {error}</div>);
@@ -582,7 +574,7 @@ export const DataKeySortableTableComponent: React.FC<DataKeySortableTableCompone
       if (!loadingTimeout) {
         setLoadingTimeout(setTimeout(() => {
           if (loadingRef.current) {
-            setComponentData(<LoadingIndicator loadingText={`Loading ${props.tableAndTabName.charAt(0).toUpperCase() + props.tableAndTabName.slice(1)} data`} />);
+            setComponentData(<LoadingIndicator loadingText={`Loading ${AddSpacesBeforeCapsAndCapitalize(props.tableAndTabName)} data`} />);
           }
         }, 200));
       }
@@ -608,7 +600,7 @@ export const DataKeySortableTableComponent: React.FC<DataKeySortableTableCompone
       if (dataObject.length === 0) {
         setComponentData(
           <div style={{ padding: '1em', textAlign: 'center' }}>
-            <h2>No <span style={{ fontWeight: 'bold', textTransform: 'capitalize', color: 'grey' }}>{props.tableAndTabName}</span> data available</h2>
+            <h2>No <span style={{ fontWeight: 'bold', color: 'grey' }}>{AddSpacesBeforeCapsAndCapitalize(props.tableAndTabName)}</span> data available</h2>
           </div>
         );
         return;
