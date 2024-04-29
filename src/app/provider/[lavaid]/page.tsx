@@ -594,7 +594,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                 chainId: (stake) => (
                   <Link href={`/spec/${stake.chainId}`}>{stake.chainId}</Link>
                 ),
-                chainBlockHeight: (data) => FormatNumberWithString(data.chainBlockHeight.toUpperCase()),
+                chainBlockHeight: (data) => FormatNumberWithString(data.chainBlockHeight),
               }}
             />
 
