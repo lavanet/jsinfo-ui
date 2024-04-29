@@ -569,8 +569,8 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
               columns={[
                 { key: "blockId", name: "Block" },
                 { key: "timestamp", name: "Time" },
-                { key: "chainId", name: "Spec" },
-                { key: "chainBlockHeight", name: "BlockHeight" },
+                { key: "chainId", name: "Chain" },
+                { key: "chainBlockHeight", name: "Chain Block Height" },
               ]}
               dataKey="providerBlockReports"
               useLastUrlPathInKey={true}
