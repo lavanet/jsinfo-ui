@@ -282,6 +282,16 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                 ),
               },
               {
+                value: "blockReports",
+                content: (
+                  <CsvButton
+                    csvDownloadLink={`providerBlockReportsCsv/${providerAddr}`}
+                  >
+                    Block Reports
+                  </CsvButton>
+                ),
+              },
+              {
                 value: "delegatorRewards",
                 content: (
                   <CsvButton
@@ -557,8 +567,41 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
 
             <DataKeySortableTableInATabComponent
               columns={[
-                { key: "timestamp", name: "Date" },
-                { key: "chain_id", name: "Spec" },
+                { key: "blockId", name: "Block" },
+                { key: "timestamp", name: "Time" },
+                { key: "chainId", name: "Spec" },
+                { key: "amount", name: "Amount" },
+              ]}
+              dataKey="providerBlockReports"
+              useLastUrlPathInKey={true}
+              defaultSortKey="timestamp|desc"
+              tableAndTabName="blockReports"
+              pkey="id"
+              pkeyUrl="none"
+              rowFormatters={{
+                "blockId": (data) => (
+                  <Link
+                    href={
+                      data.tx
+                        ? `https://lava.explorers.guru/transaction/${data.tx}`
+                        : `https://lava.explorers.guru/block/${data.blockId}`
+                    }
+                  >
+                    {data.blockId}
+                  </Link>
+                ),
+                timestamp: (data) => (<TimeTooltip datetime={data.timestamp} />),
+                chainId: (stake) => (
+                  <Link href={`/spec/${stake.chainId}`}>{stake.chainId}</Link>
+                ),
+                chainBlockHeight: (data) => FormatNumberWithString(data.chainBlockHeight.toUpperCase()),
+              }}
+            />
+
+            <DataKeySortableTableInATabComponent
+              columns={[
+                { key: "timestamp", name: "Time" },
+                { key: "chainId", name: "Spec" },
                 { key: "amount", name: "Amount" },
               ]}
               dataKey="providerDelegatorRewards"
@@ -569,8 +612,8 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
               pkeyUrl="none"
               rowFormatters={{
                 timestamp: (data) => (<TimeTooltip datetime={data.timestamp} />),
-                chain_id: (stake) => (
-                  <Link href={`/spec/${stake.chain_id}`}>{stake.chain_id}</Link>
+                chainId: (data) => (
+                  <Link href={`/spec/${data.chainId}`}>{data.chainId}</Link>
                 ),
                 amount: (data) => FormatNumberWithString(data.amount.toUpperCase()),
               }}
