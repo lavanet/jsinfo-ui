@@ -570,7 +570,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                 { key: "blockId", name: "Block" },
                 { key: "timestamp", name: "Time" },
                 { key: "chainId", name: "Spec" },
-                { key: "amount", name: "Amount" },
+                { key: "chainBlockHeight", name: "BlockHeight" },
               ]}
               dataKey="providerBlockReports"
               useLastUrlPathInKey={true}
