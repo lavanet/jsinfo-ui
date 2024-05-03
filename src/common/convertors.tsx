@@ -44,7 +44,14 @@ export function EventTypeToString(evtType: number) {
             return "Unstake From Unbound";
         case 21:
             return "Redelegate Between Providers";
-
+        case 22:
+            return "Provider Bonus Rewards";
+        case 23:
+            return "Validtor Slash";
+        case 24:
+            return "IPRPC Pool Emission";
+        case 25:
+            return "Distribution Pools Refill";
         default:
             return "Unknown Event Type";
     }

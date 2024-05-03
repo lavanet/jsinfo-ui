@@ -9,14 +9,14 @@ interface TitledCardProps {
     value: number | string;
     className?: string;
     formatNumber?: boolean;
+    tooltip?: string;
 }
 
-const TitledCard: React.FC<TitledCardProps> = ({ title, value, className, formatNumber }) => {
-
+const TitledCard: React.FC<TitledCardProps> = ({ title, value, className, formatNumber, tooltip }) => {
 
     let formattedValue = formatNumber ? FormatNumberWithString(value) : value.toString();
 
-    return (
+    const card = (
         <Card className={`w-full ${className}`}>
             {title}
             <Text as="div" size="2" weight="bold">
@@ -24,6 +24,8 @@ const TitledCard: React.FC<TitledCardProps> = ({ title, value, className, format
             </Text>
         </Card>
     );
+
+    return tooltip ? <span title={tooltip}>{card}</span> : card;
 };
 
 export default TitledCard;

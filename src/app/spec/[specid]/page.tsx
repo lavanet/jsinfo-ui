@@ -25,6 +25,8 @@ import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
 import TitledCard from "@jsinfo/components/TitledCard";
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
 import AnimatedTabsList from "@jsinfo/components/AnimatedTabsList";
+import { FormatNumber } from '@jsinfo/common/utils';
+import StatusCall from '@jsinfo/components/StatusCell';
 
 export default function Spec({ params }: { params: { specid: string } }) {
 
@@ -161,22 +163,25 @@ export default function Spec({ params }: { params: { specid: string } }) {
             className="col-span-1"
           />
           <TitledCard
-            title="CU"
+            title="Total CU"
             value={data.cuSum}
             className="col-span-1"
             formatNumber={true}
+            tooltip="Total compute units for this spec by all providers"
           />
           <TitledCard
-            title="Relays"
+            title="Total Relays"
             value={data.relaySum}
             className="col-span-1"
             formatNumber={true}
+            tooltip="Total relays for this spec by all providers"
           />
           <TitledCard
-            title="Rewards"
+            title="Total Rewards"
             value={`${data.rewardSum} ULAVA`}
             className="col-span-2 md:col-span-1"
             formatNumber={true}
+            tooltip="Total rewards for this spec by all providers"
           />
         </Flex>
       </Card>
@@ -194,30 +199,36 @@ export default function Spec({ params }: { params: { specid: string } }) {
           <Box>
             <SortableTableInATabComponent
               columns={[
-                { key: "providers.address", name: "Provider" },
-                { key: "provider_stakes.status", name: "Status" },
-                { key: "provider_stakes.geolocation", name: "Geolocation" },
-                { key: "provider_stakes.addons", name: "Addons" },
-                { key: "provider_stakes.extensions", name: "Extensions" },
-                { key: "provider_stakes.stake", name: "Stake" },
+                { key: "provider", name: "Provider" },
+                { key: "status", name: "Status" },
+                { key: "geolocation", name: "Geolocation" },
+                { key: "addonsAndExtensions", name: "Addons&Extensions" },
+                { key: "stake", name: "Stake" },
+                { key: "cuSum", name: "90-Day CU Sum" },
+                { key: "relaySum", name: "90-Day Relay Sum" },
               ]}
               data={data.stakes}
-              defaultSortKey="providers.address"
+              defaultSortKey="cuSum|desc"
               tableAndTabName="stakes"
-              pkey="provider_stakes.specId,provider_stakes.provider"
+              pkey="specId,provider"
               pkeyUrl="none"
               rowFormatters={{
-                "providers.address": (stake) => (
-                  <Link href={`/provider/${stake.providers.address}`}>
-                    {stake.providers.moniker
-                      ? stake.providers.moniker
-                      : stake.providers.address}
+                provider: (data) => (
+                  <Link href={`/provider/${data.address}`}>
+                    {data.moniker
+                      ? data.moniker
+                      : data.address}
                   </Link>
                 ),
-                "provider_stakes.status": (stake) =>
-                  StatusToString(stake.provider_stakes.status),
-                "provider_stakes.geolocation": (stake) =>
-                  GeoLocationToString(stake.provider_stakes.geolocation),
+                status: (data) => <StatusCall status={StatusToString(data.status)} />,
+                geolocation: (data) =>
+                  GeoLocationToString(data.geolocation),
+                stake: (data) =>
+                  FormatNumber(data.stake),
+                cuSum: (data) =>
+                  FormatNumber(data.cuSum),
+                relaySum: (data) =>
+                  FormatNumber(data.relaySum),
               }}
             />
           </Box>

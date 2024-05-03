@@ -22,7 +22,7 @@ import { useCachedFetch } from "@jsinfo/hooks/useCachedFetch";
 import { useEffect } from "react";
 import { usePageContext } from "@jsinfo/context/PageContext";
 
-import { FormatNumberWithString } from '@jsinfo/common/utils';
+import { FormatNumber, FormatNumberWithString } from '@jsinfo/common/utils';
 
 import {
   CHARTJS_COLORS,
@@ -37,6 +37,7 @@ import ProviderCard from "@jsinfo/components/ProviderCard";
 import TitledCard from "@jsinfo/components/TitledCard";
 import AnimatedTabsList from "@jsinfo/components/AnimatedTabsList";
 import TimeTooltip from '@jsinfo/components/TimeTooltip';
+import StatusCall from '@jsinfo/components/StatusCell';
 
 
 export default function Provider({ params }: { params: { lavaid: string } }) {
@@ -184,28 +185,32 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
       <Card>
         <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-4">
           <TitledCard
-            title="CU"
+            title="Total CU"
             value={provider.cuSum}
             className="col-span-1"
             formatNumber={true}
+            tooltip="Total compute units for provider"
           />
           <TitledCard
-            title="Relays"
+            title="Total Relays"
             value={provider.relaySum}
             className="col-span-1"
             formatNumber={true}
+            tooltip="Total relays for provider"
           />
           <TitledCard
-            title="Rewards"
+            title="Total Rewards"
             value={`${provider.rewardSum} ULAVA`}
             className="col-span-2 md:col-span-1"
             formatNumber={true}
+            tooltip="Total rewards for provider"
           />
           <TitledCard
-            title="Stake"
+            title="Total Stake"
             value={`${provider.stakeSum} ULAVA`}
             className="col-span-2 md:col-span-1"
             formatNumber={true}
+            tooltip="Total stake for all specs"
           />
           {/* <TitledCard
             title="Claimable Rewards"
@@ -297,7 +302,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                   <CsvButton
                     csvDownloadLink={`providerDelegatorRewardsCsv/${providerAddr}`}
                   >
-                    Delegator Rewards
+                    Claimable Provider Rewards
                   </CsvButton>
                 ),
               },
@@ -323,23 +328,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                 spec: (data) => (
                   <Link href={`/spec/${data.spec}`}>{data.spec}</Link>
                 ),
-                status: (data) =>
-                  ["healthy", "unhealthy", "frozen"].includes(
-                    data.status.toLowerCase()
-                  ) ? (
-                    <span
-                      style={{
-                        color:
-                          data.status.toLowerCase() === "healthy"
-                            ? "green"
-                            : "red",
-                      }}
-                    >
-                      {data.status}
-                    </span>
-                  ) : (
-                    data.status
-                  ),
+                status: (data) => <StatusCall status={data.status} />,
               }}
             />
 
@@ -469,11 +458,12 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
               pkey="specId,provider"
               pkeyUrl="spec"
               rowFormatters={{
-                specId: (stake) => (
-                  <Link href={`/spec/${stake.specId}`}>{stake.specId}</Link>
+                specId: (data) => (
+                  <Link href={`/spec/${data.specId}`}>{data.specId}</Link>
                 ),
-                status: (stake) => StatusToString(stake.status),
-                geolocation: (stake) => GeoLocationToString(stake.geolocation),
+                status: (data) => <StatusCall status={StatusToString(data.status)} />,
+                geolocation: (data) => GeoLocationToString(data.geolocation),
+                stake: (data) => FormatNumber(data.stake),
               }}
             />
 
