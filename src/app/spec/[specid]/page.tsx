@@ -153,7 +153,7 @@ export default function Spec({ params }: { params: { specid: string } }) {
       <Card>
         <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-5">
           <TitledCard
-            title="spec"
+            title="Spec"
             value={data.specId}
             className="col-span-1"
           />
@@ -214,10 +214,10 @@ export default function Spec({ params }: { params: { specid: string } }) {
               pkeyUrl="none"
               rowFormatters={{
                 provider: (data) => (
-                  <Link href={`/provider/${data.address}`}>
-                    {data.moniker
+                  <Link href={`/provider/${data.provider}`}>
+                    {data.provider
                       ? data.moniker
-                      : data.address}
+                      : data.provider}
                   </Link>
                 ),
                 status: (data) => <StatusCall status={StatusToString(data.status)} />,
