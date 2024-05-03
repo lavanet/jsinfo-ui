@@ -237,8 +237,8 @@ export default function Spec({ params }: { params: { specid: string } }) {
                 { key: "geolocation", name: "Geolocation" },
                 { key: "addonsAndExtensions", name: "Addons&Extensions" },
                 { key: "stake", name: "Stake" },
-                { key: "cuSum", name: "90-Day CU Sum" },
-                { key: "relaySum", name: "90-Day Relay Sum" },
+                { key: "cuSum", name: "90-Day CUs" },
+                { key: "relaySum", name: "90-Day Relays" },
               ]}
               data={data.stakes}
               defaultSortKey="cuSum|desc"
