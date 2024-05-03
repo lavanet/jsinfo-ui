@@ -32,6 +32,7 @@ import { ConvertToChainName } from "@jsinfo/common/convertors";
 import { useCachedFetch } from "@jsinfo/hooks/useCachedFetch";
 
 import { usePageContext } from "@jsinfo/context/PageContext";
+import { FormatNumber } from "@jsinfo/common/utils";
 
 export default function Home() {
 
@@ -238,6 +239,10 @@ export default function Home() {
               firstColumn="moniker"
               dataKey="indexProviders"
               useLastUrlPathInKey={false}
+              rowFormatters={{
+                rewardSum: (data) => FormatNumber(data.rewardSum),
+                totalStake: (data) => FormatNumber(data.totalStake),
+              }}
             />
 
             <SortableTableInATabComponent
@@ -251,6 +256,9 @@ export default function Home() {
               tableAndTabName="chains"
               pkey="chainId"
               pkeyUrl="spec"
+              rowFormatters={{
+                relaySum: (data) => FormatNumber(data.relaySum),
+              }}
             />
           </Box>
         </Tabs.Root>
