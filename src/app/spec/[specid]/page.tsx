@@ -131,7 +131,7 @@ export default function Spec({ params }: { params: { specid: string } }) {
     }));
 
     chartData.datasets.push({
-      label: specId + " Cu",
+      label: specId + " CU",
       data: metricData,
       fill: false,
       borderColor: CHARTJS_COLORS[colorIndex],
