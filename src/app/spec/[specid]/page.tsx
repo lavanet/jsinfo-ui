@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { useCachedFetch } from "@jsinfo/hooks/useCachedFetch";
 
 import {
+  CHARTJS_COLORS,
   ChartJsLineChartData,
   ChartJsLineChartDataset,
   ChartJsLineChartOptions,
@@ -61,6 +62,7 @@ export default function Spec({ params }: { params: { specid: string } }) {
         type: "linear",
         display: true,
         position: "left",
+        stacked: true,
       },
       y1: {
         type: "linear",
@@ -69,6 +71,16 @@ export default function Spec({ params }: { params: { specid: string } }) {
         min: 0,
         max: 1.01,
 
+        // grid line settings
+        grid: {
+          drawOnChartArea: false, // only want the grid lines for one axis to show up
+        },
+      },
+      y2: {
+        type: "linear",
+        display: false,
+        position: "left",
+        stacked: false,
         // grid line settings
         grid: {
           drawOnChartArea: false, // only want the grid lines for one axis to show up
@@ -106,7 +118,28 @@ export default function Spec({ params }: { params: { specid: string } }) {
     fill: false,
     borderColor: "#8c333a",
     backgroundColor: "#8c333a",
+    yAxisID: "y2",
+    borderDash: [10, 1], // Use dotted line
   });
+
+  let colorIndex = 0;
+
+  for (let specId in data.cuChartData) {
+    let metricData = data.cuChartData[specId].map((item: any) => ({
+      x: item.date,
+      y: item.cuSum,
+    }));
+
+    chartData.datasets.push({
+      label: specId + " Cu",
+      data: metricData,
+      fill: false,
+      borderColor: CHARTJS_COLORS[colorIndex],
+      backgroundColor: CHARTJS_COLORS[colorIndex],
+    });
+
+    colorIndex = (colorIndex + 1) % CHARTJS_COLORS.length; // cycle through colors
+  }
 
   let qosSync: ChartJsLineChartDataset = {
     label: "Sync Score",
