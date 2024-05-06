@@ -200,25 +200,24 @@ export default function Home() {
       <ChartJsReactiveLineChart data={chartData} options={chartOptions} />
 
       <Card>
-        <Tabs.Root defaultValue="providers">
-          <JsinfoTabs
-            tabs={[
-              {
-                value: "providers",
-                content: (
-                  <CsvButton
-                    csvDownloadLink="indexProvidersCsv"
-                  >
-                    Providers
-                  </CsvButton>
-                ),
-              },
-              {
-                value: "chains",
-                content: "Chains",
-              },
-            ]}
-          />
+        <JsinfoTabs defaultValue="providers"
+          tabs={[
+            {
+              value: "providers",
+              content: (
+                <CsvButton
+                  csvDownloadLink="indexProvidersCsv"
+                >
+                  Providers
+                </CsvButton>
+              ),
+            },
+            {
+              value: "chains",
+              content: "Chains",
+            },
+          ]}
+        >
           <Box>
             <DataKeySortableTableInATabComponent
               columns={[
@@ -261,7 +260,7 @@ export default function Home() {
               }}
             />
           </Box>
-        </Tabs.Root>
+        </JsinfoTabs>
       </Card>
     </>
   );
