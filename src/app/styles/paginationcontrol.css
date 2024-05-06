@@ -1,0 +1,33 @@
+@import url("https://fonts.cdnfonts.com/css/helvetica-neue-55");
+
+.paginationcontrol {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Helvetica Neue", sans-serif;
+  gap: 10px;
+  padding-top: 10px;
+}
+
+.paginationcontrol button,
+.paginationcontrol span {
+  padding: 5px;
+  margin: 5px;
+  border-radius: 15px;
+  border: none;
+  cursor: pointer;
+  width: 35px;
+  text-align: center;
+  color: white;
+  background-color: #cc2f00ff;
+  font-size: 9px;
+}
+
+.paginationcontrol .active {
+  font-weight: bold;
+  background-color: transparent;
+}
+
+.paginationcontrol .nowrap {
+  white-space: nowrap;
+}
