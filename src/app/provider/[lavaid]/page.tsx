@@ -2,7 +2,7 @@
 "use client";
 
 import Link from 'next/link'
-import { Flex, Card, Box, Tabs } from "@radix-ui/themes";
+import { Flex, Card, Box } from "@radix-ui/themes";
 
 import {
   StatusToString,
@@ -35,7 +35,7 @@ import CsvButton from "@jsinfo/components/CsvButton";
 import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
 import ProviderCard from "@jsinfo/components/ProviderCard";
 import TitledCard from "@jsinfo/components/TitledCard";
-import AnimatedTabsList from "@jsinfo/components/AnimatedTabsList";
+import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
 import TimeTooltip from '@jsinfo/components/TimeTooltip';
 import StatusCall from '@jsinfo/components/StatusCell';
 
@@ -223,91 +223,90 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
 
       <ChartJsReactiveLineChart data={chartData} options={chartOptions} />
       <Card>
-        <Tabs.Root defaultValue="health">
-          <AnimatedTabsList
-            tabs={[
-              {
-                value: "health",
-                content: (
-                  <CsvButton
-                    csvDownloadLink={`providerHealthCsv/${providerAddr}`}
-                  >
-                    Health
-                  </CsvButton>
-                ),
-              },
-              {
-                value: "errors",
-                content: (
-                  <CsvButton
-                    csvDownloadLink={`providerErrorsCsv/${providerAddr}`}
-                  >
-                    Errors
-                  </CsvButton>
-                ),
-              },
-              {
-                value: "stakes",
-                content: (
-                  <CsvButton
-                    csvDownloadLink={`providerStakesCsv/${providerAddr}`}
-                  >
-                    Stakes
-                  </CsvButton>
-                ),
-              },
-              {
-                value: "events",
-                content: (
-                  <CsvButton
-                    csvDownloadLink={`providerEventsCsv/${providerAddr}`}
-                  >
-                    Events
-                  </CsvButton>
-                ),
-              },
-              {
-                value: "rewards",
-                content: (
-                  <CsvButton
-                    csvDownloadLink={`providerRewardsCsv/${providerAddr}`}
-                  >
-                    Rewards
-                  </CsvButton>
-                ),
-              },
-              {
-                value: "reports",
-                content: (
-                  <CsvButton
-                    csvDownloadLink={`providerReportsCsv/${providerAddr}`}
-                  >
-                    Reports
-                  </CsvButton>
-                ),
-              },
-              {
-                value: "blockReports",
-                content: (
-                  <CsvButton
-                    csvDownloadLink={`providerBlockReportsCsv/${providerAddr}`}
-                  >
-                    Block Reports
-                  </CsvButton>
-                ),
-              },
-              {
-                value: "delegatorRewards",
-                content: (
-                  <CsvButton
-                    csvDownloadLink={`providerDelegatorRewardsCsv/${providerAddr}`}
-                  >
-                    Claimable Provider Rewards
-                  </CsvButton>
-                ),
-              },
-            ]}
-          />
+        <JsinfoTabs defaultValue="health"
+          tabs={[
+            {
+              value: "health",
+              content: (
+                <CsvButton
+                  csvDownloadLink={`providerHealthCsv/${providerAddr}`}
+                >
+                  Health
+                </CsvButton>
+              ),
+            },
+            {
+              value: "errors",
+              content: (
+                <CsvButton
+                  csvDownloadLink={`providerErrorsCsv/${providerAddr}`}
+                >
+                  Errors
+                </CsvButton>
+              ),
+            },
+            {
+              value: "stakes",
+              content: (
+                <CsvButton
+                  csvDownloadLink={`providerStakesCsv/${providerAddr}`}
+                >
+                  Stakes
+                </CsvButton>
+              ),
+            },
+            {
+              value: "events",
+              content: (
+                <CsvButton
+                  csvDownloadLink={`providerEventsCsv/${providerAddr}`}
+                >
+                  Events
+                </CsvButton>
+              ),
+            },
+            {
+              value: "rewards",
+              content: (
+                <CsvButton
+                  csvDownloadLink={`providerRewardsCsv/${providerAddr}`}
+                >
+                  Rewards
+                </CsvButton>
+              ),
+            },
+            {
+              value: "reports",
+              content: (
+                <CsvButton
+                  csvDownloadLink={`providerReportsCsv/${providerAddr}`}
+                >
+                  Reports
+                </CsvButton>
+              ),
+            },
+            {
+              value: "blockReports",
+              content: (
+                <CsvButton
+                  csvDownloadLink={`providerBlockReportsCsv/${providerAddr}`}
+                >
+                  Block Reports
+                </CsvButton>
+              ),
+            },
+            {
+              value: "claimableProviderRewards",
+              content: (
+                <CsvButton
+                  csvDownloadLink={`providerDelegatorRewardsCsv/${providerAddr}`}
+                >
+                  Claimable Provider Rewards
+                </CsvButton>
+              ),
+            },
+          ]}
+        >
           <Box>
             <DataKeySortableTableInATabComponent
               columns={[
@@ -597,7 +596,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
               dataKey="providerDelegatorRewards"
               useLastUrlPathInKey={true}
               defaultSortKey="timestamp|desc"
-              tableAndTabName="delegatorRewards"
+              tableAndTabName="claimableProviderRewards"
               pkey="id"
               pkeyUrl="none"
               rowFormatters={{
@@ -609,7 +608,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
               }}
             />
           </Box>
-        </Tabs.Root>
+        </JsinfoTabs>
       </Card>
     </>
   );

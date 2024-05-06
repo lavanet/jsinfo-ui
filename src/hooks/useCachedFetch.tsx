@@ -380,7 +380,7 @@ export class CachedPaginationFetcher {
 
         useEffect(() => {
             const fetchTotalItemCount = async () => {
-                const apiurl = getApiUrlFromDataKey(dataKey, true);
+                const apiurl = getApiUrlFromDataKey(dataKey, useLastUrlPathInKey);
                 await fetchItemCount(apiurl, setTotalItemCountCallback);
             };
             fetchTotalItemCount();

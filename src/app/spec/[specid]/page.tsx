@@ -2,7 +2,7 @@
 "use client";
 
 import Link from 'next/link'
-import { Flex, Card, Box, Tabs } from "@radix-ui/themes";
+import { Flex, Card, Box } from "@radix-ui/themes";
 import { useEffect } from "react";
 
 import { useCachedFetch } from "@jsinfo/hooks/useCachedFetch";
@@ -25,7 +25,7 @@ import { usePageContext } from "@jsinfo/context/PageContext";
 import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
 import TitledCard from "@jsinfo/components/TitledCard";
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
-import AnimatedTabsList from "@jsinfo/components/AnimatedTabsList";
+import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
 import { FormatNumber } from '@jsinfo/common/utils';
 import StatusCall from '@jsinfo/components/StatusCell';
 
@@ -220,15 +220,14 @@ export default function Spec({ params }: { params: { specid: string } }) {
       </Card>
       <ChartJsReactiveLineChart data={chartData} options={chartOptions} />
       <Card>
-        <Tabs.Root defaultValue="stakes">
-          <AnimatedTabsList
-            tabs={[
-              {
-                value: "stakes",
-                content: "Stakes",
-              },
-            ]}
-          />
+        <JsinfoTabs defaultValue="stakes"
+          tabs={[
+            {
+              value: "stakes",
+              content: "Stakes",
+            },
+          ]}
+        >
           <Box>
             <SortableTableInATabComponent
               columns={[
@@ -265,7 +264,7 @@ export default function Spec({ params }: { params: { specid: string } }) {
               }}
             />
           </Box>
-        </Tabs.Root>
+        </JsinfoTabs>
       </Card>
     </>
   );

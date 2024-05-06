@@ -2,19 +2,20 @@
 "use client";
 
 import Link from 'next/link'
-import { Card, Box, Tabs } from "@radix-ui/themes";
+import { Card, Box } from "@radix-ui/themes";
 
 import { useCachedFetch } from "@jsinfo/hooks/useCachedFetch";
 
 import { EventTypeToString } from "@jsinfo/common/convertors";
-import { SortableTableInATabComponent } from "@jsinfo/components/SortTable";
+import { DataKeySortableTableInATabComponent } from "@jsinfo/components/SortTable";
 import { useEffect } from "react";
 import { usePageContext } from "@jsinfo/context/PageContext";
 
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
 import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
-import AnimatedTabsList from "@jsinfo/components/AnimatedTabsList";
+import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
 import TimeTooltip from '@jsinfo/components/TimeTooltip';
+import CsvButton from '@jsinfo/components/CsvButton';
 
 export default function Events() {
 
@@ -35,76 +36,95 @@ export default function Events() {
     <>
       <BlockWithDateCard blockData={data} />
       <Card>
-        <Tabs.Root defaultValue="events">
-          <AnimatedTabsList
-            tabs={[
-              {
-                value: "events",
-                content: "Events",
-              },
-              {
-                value: "rewards",
-                content: "Rewards",
-              },
-              {
-                value: "reports",
-                content: "Reports",
-              },
-            ]}
-          />
+        <JsinfoTabs defaultValue="events"
+          tabs={[
+            {
+              value: "events",
+              content: (
+                <CsvButton
+                  csvDownloadLink={`eventsEventsCsv`}
+                >
+                  Events
+                </CsvButton>
+              ),
+            },
+            {
+              value: "rewards",
+              content: (
+                <CsvButton
+                  csvDownloadLink={`eventsRewardsCsv`}
+                >
+                  Rewards
+                </CsvButton>
+              ),
+            },
+            {
+              value: "reports",
+              content: (
+                <CsvButton
+                  csvDownloadLink={`eventsReportsCsv`}
+                >
+                  Reports
+                </CsvButton>
+              ),
+            },
+          ]}
+        >
           <Box>
-            <SortableTableInATabComponent
+
+            <DataKeySortableTableInATabComponent
               columns={[
-                { key: "providers.address", name: "Provider Address" },
-                { key: "events.eventType", name: "Event Type" },
-                { key: "blocks.height", name: "Block Height" },
-                { key: "blocks.datetime", name: "Time" },
-                { key: "events.t1", name: "Text1" },
-                { key: "events.t2", name: "Text2" },
-                { key: "events.t3", name: "Text3" },
-                { key: "events.b1", name: "BigInt1" },
-                { key: "events.b2", name: "BigInt2" },
-                { key: "events.b3", name: "BigInt3" },
-                { key: "events.i1", name: "Int1" },
-                { key: "events.i2", name: "Int2" },
-                { key: "events.i3", name: "Int3" },
+                { key: "provider", name: "Provider" },
+                { key: "eventType", name: "Event" },
+                { key: "blockId", name: "Height" },
+                { key: "datetime", name: "Time" },
+                { key: "t1", name: "Text1" },
+                { key: "t2", name: "Text2" },
+                { key: "t3", name: "Text3" },
+                { key: "b1", name: "BigInt1" },
+                { key: "b2", name: "BigInt2" },
+                { key: "b3", name: "BigInt3" },
+                { key: "i1", name: "Int1" },
+                { key: "i2", name: "Int2" },
+                { key: "i3", name: "Int3" },
               ]}
-              data={data.events}
-              defaultSortKey="blocks.datetime|desc"
+              dataKey="eventsEvents"
+              useLastUrlPathInKey={false}
+              defaultSortKey="datetime|desc"
               tableAndTabName="events"
-              pkey="events.id"
+              pkey="id"
               pkeyUrl="none"
               rowFormatters={{
-                "providers.address": (evt) =>
-                  evt.providers ? (
-                    <Link href={`/provider/${evt.providers.address}`}>
-                      {evt.providers.moniker
-                        ? evt.providers.moniker
-                        : evt.providers.address}
+                provider: (evt) =>
+                  evt.provider ? (
+                    <Link href={`/provider/${evt.address}`}>
+                      {evt.moniker
+                        ? evt.moniker
+                        : evt.address}
                     </Link>
                   ) : (
                     ""
                   ),
-                "events.eventType": (evt) => (
+                eventType: (evt) => (
                   <Link
                     href={
-                      evt.events.tx
-                        ? `https://lava.explorers.guru/transaction/${evt.events.tx}`
-                        : `https://lava.explorers.guru/block/${evt.events.blockId}`
+                      evt.tx
+                        ? `https://lava.explorers.guru/transaction/${evt.tx}`
+                        : `https://lava.explorers.guru/block/${evt.blockId}`
                     }
                   >
-                    {EventTypeToString(evt.events.eventType)}
+                    {EventTypeToString(evt.eventType)}
                   </Link>
                 ),
-                "blocks.height": (evt) => (
+                blockId: (evt) => (
                   <Link
-                    href={`https://lava.explorers.guru/block/${evt.events.blockId}`}
+                    href={`https://lava.explorers.guru/block/${evt.blockId}`}
                   >
-                    {evt.events.blockId}
+                    {evt.blockId}
                   </Link>
                 ),
-                "blocks.datetime": (evt) =>
-                  (<TimeTooltip datetime={evt.blocks.datetime} />),
+                datetime: (evt) =>
+                  (<TimeTooltip datetime={evt.datetime} />),
                 text1: (evt) => {
                   return (
                     <div
@@ -113,7 +133,7 @@ export default function Events() {
                         whiteSpace: "pre-wrap",
                       }}
                     >
-                      {evt.events.t1}
+                      {evt.t1}
                     </div>
                   );
                 },
@@ -125,7 +145,7 @@ export default function Events() {
                         whiteSpace: "pre-wrap",
                       }}
                     >
-                      {evt.events.t2}
+                      {evt.t2}
                     </div>
                   );
                 },
@@ -137,129 +157,119 @@ export default function Events() {
                         whiteSpace: "pre-wrap",
                       }}
                     >
-                      {evt.events.t3}
+                      {evt.t3}
                     </div>
                   );
                 },
               }}
             />
 
-            <SortableTableInATabComponent
+            <DataKeySortableTableInATabComponent
               columns={[
-                { key: "providers.address", name: "Provider" },
-                { key: "relay_payments.specId", name: "Spec" },
-                { key: "relay_payments.blockId", name: "Block" },
-                { key: "blocks.datetime", name: "Time" },
-                { key: "relay_payments.consumer", name: "Consumer" },
-                { key: "relay_payments.relays", name: "Relays" },
-                { key: "relay_payments.cu", name: "CU" },
-                { key: "relay_payments.qosSync", name: "QoS" },
-                { key: "relay_payments.qosSyncExc", name: "Excellence" },
+                { key: "provider", name: "Provider" },
+                { key: "specId", name: "Spec" },
+                { key: "blockId", name: "Block" },
+                { key: "datetime", name: "Time" },
+                { key: "consumer", name: "Consumer" },
+                { key: "relays", name: "Relays" },
+                { key: "cu", name: "CU" },
+                { key: "qosSync", name: "QoS" },
+                { key: "qosSyncExc", name: "Excellence" },
               ]}
-              data={data.payments}
-              defaultSortKey="blocks.datetime|desc"
+              dataKey="eventsRewards"
+              useLastUrlPathInKey={false}
+              defaultSortKey="datetime|desc"
               tableAndTabName="rewards"
-              pkey="relay_payments.id"
+              pkey="id"
               pkeyUrl="none"
               rowFormatters={{
-                "providers.address": (payment) =>
-                  payment.providers ? (
-                    <Link href={`/provider/${payment.providers.address}`}>
-                      {payment.providers.moniker
-                        ? payment.providers.moniker
-                        : payment.providers.address}
+                provider: (payment) =>
+                  payment.provider ? (
+                    <Link href={`/provider/${payment.provider}`}>
+                      {payment.moniker
+                        ? payment.moniker
+                        : payment.provider}
                     </Link>
                   ) : (
                     ""
                   ),
-                "relay_payments.specId": (payment) => (
-                  <Link href={`/spec/${payment.relay_payments.specId}`}>
-                    {payment.relay_payments.specId}
+                specId: (payment) => (
+                  <Link href={`/spec/${payment.specId}`}>
+                    {payment.specId}
                   </Link>
                 ),
-                "relay_payments.blockId": (payment) => (
+                blockId: (payment) => (
                   <Link
                     href={
-                      payment.relay_payments.tx
-                        ? `https://lava.explorers.guru/transaction/${payment.relay_payments.tx}`
-                        : `https://lava.explorers.guru/block/${payment.relay_payments.blockId}`
+                      payment.tx
+                        ? `https://lava.explorers.guru/transaction/${payment.tx}`
+                        : `https://lava.explorers.guru/block/${payment.blockId}`
                     }
                   >
-                    {payment.relay_payments.blockId}
+                    {payment.blockId}
                   </Link>
                 ),
-                "blocks.datetime": (payment) =>
-                  (<TimeTooltip datetime={payment.blocks.datetime} />),
-                "relay_payments.consumer": (payment) => (
-                  <Link href={`/consumer/${payment.relay_payments.consumer}`}>
-                    {payment.relay_payments.consumer}
+                datetime: (payment) => (<TimeTooltip datetime={payment.datetime} />),
+                consumer: (payment) => (
+                  <Link href={`/consumer/${payment.consumer}`}>
+                    {payment.consumer}
                   </Link>
                 ),
-                "relay_payments.relays": (payment) =>
-                  payment.relay_payments.relays,
-                "relay_payments.cu": (payment) => payment.relay_payments.cu,
-                "relay_payments.pay": (payment) =>
-                  `${payment.relay_payments.pay} ULAVA`,
-                "relay_payments.qosSync": (payment) =>
-                  `${payment.relay_payments.qosSync}, ${payment.relay_payments.qosAvailability}, ${payment.relay_payments.qosSync}`,
-                "relay_payments.qosSyncExc": (payment) =>
-                  `${payment.relay_payments.qosSyncExc}, ${payment.relay_payments.qosAvailabilityExc}, ${payment.relay_payments.qosSyncExc}`,
+                relays: (payment) => payment.relays,
+                cu: (payment) => payment.cu,
+                pay: (payment) => `${payment.pay} ULAVA`,
+                qosSync: (payment) => `${payment.qosSync}, ${payment.qosAvailability}, ${payment.qosSync}`,
+                qosSyncExc: (payment) => `${payment.qosSyncExc}, ${payment.qosAvailabilityExc}, ${payment.qosSyncExc}`,
               }}
             />
 
-            <SortableTableInATabComponent
+            <DataKeySortableTableInATabComponent
               columns={[
-                { key: "providers.address", name: "Provider" },
-                { key: "provider_reported.blockId", name: "Block" },
-                { key: "blocks.datetime", name: "Time" },
-                { key: "provider_reported.cu", name: "CU" },
-                {
-                  key: "provider_reported.disconnections",
-                  name: "Disconnections",
-                },
-                { key: "provider_reported.errors", name: "Errors" },
-                { key: "provider_reported.project", name: "Project" },
+                { key: "provider", name: "Provider" },
+                { key: "blockId", name: "Block" },
+                { key: "datetime", name: "Time" },
+                { key: "cu", name: "CU" },
+                { key: "disconnections", name: "Disconnections" },
+                { key: "errors", name: "Errors" },
+                { key: "project", name: "Project" },
               ]}
-              data={data.reports}
-              defaultSortKey="blocks.datetime|desc"
+              dataKey="eventsReports"
+              useLastUrlPathInKey={false}
+              defaultSortKey="datetime|desc"
               tableAndTabName="reports"
-              pkey="provider_reported.provider,provider_reported.blockId"
+              pkey="provider,blockId"
               pkeyUrl="none"
               rowFormatters={{
-                "providers.address": (report) =>
-                  report.providers ? (
-                    <Link href={`/provider/${report.providers.address}`}>
-                      {report.providers.moniker
-                        ? report.providers.moniker
-                        : report.providers.address}
+                provider: (report) =>
+                  report.provider ? (
+                    <Link href={`/provider/${report.provider}`}>
+                      {report.moniker
+                        ? report.moniker
+                        : report.provider}
                     </Link>
                   ) : (
                     ""
                   ),
-                "provider_reported.blockId": (report) => (
+                blockId: (report) => (
                   <Link
                     href={
-                      report.provider_reported.tx
-                        ? `https://lava.explorers.guru/transaction/${report.provider_reported.tx}`
-                        : `https://lava.explorers.guru/block/${report.provider_reported.blockId}`
+                      report.tx
+                        ? `https://lava.explorers.guru/transaction/${report.tx}`
+                        : `https://lava.explorers.guru/block/${report.blockId}`
                     }
                   >
-                    {report.provider_reported.blockId}
+                    {report.blockId}
                   </Link>
                 ),
-                "blocks.datetime": (report) =>
-                  (<TimeTooltip datetime={report.blocks.datetime} />),
-                "provider_reported.cu": (report) => report.provider_reported.cu,
-                "provider_reported.disconnections": (report) =>
-                  report.provider_reported.disconnections,
-                "provider_reported.errors": (report) =>
-                  report.provider_reported.errors,
-                "provider_reported.project": (report) =>
-                  report.provider_reported.project,
+                datetime: (report) => (<TimeTooltip datetime={report.datetime} />),
+                cu: (report) => report.cu,
+                disconnections: (report) => report.disconnections,
+                errors: (report) => report.errors,
+                project: (report) => report.project,
               }}
             />
           </Box>
-        </Tabs.Root>
+        </JsinfoTabs>
       </Card>
     </>
   );

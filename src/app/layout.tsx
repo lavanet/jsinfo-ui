@@ -10,7 +10,8 @@ import { Theme } from "@radix-ui/themes";
 import { PageProvider } from "@jsinfo/components/PageProvider";
 
 import '@radix-ui/themes/styles.css';
-import "./globals.css";
+import "./styles/globals.css";
+import "./styles/paginationcontrol.css";
 
 const inter = Inter({ subsets: ["latin"] });
 

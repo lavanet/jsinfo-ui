@@ -209,12 +209,11 @@ const SortableTableRow: React.FC<SortableTableRowProps> = (props) => {
   }
 
   let key = GetNestedProperty(props.rowData, props.pkey);
+
   const tableRowKey = `SorttableRow_${props.tableAndTabName}_${props.tableAndTabName}_${props.index}_${key}`;
 
-  // console.log("Print 40000", props.tableAndTabName, "props", props, "GetNestedProperty", GetNestedProperty(props.rowData, props.pkey))
-
   // dont show rows that have an empty pkey
-  if (!GetNestedProperty(props.rowData, props.pkey)) return null;
+  if (!key) return null;
 
 
   return (
@@ -230,6 +229,7 @@ const SortableTableRow: React.FC<SortableTableRowProps> = (props) => {
     </Table.Row>
   );
 }
+
 interface SortableTableBodyProps {
   tableData: any[];
   columns: Column[];
@@ -243,24 +243,31 @@ interface SortableTableBodyProps {
 const SortableTableBody: React.FC<SortableTableBodyProps> = (props) => {
 
   if (!Array.isArray(props.tableData)) {
+    console.error('Invalid prop: tableData should be an array', props);
     throw new Error('Invalid prop: tableData should be an array');
   }
   if (!Array.isArray(props.columns)) {
+    console.error('Invalid prop: columns should be an array', props);
     throw new Error('Invalid prop: columns should be an array');
   }
   if (typeof props.tableAndTabName !== 'string') {
+    console.error('Invalid prop: tableAndTabName should be a string', props);
     throw new Error('Invalid prop: tableAndTabName should be a string');
   }
   if (typeof props.pkey !== 'string') {
+    console.error('Invalid prop: pkey should be a string', props);
     throw new Error('Invalid prop: pkey should be a string');
   }
   if (props.pkeyUrl && typeof props.pkeyUrl !== 'string') {
+    console.error('Invalid prop: pkeyUrl should be a string or null', props);
     throw new Error('Invalid prop: pkeyUrl should be a string or null');
   }
   if (props.rowFormatters && typeof props.rowFormatters !== 'object') {
+    console.error('Invalid prop: rowFormatters should be an object or null', props);
     throw new Error('Invalid prop: rowFormatters should be an object or null');
   }
   if (props.firstColumn && typeof props.firstColumn !== 'string') {
+    console.error('Invalid prop: firstColumn should be a string or null', props);
     throw new Error('Invalid prop: firstColumn should be a string or null');
   }
 

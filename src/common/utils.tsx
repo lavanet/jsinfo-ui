@@ -34,7 +34,7 @@ export function GetNestedProperty(obj: Record<string, any>, key: string): any {
 
   return key.split(".").reduce((o: any, i: string) => {
     if (o === null || o === undefined || !o.hasOwnProperty(i)) {
-      return "";
+      throw new Error(`Key "${i}" does not exist on object`);
     }
     return o[i];
   }, obj);

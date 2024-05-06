@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 import { Flex, Card, Box, Tabs } from "@radix-ui/themes";
 
-import AnimatedTabsList from "@jsinfo/components/AnimatedTabsList";
+import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
 import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
 import CsvButton from "@jsinfo/components/CsvButton";
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
@@ -201,7 +201,7 @@ export default function Home() {
 
       <Card>
         <Tabs.Root defaultValue="providers">
-          <AnimatedTabsList
+          <JsinfoTabs
             tabs={[
               {
                 value: "providers",

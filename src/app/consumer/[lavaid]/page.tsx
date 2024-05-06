@@ -2,7 +2,7 @@
 "use client";
 
 import Link from 'next/link'
-import { Flex, Text, Card, Box, Tabs } from "@radix-ui/themes";
+import { Flex, Text, Card, Box } from "@radix-ui/themes";
 import dayjs from "dayjs";
 
 import { useCachedFetch } from "@jsinfo/hooks/useCachedFetch";
@@ -19,7 +19,7 @@ import { ChartJsReactiveLineChart } from "@jsinfo/components/ChartJsReactiveLine
 
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
 import TitledCard from "@jsinfo/components/TitledCard";
-import AnimatedTabsList from "@jsinfo/components/AnimatedTabsList";
+import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
 import { useEffect } from "react";
 
 import { usePageContext } from '@jsinfo/context/PageContext';
@@ -112,19 +112,18 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
 
       <ChartJsReactiveLineChart data={chartData} options={chartOptions} />
       <Card>
-        <Tabs.Root defaultValue="subscriptions">
-          <AnimatedTabsList
-            tabs={[
-              {
-                value: "subscriptions",
-                content: "Subscriptions",
-              },
-              {
-                value: "conflicts",
-                content: "Conflicts",
-              },
-            ]}
-          />
+        <JsinfoTabs defaultValue="subscriptions"
+          tabs={[
+            {
+              value: "subscriptions",
+              content: "Subscriptions",
+            },
+            {
+              value: "conflicts",
+              content: "Conflicts",
+            },
+          ]}
+        >
           <Box>
             <SortableTableInATabComponent
               columns={[
@@ -160,7 +159,7 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
               }}
             />
           </Box>
-        </Tabs.Root>
+        </JsinfoTabs>
       </Card>
     </>
   );
