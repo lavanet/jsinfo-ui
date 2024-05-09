@@ -76,16 +76,16 @@ export default function Spec({ params }: { params: { specid: string } }) {
           drawOnChartArea: false, // only want the grid lines for one axis to show up
         },
       },
-      y2: {
-        type: "linear",
-        display: false,
-        position: "left",
-        stacked: false,
-        // grid line settings
-        grid: {
-          drawOnChartArea: false, // only want the grid lines for one axis to show up
-        },
-      },
+      // y2: {
+      //   type: "linear",
+      //   display: false,
+      //   position: "left",
+      //   stacked: false,
+      //   // grid line settings
+      //   grid: {
+      //     drawOnChartArea: false, // only want the grid lines for one axis to show up
+      //   },
+      // },
       x: {
         ticks: {
           autoSkip: false,
@@ -118,28 +118,28 @@ export default function Spec({ params }: { params: { specid: string } }) {
     fill: false,
     borderColor: "#8c333a",
     backgroundColor: "#8c333a",
-    yAxisID: "y2",
-    borderDash: [10, 1], // Use dotted line
+    yAxisID: "y", // was y2
+    // borderDash: [10, 1], // Use dotted line // was enabled
   });
 
   let colorIndex = 0;
 
-  for (let specId in data.cuChartData) {
-    let metricData = data.cuChartData[specId].map((item: any) => ({
-      x: item.date,
-      y: item.cuSum,
-    }));
+  // for (let specId in data.cuChartData) {
+  //   let metricData = data.cuChartData[specId].map((item: any) => ({
+  //     x: item.date,
+  //     y: item.cuSum,
+  //   }));
 
-    chartData.datasets.push({
-      label: specId + " CU",
-      data: metricData,
-      fill: false,
-      borderColor: CHARTJS_COLORS[colorIndex],
-      backgroundColor: CHARTJS_COLORS[colorIndex],
-    });
+  //   chartData.datasets.push({
+  //     label: specId + " CU",
+  //     data: metricData,
+  //     fill: false,
+  //     borderColor: CHARTJS_COLORS[colorIndex],
+  //     backgroundColor: CHARTJS_COLORS[colorIndex],
+  //   });
 
-    colorIndex = (colorIndex + 1) % CHARTJS_COLORS.length; // cycle through colors
-  }
+  //   colorIndex = (colorIndex + 1) % CHARTJS_COLORS.length; // cycle through colors
+  // }
 
   let qosSync: ChartJsLineChartDataset = {
     label: "Sync Score",

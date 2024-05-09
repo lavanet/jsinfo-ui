@@ -4,7 +4,7 @@
 import React from "react";
 import { useEffect } from "react";
 
-import { Flex, Card, Box, Tabs } from "@radix-ui/themes";
+import { Flex, Card, Box } from "@radix-ui/themes";
 
 import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
 import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
@@ -33,6 +33,7 @@ import { useCachedFetch } from "@jsinfo/hooks/useCachedFetch";
 
 import { usePageContext } from "@jsinfo/context/PageContext";
 import { FormatNumber } from "@jsinfo/common/utils";
+// import RangeDatePicker from "@jsinfo/components/RangeDatePicker";
 
 export default function Home() {
 
@@ -167,7 +168,6 @@ export default function Home() {
     }));
   }
 
-
   const transformedSpecData = transformSpecsData(data.allSpecs);
 
   return (
@@ -197,6 +197,7 @@ export default function Home() {
         </Flex>
       </Card>
 
+      {/* <RangeDatePicker /> */}
       <ChartJsReactiveLineChart data={chartData} options={chartOptions} />
 
       <Card>
