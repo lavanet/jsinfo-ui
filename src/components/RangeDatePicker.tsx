@@ -66,16 +66,17 @@ const predefinedRanges = [
 ];
 
 const RangeDatePicker: React.FC = () => {
-    return (
-        <DateRangePicker
-            ranges={predefinedRanges}
-            placeholder="Placement left"
-            style={{ width: 300 }}
-            onShortcutClick={(shortcut: Record<string, unknown>, event) => {
-                console.log(shortcut);
-            }}
-        />
-    );
+    return null
+    // return (
+    //     <DateRangePicker
+    //         ranges={predefinedRanges}
+    //         placeholder="Placement left"
+    //         style={{ width: 300 }}
+    //         onShortcutClick={(shortcut: Record<string, unknown>, event) => {
+    //             console.log(shortcut);
+    //         }}
+    //     />
+    // );
 };
 
 export default RangeDatePicker;
