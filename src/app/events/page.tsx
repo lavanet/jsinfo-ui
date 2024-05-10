@@ -97,10 +97,10 @@ export default function Events() {
               rowFormatters={{
                 provider: (evt) =>
                   evt.provider ? (
-                    <Link href={`/provider/${evt.address}`}>
+                    <Link href={`/provider/${evt.provider}`}>
                       {evt.moniker
                         ? evt.moniker
-                        : evt.address}
+                        : evt.provider}
                     </Link>
                   ) : (
                     ""
