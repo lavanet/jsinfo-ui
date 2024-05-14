@@ -17,11 +17,6 @@ const predefinedRanges: RangeType[] = [
         placement: 'left'
     },
     {
-        label: 'Last 30 days',
-        value: [subDays(new Date(), 29), new Date()],
-        placement: 'left'
-    },
-    {
         label: 'This month',
         value: [startOfMonth(new Date()), new Date()],
         placement: 'left'
@@ -32,7 +27,32 @@ const predefinedRanges: RangeType[] = [
         placement: 'left'
     },
     {
-        label: 'Max (6 Month)',
+        label: '1 Month ago',
+        value: [subMonths(new Date(), 1), new Date()],
+        placement: 'left'
+    },
+    {
+        label: '2 Month ago',
+        value: [subMonths(new Date(), 2), new Date()],
+        placement: 'left'
+    },
+    {
+        label: '3 Month ago',
+        value: [subMonths(new Date(), 3), new Date()],
+        placement: 'left'
+    },
+    {
+        label: '4 Month ago',
+        value: [subMonths(new Date(), 4), new Date()],
+        placement: 'left'
+    },
+    {
+        label: '5 Month ago',
+        value: [subMonths(new Date(), 5), new Date()],
+        placement: 'left'
+    },
+    {
+        label: '6 Month ago (max)',
         value: [subMonths(new Date(), 6), new Date()],
         placement: 'left'
     },
