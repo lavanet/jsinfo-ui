@@ -24,6 +24,7 @@ import {
   PointStyle,
 } from 'chart.js';
 import { DateRange } from '@jsinfo/hooks/useCachedFetch';
+import TextToggle from './TextToggle';
 
 ChartJS.register(
   CategoryScale,
@@ -156,13 +157,13 @@ interface ChartJsReactiveLineChartPropsWithDatePicker {
   data: ChartJsLineChartData;
   options: ChartJsLineChartOptions;
   title?: string;
-  enableDatePicker: boolean;
   onDateChange: (from: Date, to: Date) => void;
   datePickerValue: DateRange;
+  rightControl?: JSX.Element | null;
 }
 
 export const ChartJsReactiveLineChartWithDatePicker: React.FC<ChartJsReactiveLineChartPropsWithDatePicker> = (
-  { data, options, title, enableDatePicker, onDateChange, datePickerValue }
+  { data, options, title, onDateChange, datePickerValue, rightControl }
 ) => {
 
   if (!data || typeof data !== 'object') {
@@ -180,9 +181,19 @@ export const ChartJsReactiveLineChartWithDatePicker: React.FC<ChartJsReactiveLin
     throw new Error('title should be a string');
   }
 
-  if (enableDatePicker && typeof enableDatePicker !== 'boolean') {
-    console.error('enableDatePicker should be a boolean', enableDatePicker);
-    throw new Error('enableDatePicker should be a boolean');
+  if (!onDateChange || typeof onDateChange !== 'function') {
+    console.error('onDateChange is required and should be a function', onDateChange);
+    throw new Error('onDateChange is required and should be a function');
+  }
+
+  if (!datePickerValue || typeof datePickerValue !== 'object') {
+    console.error('datePickerValue is required and should be an object', datePickerValue);
+    throw new Error('datePickerValue is required and should be an object');
+  }
+
+  if (rightControl && typeof rightControl !== 'object') {
+    console.error('rightControl should be a JSX.Element or null', rightControl);
+    throw new Error('rightControl should be a JSX.Element or null');
   }
 
   const boxRef: RefObject<HTMLDivElement> = useRef(null);
@@ -245,11 +256,10 @@ export const ChartJsReactiveLineChartWithDatePicker: React.FC<ChartJsReactiveLin
       <Card style={{ width: '100%', height: '100%' }}>
         <div style={{ marginBottom: '5px' }}>
           {title && <Box style={{ float: 'left', marginLeft: '11px', userSelect: 'text' }}>{title}</Box>}
-          {enableDatePicker &&
-            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <RangeDatePicker onDateChange={onDateChange} datePickerValue={datePickerValue} />
-            </div>
-          }
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            {rightControl ? rightControl : null}
+            <RangeDatePicker onDateChange={onDateChange} datePickerValue={datePickerValue} />
+          </div>
         </div>
         <div ref={boxRef} style={{ position: 'relative', height: '100%', width: '100%' }}>
           <Line data={data} options={responsiveChartOptions}></Line>

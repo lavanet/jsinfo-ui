@@ -1,4 +1,5 @@
 @import "rsuite/DateRangePicker/styles/index.css";
+@import "rsuite/Toggle/styles/index.css";
 
 /* var overriders */
 :root {
@@ -124,31 +125,6 @@
   font-size: 13px;
 }
 
-/* side link buttons */
-
-.rs-btn-link {
-  cursor: var(--cursor-link);
-  text-decoration-line: none;
-  text-decoration-style: solid;
-  text-decoration-thickness: min(2px, max(1px, 0.05em));
-  text-underline-offset: calc(0.025em + 2px);
-  /* text-decoration-color: var(--interactive-element-selected-color); */
-  color: var(--interactive-element-color);
-  font-size: 12px;
-}
-
-.rs-btn-link:hover {
-  text-decoration-line: none;
-  background-color: var(--interactive-element-selected-color);
-  color: var(--interactive-element-color);
-}
-
-.rs-picker-daterange-predefined .rs-stack-item,
-.rs-picker-daterange-predefined .rs-stack-item .rs-btn.rs-btn-link.rs-btn-sm {
-  width: 100%;
-  text-align: left;
-}
-
 /* ok button */
 
 .rs-btn.rs-btn-primary.rs-btn-sm {
@@ -206,4 +182,47 @@
 
 .rs-calendar-table-cell-un-same-month .rs-calendar-table-cell-content {
   color: orange !important;
+}
+
+/* side link buttons */
+
+/* bad colors on chrome windows latest version */
+.rs-stack-item,
+.rs-btn-link,
+.rs-link {
+  background-color: var(--interactive-element-background-color) !important;
+  color: var(--interactive-element-color) !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.rs-btn-link,
+.rs-link {
+  cursor: var(--cursor-link);
+  text-decoration-line: none;
+  text-decoration-style: solid;
+  text-decoration-thickness: min(2px, max(1px, 0.05em));
+  text-underline-offset: calc(0.025em + 2px);
+  /* text-decoration-color: var(--interactive-element-selected-color); */
+  color: var(--interactive-element-color);
+  font-size: 12px;
+}
+
+.rs-btn-link:hover,
+.rs-link:hover {
+  text-decoration-line: none;
+  background-color: var(--interactive-element-selected-color) !important;
+  color: var(--interactive-element-color);
+}
+
+.rs-picker-daterange-predefined .rs-stack-item,
+.rs-picker-daterange-predefined .rs-stack-item .rs-btn.rs-btn-link.rs-btn-sm,
+.rs-picker-daterange-predefined .rs-stack-item .rs-btn.rs-btn.rs-btn-sm {
+  width: 100%;
+  text-align: left;
+}
+
+/* rsuite toggle */
+.rs-toggle-presentation {
+  background-color: var(--interactive-element-background-color) !important;
+  color: var(--interactive-element-color) !important;
 }

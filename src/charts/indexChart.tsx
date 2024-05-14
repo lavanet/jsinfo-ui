@@ -11,11 +11,12 @@ import {
     ChartJsReactiveLineChartWithDatePicker
 } from "@jsinfo/components/ChartJsReactiveLineChart";
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
+import TextToggle from "@jsinfo/components/TextToggle";
 
 import { DateRange, useCachedFetch } from "@jsinfo/hooks/useCachedFetch";
 import { Card } from "@radix-ui/themes";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type CuRelayItem = {
     chainId: string;
@@ -128,49 +129,42 @@ export function ParseDateItem(dateStr: string): Date {
 
 export default function IndexChart() {
 
+    const [isRelayOrCuSelected, setIsRelayOrCuSelected] = useState(false);
+
     const today = new Date();
-    console.log('Today:', today);
 
     const ninetyDaysAgo = new Date();
     ninetyDaysAgo.setDate(today.getDate() - 90);
-    console.log('Ninety days ago:', ninetyDaysAgo);
 
     const initialRange = { from: ninetyDaysAgo, to: today };
-    console.log('Initial range:', initialRange);
 
     const [dates, setDates] = useState<DateRange>(initialRange);
-    console.log('Dates:', dates);
 
     const handleDateChange = (from: Date, to: Date) => {
-        console.log('Handling date change from:', from, 'to:', to);
-
         // Use the adjustDates function to adjust the from and to dates
         const { from: adjustedFrom, to: adjustedTo } = adjustDates(from, to);
 
         const fromFormatted = formatDate(adjustedFrom);
         const toFormatted = formatDate(adjustedTo);
-        console.log('Formatted dates:', fromFormatted, toFormatted);
 
         if (fromFormatted && toFormatted) {
             const diffInDays = Math.ceil(Math.abs(new Date(toFormatted).getTime() - new Date(fromFormatted).getTime()) / (1000 * 60 * 60 * 24));
-            console.log('Difference in days:', diffInDays);
 
             if (diffInDays < 1) {
                 setDates(initialRange);
-                console.log('Setting dates to initial range:', initialRange);
             } else {
                 const newDates = {
                     from: new Date(fromFormatted),
                     to: new Date(toFormatted)
                 };
                 setDates(newDates);
-                console.log('Setting dates to:', newDates);
             }
         }
     };
 
+
+
     const { data, loading, error } = useCachedFetch({ dataKey: "indexCharts", apiurlDateRangeQuery: { from: formatDate(dates.from), to: formatDate(dates.to) } });
-    console.log('useCachedFetch response:', { data, loading, error });
 
     // Then in your render method or function component
     if (error) return renderErrorOrLoading(`Error: ${error}`);
@@ -254,11 +248,16 @@ export default function IndexChart() {
         yAxisID: "y1",
     };
 
+    const relayToCuChange = (checked: boolean, event: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(checked);
+        setIsRelayOrCuSelected(checked);
+    };
+
     rawChartData.forEach((indexChartResponse: IndexChartResponse) => {
         for (const cuRelayItem of indexChartResponse.data) {
             if (specIdToDatasetMap[cuRelayItem.chainId] == undefined) {
                 specIdToDatasetMap[cuRelayItem.chainId] = {
-                    label: cuRelayItem.chainId + " Relays",
+                    label: !isRelayOrCuSelected ? cuRelayItem.chainId + " Relays" : cuRelayItem.chainId + " CUs",
                     data: [],
                     fill: false,
                     borderColor: CHARTJS_COLORS[i],
@@ -272,7 +271,7 @@ export default function IndexChart() {
             }
             specIdToDatasetMap[cuRelayItem.chainId].data.push({
                 x: indexChartResponse.date,
-                y: cuRelayItem.relaySum,
+                y: !isRelayOrCuSelected ? cuRelayItem.relaySum : cuRelayItem.cuSum,
             });
         }
 
@@ -290,6 +289,12 @@ export default function IndexChart() {
     ChartjsSetLastDotHighInChartData(chartData);
 
     return (
-        <ChartJsReactiveLineChartWithDatePicker data={chartData} options={chartOptions} title="Qos Score & Relays for top 10 Chains" enableDatePicker={true} onDateChange={handleDateChange} datePickerValue={dates} />
+        <ChartJsReactiveLineChartWithDatePicker
+            data={chartData}
+            options={chartOptions}
+            title="Qos Score & Relays/CUs for top 10 Chains"
+            onDateChange={handleDateChange}
+            rightControl={<TextToggle openText='CU sum' closeText='Relay sum' onChange={relayToCuChange} style={{ marginRight: '10px' }} />}
+            datePickerValue={dates} />
     );
 }
