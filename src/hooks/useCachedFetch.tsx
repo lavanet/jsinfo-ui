@@ -20,9 +20,15 @@ const axiosInstance = axios.create({
 
 axiosRetry(axiosInstance, { retries: 5 });
 
+export interface DateRange {
+    from?: Date | string | null;
+    to?: Date | string | null;
+}
+
 type FetchState = {
     apiurl: string | null,
     apiurlPaginationQuery: string | null,
+    apiurlDateRangeQuery: DateRange | null,
     retryTimeout: React.MutableRefObject<number>,
     retryCount: React.MutableRefObject<number>,
     errorCount: React.MutableRefObject<number>,
@@ -38,6 +44,7 @@ function isFetchState(state: any): state is FetchState {
     return state
         && typeof state.apiurl === 'string'
         && (state.apiurlPaginationQuery === null || typeof state.apiurlPaginationQuery === 'string')
+        && (state.apiurlDateRangeQuery === null || (state.apiurlDateRangeQuery.from || state.apiurlDateRangeQuery.to))
         && typeof state.setData === 'function'
         && typeof state.setLoading === 'function'
         && typeof state.setError === 'function';
@@ -109,9 +116,10 @@ const fetchDataWithRetry = async (state: FetchState): Promise<void> => {
         throw new Error(`fetchDataWithRetry invalid arguments: state.apiurl=${state.apiurl}`);
     }
 
-    const cacheKey = state.apiurl + state.apiurlPaginationQuery;
+    const cacheKey = state.apiurl + state.apiurlPaginationQuery + JSON.stringify(state.apiurlDateRangeQuery);
 
     const cachedData = localmemcache.get(cacheKey);
+
     if (cachedData) {
         state.setData(cachedData);
         state.setLoading(false);
@@ -123,9 +131,24 @@ const fetchDataWithRetry = async (state: FetchState): Promise<void> => {
         if (state.isFetching.current) return;
         state.isFetching.current = true;
 
+        let params: any = {};
+
+        if (state.apiurlPaginationQuery) {
+            params.pagination = state.apiurlPaginationQuery;
+        }
+
+        if (state.apiurlDateRangeQuery) {
+            if (state.apiurlDateRangeQuery.from) {
+                params.f = state.apiurlDateRangeQuery.from;
+            }
+            if (state.apiurlDateRangeQuery.to) {
+                params.t = state.apiurlDateRangeQuery.to;
+            }
+        }
+
         const res = await axiosInstance.get(state.apiurl, {
             timeout: 5000,
-            params: state.apiurlPaginationQuery ? { pagination: state.apiurlPaginationQuery } : {}
+            params
         });
 
         const data = res.data;
@@ -163,6 +186,8 @@ const fetchDataWithRetry = async (state: FetchState): Promise<void> => {
 };
 
 async function fetchLastUpdatedDate(state: FetchState): Promise<Date | null> {
+    if (state.apiurlDateRangeQuery) return null;
+
     if (!isFetchState(state)) {
         console.error(`fetchLastUpdatedDate invalid state type. Type: ${typeof state}, Value: ${JSON.stringify(state)}`);
         throw new Error(`fetchLastUpdatedDate invalid arguments: state=${state}`);
@@ -427,9 +452,19 @@ function getApiUrlFromDataKey(dataKey: string, useLastUrlPathInKey: boolean = fa
     return apiurl;
 }
 
-export function useCachedFetch(
-    { dataKey, useLastUrlPathInKey = false, cachedPaginationFetcher = null }:
-        { dataKey: string, useLastUrlPathInKey?: boolean, cachedPaginationFetcher?: CachedPaginationFetcher | null }) {
+interface UseCachedFetchProps {
+    dataKey: string;
+    useLastUrlPathInKey?: boolean;
+    cachedPaginationFetcher?: CachedPaginationFetcher | null;
+    apiurlDateRangeQuery?: DateRange | null;
+}
+
+export function useCachedFetch({
+    dataKey,
+    useLastUrlPathInKey = false,
+    cachedPaginationFetcher = null,
+    apiurlDateRangeQuery = null
+}: UseCachedFetchProps) {
 
     if (!dataKey || dataKey === "undefined" || dataKey === "null" || dataKey === "" || !/^[A-Za-z0-9.]+$/.test(dataKey)) {
         console.error(`Invalid arguments: dataKey=${dataKey}, useLastUrlPathInKey=${useLastUrlPathInKey}, cachedPaginationFetcher=${cachedPaginationFetcher}`);
@@ -449,6 +484,7 @@ export function useCachedFetch(
     const state: FetchState = {
         apiurl: null,
         apiurlPaginationQuery: cachedPaginationFetcher ? cachedPaginationFetcher.serialize() : null,
+        apiurlDateRangeQuery: apiurlDateRangeQuery || null,
         retryTimeout: retryTimeout,
         retryCount: retryCount,
         errorCount: errorCount,
@@ -495,7 +531,8 @@ export function useCachedFetch(
         // Clear the interval when the component is unmounted
         return () => clearInterval(intervalId);
 
-    }, [dataKey, fetchDataWithRetry, cachedPaginationFetcher]);
+    }, [dataKey, fetchDataWithRetry, cachedPaginationFetcher, apiurlDateRangeQuery, useLastUrlPathInKey]);
 
     return { data, loading, error };
 }
+

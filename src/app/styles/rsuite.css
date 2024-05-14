@@ -1,2 +1,209 @@
-@import "rsuite/dist/rsuite-no-reset.min.css";
-@enable-dark-mode: true;
+@import "rsuite/DateRangePicker/styles/index.css";
+
+/* var overriders */
+:root {
+  --rs-state-error: var(--interactive-element-line-color-darker);
+  --rs-text-primary: var(--interactive-element-color);
+  --rs-text-secondary: var(--interactive-element-line-color);
+  --rs-text-inverse: var(--interactive-element-background-color);
+  --rs-text-active: var(--interactive-element-line-color-darker);
+  --rs-text-disabled: var(--interactive-element-line-color);
+  --rs-text-error: var(--interactive-element-line-color-darker);
+  --rs-border-primary: var(--interactive-element-line-color);
+  --rs-border-secondary: var(--interactive-element-line-color-darker);
+  --rs-bg-overlay: var(--interactive-element-background-color);
+  --rs-bg-well: var(--interactive-element-color);
+  --rs-bg-active: var(--interactive-element-line-color-darker);
+  --rs-state-hover-bg: var(--interactive-element-color);
+  --rs-color-focus-ring: var(--interactive-element-line-color-darker);
+  --rs-state-focus-shadow: 0 0 0 3px
+    var(--interactive-element-line-color-darker);
+  --rs-state-error-outline: 3px solid
+    var(--interactive-element-line-color-darker);
+  --rs-shadow-overlay: 0 4px 4px var(--interactive-element-background-color),
+    0 0 10px var(--interactive-element-background-color);
+  --rs-btn-default-bg: var(--interactive-element-color);
+  --rs-btn-default-text: var(--interactive-element-background-color);
+  --rs-btn-default-hover-bg: var(--interactive-element-line-color);
+  --rs-btn-default-active-bg: var(--interactive-element-line-color-darker);
+  --rs-btn-default-active-text: var(--interactive-element-background-color);
+  --rs-btn-default-disabled-bg: var(--interactive-element-color);
+  --rs-btn-default-disabled-text: var(--interactive-element-background-color);
+  --rs-btn-primary-bg: var(--interactive-element-background-color);
+  --rs-btn-primary-text: var(--interactive-element-color);
+  --rs-btn-primary-hover-bg: var(--interactive-element-line-color-darker);
+  --rs-btn-primary-active-bg: var(--interactive-element-selected-color);
+  --rs-btn-subtle-text: var(--interactive-element-line-color-darker);
+  --rs-btn-subtle-hover-bg: var(--interactive-element-color);
+  --rs-btn-subtle-hover-text: var(--interactive-element-line-color-darker);
+  --rs-btn-subtle-active-bg: var(--interactive-element-color);
+  --rs-btn-subtle-active-text: var(--interactive-element-selected-color);
+  --rs-btn-subtle-disabled-text: var(--interactive-element-line-color);
+  --rs-btn-ghost-border: var(--interactive-element-line-color-darker);
+  --rs-btn-ghost-text: var(--interactive-element-color);
+  --rs-btn-ghost-hover-border: var(--interactive-element-line-color-darker);
+  --rs-btn-ghost-hover-text: var(--interactive-element-line-color-darker);
+  --rs-btn-ghost-active-border: var(--interactive-element-line-color-darker);
+  --rs-input-bg: var(--interactive-element-background-color);
+  --rs-input-focus-border: var(--interactive-element-line-color);
+  --rs-input-disabled-bg: var(--interactive-element-color);
+  --rs-listbox-option-hover-bg: var(--interactive-element-line-color);
+  --rs-listbox-option-hover-text: var(--interactive-element-color);
+  --rs-close-button-hover-color: var(--interactive-element-line-color-darker);
+  --rs-picker-value: var(--interactive-element-line-color);
+  --rs-picker-count-bg: var(--interactive-element-line-color);
+  --rs-picker-count-text: var(--interactive-element-background-color);
+  --rs-calendar-today-bg: var(--interactive-element-line-color);
+  --rs-calendar-today-text: var(--interactive-element-background-color);
+  --rs-calendar-range-bg: var(--interactive-element-line-color-darker);
+  --rs-calendar-time-unit-bg: var(--interactive-element-color);
+  --rs-calendar-date-selected-text: var(--interactive-element-background-color);
+  --rs-calendar-cell-selected-hover-bg: var(--interactive-element-line-color);
+}
+
+/* general overrides */
+
+.rs-picker-daterange-panel *,
+.rs-picker *,
+.rs-input-group.rs-input-group-inside,
+.rs-btn-close .rs-icon {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI (Custom)", Roboto,
+    "Helvetica Neue", "Open Sans (Custom)", system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji";
+  border-color: var(--interactive-element-line-color);
+  fill: var(--interactive-element-line-color);
+}
+
+/* basic date picker textbox */
+
+.rs-input-group:not(.rs-input-group-disabled).rs-input-group-focus,
+.rs-input-group:focus-within,
+.rs-input-group:active,
+.rs-input-group:hover {
+  outline: 1px solid var(--interactive-element-line-color);
+}
+
+.rs-input-group,
+.rs-date-range-input,
+.rs-input {
+  background-color: var(--interactive-element-background-color);
+  border-radius: 20px !important;
+}
+
+.rs-input-group-inside,
+.rs-input-group,
+.rs-input {
+  color: var(--interactive-element-color) !important;
+}
+
+/* whole date box - inner borders */
+
+.rs-picker-popup .rs-calendar:first-child {
+  border-right: 1px solid var(--interactive-element-line-color);
+}
+
+.rs-calendar-month-dropdown-row:not(:last-child) {
+  border-bottom: 1px dashed var(--interactive-element-line-color);
+}
+
+.rs-picker-popup {
+  background-color: var(--interactive-element-background-color);
+  outline: 1px solid var(--interactive-element-line-color);
+  border-radius: 10px !important;
+}
+
+.rs-input-group.rs-input-group-xs.rs-input-group-inside {
+  background-color: var(--interactive-element-background-color);
+}
+
+/* header */
+
+.rs-picker-daterange-header {
+  font-weight: bold;
+  color: var(--interactive-element-color);
+  font-size: 13px;
+}
+
+/* side link buttons */
+
+.rs-btn-link {
+  cursor: var(--cursor-link);
+  text-decoration-line: none;
+  text-decoration-style: solid;
+  text-decoration-thickness: min(2px, max(1px, 0.05em));
+  text-underline-offset: calc(0.025em + 2px);
+  /* text-decoration-color: var(--interactive-element-selected-color); */
+  color: var(--interactive-element-color);
+  font-size: 12px;
+}
+
+.rs-btn-link:hover {
+  text-decoration-line: none;
+  background-color: var(--interactive-element-selected-color);
+  color: var(--interactive-element-color);
+}
+
+.rs-picker-daterange-predefined .rs-stack-item,
+.rs-picker-daterange-predefined .rs-stack-item .rs-btn.rs-btn-link.rs-btn-sm {
+  width: 100%;
+  text-align: left;
+}
+
+/* ok button */
+
+.rs-btn.rs-btn-primary.rs-btn-sm {
+  cursor: var(--cursor-link);
+  text-decoration-line: none;
+  text-decoration-style: solid;
+  text-decoration-thickness: min(2px, max(1px, 0.05em));
+  text-underline-offset: calc(0.025em + 2px);
+  color: var(--interactive-element-color);
+  font-size: 12px;
+}
+
+.rs-btn.rs-btn-primary.rs-btn-sm:hover {
+  text-decoration-line: none;
+  background-color: var(--interactive-element-selected-color);
+  color: var(--interactive-element-color);
+}
+
+.rs-btn-primary:disabled,
+.rs-btn-primary.rs-btn-disabled,
+.rs-btn-primary.rs-btn-disabled:hover {
+  color: grey;
+  background-color: var(--interactive-element-background-color);
+}
+
+/* date table headers */
+
+.rs-calendar-table-header-cell-content {
+  font-weight: bold;
+}
+
+/* the month view and his close button */
+.rs-calendar-month-dropdown-row,
+.rs-calendar-btn-close {
+  background-color: var(--interactive-element-background-color);
+}
+
+.rs-picker-popup .rs-calendar .rs-calendar-table-cell-content {
+  color: #f2f2f2; /* very light grey */
+}
+
+/* selected table cell item */
+.rs-calendar-table-cell-selected .rs-calendar-table-cell-content {
+  text-decoration: underline;
+  color: white !important;
+  text-decoration-color: white !important;
+}
+
+.rs-calendar-table-cell-selected .rs-calendar-table-cell-content,
+.rs-calendar-table-cell-in-range .rs-calendar-table-cell-content {
+  z-index: 1;
+  position: relative;
+  color: rgb(184, 183, 183) !important;
+}
+
+.rs-calendar-table-cell-un-same-month .rs-calendar-table-cell-content {
+  color: orange !important;
+}

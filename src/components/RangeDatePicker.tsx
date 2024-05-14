@@ -1,22 +1,14 @@
 // src/components/RangeDatePicker.tsx
-import { DateRangePicker, Stack } from 'rsuite';
+import DateRangePicker, { DateRange, RangeType } from 'rsuite/DateRangePicker';
+import { DateRange as DictDateRange } from "@jsinfo/hooks/useCachedFetch";
+const { allowedRange } = DateRangePicker;
 
-import { subDays, startOfWeek, endOfWeek, addDays, startOfMonth, endOfMonth, addMonths } from 'date-fns';
+import { subDays, startOfWeek, startOfMonth, startOfYear, addMonths, subMonths, getYear, format, subWeeks } from 'date-fns';
 
-const predefinedRanges = [
+const predefinedRanges: RangeType[] = [
     {
-        label: 'Today',
-        value: [new Date(), new Date()],
-        placement: 'left'
-    },
-    {
-        label: 'Yesterday',
-        value: [addDays(new Date(), -1), addDays(new Date(), -1)],
-        placement: 'left'
-    },
-    {
-        label: 'This week',
-        value: [startOfWeek(new Date()), endOfWeek(new Date())],
+        label: 'Last week',
+        value: [startOfWeek(subWeeks(new Date(), 1)), new Date()],
         placement: 'left'
     },
     {
@@ -36,47 +28,69 @@ const predefinedRanges = [
     },
     {
         label: 'Last month',
-        value: [startOfMonth(addMonths(new Date(), -1)), endOfMonth(addMonths(new Date(), -1))],
-        placement: 'left'
-    },
-    {
-        label: 'This year',
-        value: [
-            new Date(Math.max(new Date(new Date().getFullYear(), 0, 1).getTime(), new Date(new Date().getFullYear(), new Date().getMonth() - 6, new Date().getDate()).getTime())),
-            new Date()
-        ],
+        value: [startOfMonth(addMonths(new Date(), -1)), new Date()],
         placement: 'left'
     },
     {
         label: 'Max (6 Month)',
-        value: [new Date(new Date().getFullYear(), new Date().getMonth() - 6, new Date().getDate()), new Date()],
+        value: [subMonths(new Date(), 6), new Date()],
         placement: 'left'
     },
     {
-        label: 'Last week',
-        value: (value: Date[] = []) => {
-            const [start = new Date()] = value;
-            return [
-                addDays(startOfWeek(start, { weekStartsOn: 0 }), -7),
-                addDays(endOfWeek(start, { weekStartsOn: 0 }), -7)
-            ];
-        },
+        label: 'This year',
+        value: [startOfYear(new Date()), new Date()],
         placement: 'left'
-    }
+    },
 ];
+interface RangeDatePickerProps {
+    onDateChange?: (from: Date, to: Date) => void;
+    datePickerValue: DictDateRange;
+}
 
-const RangeDatePicker: React.FC = () => {
-    return null
-    // return (
-    //     <DateRangePicker
-    //         ranges={predefinedRanges}
-    //         placeholder="Placement left"
-    //         style={{ width: 300 }}
-    //         onShortcutClick={(shortcut: Record<string, unknown>, event) => {
-    //             console.log(shortcut);
-    //         }}
-    //     />
-    // );
+const RangeDatePicker: React.FC<RangeDatePickerProps> = ({ onDateChange, datePickerValue }) => {
+
+    const now = new Date();
+    const sixMonthsAgoDate = subMonths(now, 6);
+    const threeMonthsAgoDate = subMonths(now, 3);
+    const sixMonthsAgo = format(sixMonthsAgoDate, 'yyyy-MM-dd');
+    const currentDate = format(now, 'yyyy-MM-dd');
+
+    const handleDateChange = (from: Date, to: Date) => {
+        console.log("Date range changed", onDateChange, from, to);
+        if (onDateChange) {
+            onDateChange(from, to);
+        }
+    };
+
+    const handleOk = (date: DateRange, event: React.SyntheticEvent) => {
+        handleDateChange(date[0], date[1]);
+    };
+
+    const handleShortcutClick = (range: RangeType<DateRange>, event: React.MouseEvent) => {
+        if (Array.isArray(range.value)) {
+            handleDateChange(range.value[0], range.value[1]);
+        }
+    };
+
+    return (
+        <DateRangePicker
+            ranges={predefinedRanges}
+            placement={"bottomEnd"}
+            style={{ width: 200 }}
+            size="xs"
+            shouldDisableDate={allowedRange(sixMonthsAgo, currentDate)}
+            limitStartYear={getYear(sixMonthsAgoDate)}
+            limitEndYear={getYear(now)}
+            appearance="subtle"
+            onOk={handleOk}
+            value={[
+                datePickerValue.from ? new Date(datePickerValue.from) : threeMonthsAgoDate,
+                datePickerValue.to ? new Date(datePickerValue.to) : now
+            ]}
+            onShortcutClick={handleShortcutClick}
+
+        />
+    );
 };
 
 export default RangeDatePicker;

@@ -12,16 +12,6 @@ import CsvButton from "@jsinfo/components/CsvButton";
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
 import TitledCard from "@jsinfo/components/TitledCard";
 
-import {
-  CHARTJS_COLORS,
-  ChartJsReactiveLineChart,
-  ChartjsSetLastDotHighInChartData,
-  ChartjsSetLastPointToLineInChartOptions,
-  ChartJsLineChartOptions,
-  ChartJsLineChartData,
-  ChartJsLineChartDataset,
-  ChartJsSpecIdToDatasetMap
-} from "@jsinfo/components/ChartJsReactiveLineChart";
 
 import {
   SortableTableInATabComponent,
@@ -33,7 +23,8 @@ import { useCachedFetch } from "@jsinfo/hooks/useCachedFetch";
 
 import { usePageContext } from "@jsinfo/context/PageContext";
 import { FormatNumber } from "@jsinfo/common/utils";
-// import RangeDatePicker from "@jsinfo/components/RangeDatePicker";
+
+import IndexChart from "@jsinfo/charts/indexChart";
 
 export default function Home() {
 
@@ -50,111 +41,6 @@ export default function Home() {
   if (error) return <div>Error: {error}</div>;
   if (loading) return <LoadingIndicator loadingText="Loading page" />;
 
-  const chartData: ChartJsLineChartData = {
-    datasets: [],
-  };
-
-  const chartOptions: ChartJsLineChartOptions = ChartjsSetLastPointToLineInChartOptions({
-    interaction: {
-      mode: "index",
-      intersect: false,
-    },
-    stacked: false,
-    scales: {
-      y: {
-        type: "linear",
-        display: true,
-        position: "left",
-        stacked: true,
-      },
-      y1: {
-        type: "linear",
-        display: true,
-        position: "right",
-        min: 0,
-        max: 1.01,
-
-        // grid line settings
-        grid: {
-          drawOnChartArea: false, // only want the grid lines for one axis to show up
-        },
-      },
-      y2: {
-        type: "linear",
-        display: false, // hide this axis
-        stacked: false, // not stacked
-      },
-      x: {
-        ticks: {
-          autoSkip: false,
-          callback: (t, i) =>
-            i % 5 && i != 0 && i + 1 != data.qosData.length
-              ? ""
-              : data.qosData[i]["date"],
-        },
-      },
-    },
-  });
-
-  const specIdToDatasetMap: ChartJsSpecIdToDatasetMap = {};
-  let i = 0;
-
-  interface Metric {
-    chainId: string;
-    date: string;
-    relaySum: number;
-  }
-
-  data.data.forEach((metric: Metric) => {
-    if (specIdToDatasetMap[metric.chainId] == undefined) {
-      specIdToDatasetMap[metric.chainId] = {
-        label: metric.chainId + " Relays",
-        data: [],
-        fill: false,
-        borderColor: CHARTJS_COLORS[i],
-        backgroundColor: CHARTJS_COLORS[i],
-        yAxisID: metric.chainId === "All Chains" ? "y2" : "y",
-      };
-      i++;
-      if (i > CHARTJS_COLORS.length - 1) {
-        i = 0;
-      }
-    }
-    specIdToDatasetMap[metric.chainId].data.push({
-      x: metric.date,
-      y: metric.relaySum,
-    });
-  });
-
-  let qosData: ChartJsLineChartDataset = {
-    label: "QoS",
-    data: [],
-    fill: false,
-    borderColor: "#AAFF00",
-    backgroundColor: "#AAFF00",
-    yAxisID: "y1",
-  };
-
-  interface QosMetric {
-    date: string;
-    qosSyncAvg: number;
-    qosAvailabilityAvg: number;
-    qosLatencyAvg: number;
-  }
-
-  data.qosData.forEach((metric: QosMetric) => {
-    qosData.data.push({
-      x: metric.date,
-      y: (metric.qosSyncAvg + metric.qosAvailabilityAvg + metric.qosLatencyAvg) / 3,
-    });
-  });
-
-  chartData.datasets.push(qosData);
-  for (const [key, value] of Object.entries(specIdToDatasetMap)) {
-    chartData.datasets.push(value);
-  }
-
-  ChartjsSetLastDotHighInChartData(chartData);
   interface Item {
     chainId: string;
     [key: string]: any;
@@ -197,8 +83,7 @@ export default function Home() {
         </Flex>
       </Card>
 
-      {/* <RangeDatePicker /> */}
-      <ChartJsReactiveLineChart data={chartData} options={chartOptions} />
+      <IndexChart />
 
       <Card>
         <JsinfoTabs defaultValue="providers"

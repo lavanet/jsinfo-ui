@@ -61,11 +61,11 @@ export function NavbarSearch() {
 
         return (
             <>
-                <span style={{ display: 'block', textAlign: 'left', fontSize: '1.3em', color: 'grey' }}>
+                <span className="searchBarElement">
                     {type}: {name}
                 </span>
                 {moniker && (
-                    <span style={{ display: 'block', textAlign: 'left', fontSize: '1.3em', color: 'grey' }}>
+                    <span className="searchBarElement">
                         Moniker: {moniker}
                     </span>
                 )}
