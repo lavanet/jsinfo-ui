@@ -16,6 +16,8 @@ import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
 import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
 import TimeTooltip from '@jsinfo/components/TimeTooltip';
 import CsvButton from '@jsinfo/components/CsvButton';
+import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
+import { RenderInFullPageCard } from '@jsinfo/common/utils';
 
 export default function Events() {
 
@@ -29,8 +31,8 @@ export default function Events() {
     }
   }, [loading, error, setCurrentPage]);
 
-  if (error) return <div>Error: {error}</div>;
-  if (loading) return <LoadingIndicator loadingText="Loading events page" />;
+  if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
+  if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading events page`} greyText={`events`} />);
 
   return (
     <>

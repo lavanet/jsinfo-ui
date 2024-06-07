@@ -12,7 +12,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
 import { GetRestUrl } from '@jsinfo/common/utils';
-import { SortAndPaginationConfig } from '@jsinfo/common/types.jsx';
+import { CachedFetchDateRange, SortAndPaginationConfig } from '@jsinfo/common/types.jsx';
 
 const axiosInstance = axios.create({
     baseURL: GetRestUrl(),
@@ -20,15 +20,10 @@ const axiosInstance = axios.create({
 
 axiosRetry(axiosInstance, { retries: 5 });
 
-export interface DateRange {
-    from?: Date | string | null;
-    to?: Date | string | null;
-}
-
 type FetchState = {
     apiurl: string | null,
     apiurlPaginationQuery: string | null,
-    apiurlDateRangeQuery: DateRange | null,
+    apiurlDateRangeQuery: CachedFetchDateRange | null,
     retryTimeout: React.MutableRefObject<number>,
     retryCount: React.MutableRefObject<number>,
     errorCount: React.MutableRefObject<number>,
@@ -456,7 +451,7 @@ interface UseCachedFetchProps {
     dataKey: string;
     useLastUrlPathInKey?: boolean;
     cachedPaginationFetcher?: CachedPaginationFetcher | null;
-    apiurlDateRangeQuery?: DateRange | null;
+    apiurlDateRangeQuery?: CachedFetchDateRange | null;
 }
 
 export function useCachedFetch({

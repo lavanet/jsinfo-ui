@@ -28,3 +28,8 @@ export interface SortAndPaginationConfig {
     itemCountPerPage: number;
     totalItemCount: number | null;
 }
+
+export interface CachedFetchDateRange {
+    from?: Date | string | null;
+    to?: Date | string | null;
+}

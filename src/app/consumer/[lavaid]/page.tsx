@@ -23,8 +23,19 @@ import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
 import { useEffect } from "react";
 
 import { usePageContext } from '@jsinfo/context/PageContext';
+import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
+import { RenderInFullPageCard } from '@jsinfo/common/utils';
 
 export default function Consumer({ params }: { params: { lavaid: string } }) {
+
+  let decodedLavaId = decodeURIComponent(params.lavaid);
+
+  const lavaIdPattern = /^lava@[a-z0-9]+$/;
+
+  if (!lavaIdPattern.test(decodedLavaId)) {
+    const error = 'Invalid lavaId format';
+    return RenderInFullPageCard(<ErrorDisplay message={error} />);
+  }
 
   const { data, loading, error } = useCachedFetch({
     dataKey: "consumer",
@@ -35,12 +46,12 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
 
   useEffect(() => {
     if (!loading && !error) {
-      setCurrentPage('consumer/' + params.lavaid);
+      setCurrentPage('consumer/' + decodedLavaId);
     }
-  }, [loading, error, params.lavaid, setCurrentPage]);
+  }, [loading, error, decodedLavaId, setCurrentPage]);
 
-  if (error) return <div>Error: {error} </div>;
-  if (loading) return <LoadingIndicator loadingText="Loading consumer page" />;
+  if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
+  if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${decodedLavaId} consumer page`} greyText={`${decodedLavaId} consumer`} />);
 
   const consumer = data;
 

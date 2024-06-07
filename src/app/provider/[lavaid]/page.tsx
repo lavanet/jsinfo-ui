@@ -22,7 +22,7 @@ import { useCachedFetch } from "@jsinfo/hooks/useCachedFetch";
 import { useEffect } from "react";
 import { usePageContext } from "@jsinfo/context/PageContext";
 
-import { FormatNumber, FormatNumberWithString } from '@jsinfo/common/utils';
+import { FormatNumber, FormatNumberWithString, RenderInFullPageCard } from '@jsinfo/common/utils';
 
 import {
   CHARTJS_COLORS,
@@ -38,9 +38,20 @@ import TitledCard from "@jsinfo/components/TitledCard";
 import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
 import TimeTooltip from '@jsinfo/components/TimeTooltip';
 import StatusCall from '@jsinfo/components/StatusCell';
+import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
+import ProviderChart from '@jsinfo/charts/providerChart';
 
 
 export default function Provider({ params }: { params: { lavaid: string } }) {
+
+  let decodedLavaId = decodeURIComponent(params.lavaid);
+
+  const lavaIdPattern = /^lava@[a-z0-9]+$/;
+
+  if (!lavaIdPattern.test(decodedLavaId)) {
+    const error = 'Invalid lavaId format';
+    return RenderInFullPageCard(<ErrorDisplay message={error} />);
+  }
 
   const { data, loading, error } = useCachedFetch({
     dataKey: "provider",
@@ -51,132 +62,14 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
 
   useEffect(() => {
     if (!loading && !error) {
-      setCurrentPage('provider/' + params.lavaid);
+      setCurrentPage('provider/' + decodedLavaId);
     }
-  }, [loading, error, params.lavaid, setCurrentPage]);
+  }, [loading, error, decodedLavaId, setCurrentPage]);
 
-  if (loading) return <LoadingIndicator loadingText="Loading provider page" />;
-  if (error) return <div>Error: {error}</div>;
+  if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
+  if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${decodedLavaId} provider page`} greyText={`${decodedLavaId} provider`} />);
 
   const provider = data;
-
-  const chartData: ChartJsLineChartData = {
-    datasets: [],
-  };
-  const chartOptions: ChartJsLineChartOptions = ChartjsSetLastPointToLineInChartOptions({
-    interaction: {
-      mode: "index",
-      intersect: false,
-    },
-    stacked: false,
-    scales: {
-      y: {
-        type: "linear",
-        display: true,
-        position: "left",
-        stacked: true,
-      },
-      y1: {
-        type: "linear",
-        display: true,
-        position: "right",
-        min: 0,
-        max: 1.01,
-
-        // grid line settings
-        grid: {
-          drawOnChartArea: false, // only want the grid lines for one axis to show up
-        },
-      },
-      x: {
-        ticks: {
-          autoSkip: false,
-          callback: (t, i) =>
-            i % 5 && i != 0 && i + 1 != provider.qosData.length
-              ? ""
-              : provider.qosData[i]["date"],
-        },
-      },
-    },
-  });
-
-  const specIdToDatasetMap: ChartJsSpecIdToDatasetMap = {};
-  let i = 0;
-
-  interface Metric {
-    chainId: string;
-    date: Date;
-    relaySum: number;
-    qosSyncAvg: number;
-    qosAvailabilityAvg: number;
-    qosLatencyAvg: number;
-  }
-
-  provider.data.forEach((metric: Metric) => {
-    if (specIdToDatasetMap[metric.chainId] == undefined) {
-      specIdToDatasetMap[metric.chainId] = {
-        label: metric.chainId + " Relays",
-        data: [],
-        fill: false,
-        borderColor: CHARTJS_COLORS[i],
-        backgroundColor: CHARTJS_COLORS[i],
-        yAxisID: "y",
-      };
-      i++;
-      if (i > CHARTJS_COLORS.length - 1) {
-        i = 0;
-      }
-    }
-    specIdToDatasetMap[metric.chainId].data.push({
-      x: metric.date,
-      y: metric.relaySum,
-    });
-  });
-
-  let qosSync: ChartJsLineChartDataset = {
-    label: "Sync Score",
-    data: [],
-    fill: false,
-    borderColor: "#FFC53D",
-    backgroundColor: "#FFC53D",
-    yAxisID: "y1",
-  };
-  let qosAvailability: ChartJsLineChartDataset = {
-    label: "Availability Score",
-    data: [],
-    fill: false,
-    borderColor: "#46A758",
-    backgroundColor: "#46A758",
-    yAxisID: "y1",
-  };
-  let qosLatency: ChartJsLineChartDataset = {
-    label: "Latency Score",
-    data: [],
-    fill: false,
-    borderColor: "#6E56CF",
-    backgroundColor: "#6E56CF",
-    yAxisID: "y1",
-  };
-
-  provider.qosData.forEach((metric: Metric) => {
-    qosSync.data.push({ x: metric.date, y: metric.qosSyncAvg });
-    qosAvailability.data.push({
-      x: metric.date,
-      y: metric.qosAvailabilityAvg,
-    });
-    qosLatency.data.push({ x: metric.date, y: metric.qosLatencyAvg });
-  });
-
-  chartData.datasets.push(qosSync);
-  chartData.datasets.push(qosAvailability);
-  chartData.datasets.push(qosLatency);
-  for (const [key, value] of Object.entries(specIdToDatasetMap)) {
-    chartData.datasets.push(value);
-  }
-
-  ChartjsSetLastDotHighInChartData(chartData);
-
-  const providerAddr = params.lavaid;
 
   return (
     <>
@@ -221,7 +114,8 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
         </Flex>
       </Card>
 
-      <ChartJsReactiveLineChart data={chartData} options={chartOptions} />
+      <ProviderChart addr={decodedLavaId} />
+
       <Card>
         <JsinfoTabs defaultValue="health"
           tabs={[
@@ -229,7 +123,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
               value: "health",
               content: (
                 <CsvButton
-                  csvDownloadLink={`providerHealthCsv/${providerAddr}`}
+                  csvDownloadLink={`providerHealthCsv/${decodedLavaId}`}
                 >
                   Health
                 </CsvButton>
@@ -239,7 +133,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
               value: "errors",
               content: (
                 <CsvButton
-                  csvDownloadLink={`providerErrorsCsv/${providerAddr}`}
+                  csvDownloadLink={`providerErrorsCsv/${decodedLavaId}`}
                 >
                   Errors
                 </CsvButton>
@@ -249,7 +143,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
               value: "stakes",
               content: (
                 <CsvButton
-                  csvDownloadLink={`providerStakesCsv/${providerAddr}`}
+                  csvDownloadLink={`providerStakesCsv/${decodedLavaId}`}
                 >
                   Stakes
                 </CsvButton>
@@ -259,7 +153,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
               value: "events",
               content: (
                 <CsvButton
-                  csvDownloadLink={`providerEventsCsv/${providerAddr}`}
+                  csvDownloadLink={`providerEventsCsv/${decodedLavaId}`}
                 >
                   Events
                 </CsvButton>
@@ -269,7 +163,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
               value: "rewards",
               content: (
                 <CsvButton
-                  csvDownloadLink={`providerRewardsCsv/${providerAddr}`}
+                  csvDownloadLink={`providerRewardsCsv/${decodedLavaId}`}
                 >
                   Rewards
                 </CsvButton>
@@ -279,7 +173,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
               value: "reports",
               content: (
                 <CsvButton
-                  csvDownloadLink={`providerReportsCsv/${providerAddr}`}
+                  csvDownloadLink={`providerReportsCsv/${decodedLavaId}`}
                 >
                   Reports
                 </CsvButton>
@@ -289,7 +183,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
               value: "blockReports",
               content: (
                 <CsvButton
-                  csvDownloadLink={`providerBlockReportsCsv/${providerAddr}`}
+                  csvDownloadLink={`providerBlockReportsCsv/${decodedLavaId}`}
                 >
                   Block Reports
                 </CsvButton>
@@ -299,7 +193,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
               value: "claimableProviderRewards",
               content: (
                 <CsvButton
-                  csvDownloadLink={`providerDelegatorRewardsCsv/${providerAddr}`}
+                  csvDownloadLink={`providerDelegatorRewardsCsv/${decodedLavaId}`}
                 >
                   Claimable Provider Rewards
                 </CsvButton>
@@ -345,6 +239,9 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
               pkeyUrl="none"
               rowFormatters={{
                 date: (data) => (<TimeTooltip datetime={data.date} />),
+                spec: (data) => (
+                  <Link href={`/spec/${data.spec}`}>{data.spec}</Link>
+                ),
                 error: (data) => {
                   return (
                     <div

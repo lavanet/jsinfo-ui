@@ -22,9 +22,10 @@ import { ConvertToChainName } from "@jsinfo/common/convertors";
 import { useCachedFetch } from "@jsinfo/hooks/useCachedFetch";
 
 import { usePageContext } from "@jsinfo/context/PageContext";
-import { FormatNumber } from "@jsinfo/common/utils";
+import { FormatNumber, RenderInFullPageCard } from "@jsinfo/common/utils";
 
 import IndexChart from "@jsinfo/charts/indexChart";
+import { ErrorDisplay } from "@jsinfo/components/ErrorDisplay";
 
 export default function Home() {
 
@@ -38,8 +39,8 @@ export default function Home() {
     }
   }, [loading, error, setCurrentPage]);
 
-  if (error) return <div>Error: {error}</div>;
-  if (loading) return <LoadingIndicator loadingText="Loading page" />;
+  if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
+  if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText="Loading Landing page" greyText="Landing" />);
 
   interface Item {
     chainId: string;

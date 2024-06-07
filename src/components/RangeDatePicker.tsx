@@ -1,70 +1,60 @@
 // src/components/RangeDatePicker.tsx
 import DateRangePicker, { DateRange, RangeType } from 'rsuite/DateRangePicker';
-import { DateRange as DictDateRange } from "@jsinfo/hooks/useCachedFetch";
 const { allowedRange } = DateRangePicker;
-
 import { subDays, startOfWeek, startOfMonth, startOfYear, addMonths, subMonths, getYear, format, subWeeks } from 'date-fns';
+import { CachedFetchDateRange } from '@jsinfo/common/types';
 
-const predefinedRanges: RangeType[] = [
+const predefinedRanges: any[] = [
     {
         label: 'Last week',
         value: [startOfWeek(subWeeks(new Date(), 1)), new Date()],
-        placement: 'left'
     },
     {
         label: 'Last 7 days',
-        value: [subDays(new Date(), 6), new Date()],
-        placement: 'left'
+        value: [subDays(new Date(), 6), new Date()]
     },
     {
         label: 'This month',
-        value: [startOfMonth(new Date()), new Date()],
-        placement: 'left'
+        value: [startOfMonth(new Date()), new Date()]
     },
     {
         label: 'Last month',
-        value: [startOfMonth(addMonths(new Date(), -1)), new Date()],
-        placement: 'left'
+        value: [startOfMonth(addMonths(new Date(), -1)), new Date()]
     },
     {
         label: '1 Month ago',
-        value: [subMonths(new Date(), 1), new Date()],
-        placement: 'left'
+        value: [subMonths(new Date(), 1), new Date()]
     },
     {
         label: '2 Month ago',
-        value: [subMonths(new Date(), 2), new Date()],
-        placement: 'left'
+        value: [subMonths(new Date(), 2), new Date()]
     },
     {
         label: '3 Month ago',
-        value: [subMonths(new Date(), 3), new Date()],
-        placement: 'left'
+        value: [subMonths(new Date(), 3), new Date()]
     },
     {
         label: '4 Month ago',
-        value: [subMonths(new Date(), 4), new Date()],
-        placement: 'left'
+        value: [subMonths(new Date(), 4), new Date()]
     },
     {
         label: '5 Month ago',
-        value: [subMonths(new Date(), 5), new Date()],
-        placement: 'left'
+        value: [subMonths(new Date(), 5), new Date()]
     },
     {
         label: '6 Month ago (max)',
-        value: [subMonths(new Date(), 6), new Date()],
-        placement: 'left'
+        value: [subMonths(new Date(), 6), new Date()]
     },
     {
         label: 'This year',
         value: [startOfYear(new Date()), new Date()],
-        placement: 'left'
     },
-];
+    // strange windows bug - leave the disabled here
+].map(item => ({ ...item, placement: 'left', disabled: false }));
+
 interface RangeDatePickerProps {
     onDateChange?: (from: Date, to: Date) => void;
-    datePickerValue: DictDateRange;
+    datePickerValue: CachedFetchDateRange;
 }
 
 const RangeDatePicker: React.FC<RangeDatePickerProps> = ({ onDateChange, datePickerValue }) => {
@@ -94,6 +84,7 @@ const RangeDatePicker: React.FC<RangeDatePickerProps> = ({ onDateChange, datePic
 
     return (
         <DateRangePicker
+            disabled={false} // strange windows bug - leave this here
             ranges={predefinedRanges}
             placement={"bottomEnd"}
             style={{ width: 200 }}

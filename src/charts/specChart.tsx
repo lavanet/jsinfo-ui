@@ -1,4 +1,4 @@
-// src/charts/indexChart.tsx
+// src/charts/specChart.tsx
 
 import { CachedFetchDateRange } from "@jsinfo/common/types";
 import { ConvertDateToServerQueryDate, ConvertJsInfoServerFormatedDateToJsDateObject, RenderInFullPageCard, WrapSetDatesWithFormatingAnd6MonthFromLimit } from "@jsinfo/common/utils";
@@ -20,19 +20,32 @@ import { useCachedFetch } from "@jsinfo/hooks/useCachedFetch";
 
 import { useState } from "react";
 
-type CuRelayItem = {
-    chainId: string;
-    cuSum: number;
-    relaySum: number;
+type SpecChartCuRelay = {
+    provider: string;
+    cus: number;
+    relays: number;
 };
 
-type IndexChartResponse = {
+type SpecChartResponse = {
+    data: SpecChartCuRelay[];
+} & SpecQosData;
+
+interface QosQueryData {
     date: string;
-    qos: number;
-    data: CuRelayItem[];
-};
+    qosSyncAvg: number;
+    qosAvailabilityAvg: number;
+    qosLatencyAvg: number;
+}
 
-export default function IndexChart() {
+type SpecQosData = {
+    qos: number;
+} & QosQueryData;
+
+interface SpecChartProps {
+    specid: string;
+}
+
+export default function SpecChart({ specid }: SpecChartProps) {
 
     const [isRelayOrCuSelected, setIsRelayOrCuSelected] = useState(false);
 
@@ -45,16 +58,16 @@ export default function IndexChart() {
 
     const [dates, setDates] = useState<CachedFetchDateRange>(initialRange);
 
-    const { data, loading, error } = useCachedFetch({ dataKey: "indexCharts", apiurlDateRangeQuery: { from: ConvertDateToServerQueryDate(dates.from), to: ConvertDateToServerQueryDate(dates.to) } });
+    const { data, loading, error } = useCachedFetch({ dataKey: "specCharts", useLastUrlPathInKey: true, apiurlDateRangeQuery: { from: ConvertDateToServerQueryDate(dates.from), to: ConvertDateToServerQueryDate(dates.to) } });
 
     // Then in your render method or function component
     if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
-    if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading chart data`} greyText={`chart`} />);
+    if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${specid} chart data`} greyText={`${specid} chart`} />);
 
-    let rawChartData: IndexChartResponse[] = data.data;
+    let rawChartData: SpecChartResponse[] = data.data;
 
     // First, sort the rawChartData
-    rawChartData = rawChartData.sort((a: IndexChartResponse, b: IndexChartResponse) => {
+    rawChartData = rawChartData.sort((a: SpecChartResponse, b: SpecChartResponse) => {
         // Convert the formatted dates back to Date objects
         const dateA = ConvertJsInfoServerFormatedDateToJsDateObject(a.date);
         const dateB = ConvertJsInfoServerFormatedDateToJsDateObject(b.date);
@@ -86,7 +99,6 @@ export default function IndexChart() {
                 position: "right",
                 min: 0,
                 max: 1.01,
-
                 // grid line settings
                 grid: {
                     drawOnChartArea: false, // only want the grid lines for one axis to show up
@@ -117,10 +129,10 @@ export default function IndexChart() {
         },
     });
 
-    const specIdToDatasetMap: ChartJsSpecIdToDatasetMap = {};
+    const specProviderToDatasetMap: ChartJsSpecIdToDatasetMap = {};
     let i = 0;
 
-    let qosData: ChartJsLineChartDataset = {
+    let qosScoreData: ChartJsLineChartDataset = {
         label: "QoS Score",
         data: [],
         fill: false,
@@ -130,41 +142,90 @@ export default function IndexChart() {
         borderDash: [30, 1],
     };
 
+    let qosSyncData: ChartJsLineChartDataset = {
+        label: "Sync Score",
+        data: [],
+        fill: false,
+        borderColor: "#FFC53D",
+        backgroundColor: "#FFC53D",
+        yAxisID: "y1",
+        borderDash: [30, 1],
+    };
+
+    let qosAvailabilityData: ChartJsLineChartDataset = {
+        label: "Availability Score",
+        data: [],
+        fill: false,
+        borderColor: "#46A758",
+        backgroundColor: "#46A758",
+        yAxisID: "y1",
+        borderDash: [30, 1],
+    };
+
+    let qosLatencyData: ChartJsLineChartDataset = {
+        label: "Latency Score",
+        data: [],
+        fill: false,
+        borderColor: "#6E56CF",
+        backgroundColor: "#6E56CF",
+        yAxisID: "y1",
+        borderDash: [30, 1],
+    };
+
     const relayToCuChange = (checked: boolean, event: React.ChangeEvent<HTMLInputElement>) => {
         setIsRelayOrCuSelected(checked);
     };
 
-    rawChartData.forEach((indexChartResponse: IndexChartResponse) => {
-        for (const cuRelayItem of indexChartResponse.data) {
-            if (specIdToDatasetMap[cuRelayItem.chainId] == undefined) {
-                specIdToDatasetMap[cuRelayItem.chainId] = {
-                    label: !isRelayOrCuSelected ? cuRelayItem.chainId + " Relays" : cuRelayItem.chainId + " CUs",
+    rawChartData.forEach((specChartResponse: SpecChartResponse) => {
+        for (const specCuRelayItem of specChartResponse.data) {
+            if (specProviderToDatasetMap[specCuRelayItem.provider] == undefined) {
+                specProviderToDatasetMap[specCuRelayItem.provider] = {
+                    label: !isRelayOrCuSelected ? specCuRelayItem.provider + " Relays" : specCuRelayItem.provider + " CUs",
                     data: [],
                     fill: false,
                     borderColor: CHARTJS_COLORS[i],
                     backgroundColor: CHARTJS_COLORS[i],
-                    yAxisID: cuRelayItem.chainId === "All Chains" ? "y2" : "y",
-                    borderDash: cuRelayItem.chainId === "All Chains" ? [15, 1] : undefined,
+                    yAxisID: specCuRelayItem.provider === "All Providers" ? "y2" : "y",
+                    borderDash: specCuRelayItem.provider === "All Providers" ? [15, 1] : undefined,
                 };
                 i++;
                 if (i > CHARTJS_COLORS.length - 1) {
                     i = 0;
                 }
             }
-            specIdToDatasetMap[cuRelayItem.chainId].data.push({
-                x: indexChartResponse.date,
-                y: !isRelayOrCuSelected ? cuRelayItem.relaySum : cuRelayItem.cuSum,
+            specProviderToDatasetMap[specCuRelayItem.provider].data.push({
+                x: specChartResponse.date,
+                y: !isRelayOrCuSelected ? specCuRelayItem.relays : specCuRelayItem.cus,
             });
         }
 
-        qosData.data.push({
-            x: indexChartResponse.date,
-            y: indexChartResponse.qos,
+        qosScoreData.data.push({
+            x: specChartResponse.date,
+            y: specChartResponse.qos,
+        });
+
+        qosSyncData.data.push({
+            x: specChartResponse.date,
+            y: specChartResponse.qosSyncAvg,
+        });
+
+        qosAvailabilityData.data.push({
+            x: specChartResponse.date,
+            y: specChartResponse.qosAvailabilityAvg,
+        });
+
+        qosLatencyData.data.push({
+            x: specChartResponse.date,
+            y: specChartResponse.qosLatencyAvg,
         });
     });
 
-    chartData.datasets.push(qosData);
-    for (const [key, value] of Object.entries(specIdToDatasetMap)) {
+    chartData.datasets.push(qosScoreData);
+    chartData.datasets.push(qosSyncData);
+    chartData.datasets.push(qosAvailabilityData);
+    chartData.datasets.push(qosLatencyData);
+
+    for (const [key, value] of Object.entries(specProviderToDatasetMap)) {
         chartData.datasets.push(value);
     }
 
@@ -174,7 +235,7 @@ export default function IndexChart() {
         <ChartJsReactiveLineChartWithDatePicker
             data={chartData}
             options={chartOptions}
-            title="Qos Score & Relays/CUs for top 10 Chains"
+            title="Qos Score & Relays/CUs for top 10 Providers"
             onDateChange={WrapSetDatesWithFormatingAnd6MonthFromLimit(setDates, initialRange)}
             rightControl={<TextToggle openText='CU sum' closeText='Relay sum' onChange={relayToCuChange} style={{ marginRight: '10px' }} />}
             datePickerValue={dates} />

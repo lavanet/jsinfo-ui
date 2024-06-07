@@ -11,6 +11,7 @@ import { Column, SortConfig, RowFormatters, SortableData, SortAndPaginationConfi
 import { AddSpacesBeforeCapsAndCapitalize, ConvertToSortConfig, GetNestedProperty } from '@jsinfo/common/utils';
 import { ErrorBoundary } from '@jsinfo/components/ErrorBoundary';
 import PaginationControl from './PaginationControl';
+import { ErrorDisplay } from './ErrorDisplay';
 
 const JSINFO_QUERY_DEFAULT_ITEMS_PER_PAGE = 20
 
@@ -573,7 +574,11 @@ export const DataKeySortableTableComponent: React.FC<DataKeySortableTableCompone
 
   useEffect(() => {
     if (error) {
-      setComponentData(<div style={{ margin: '5px' }}>Error: {error}</div>);
+      setComponentData(
+        <div style={{ margin: '5px' }}>
+          <ErrorDisplay message={error} />
+        </div>
+      );
       return
     }
 
@@ -581,7 +586,7 @@ export const DataKeySortableTableComponent: React.FC<DataKeySortableTableCompone
       if (!loadingTimeout) {
         setLoadingTimeout(setTimeout(() => {
           if (loadingRef.current) {
-            setComponentData(<LoadingIndicator loadingText={`Loading ${AddSpacesBeforeCapsAndCapitalize(props.tableAndTabName)} data`} />);
+            setComponentData(<LoadingIndicator loadingText={`Loading ${AddSpacesBeforeCapsAndCapitalize(props.tableAndTabName)} data`} greyText={`${AddSpacesBeforeCapsAndCapitalize(props.tableAndTabName)}`} />);
           }
         }, 200));
       }

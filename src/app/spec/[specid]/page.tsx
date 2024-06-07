@@ -7,18 +7,7 @@ import { useEffect } from "react";
 
 import { useCachedFetch } from "@jsinfo/hooks/useCachedFetch";
 
-import {
-  CHARTJS_COLORS,
-  ChartJsLineChartData,
-  ChartJsLineChartDataset,
-  ChartJsLineChartOptions,
-  ChartJsLinePoint,
-  ChartJsReactiveLineChart,
-  ChartjsSetLastDotHighInChartData,
-  ChartjsSetLastPointToLineInChartOptions,
-} from "@jsinfo/components/ChartJsReactiveLineChart";
-
-import { SortableTableInATabComponent } from "@jsinfo/components/SortTable";
+import { DataKeySortableTableInATabComponent } from "@jsinfo/components/SortTable";
 import { StatusToString, GeoLocationToString } from "@jsinfo/common/convertors";
 import { usePageContext } from "@jsinfo/context/PageContext";
 
@@ -26,10 +15,22 @@ import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
 import TitledCard from "@jsinfo/components/TitledCard";
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
 import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
-import { FormatNumber } from '@jsinfo/common/utils';
+import { FormatNumber, RenderInFullPageCard } from '@jsinfo/common/utils';
 import StatusCall from '@jsinfo/components/StatusCell';
+import CsvButton from '@jsinfo/components/CsvButton';
+import SpecChart from '@jsinfo/charts/specChart';
+import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
 
 export default function Spec({ params }: { params: { specid: string } }) {
+
+  let decodedSpecId = decodeURIComponent(params.specid);
+
+  const specIdPattern = /^[A-Za-z0-9]+$/; // Matches alphanumeric characters
+
+  if (!specIdPattern.test(decodedSpecId)) {
+    const error = 'Invalid spec format';
+    return RenderInFullPageCard(<ErrorDisplay message={error} />);
+  }
 
   const { data, loading, error } = useCachedFetch({
     dataKey: "spec",
@@ -40,145 +41,14 @@ export default function Spec({ params }: { params: { specid: string } }) {
 
   useEffect(() => {
     if (!loading && !error) {
-      setCurrentPage('spec/' + params.specid);
+      setCurrentPage('spec/' + decodedSpecId);
     }
-  }, [loading, error, params.specid, setCurrentPage]);
+  }, [loading, error, decodedSpecId, setCurrentPage]);
 
-  if (error) return <div>Error: {error}</div>;
-  if (loading) return <LoadingIndicator loadingText="Loading spec page" />;
+  const specId = decodedSpecId;
 
-  const chartData: ChartJsLineChartData = {
-    datasets: [],
-  };
-
-  const chartOptions: ChartJsLineChartOptions = ChartjsSetLastPointToLineInChartOptions({
-    interaction: {
-      mode: "index",
-      intersect: false,
-    },
-    stacked: false,
-    scales: {
-      y: {
-        type: "linear",
-        display: true,
-        position: "left",
-        stacked: true,
-      },
-      y1: {
-        type: "linear",
-        display: true,
-        position: "right",
-        min: 0,
-        max: 1.01,
-
-        // grid line settings
-        grid: {
-          drawOnChartArea: false, // only want the grid lines for one axis to show up
-        },
-      },
-      // y2: {
-      //   type: "linear",
-      //   display: false,
-      //   position: "left",
-      //   stacked: false,
-      //   // grid line settings
-      //   grid: {
-      //     drawOnChartArea: false, // only want the grid lines for one axis to show up
-      //   },
-      // },
-      x: {
-        ticks: {
-          autoSkip: false,
-          callback: (t, i) =>
-            i % 5 && i != 0 && i + 1 != data.qosData.length
-              ? ""
-              : data.qosData[i]["date"],
-        },
-      },
-    },
-  });
-
-  const metricData: ChartJsLinePoint[] = [];
-
-  interface Metric {
-    date: Date
-    relaySum: number
-    qosSyncAvg: number
-    qosAvailabilityAvg: number
-    qosLatencyAvg: number
-  }
-
-  data.data.forEach((metric: Metric) => {
-    metricData.push({ x: metric.date, y: metric.relaySum });
-  });
-
-  chartData.datasets.push({
-    label: data["specId"] + " Relays",
-    data: metricData,
-    fill: false,
-    borderColor: "#8c333a",
-    backgroundColor: "#8c333a",
-    yAxisID: "y", // was y2
-    // borderDash: [10, 1], // Use dotted line // was enabled
-  });
-
-  let colorIndex = 0;
-
-  // for (let specId in data.cuChartData) {
-  //   let metricData = data.cuChartData[specId].map((item: any) => ({
-  //     x: item.date,
-  //     y: item.cuSum,
-  //   }));
-
-  //   chartData.datasets.push({
-  //     label: specId + " CU",
-  //     data: metricData,
-  //     fill: false,
-  //     borderColor: CHARTJS_COLORS[colorIndex],
-  //     backgroundColor: CHARTJS_COLORS[colorIndex],
-  //   });
-
-  //   colorIndex = (colorIndex + 1) % CHARTJS_COLORS.length; // cycle through colors
-  // }
-
-  let qosSync: ChartJsLineChartDataset = {
-    label: "Sync Score",
-    data: [],
-    fill: false,
-    borderColor: "#FFC53D",
-    backgroundColor: "#FFC53D",
-    yAxisID: "y1",
-  };
-  let qosAvailability: ChartJsLineChartDataset = {
-    label: "Availability Score",
-    data: [],
-    fill: false,
-    borderColor: "#46A758",
-    backgroundColor: "#46A758",
-    yAxisID: "y1",
-  };
-  let qosLatency: ChartJsLineChartDataset = {
-    label: "Latency Score",
-    data: [],
-    fill: false,
-    borderColor: "#6E56CF",
-    backgroundColor: "#6E56CF",
-    yAxisID: "y1",
-  };
-  data.qosData.forEach((metric: Metric) => {
-    qosSync.data.push({ x: metric.date, y: metric.qosSyncAvg });
-    qosAvailability.data.push({
-      x: metric.date,
-      y: metric.qosAvailabilityAvg,
-    });
-    qosLatency.data.push({ x: metric.date, y: metric.qosLatencyAvg });
-  });
-
-  chartData.datasets.push(qosSync);
-  chartData.datasets.push(qosAvailability);
-  chartData.datasets.push(qosLatency);
-
-  ChartjsSetLastDotHighInChartData(chartData);
+  if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
+  if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${specId} spec page`} greyText={`${specId} spec`} />);
 
   return (
     <>
@@ -192,7 +62,7 @@ export default function Spec({ params }: { params: { specid: string } }) {
           />
           <TitledCard
             title="Providers"
-            value={data.stakes.length}
+            value={data.providerCount}
             className="col-span-1"
           />
           <TitledCard
@@ -218,18 +88,26 @@ export default function Spec({ params }: { params: { specid: string } }) {
           />
         </Flex>
       </Card>
-      <ChartJsReactiveLineChart data={chartData} options={chartOptions} />
+
+      <SpecChart specid={specId} />
+
       <Card>
         <JsinfoTabs defaultValue="stakes"
           tabs={[
             {
               value: "stakes",
-              content: "Stakes",
+              content: (
+                <CsvButton
+                  csvDownloadLink={`specStakesCsv/${specId}`}
+                >
+                  Stakes
+                </CsvButton>
+              ),
             },
           ]}
         >
           <Box>
-            <SortableTableInATabComponent
+            <DataKeySortableTableInATabComponent
               columns={[
                 { key: "provider", name: "Provider" },
                 { key: "status", name: "Status" },
@@ -239,10 +117,11 @@ export default function Spec({ params }: { params: { specid: string } }) {
                 { key: "cuSum", name: "90-Day CUs" },
                 { key: "relaySum", name: "90-Day Relays" },
               ]}
-              data={data.stakes}
+              dataKey="specStakes"
+              useLastUrlPathInKey={true}
               defaultSortKey="cuSum|desc"
               tableAndTabName="stakes"
-              pkey="specId,provider"
+              pkey="provider"
               pkeyUrl="none"
               rowFormatters={{
                 provider: (data) => (
