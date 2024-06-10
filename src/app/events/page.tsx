@@ -17,7 +17,7 @@ import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
 import TimeTooltip from '@jsinfo/components/TimeTooltip';
 import CsvButton from '@jsinfo/components/CsvButton';
 import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
-import { RenderInFullPageCard } from '@jsinfo/common/utils';
+import { IsMeaningfulText, RenderInFullPageCard } from '@jsinfo/common/utils';
 
 export default function Events() {
 
@@ -188,7 +188,7 @@ export default function Events() {
                 provider: (payment) =>
                   payment.provider ? (
                     <Link href={`/provider/${payment.provider}`}>
-                      {payment.moniker
+                      {IsMeaningfulText(payment.moniker)
                         ? payment.moniker
                         : payment.provider}
                     </Link>
@@ -245,7 +245,7 @@ export default function Events() {
                 provider: (report) =>
                   report.provider ? (
                     <Link href={`/provider/${report.provider}`}>
-                      {report.moniker
+                      {IsMeaningfulText(report.moniker)
                         ? report.moniker
                         : report.provider}
                     </Link>

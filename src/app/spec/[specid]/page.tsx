@@ -15,7 +15,7 @@ import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
 import TitledCard from "@jsinfo/components/TitledCard";
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
 import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
-import { FormatNumber, RenderInFullPageCard } from '@jsinfo/common/utils';
+import { FormatNumber, IsMeaningfulText, RenderInFullPageCard } from '@jsinfo/common/utils';
 import StatusCall from '@jsinfo/components/StatusCell';
 import CsvButton from '@jsinfo/components/CsvButton';
 import SpecChart from '@jsinfo/charts/specChart';
@@ -126,7 +126,7 @@ export default function Spec({ params }: { params: { specid: string } }) {
               rowFormatters={{
                 provider: (data) => (
                   <Link href={`/provider/${data.provider}`}>
-                    {data.provider
+                    {IsMeaningfulText(data.moniker)
                       ? data.moniker
                       : data.provider}
                   </Link>
