@@ -86,7 +86,7 @@ export function AddSpacesBeforeCapsAndCapitalize(text: string): string {
   return formattedText;
 }
 
-const UtilsDebugLogEnabled = true;
+const UtilsDebugLogEnabled = false;
 
 function UtilsDebugLog(...args: any[]) {
   if (UtilsDebugLogEnabled) {
