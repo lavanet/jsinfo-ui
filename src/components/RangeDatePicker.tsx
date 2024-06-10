@@ -3,6 +3,7 @@ import DateRangePicker, { DateRange, RangeType } from 'rsuite/DateRangePicker';
 const { allowedRange } = DateRangePicker;
 import { subDays, startOfWeek, startOfMonth, startOfYear, addMonths, subMonths, getYear, format, subWeeks } from 'date-fns';
 import { CachedFetchDateRange } from '@jsinfo/common/types';
+import { useEffect } from 'react';
 
 const predefinedRanges: any[] = [
     {
@@ -57,6 +58,14 @@ interface RangeDatePickerProps {
     datePickerValue: CachedFetchDateRange;
 }
 
+const RangeDatePickerDebugEnabled = true;
+
+function RangeDatePickerDebugLog(...args: any[]) {
+    if (RangeDatePickerDebugEnabled) {
+        console.log(...args);
+    }
+}
+
 const RangeDatePicker: React.FC<RangeDatePickerProps> = ({ onDateChange, datePickerValue }) => {
 
     const now = new Date();
@@ -65,66 +74,85 @@ const RangeDatePicker: React.FC<RangeDatePickerProps> = ({ onDateChange, datePic
     const sixMonthsAgo = format(sixMonthsAgoDate, 'yyyy-MM-dd');
     const currentDate = format(now, 'yyyy-MM-dd');
     const handleDateChange = (from: Date, to: Date) => {
-        console.log("handleDateChange: started");
-        console.log("handleDateChange: from", from);
-        console.log("handleDateChange: to", to);
+        RangeDatePickerDebugLog("handleDateChange: started");
+        RangeDatePickerDebugLog("handleDateChange: from", from);
+        RangeDatePickerDebugLog("handleDateChange: to", to);
         if (onDateChange) {
-            console.log("handleDateChange: calling onDateChange");
+            RangeDatePickerDebugLog("handleDateChange: calling onDateChange");
             onDateChange(from, to);
         }
-        console.log("handleDateChange: ended");
+        RangeDatePickerDebugLog("handleDateChange: ended");
     };
 
     const handleOk = (date: DateRange, event: React.SyntheticEvent) => {
-        console.log("handleOk: started");
-        console.log("handleOk: date", date);
-        console.log("handleOk: event", event);
-        console.log("handleOk: calling handleDateChange");
+        RangeDatePickerDebugLog("handleOk: started");
+        RangeDatePickerDebugLog("handleOk: date", date);
+        RangeDatePickerDebugLog("handleOk: event", event);
+        RangeDatePickerDebugLog("handleOk: calling handleDateChange");
         handleDateChange(date[0], date[1]);
-        console.log("handleOk: ended");
+        RangeDatePickerDebugLog("handleOk: ended");
     };
 
     const handleShortcutClick = (range: RangeType<DateRange>, event: React.MouseEvent) => {
-        console.log("handleShortcutClick: started");
-        console.log("handleShortcutClick: range", range);
-        console.log("handleShortcutClick: event", event);
+        // this is the normal flow - this works on all machines
+        RangeDatePickerDebugLog("handleShortcutClick: started");
+        RangeDatePickerDebugLog("handleShortcutClick: range", range);
+        RangeDatePickerDebugLog("handleShortcutClick: event", event);
         if (Array.isArray(range.value)) {
-            console.log("handleShortcutClick: range.value is an array, calling handleDateChange");
+            RangeDatePickerDebugLog("handleShortcutClick: range.value is an array, calling handleDateChange");
             handleDateChange(range.value[0], range.value[1]);
         }
-        console.log("handleShortcutClick: ended");
+        RangeDatePickerDebugLog("handleShortcutClick: ended");
     };
 
     function handleOnOverlayEntered() {
-        console.log("handleOnOverlayEntered: started");
+        // this is the additional flow for the windows bug/chrome - very rare - don't touch this
+        RangeDatePickerDebugLog("handleOnOverlayEntered: started");
         const buttons = document.querySelectorAll('div.rs-stack-item button[placement="left"][type="button"][aria-disabled="false"].rs-btn.rs-btn-link.rs-btn-sm');
-        console.log("handleOnOverlayEntered: buttons", buttons);
+        RangeDatePickerDebugLog("handleOnOverlayEntered: buttons", buttons);
         const handleClick = (event: Event) => {
-            console.log("handleOnOverlayEntered: handleClick started");
+            RangeDatePickerDebugLog("handleOnOverlayEntered: handleClick started");
             const buttonText = (event.target as HTMLElement).innerText;
-            console.log("handleOnOverlayEntered: buttonText", buttonText);
+            RangeDatePickerDebugLog("handleOnOverlayEntered: buttonText", buttonText);
             const range = predefinedRanges.find(range => range.label === buttonText);
-            console.log("handleOnOverlayEntered: range", range);
+            RangeDatePickerDebugLog("handleOnOverlayEntered: range", range);
             if (range) {
-                console.log("handleOnOverlayEntered: range found, calling handleDateChange");
+                RangeDatePickerDebugLog("handleOnOverlayEntered: range found, calling handleDateChange");
                 handleDateChange(range.value[0], range.value[1]);
                 const div = document.querySelector('div[data-testid="picker-popup"][role="dialog"][tabindex="-1"].rs-anim-fade.rs-anim-in.rs-picker-popup-daterange.rs-picker-popup.placement-bottom-end');
-                console.log("handleOnOverlayEntered: div", div);
+                RangeDatePickerDebugLog("handleOnOverlayEntered: div", div);
                 if (div) {
-                    console.log("handleOnOverlayEntered: div found, adding hide-animation class");
+                    RangeDatePickerDebugLog("handleOnOverlayEntered: div found, adding hide-animation class");
                     div.classList.add('hide-animation');
                 }
             }
-            console.log("handleOnOverlayEntered: handleClick ended");
+            RangeDatePickerDebugLog("handleOnOverlayEntered: handleClick ended");
             return;
         };
         buttons.forEach(button => button.addEventListener('click', handleClick));
-        console.log("handleOnOverlayEntered: ended");
+        RangeDatePickerDebugLog("handleOnOverlayEntered: ended");
     }
+
+    // this is the additional flow for the windows bug/chrome - very rare - don't touch this
+    useEffect(() => {
+        const button = document.querySelector('span.rs-input-group-addon > button.rs-picker-clean.rs-btn-close');
+        RangeDatePickerDebugLog("handleOnOverlayEnteredCloseDiv: button", button);
+        if (button) {
+            button.addEventListener('click', () => {
+                const div = document.querySelector('div[data-testid="picker-popup"][role="dialog"][tabindex="-1"].rs-anim-fade.rs-anim-in.rs-picker-popup-daterange.rs-picker-popup.placement-bottom-end');
+                RangeDatePickerDebugLog("handleOnOverlayEnteredCloseDiv click: div", div);
+                if (div) {
+                    RangeDatePickerDebugLog("handleOnOverlayEnteredCloseDiv click: div found, adding hide-animation class");
+                    div.classList.add('hide-animation');
+                }
+            });
+        }
+    }, []);
 
     return (
         <DateRangePicker
-            disabled={false} // strange windows bug - leave this here
+            // this is the additional flow for the windows bug/chrome - very rare - don't touch this
+            disabled={false}
             ranges={predefinedRanges}
             placement={"bottomEnd"}
             style={{ width: 200 }}
