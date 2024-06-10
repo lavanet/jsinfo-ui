@@ -3,6 +3,7 @@
 import React from 'react';
 import { Flex, Text, Card, Box } from "@radix-ui/themes";
 import Image from 'next/image';
+import { IsMeaningfulText } from '../common/utils';
 
 interface Provider {
     moniker: string;
@@ -13,10 +14,31 @@ interface ProviderCardProps {
     provider: Provider;
 }
 
-const ProviderCard: React.FC<ProviderCardProps> = ({ provider }) => (
-    <Card>
-        <Flex gap="3" align="center">
-            <Box style={{ paddingLeft: '5px' }}>
+const ProviderCard: React.FC<ProviderCardProps> = ({ provider }) => {
+    const renderProviderInfo = () => {
+        if (IsMeaningfulText(provider.moniker) && IsMeaningfulText(provider.addr)) {
+            return (
+                <>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <div style={{ margin: "-15px" }}>
+                            <Image
+                                src="/user-line.svg"
+                                width={40}
+                                height={40}
+                                alt="user"
+                            />
+                        </div>
+                        <Text as="div" size="2" weight="bold" style={{ marginLeft: '10px', whiteSpace: 'nowrap' }}>
+                            {provider.moniker}
+                        </Text>
+                    </div>
+                    <Text as="div" size="2" color="gray" style={{ whiteSpace: 'nowrap' }}>
+                        {provider.addr}
+                    </Text>
+                </>
+            );
+        } else if (IsMeaningfulText(provider.addr)) {
+            return (
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                     <div style={{ margin: "-15px" }}>
                         <Image
@@ -26,16 +48,29 @@ const ProviderCard: React.FC<ProviderCardProps> = ({ provider }) => (
                             alt="user"
                         />
                     </div>
-                    <Text as="div" size="2" weight="bold" style={{ marginLeft: '10px', whiteSpace: 'nowrap' }}>
-                        {provider.moniker}
+                    <Text as="div" size="2" color="gray" style={{ marginLeft: '10px', whiteSpace: 'nowrap' }}>
+                        {provider.addr}
                     </Text>
                 </div>
-                <Text as="div" size="2" color="gray" style={{ whiteSpace: 'nowrap' }}>
-                    {provider.addr}
+            );
+        } else {
+            return (
+                <Text as="div" size="2" color="red" style={{ marginLeft: '10px', whiteSpace: 'nowrap' }}>
+                    Error: No provider information available
                 </Text>
-            </Box>
-        </Flex>
-    </Card>
-);
+            );
+        }
+    };
+
+    return (
+        <Card>
+            <Flex gap="3" align="center">
+                <Box style={{ paddingLeft: '5px' }}>
+                    {renderProviderInfo()}
+                </Box>
+            </Flex>
+        </Card>
+    );
+};
 
 export default ProviderCard;
