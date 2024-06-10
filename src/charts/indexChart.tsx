@@ -136,6 +136,7 @@ export default function IndexChart() {
 
     rawChartData.forEach((indexChartResponse: IndexChartResponse) => {
         for (const cuRelayItem of indexChartResponse.data) {
+            if (!cuRelayItem.chainId) continue
             if (specIdToDatasetMap[cuRelayItem.chainId] == undefined) {
                 specIdToDatasetMap[cuRelayItem.chainId] = {
                     label: !isRelayOrCuSelected ? cuRelayItem.chainId + " Relays" : cuRelayItem.chainId + " CUs",

@@ -178,6 +178,7 @@ export default function SpecChart({ specid }: SpecChartProps) {
 
     rawChartData.forEach((specChartResponse: SpecChartResponse) => {
         for (const specCuRelayItem of specChartResponse.data) {
+            if (!specCuRelayItem.provider) continue;
             if (specProviderToDatasetMap[specCuRelayItem.provider] == undefined) {
                 specProviderToDatasetMap[specCuRelayItem.provider] = {
                     label: !isRelayOrCuSelected ? specCuRelayItem.provider + " Relays" : specCuRelayItem.provider + " CUs",
