@@ -225,3 +225,16 @@ a:hover {
   font-size: 1.3em;
   color: var(--interactive-element-color);
 }
+
+/* -------- Global vars but used to hide datepicker overlay -------- */
+
+.hide-animation {
+  animation: hide 0.1s forwards;
+}
+
+@keyframes hide {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}

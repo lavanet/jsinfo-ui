@@ -64,23 +64,63 @@ const RangeDatePicker: React.FC<RangeDatePickerProps> = ({ onDateChange, datePic
     const threeMonthsAgoDate = subMonths(now, 3);
     const sixMonthsAgo = format(sixMonthsAgoDate, 'yyyy-MM-dd');
     const currentDate = format(now, 'yyyy-MM-dd');
-
     const handleDateChange = (from: Date, to: Date) => {
-        console.log("Date range changed", onDateChange, from, to);
+        console.log("handleDateChange: started");
+        console.log("handleDateChange: from", from);
+        console.log("handleDateChange: to", to);
         if (onDateChange) {
+            console.log("handleDateChange: calling onDateChange");
             onDateChange(from, to);
         }
+        console.log("handleDateChange: ended");
     };
 
     const handleOk = (date: DateRange, event: React.SyntheticEvent) => {
+        console.log("handleOk: started");
+        console.log("handleOk: date", date);
+        console.log("handleOk: event", event);
+        console.log("handleOk: calling handleDateChange");
         handleDateChange(date[0], date[1]);
+        console.log("handleOk: ended");
     };
 
     const handleShortcutClick = (range: RangeType<DateRange>, event: React.MouseEvent) => {
+        console.log("handleShortcutClick: started");
+        console.log("handleShortcutClick: range", range);
+        console.log("handleShortcutClick: event", event);
         if (Array.isArray(range.value)) {
+            console.log("handleShortcutClick: range.value is an array, calling handleDateChange");
             handleDateChange(range.value[0], range.value[1]);
         }
+        console.log("handleShortcutClick: ended");
     };
+
+    function handleOnOverlayEntered() {
+        console.log("handleOnOverlayEntered: started");
+        const buttons = document.querySelectorAll('div.rs-stack-item button[placement="left"][type="button"][aria-disabled="false"].rs-btn.rs-btn-link.rs-btn-sm');
+        console.log("handleOnOverlayEntered: buttons", buttons);
+        const handleClick = (event: Event) => {
+            console.log("handleOnOverlayEntered: handleClick started");
+            const buttonText = (event.target as HTMLElement).innerText;
+            console.log("handleOnOverlayEntered: buttonText", buttonText);
+            const range = predefinedRanges.find(range => range.label === buttonText);
+            console.log("handleOnOverlayEntered: range", range);
+            if (range) {
+                console.log("handleOnOverlayEntered: range found, calling handleDateChange");
+                handleDateChange(range.value[0], range.value[1]);
+                const div = document.querySelector('div[data-testid="picker-popup"][role="dialog"][tabindex="-1"].rs-anim-fade.rs-anim-in.rs-picker-popup-daterange.rs-picker-popup.placement-bottom-end');
+                console.log("handleOnOverlayEntered: div", div);
+                if (div) {
+                    console.log("handleOnOverlayEntered: div found, adding hide-animation class");
+                    div.classList.add('hide-animation');
+                }
+            }
+            console.log("handleOnOverlayEntered: handleClick ended");
+            return;
+        };
+        buttons.forEach(button => button.addEventListener('click', handleClick));
+        console.log("handleOnOverlayEntered: ended");
+    }
 
     return (
         <DateRangePicker
@@ -99,7 +139,7 @@ const RangeDatePicker: React.FC<RangeDatePickerProps> = ({ onDateChange, datePic
                 datePickerValue.to ? new Date(datePickerValue.to) : now
             ]}
             onShortcutClick={handleShortcutClick}
-
+            onEntered={handleOnOverlayEntered}
         />
     );
 };
