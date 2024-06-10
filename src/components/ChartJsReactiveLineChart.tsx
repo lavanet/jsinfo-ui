@@ -23,8 +23,8 @@ import {
   ScriptableContext,
   PointStyle,
 } from 'chart.js';
-import { DateRange } from '@jsinfo/hooks/useCachedFetch';
-import TextToggle from './TextToggle';
+
+import { CachedFetchDateRange } from '@jsinfo/common/types';
 
 ChartJS.register(
   CategoryScale,
@@ -158,7 +158,7 @@ interface ChartJsReactiveLineChartPropsWithDatePicker {
   options: ChartJsLineChartOptions;
   title?: string;
   onDateChange: (from: Date, to: Date) => void;
-  datePickerValue: DateRange;
+  datePickerValue: CachedFetchDateRange;
   rightControl?: JSX.Element | null;
 }
 
