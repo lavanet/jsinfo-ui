@@ -64,6 +64,10 @@ export default function ProviderChart({ addr }: ProviderChartProps) {
     if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
     if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${addr} chart data`} greyText={`${addr} chart`} />);
 
+    if (!Array.isArray(data.data) || data.data.length === 0) {
+        return RenderInFullPageCard(<ErrorDisplay message={"No data for chart loaded"} />);
+    }
+
     let rawChartData: ProviderChartResponse[] = data.data;
 
     // First, sort the rawChartData
@@ -178,6 +182,7 @@ export default function ProviderChart({ addr }: ProviderChartProps) {
 
     rawChartData.forEach((providerChartResponse: ProviderChartResponse) => {
         for (const specCuRelayItem of providerChartResponse.data) {
+            if (!specCuRelayItem.specId) continue;
             if (specProviderToDatasetMap[specCuRelayItem.specId] == undefined) {
                 specProviderToDatasetMap[specCuRelayItem.specId] = {
                     label: !isRelayOrCuSelected ? specCuRelayItem.specId + " Relays" : specCuRelayItem.specId + " CUs",

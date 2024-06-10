@@ -51,6 +51,10 @@ export default function IndexChart() {
     if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
     if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading chart data`} greyText={`chart`} />);
 
+    if (!Array.isArray(data.data) || data.data.length === 0) {
+        return RenderInFullPageCard(<ErrorDisplay message={"No data for chart loaded"} />);
+    }
+
     let rawChartData: IndexChartResponse[] = data.data;
 
     // First, sort the rawChartData

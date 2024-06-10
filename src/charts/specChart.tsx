@@ -64,6 +64,10 @@ export default function SpecChart({ specid }: SpecChartProps) {
     if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
     if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${specid} chart data`} greyText={`${specid} chart`} />);
 
+    if (!Array.isArray(data.data) || data.data.length === 0) {
+        return RenderInFullPageCard(<ErrorDisplay message={"No data for chart loaded"} />);
+    }
+
     let rawChartData: SpecChartResponse[] = data.data;
 
     // First, sort the rawChartData
