@@ -114,12 +114,14 @@ export default function Spec({ params }: { params: { specid: string } }) {
                 { key: "geolocation", name: "Geolocation" },
                 { key: "addonsAndExtensions", name: "Addons&Extensions" },
                 { key: "stake", name: "Stake" },
-                { key: "cuSum", name: "90-Day CUs" },
-                { key: "relaySum", name: "90-Day Relays" },
+                { key: "cuSum30Days", name: "30-Day CUs" },
+                { key: "relaySum30Days", name: "30-Day Relays" },
+                { key: "cuSum90Days", name: "90-Day CUs" },
+                { key: "relaySum90Days", name: "90-Day Relays" },
               ]}
               dataKey="specStakes"
               useLastUrlPathInKey={true}
-              defaultSortKey="cuSum|desc"
+              defaultSortKey="cuSum90Days|desc"
               tableAndTabName="stakes"
               pkey="provider"
               pkeyUrl="none"
