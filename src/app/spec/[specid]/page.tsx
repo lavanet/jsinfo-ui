@@ -138,10 +138,14 @@ export default function Spec({ params }: { params: { specid: string } }) {
                   GeoLocationToString(data.geolocation),
                 stake: (data) =>
                   FormatNumber(data.stake),
-                cuSum: (data) =>
-                  FormatNumber(data.cuSum),
-                relaySum: (data) =>
-                  FormatNumber(data.relaySum),
+                cuSum30Days: (data) =>
+                  FormatNumber(data.cuSum30Days),
+                relaySum30Days: (data) =>
+                  FormatNumber(data.relaySum30Days),
+                cuSum90Days: (data) =>
+                  FormatNumber(data.cuSum90Days),
+                relaySum90Days: (data) =>
+                  FormatNumber(data.relaySum90Days),
               }}
             />
           </Box>
