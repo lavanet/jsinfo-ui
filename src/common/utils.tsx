@@ -25,6 +25,20 @@ export function GetRestUrl() {
   return url;
 }
 
+export function GetInfoNetwork() {
+  const network = process.env["INFO_NETWORK"] || process.env["NEXT_PUBLIC_INFO_NETWORK"];
+  if (!network) {
+    throw new Error("INFO_NETWORK environment variable is not defined or is an empty string.");
+  }
+  return network;
+}
+
+export function GetPageTitle() {
+  const network = GetInfoNetwork();
+  const capitalizedNetwork = network.charAt(0).toUpperCase() + network.slice(1);
+  return network === "" ? "Lava Info" : `Lava Info | ${capitalizedNetwork}`;
+}
+
 export function GetNestedProperty(obj: Record<string, any>, key: string): any {
   if (key.includes(",")) {
     return key

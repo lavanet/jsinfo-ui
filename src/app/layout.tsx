@@ -13,11 +13,12 @@ import '@radix-ui/themes/styles.css';
 import "./styles/globals.css";
 import "./styles/paginationcontrol.css";
 import "./styles/rsuite.css";
+import { GetPageTitle } from "@jsinfo/common/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Lava Info",
+  title: GetPageTitle(),
   description: "Lava blockchain information index",
 };
 
