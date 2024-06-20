@@ -14,11 +14,14 @@ const StatusCall: React.FC<StatusCallProps> = ({ status }) => {
                 return "green";
             case "frozen":
             case "unhealthy":
+            case "jailed":
                 return "red";
             case "unstaking":
                 return "orange";
             case "inactive":
                 return "grey";
+            case "degredated":
+                return "yellow";
             default:
                 return null;
         }
