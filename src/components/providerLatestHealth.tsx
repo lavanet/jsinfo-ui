@@ -1,6 +1,6 @@
 // src/components/providerLatestHealth.tsx
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, Text, Box, Link } from "@radix-ui/themes";
 import LoadingIndicator from '@jsinfo/components/LoadingIndicator';
 import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
@@ -9,6 +9,7 @@ import { useCachedFetch } from '@jsinfo/hooks/useCachedFetch';
 import { RenderInFullPageCard } from '@jsinfo/common/utils';
 import StatusCall from './StatusCell';
 import Image from 'next/image';
+import TextToggle from './TextToggle';
 
 interface InterfaceStatus {
     status: string;
@@ -108,9 +109,9 @@ const renderCard = (specDict: SpecHealth, spec: string) => {
                 </div>
                 <StatusCall key={hckey(`${spec}_statuscell`)} status={specDict.overallStatus} />
             </div>
-            <div key={hckey(`${spec}_div`)} style={{ flex: 1, marginTop: '-5px', marginBottom: '-5px', display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
+            <div className="spec-container" key={hckey(`${spec}_div`)} style={{ flex: 1, marginTop: '-5px', marginBottom: '-5px', display: 'none', flexDirection: 'row', flexWrap: 'nowrap', justifyContent: 'flex-start', alignItems: 'center', minWidth: 0 }}>
                 {specDict.interfaces && Object.keys(specDict.interfaces!).map((intf, index) => (
-                    <div key={hckey(`${spec}_div`)} style={{ marginRight: index < Object.keys(specDict.interfaces!).length - 1 ? '10px' : '0px', height: '100%' }}>
+                    <div className="spec-item" key={hckey(`${spec}_div`)} style={{ marginRight: index < Object.keys(specDict.interfaces!).length - 1 ? '10px' : '0px', height: '100%', display: 'inline-flex', alignItems: 'center', minWidth: 'min-content' }}>
                         {renderInterface(specDict, spec, intf)}
                     </div>
                 ))}
@@ -136,6 +137,23 @@ const ProviderLatestHealthCards: React.FC<ProviderLatestHealthCardsProps> = ({ l
     }
 
     const { specs } = healthData;
+
+    function toggleVisibility() {
+        // Select all elements with the given class name
+        const elements = document.getElementsByClassName('spec-container');
+
+        // Loop through the selected elements
+        for (let i = 0; i < elements.length; i++) {
+            const element = elements[i] as HTMLElement; // Type assertion to HTMLElement
+            if (element.style.display === 'none') {
+                element.style.display = 'flex';
+            } else {
+                element.style.display = 'none';
+            }
+        }
+    }
+
+    // start hidden
 
     // Static Sort - before card size is known - we assume 3 1 1 (cards infterfaces count) fits best
 
@@ -215,17 +233,24 @@ const ProviderLatestHealthCards: React.FC<ProviderLatestHealthCardsProps> = ({ l
 
     // leaving the react context here on purpose - there is some hook issue on rendering/handleContainerResize is not called
     window.addEventListener('resize', handleContainerResize);
-    for (let i = 1; i <= 6; i++) {
-        setTimeout(handleContainerResize, i * 500);
-    }
 
     return RenderInFullPageCard(
-        <div key={hckey(`div`)} id="healthcontainer" style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'flex-start', margin: "-10px", marginBottom: "-20px", fontSize: '10px', width: '100%', marginLeft: "-22px" }} >
-            {sortedCards.map(({ card }, _) => (
-                <div key={hckey(`div`)} style={{ marginRight: '2px' }}>
-                    {card}
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{ marginBottom: '9px' }}>
+                <Box style={{ float: 'left', marginLeft: '8px', userSelect: 'text' }}>
+                    Latest health metrics for provider specs queried from US/EU regions
+                </Box>
+                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <TextToggle key={hckey(`textoggle`)} openText='Full info' closeText='Basic info' onChange={toggleVisibility} style={{ marginRight: '10px' }} />
                 </div>
-            ))}
+            </div>
+            <div key={hckey(`div`)} id="healthcontainer" style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'flex-start', margin: "-2px", marginBottom: "-15px", fontSize: '10px', width: '100%', marginLeft: "-4px" }}>
+                {sortedCards.map(({ card }, _) => (
+                    <div key={hckey(`div`)} style={{ marginRight: '2px' }}>
+                        {card}
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };
