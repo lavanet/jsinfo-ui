@@ -58,7 +58,11 @@ export default function ProviderChart({ addr }: ProviderChartProps) {
 
     const [dates, setDates] = useState<CachedFetchDateRange>(initialRange);
 
-    const { data, loading, error } = useCachedFetch({ dataKey: "providerCharts", useLastUrlPathInKey: true, apiurlDateRangeQuery: { from: ConvertDateToServerQueryDate(dates.from), to: ConvertDateToServerQueryDate(dates.to) } });
+    const { data, loading, error } = useCachedFetch({
+        dataKey: "providerCharts/" + addr,
+        useLastUrlPathInKey: false,
+        apiurlDateRangeQuery: { from: ConvertDateToServerQueryDate(dates.from), to: ConvertDateToServerQueryDate(dates.to) }
+    });
 
     // Then in your render method or function component
     if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);

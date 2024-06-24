@@ -9,3 +9,6 @@ mainnet_run:
 
 build:
 	NEXT_PUBLIC_REST_URL=12 pnpm build
+
+install:
+	pnpm install

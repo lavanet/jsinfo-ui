@@ -58,7 +58,11 @@ export default function SpecChart({ specid }: SpecChartProps) {
 
     const [dates, setDates] = useState<CachedFetchDateRange>(initialRange);
 
-    const { data, loading, error } = useCachedFetch({ dataKey: "specCharts", useLastUrlPathInKey: true, apiurlDateRangeQuery: { from: ConvertDateToServerQueryDate(dates.from), to: ConvertDateToServerQueryDate(dates.to) } });
+    const { data, loading, error } = useCachedFetch({
+        dataKey: "specCharts/" + specid,
+        useLastUrlPathInKey: false,
+        apiurlDateRangeQuery: { from: ConvertDateToServerQueryDate(dates.from), to: ConvertDateToServerQueryDate(dates.to) }
+    });
 
     // Then in your render method or function component
     if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);

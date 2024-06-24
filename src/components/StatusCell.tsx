@@ -1,12 +1,13 @@
 // src/components/StatusCell.tsx
 
-import React from 'react';
+import React, { CSSProperties } from 'react';
 
 interface StatusCallProps {
     status: string;
+    style?: CSSProperties;
 }
 
-const StatusCall: React.FC<StatusCallProps> = ({ status }) => {
+const StatusCall: React.FC<StatusCallProps> = ({ status, style }) => {
     const statusColor = (status: string) => {
         switch (status.toLowerCase()) {
             case "active":
@@ -20,7 +21,7 @@ const StatusCall: React.FC<StatusCallProps> = ({ status }) => {
                 return "orange";
             case "inactive":
                 return "grey";
-            case "degredated":
+            case "degraded":
                 return "yellow";
             default:
                 return null;
@@ -29,12 +30,27 @@ const StatusCall: React.FC<StatusCallProps> = ({ status }) => {
 
     const color = statusColor(status);
 
+    const capitalizedStatus = status.charAt(0).toUpperCase() + status.slice(1).toLowerCase();
+
+    const iconSrc = color === "green" ? "/circle-green.svg" :
+        color === "grey" ? "/circle-grey.svg" :
+            color === "red" ? "/circle-red.svg" :
+                color === "yellow" ? "/circle-yellow.svg" :
+                    "/circle-grey.svg";
+
     return color ? (
-        <span style={{ color: color }}>
-            {status}
+        <span style={{ color: color, whiteSpace: 'nowrap', ...style }}>
+            <img
+                width={10}
+                height={10}
+                src={iconSrc}
+                alt="status"
+                style={{ display: 'inline-block', verticalAlign: 'middle', paddingBottom: '2px' }}
+            />
+            &nbsp;
+            {capitalizedStatus}
         </span>
-    ) : status;
+    ) : <span style={{ whiteSpace: 'nowrap', ...style }}>{capitalizedStatus}</span>;
 };
 
 export default StatusCall;
-

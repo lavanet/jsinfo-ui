@@ -11,24 +11,11 @@ import {
 } from "@jsinfo/common/convertors";
 
 import { DataKeySortableTableInATabComponent } from "@jsinfo/components/SortTable";
-import {
-  ChartJsLineChartData,
-  ChartJsLineChartDataset,
-  ChartJsLineChartOptions,
-  ChartJsReactiveLineChart,
-  ChartJsSpecIdToDatasetMap
-} from "@jsinfo/components/ChartJsReactiveLineChart";
 import { useCachedFetch } from "@jsinfo/hooks/useCachedFetch";
 import { useEffect } from "react";
 import { usePageContext } from "@jsinfo/context/PageContext";
 
 import { FormatNumber, FormatNumberWithString, RenderInFullPageCard } from '@jsinfo/common/utils';
-
-import {
-  CHARTJS_COLORS,
-  ChartjsSetLastDotHighInChartData,
-  ChartjsSetLastPointToLineInChartOptions,
-} from "@jsinfo/components/ChartJsReactiveLineChart";
 
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
 import CsvButton from "@jsinfo/components/CsvButton";
@@ -40,7 +27,7 @@ import TimeTooltip from '@jsinfo/components/TimeTooltip';
 import StatusCall from '@jsinfo/components/StatusCell';
 import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
 import ProviderChart from '@jsinfo/charts/providerChart';
-
+import ProviderLatestHealthCards from '@jsinfo/components/providerLatestHealth';
 
 export default function Provider({ params }: { params: { lavaid: string } }) {
 
@@ -115,6 +102,8 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
       </Card>
 
       <ProviderChart addr={decodedLavaId} />
+
+      <ProviderLatestHealthCards lavaId={decodedLavaId} />
 
       <Card>
         <JsinfoTabs defaultValue="health"
@@ -208,6 +197,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                 { key: "spec", name: "Spec" },
                 { key: "interface", name: "Interface" },
                 { key: "status", name: "Status" },
+                { key: "region", name: "Region" },
                 { key: "message", name: "Message" },
               ]}
               dataKey="providerHealth"
