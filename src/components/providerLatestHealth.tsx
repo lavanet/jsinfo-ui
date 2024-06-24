@@ -21,18 +21,19 @@ interface SpecInterfaces {
     [region: string]: InterfaceStatus;
 }
 
-interface SpecHealth {
+interface SpecStatusAndInterfaces {
     overallStatus: string;
     interfaces?: {
         [key: string]: SpecInterfaces;
     }
 }
-
+interface HealthSpecRecord {
+    spec: string;
+    specData: SpecStatusAndInterfaces;
+}
 interface HealthData {
     provider: string;
-    specs: {
-        [key: string]: SpecHealth;
-    }
+    specs: HealthSpecRecord[];
 }
 
 interface ProviderLatestHealthCardsProps {
@@ -46,8 +47,8 @@ function hckey(str: string): string {
     return `healthcontainer_${currentNumber}_${str}`;
 }
 
-const renderInterface = (specDict: SpecHealth, spec: string, intf: string) => {
-    const interfaceData = specDict.interfaces![intf];
+const renderInterface = (specStatusAndInterfaces: SpecStatusAndInterfaces, spec: string, intf: string) => {
+    const interfaceData = specStatusAndInterfaces.interfaces![intf];
     if (!interfaceData) return null;
 
     return (
@@ -91,7 +92,7 @@ const renderInterface = (specDict: SpecHealth, spec: string, intf: string) => {
     );
 }
 
-const renderCard = (specDict: SpecHealth, spec: string) => {
+const renderCard = (specStatusAndInterfaces: SpecStatusAndInterfaces, spec: string) => {
     return (
         <Card key={hckey(`${spec}_card`)} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start' }}>
             <div key={hckey(`${spec}_div`)} style={{ marginRight: '5px' }}>
@@ -107,12 +108,12 @@ const renderCard = (specDict: SpecHealth, spec: string) => {
                         {spec}
                     </Link>
                 </div>
-                <StatusCall key={hckey(`${spec}_statuscell`)} status={specDict.overallStatus} />
+                <StatusCall key={hckey(`${spec}_statuscell`)} status={specStatusAndInterfaces.overallStatus} />
             </div>
             <div className="spec-container" key={hckey(`${spec}_div`)} style={{ flex: 1, marginTop: '-5px', marginBottom: '-5px', display: 'none', flexDirection: 'row', flexWrap: 'nowrap', justifyContent: 'flex-start', alignItems: 'center', minWidth: 0 }}>
-                {specDict.interfaces && Object.keys(specDict.interfaces!).map((intf, index) => (
-                    <div className="spec-item" key={hckey(`${spec}_div`)} style={{ marginRight: index < Object.keys(specDict.interfaces!).length - 1 ? '10px' : '0px', height: '100%', display: 'inline-flex', alignItems: 'center', minWidth: 'min-content' }}>
-                        {renderInterface(specDict, spec, intf)}
+                {specStatusAndInterfaces.interfaces && Object.keys(specStatusAndInterfaces.interfaces!).map((intf, index) => (
+                    <div className="spec-item" key={hckey(`${spec}_div`)} style={{ marginRight: index < Object.keys(specStatusAndInterfaces.interfaces!).length - 1 ? '10px' : '0px', height: '100%', display: 'inline-flex', alignItems: 'center', minWidth: 'min-content' }}>
+                        {renderInterface(specStatusAndInterfaces, spec, intf)}
                     </div>
                 ))}
             </div>
@@ -138,62 +139,6 @@ const ProviderLatestHealthCards: React.FC<ProviderLatestHealthCardsProps> = ({ l
 
     const { specs } = healthData;
 
-    function toggleVisibility() {
-        // Select all elements with the given class name
-        const elements = document.getElementsByClassName('spec-container');
-
-        // Loop through the selected elements
-        for (let i = 0; i < elements.length; i++) {
-            const element = elements[i] as HTMLElement; // Type assertion to HTMLElement
-            if (element.style.display === 'none') {
-                element.style.display = 'flex';
-            } else {
-                element.style.display = 'none';
-            }
-        }
-    }
-
-    // start hidden
-
-    // Static Sort - before card size is known - we assume 3 1 1 (cards infterfaces count) fits best
-
-    // Create an array of objects where each object contains the size and the card component
-    const cards = Object.keys(specs).map(spec => {
-        const interfacesCount = specs[spec].interfaces ? Object.keys(specs[spec].interfaces!).length : 0;
-        const card = renderCard(specs[spec], spec);
-        return { interfacesCount, card };
-    });
-
-    // Separate cards into two groups
-    const moreThanThree = cards.filter(({ interfacesCount }) => interfacesCount !== 1);
-    const oneInterface = cards.filter(({ interfacesCount }) => interfacesCount === 1);
-
-    // Sort each group separately
-    moreThanThree.sort((a, b) => b.interfacesCount - a.interfacesCount);
-    oneInterface.sort((a, b) => b.interfacesCount - a.interfacesCount);
-
-    moreThanThree.sort((a, b) => b.interfacesCount - a.interfacesCount);
-    oneInterface.sort((a, b) => b.interfacesCount - a.interfacesCount);
-
-    // Merge the two groups by alternating between them
-    const sortedCards = [];
-    while (moreThanThree.length || oneInterface.length) {
-        const cardMoreThanThree = moreThanThree.shift();
-        const cardOneInterface1 = oneInterface.shift();
-        const cardOneInterface2 = oneInterface.shift();
-
-        if (cardMoreThanThree) {
-            sortedCards.push(cardMoreThanThree);
-        }
-        if (cardOneInterface1) {
-            sortedCards.push(cardOneInterface1);
-        }
-        if (cardOneInterface2) {
-            sortedCards.push(cardOneInterface2);
-        }
-    }
-
-    // Dynamic Sort - when card width is known
     function handleContainerResize() {
         const container = document.getElementById('healthcontainer');
         if (!container) return;
@@ -231,21 +176,46 @@ const ProviderLatestHealthCards: React.FC<ProviderLatestHealthCardsProps> = ({ l
         }
     }
 
-    // leaving the react context here on purpose - there is some hook issue on rendering/handleContainerResize is not called
     window.addEventListener('resize', handleContainerResize);
 
+    function toggleVisibility() {
+        const elements = document.getElementsByClassName('spec-container');
+
+        for (let i = 0; i < elements.length; i++) {
+            const element = elements[i] as HTMLElement;
+            if (element.style.display === 'none') {
+                element.style.display = 'flex';
+            } else {
+                element.style.display = 'none';
+            }
+        }
+
+        handleContainerResize();
+        for (let i = 100; i <= 3000; i += 500) {
+            setTimeout(() => {
+                handleContainerResize();
+            }, i);
+        }
+    }
+
+    const cards = healthData.specs.map(({ spec: specName, specData: SpecStatusAndInterfaces }) => {
+        const interfacesCount = SpecStatusAndInterfaces.interfaces ? Object.keys(SpecStatusAndInterfaces.interfaces).length : 0;
+        const card = renderCard(SpecStatusAndInterfaces, specName);
+        return { interfacesCount, card, spec: specName };
+    });
+
     return RenderInFullPageCard(
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
             <div style={{ marginBottom: '9px' }}>
                 <Box style={{ float: 'left', marginLeft: '8px', userSelect: 'text' }}>
                     Latest health metrics for provider specs queried from US/EU regions
                 </Box>
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    <TextToggle key={hckey(`textoggle`)} openText='Full info' closeText='Basic info' onChange={toggleVisibility} style={{ marginRight: '10px' }} />
+                    <TextToggle key={hckey(`textoggle`)} openText='Full info' closeText='Basic info' onChange={toggleVisibility} style={{ marginRight: '-5px' }} />
                 </div>
             </div>
             <div key={hckey(`div`)} id="healthcontainer" style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'flex-start', margin: "-2px", marginBottom: "-15px", fontSize: '10px', width: '100%', marginLeft: "-4px" }}>
-                {sortedCards.map(({ card }, _) => (
+                {cards.map(({ card }, _) => (
                     <div key={hckey(`div`)} style={{ marginRight: '2px' }}>
                         {card}
                     </div>
