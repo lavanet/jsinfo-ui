@@ -129,7 +129,7 @@ const ProviderLatestHealthCards: React.FC<ProviderLatestHealthCardsProps> = ({ l
     });
 
     if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
-    if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${lavaId} latest health stats`} greyText={`${lavaId} health`} />);
+    if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${lavaId} latest health stats`} greyText={`${lavaId} latest health`} />);
 
     const healthData: HealthData | null = data?.data || null;
 
