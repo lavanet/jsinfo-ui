@@ -27,7 +27,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: GetPageTitle(),
-  description: "Lava blockchain information index",
+  description: "Lava Blockchain Insights Hub",
 };
 
 export const viewport: Viewport = {
