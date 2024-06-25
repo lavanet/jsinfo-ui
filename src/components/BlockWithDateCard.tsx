@@ -13,6 +13,10 @@ interface BlockWithDateCardProps {
     blockData: BlockData;
 }
 
+export const revalidate = 0;
+export const fetchCache = 'force-no-store';
+export const dynamic = 'force-dynamic'
+
 const BlockWithDateCard: FC<BlockWithDateCardProps> = ({ blockData }) => (
     <Card>
         <Flex gap="3" align="center">

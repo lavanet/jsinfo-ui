@@ -4,6 +4,9 @@
 import React, { useEffect, useState } from "react";
 import { Tabs } from "@radix-ui/themes";
 
+export const revalidate = 0;
+export const fetchCache = 'force-no-store';
+export const dynamic = 'force-dynamic'
 interface Tab {
     value: string;
     content: React.ReactNode;

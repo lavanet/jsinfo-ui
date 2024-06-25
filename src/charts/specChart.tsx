@@ -45,6 +45,10 @@ interface SpecChartProps {
     specid: string;
 }
 
+export const revalidate = 0;
+export const fetchCache = 'force-no-store';
+export const dynamic = 'force-dynamic'
+
 export default function SpecChart({ specid }: SpecChartProps) {
 
     const [isRelayOrCuSelected, setIsRelayOrCuSelected] = useState(false);

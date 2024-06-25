@@ -3,6 +3,9 @@
 import React from 'react';
 import Toggle from 'rsuite/Toggle';
 
+export const revalidate = 0;
+export const fetchCache = 'force-no-store';
+export const dynamic = 'force-dynamic'
 interface TextToggleProps {
     openText: string;
     closeText: string;

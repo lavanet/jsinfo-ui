@@ -45,6 +45,10 @@ interface ProviderChartProps {
     addr: string;
 }
 
+export const revalidate = 0;
+export const fetchCache = 'force-no-store';
+export const dynamic = 'force-dynamic'
+
 export default function ProviderChart({ addr }: ProviderChartProps) {
 
     const [isRelayOrCuSelected, setIsRelayOrCuSelected] = useState(false);

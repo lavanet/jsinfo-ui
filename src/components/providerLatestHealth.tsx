@@ -11,6 +11,9 @@ import StatusCall from './StatusCell';
 import Image from 'next/image';
 import TextToggle from './TextToggle';
 
+export const revalidate = 0;
+export const fetchCache = 'force-no-store';
+export const dynamic = 'force-dynamic'
 interface InterfaceStatus {
     status: string;
     timestamp: string;

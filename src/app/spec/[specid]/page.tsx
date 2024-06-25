@@ -21,6 +21,10 @@ import CsvButton from '@jsinfo/components/CsvButton';
 import SpecChart from '@jsinfo/charts/specChart';
 import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
 
+export const revalidate = 0;
+export const fetchCache = 'force-no-store';
+export const dynamic = 'force-dynamic'
+
 export default function Spec({ params }: { params: { specid: string } }) {
 
   let decodedSpecId = decodeURIComponent(params.specid);

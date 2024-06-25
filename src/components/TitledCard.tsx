@@ -4,6 +4,9 @@ import React from 'react';
 import { Card, Text } from "@radix-ui/themes";
 import { FormatNumberWithString } from '@jsinfo/common/utils';
 
+export const revalidate = 0;
+export const fetchCache = 'force-no-store';
+export const dynamic = 'force-dynamic'
 interface TitledCardProps {
     title: string;
     value: number | string;

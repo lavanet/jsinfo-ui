@@ -1,6 +1,10 @@
 // src/components/ChartJsReactiveLineChart.tsx
 "use client"
 
+export const revalidate = 0;
+export const fetchCache = 'force-no-store';
+export const dynamic = 'force-dynamic'
+
 import React, { useRef, useEffect, RefObject } from 'react';
 import { Box, Card } from '@radix-ui/themes';
 import { Line } from 'react-chartjs-2';

@@ -15,6 +15,10 @@ interface ProviderCardProps {
     provider: Provider;
 }
 
+export const revalidate = 0;
+export const fetchCache = 'force-no-store';
+export const dynamic = 'force-dynamic'
+
 const ProviderCard: React.FC<ProviderCardProps> = ({ provider }) => {
     const renderProviderInfo = () => {
         if (IsMeaningfulText(provider.moniker) && IsMeaningfulText(provider.addr)) {
