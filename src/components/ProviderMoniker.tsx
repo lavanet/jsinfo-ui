@@ -7,18 +7,28 @@ interface ProviderMonikerProps {
     moniker: string;
 }
 
+const monikerUrls: { [key: string]: string } = {
+    'lava-donkamote': 'https://donkamote.xyz/blockchain-explorers', // https://info.lavanet.xyz/provider/lava@1w39wm9tp6nsy7tsxlkfwy98f7p6wsq54vx4f23#health
+    'GateOmega': 'https://gateomega.com/#networks', // https://info.lavanet.xyz/provider/lava@1jqwgsmrcrmhncvn7u50sr5yag8sdmg7hfx3l74#health
+    'infrasingularity': 'https://infra-is-ui.vercel.app', // https://info.lavanet.xyz/provider/lava@1rzmky2xqdusw8wr0fqplfs7qqudxj7al4zhg0l#health
+    // 'SGTstake': 'https://sgtstake.com/', 
+    // '01node': 'https://x.com/01node',
+    // 'nodes.guru': 'https://nodes.guru/', 
+    // 'ChainLayer': 'https://x.com/chainlayerio', 
+    // 'Stake Village': 'https://stakevillage.net/en/',
+    // 'itrocket': 'https://itrocket.net/',
+    // 'CryptoSailors🐬': 'https://x.com/crypto_sailors',
+    // 'All That Node': 'https://www.allthatnode.com/',
+    // 'Brightlystake': 'https://x.com/brightlystake?lang=en',
+    // 'Nodefleet.org': 'https://nodefleet.org/',
+    // 'cryptonode.tools': 'https://cryptonode.tools/', 
+};
+
 const ProviderMoniker: React.FC<ProviderMonikerProps> = ({ moniker }) => {
-    if (moniker === 'lava-donkamote') {
-        // https://info.lavanet.xyz/provider/lava@1w39wm9tp6nsy7tsxlkfwy98f7p6wsq54vx4f23#health
+    const url = monikerUrls[moniker];
+    if (url) {
         return (
-            <Link href="https://donkamote.xyz/blockchain-explorers" target="_blank" rel="noopener noreferrer">
-                {moniker}
-            </Link>
-        );
-    } else if (moniker === 'GateOmega') {
-        // https://info.lavanet.xyz/provider/lava@1jqwgsmrcrmhncvn7u50sr5yag8sdmg7hfx3l74#health
-        return (
-            <Link href="https://gateomega.com/#networks" target="_blank" rel="noopener noreferrer">
+            <Link href={url} target="_blank" rel="noopener noreferrer">
                 {moniker}
             </Link>
         );
