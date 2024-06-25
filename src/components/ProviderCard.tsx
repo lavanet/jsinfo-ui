@@ -4,6 +4,7 @@ import React from 'react';
 import { Flex, Text, Card, Box } from "@radix-ui/themes";
 import Image from 'next/image';
 import { IsMeaningfulText } from '../common/utils';
+import ProviderMoniker from './ProviderMoniker';
 
 interface Provider {
     moniker: string;
@@ -29,7 +30,7 @@ const ProviderCard: React.FC<ProviderCardProps> = ({ provider }) => {
                             />
                         </div>
                         <Text as="div" size="2" weight="bold" style={{ marginLeft: '10px', whiteSpace: 'nowrap' }}>
-                            {provider.moniker}
+                            <ProviderMoniker moniker={provider.moniker} />
                         </Text>
                     </div>
                     <Text as="div" size="2" color="gray" style={{ whiteSpace: 'nowrap' }}>
