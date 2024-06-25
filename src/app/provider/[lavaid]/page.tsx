@@ -29,7 +29,7 @@ import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
 import ProviderChart from '@jsinfo/charts/providerChart';
 import ProviderLatestHealthCards from '@jsinfo/components/ProviderLatestHealth';
 
-export const revalidate = 0;
+
 export const fetchCache = 'force-no-store';
 export const dynamic = 'force-dynamic'
 

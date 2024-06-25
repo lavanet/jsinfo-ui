@@ -19,7 +19,7 @@ import { GetPageTitle } from "@jsinfo/common/utils";
 // export const fetchCache = 'only-cache';
 // export const dynamic = 'auto';
 
-export const revalidate = 0;
+
 export const fetchCache = 'force-no-store';
 export const dynamic = 'force-dynamic'
 

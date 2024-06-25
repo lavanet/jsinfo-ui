@@ -19,7 +19,7 @@ import CsvButton from '@jsinfo/components/CsvButton';
 import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
 import { IsMeaningfulText, RenderInFullPageCard } from '@jsinfo/common/utils';
 
-export const revalidate = 0;
+
 export const fetchCache = 'force-no-store';
 export const dynamic = 'force-dynamic'
 

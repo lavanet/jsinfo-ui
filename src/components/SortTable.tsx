@@ -15,7 +15,7 @@ import { ErrorDisplay } from './ErrorDisplay';
 
 const JSINFO_QUERY_DEFAULT_ITEMS_PER_PAGE = 20
 
-export const revalidate = 0;
+
 export const fetchCache = 'force-no-store';
 export const dynamic = 'force-dynamic'
 

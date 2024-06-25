@@ -27,7 +27,7 @@ import { FormatNumber, RenderInFullPageCard } from "@jsinfo/common/utils";
 import IndexChart from "@jsinfo/charts/indexChart";
 import { ErrorDisplay } from "@jsinfo/components/ErrorDisplay";
 
-export const revalidate = 0;
+
 export const fetchCache = 'force-no-store';
 export const dynamic = 'force-dynamic'
 
