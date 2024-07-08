@@ -46,8 +46,8 @@ interface ProviderChartProps {
 }
 
 
-export const fetchCache = 'force-no-store';
-export const dynamic = 'force-dynamic'
+// export const fetchCache = 'force-no-store';
+// export const dynamic = 'force-dynamic'
 
 export default function ProviderChart({ addr }: ProviderChartProps) {
 

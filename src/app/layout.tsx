@@ -20,8 +20,8 @@ import { GetPageTitle } from "@jsinfo/common/utils";
 // export const dynamic = 'auto';
 
 
-export const fetchCache = 'force-no-store';
-export const dynamic = 'force-dynamic'
+// export const fetchCache = 'force-no-store';
+// export const dynamic = 'force-dynamic'
 
 const inter = Inter({ subsets: ["latin"] });
 

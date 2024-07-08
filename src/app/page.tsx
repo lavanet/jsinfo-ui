@@ -28,8 +28,8 @@ import IndexChart from "@jsinfo/charts/indexChart";
 import { ErrorDisplay } from "@jsinfo/components/ErrorDisplay";
 
 
-export const fetchCache = 'force-no-store';
-export const dynamic = 'force-dynamic'
+// export const fetchCache = 'force-no-store';
+// export const dynamic = 'force-dynamic'
 
 export default function Home() {
 
