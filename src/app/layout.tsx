@@ -15,13 +15,6 @@ import "./styles/paginationcontrol.css";
 import "./styles/rsuite.css";
 import { GetPageTitle } from "@jsinfo/common/utils";
 
-// export const revalidate = 60;
-// export const fetchCache = 'only-cache';
-// export const dynamic = 'auto';
-
-
-
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
