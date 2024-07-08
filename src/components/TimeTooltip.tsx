@@ -2,9 +2,6 @@
 
 import { FormatTimeDifference } from '../common/utils';
 
-
-export const fetchCache = 'force-no-store';
-export const dynamic = 'force-dynamic'
 interface TimeTooltipProps {
     datetime: Date | string;
 }

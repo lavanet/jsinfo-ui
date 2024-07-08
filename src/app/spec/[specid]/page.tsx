@@ -22,8 +22,7 @@ import SpecChart from '@jsinfo/charts/specChart';
 import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
 
 
-export const fetchCache = 'force-no-store';
-export const dynamic = 'force-dynamic'
+
 
 export default function Spec({ params }: { params: { specid: string } }) {
 

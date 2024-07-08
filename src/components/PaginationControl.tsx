@@ -10,8 +10,7 @@ interface PaginationControlProps {
 }
 
 
-export const fetchCache = 'force-no-store';
-export const dynamic = 'force-dynamic'
+
 
 function PaginationControl({ sortAndPaginationConfig, setPage }: PaginationControlProps) {
 

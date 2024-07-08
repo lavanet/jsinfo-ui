@@ -12,9 +12,9 @@ const nextConfig = {
       },
     ],
   },
-  onDemandEntries: {
-    maxInactiveAge: 1000,
-  },
+  // onDemandEntries: {
+  //   maxInactiveAge: 1000,
+  // },
   env: {
     REST_URL: process.env.REST_URL,
   },

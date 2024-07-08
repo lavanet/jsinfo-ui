@@ -29,7 +29,6 @@ type FetchState = {
     errorCount: React.MutableRefObject<number>,
     isFetching: React.MutableRefObject<boolean>,
     wasOneFetchDone: React.MutableRefObject<boolean>,
-    dataLastUpdatedDate: React.MutableRefObject<Date | null>,
     setData: React.Dispatch<React.SetStateAction<any>>,
     setLoading: React.Dispatch<React.SetStateAction<boolean>>,
     setError: React.Dispatch<React.SetStateAction<string | null>>,
@@ -61,7 +60,6 @@ const handleData = async (data: any, state: FetchState): Promise<void> => {
     state.wasOneFetchDone.current = true;
     state.setData(data);
     state.setLoading(false);
-    state.dataLastUpdatedDate.current = await fetchLastUpdatedDate(state);
 };
 
 const handleError = async (error: Error, state: FetchState): Promise<void> => {
@@ -69,6 +67,35 @@ const handleError = async (error: Error, state: FetchState): Promise<void> => {
     state.setError(error.message);
     state.setLoading(false);
 };
+
+class LocalMemoryCache {
+    private cache: { [key: string]: { value: any, expiry: number, timeoutId: NodeJS.Timeout } } = {};
+
+    get(key: string) {
+        const cacheEntry = this.cache[key];
+        if (!cacheEntry) return null;
+
+        const currentTime = Date.now();
+        if (currentTime > cacheEntry.expiry) {
+            clearTimeout(cacheEntry.timeoutId);
+            delete this.cache[key];
+            return null;
+        }
+
+        return cacheEntry.value;
+    }
+
+    set(key: string, value: any) {
+        const expiryTime = Math.floor(Math.random() * (35 - 25 + 1)) + 25; // Generate a random number between 25 and 35
+        const expiry = Date.now() + expiryTime * 1000;
+        const timeoutId = setTimeout(() => {
+            delete this.cache[key];
+        }, expiryTime * 1000);
+        this.cache[key] = { value, expiry, timeoutId };
+    }
+}
+
+const localmemcache = new LocalMemoryCache();
 
 const fetchDataWithRetry = async (state: FetchState): Promise<void> => {
     if (!isFetchState(state)) {
@@ -79,6 +106,16 @@ const fetchDataWithRetry = async (state: FetchState): Promise<void> => {
     if (!state.apiurl || state.apiurl === "undefined" || state.apiurl === "null" || state.apiurl === "") {
         console.error(`fetchDataWithRetry invalid arguments: state.apiurl=${state.apiurl}, state=${state}}`);
         throw new Error(`fetchDataWithRetry invalid arguments: state.apiurl=${state.apiurl}`);
+    }
+
+    const cacheKey = state.apiurl + state.apiurlPaginationQuery + JSON.stringify(state.apiurlDateRangeQuery);
+
+    const cachedData = localmemcache.get(cacheKey);
+
+    if (cachedData) {
+        state.setData(cachedData);
+        state.setLoading(false);
+        return;
     }
 
     try {
@@ -115,6 +152,7 @@ const fetchDataWithRetry = async (state: FetchState): Promise<void> => {
         } else if (!data || Object.keys(data).length === 0) {
             await handleEmptyData(state);
         } else {
+            localmemcache.set(cacheKey, data);
             await handleData(data, state);
         }
 
@@ -138,42 +176,6 @@ const fetchDataWithRetry = async (state: FetchState): Promise<void> => {
 
     }
 };
-
-async function fetchLastUpdatedDate(state: FetchState): Promise<Date | null> {
-    if (state.apiurlDateRangeQuery) return null;
-
-    if (!isFetchState(state)) {
-        console.error(`fetchLastUpdatedDate invalid state type. Type: ${typeof state}, Value: ${JSON.stringify(state)}`);
-        throw new Error(`fetchLastUpdatedDate invalid arguments: state=${state}`);
-    }
-
-    if (!state.apiurl || state.apiurl === "undefined" || state.apiurl === "null" || state.apiurl === "") {
-        console.error(`fetchLastUpdatedDate invalid arguments: state.apiurl=${state.apiurl}, state=${state}}`);
-        throw new Error(`fetchLastUpdatedDate invalid arguments: state.apiurl=${state.apiurl}`);
-    }
-
-    try {
-
-        const res = await axiosInstance.get("last-updated/" + state.apiurl, {
-            timeout: 5000,
-            params: state.apiurlPaginationQuery ? { pagination: state.apiurlPaginationQuery } : {}
-        });
-
-        const lastUpdated = res.data && res.data['X-Data-Last-Updated'];
-
-        if (!lastUpdated) {
-            return null;
-        }
-
-        const lastUpdatedDate = new Date(lastUpdated);
-        console.log('Last updated:', lastUpdatedDate);
-
-        return lastUpdatedDate;
-    } catch (error) {
-        console.error('Error fetching last updated date:', error);
-        return null;
-    }
-}
 
 async function fetchItemCount(apiurl: string, updateItemCount: (count: number) => void, retryCount: number = 0): Promise<void> {
     const maxRetries = 3;
@@ -444,7 +446,6 @@ export function useCachedFetch({
     const errorCount = useRef<number>(0);
     const isFetching = useRef<boolean>(false);
     const wasOneFetchDone = useRef<boolean>(false);
-    const dataLastUpdatedDate = useRef<Date | null>(null);
 
     const state: FetchState = {
         apiurl: null,
@@ -455,7 +456,6 @@ export function useCachedFetch({
         errorCount: errorCount,
         isFetching: isFetching,
         wasOneFetchDone: wasOneFetchDone,
-        dataLastUpdatedDate: dataLastUpdatedDate,
         setData: setData,
         setLoading: setLoading,
         setError: setError,
@@ -471,32 +471,8 @@ export function useCachedFetch({
 
         fetchDataWithRetryWrapper();
 
-        const intervalId = setInterval(async () => {
-            if (!state.wasOneFetchDone.current || state.dataLastUpdatedDate.current == null) {
-                return;
-            }
-            try {
-                const lastUpdated = await fetchLastUpdatedDate(state);
-
-                if (!lastUpdated) {
-                    if (intervalId) clearInterval(intervalId);
-                    return;
-                }
-
-                if (lastUpdated > state.dataLastUpdatedDate.current) {
-                    console.log('Background fetch:: New data available, fetching');
-                    fetchDataWithRetryWrapper();
-                }
-            } catch (error) {
-                console.error("Backgroun fetch error::", error);
-                if (intervalId) clearInterval(intervalId);
-            }
-        }, 60000); // 60000 milliseconds = 1 minute
-
-        // Clear the interval when the component is unmounted
-        return () => clearInterval(intervalId);
-
     }, [dataKey, fetchDataWithRetry, cachedPaginationFetcher, apiurlDateRangeQuery, useLastUrlPathInKey]);
 
     return { data, loading, error };
 }
+

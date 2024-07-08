@@ -27,8 +27,7 @@ import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
 import { RenderInFullPageCard } from '@jsinfo/common/utils';
 
 
-export const fetchCache = 'force-no-store';
-export const dynamic = 'force-dynamic'
+
 
 export default function Consumer({ params }: { params: { lavaid: string } }) {
 

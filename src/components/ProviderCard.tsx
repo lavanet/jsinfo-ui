@@ -16,8 +16,7 @@ interface ProviderCardProps {
 }
 
 
-export const fetchCache = 'force-no-store';
-export const dynamic = 'force-dynamic'
+
 
 const ProviderCard: React.FC<ProviderCardProps> = ({ provider }) => {
     const renderProviderInfo = () => {
