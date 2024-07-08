@@ -46,8 +46,7 @@ interface SpecChartProps {
 }
 
 
-export const fetchCache = 'force-no-store';
-export const dynamic = 'force-dynamic'
+
 
 export default function SpecChart({ specid }: SpecChartProps) {
 

@@ -16,8 +16,7 @@ import { ErrorDisplay } from './ErrorDisplay';
 const JSINFO_QUERY_DEFAULT_ITEMS_PER_PAGE = 20
 
 
-export const fetchCache = 'force-no-store';
-export const dynamic = 'force-dynamic'
+
 
 const useSortableData = (items: any[], defaultSortKey: string): SortableData => {
   if (!Array.isArray(items)) {
