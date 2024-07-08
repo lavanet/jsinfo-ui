@@ -12,3 +12,6 @@ build:
 
 install:
 	pnpm install
+
+reinstall:
+	rm -rf node_modules pnpm-lock.yaml && pnpm install

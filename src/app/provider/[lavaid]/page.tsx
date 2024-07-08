@@ -30,8 +30,8 @@ import ProviderChart from '@jsinfo/charts/providerChart';
 import ProviderLatestHealthCards from '@jsinfo/components/ProviderLatestHealth';
 
 
-export const fetchCache = 'force-no-store';
-export const dynamic = 'force-dynamic'
+// export const fetchCache = 'force-no-store';
+// export const dynamic = 'force-dynamic'
 
 export default function Provider({ params }: { params: { lavaid: string } }) {
 
