@@ -14,8 +14,6 @@ import axiosRetry from 'axios-retry';
 import { GetRestUrl } from '@jsinfo/common/utils';
 import { CachedFetchDateRange, SortAndPaginationConfig } from '@jsinfo/common/types.jsx';
 
-const AXIOS_TIMEOUT = 100000
-
 const axiosInstance = axios.create({
     baseURL: GetRestUrl(),
 });
@@ -70,6 +68,35 @@ const handleError = async (error: Error, state: FetchState): Promise<void> => {
     state.setLoading(false);
 };
 
+class LocalMemoryCache {
+    private cache: { [key: string]: { value: any, expiry: number, timeoutId: NodeJS.Timeout } } = {};
+
+    get(key: string) {
+        const cacheEntry = this.cache[key];
+        if (!cacheEntry) return null;
+
+        const currentTime = Date.now();
+        if (currentTime > cacheEntry.expiry) {
+            clearTimeout(cacheEntry.timeoutId);
+            delete this.cache[key];
+            return null;
+        }
+
+        return cacheEntry.value;
+    }
+
+    set(key: string, value: any) {
+        const expiryTime = Math.floor(Math.random() * (35 - 25 + 1)) + 25; // Generate a random number between 25 and 35
+        const expiry = Date.now() + expiryTime * 1000;
+        const timeoutId = setTimeout(() => {
+            delete this.cache[key];
+        }, expiryTime * 1000);
+        this.cache[key] = { value, expiry, timeoutId };
+    }
+}
+
+const localmemcache = new LocalMemoryCache();
+
 const fetchDataWithRetry = async (state: FetchState): Promise<void> => {
     if (!isFetchState(state)) {
         console.error(`fetchDataWithRetry invalid state type. Type: ${typeof state}, Value: ${JSON.stringify(state)}`);
@@ -79,6 +106,16 @@ const fetchDataWithRetry = async (state: FetchState): Promise<void> => {
     if (!state.apiurl || state.apiurl === "undefined" || state.apiurl === "null" || state.apiurl === "") {
         console.error(`fetchDataWithRetry invalid arguments: state.apiurl=${state.apiurl}, state=${state}}`);
         throw new Error(`fetchDataWithRetry invalid arguments: state.apiurl=${state.apiurl}`);
+    }
+
+    const cacheKey = state.apiurl + state.apiurlPaginationQuery + JSON.stringify(state.apiurlDateRangeQuery);
+
+    const cachedData = localmemcache.get(cacheKey);
+
+    if (cachedData) {
+        state.setData(cachedData);
+        state.setLoading(false);
+        return;
     }
 
     try {
@@ -102,7 +139,7 @@ const fetchDataWithRetry = async (state: FetchState): Promise<void> => {
         }
 
         const res = await axiosInstance.get(state.apiurl, {
-            timeout: AXIOS_TIMEOUT,
+            timeout: 5000,
             params
         });
 
@@ -115,6 +152,7 @@ const fetchDataWithRetry = async (state: FetchState): Promise<void> => {
         } else if (!data || Object.keys(data).length === 0) {
             await handleEmptyData(state);
         } else {
+            localmemcache.set(cacheKey, data);
             await handleData(data, state);
         }
 
@@ -150,7 +188,7 @@ async function fetchItemCount(apiurl: string, updateItemCount: (count: number) =
     while (retries < maxRetries) {
         try {
             const res = await axiosInstance.get("item-count/" + apiurl, {
-                timeout: AXIOS_TIMEOUT,
+                timeout: 5000,
             });
 
             const itemCount = res.data && res.data['itemCount'];
@@ -437,3 +475,4 @@ export function useCachedFetch({
 
     return { data, loading, error };
 }
+

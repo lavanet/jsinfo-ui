@@ -3,8 +3,6 @@
 import React from 'react';
 import Toggle from 'rsuite/Toggle';
 
-
-
 interface TextToggleProps {
     openText: string;
     closeText: string;

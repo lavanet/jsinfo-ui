@@ -2,8 +2,6 @@
 
 import React, { CSSProperties } from 'react';
 
-
-
 interface StatusCallProps {
     status: string;
     style?: CSSProperties;

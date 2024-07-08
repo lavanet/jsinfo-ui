@@ -2,8 +2,6 @@
 
 import { FormatTimeDifference } from '../common/utils';
 
-
-
 interface TimeTooltipProps {
     datetime: Date | string;
 }
