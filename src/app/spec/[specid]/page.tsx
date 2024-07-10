@@ -4,24 +4,69 @@
 import Link from 'next/link'
 import { Flex, Card, Box } from "@radix-ui/themes";
 import { useEffect } from "react";
-
 import { useCachedFetch } from "@jsinfo/hooks/useCachedFetch";
-
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/SortTable";
+import { SortableTableInATabComponent } from "@jsinfo/components/SortTable";
 import { StatusToString, GeoLocationToString } from "@jsinfo/common/convertors";
 import { usePageContext } from "@jsinfo/context/PageContext";
-
 import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
 import TitledCard from "@jsinfo/components/TitledCard";
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
 import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
 import { FormatNumber, IsMeaningfulText, RenderInFullPageCard } from '@jsinfo/common/utils';
 import StatusCall from '@jsinfo/components/StatusCell';
-import CsvButton from '@jsinfo/components/CsvButton';
 import SpecChart from '@jsinfo/charts/specChart';
 import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
 
+interface SpecStakesTableProps {
+  specid: string
+}
 
+const SpecStakesTable: React.FC<SpecStakesTableProps> = ({ specid }) => {
+  const { data, loading, error } = useCachedFetch({
+    dataKey: "specStakes",
+    useLastUrlPathInKey: true,
+  });
+
+  if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
+  if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${specid} stake data`} greyText={`${specid} stake`} />);
+
+  return (
+    <Box>
+      <SortableTableInATabComponent
+        columns={[
+          { key: "provider", name: "Provider" },
+          { key: "status", name: "Status" },
+          { key: "geolocation", name: "Geolocation" },
+          { key: "addonsAndExtensions", name: "Addons&Extensions" },
+          { key: "stake", name: "Stake" },
+          { key: "cuSum30Days", name: "30-Day CUs" },
+          { key: "relaySum30Days", name: "30-Day Relays" },
+          { key: "cuSum90Days", name: "90-Day CUs" },
+          { key: "relaySum90Days", name: "90-Day Relays" },
+        ]}
+        data={data.data}
+        defaultSortKey="cuSum90Days|desc"
+        tableAndTabName="stakes"
+        pkey="provider"
+        pkeyUrl="none"
+        rowFormatters={{
+          provider: (data) => (
+            <Link href={`/provider/${data.provider}`}>
+              {IsMeaningfulText(data.moniker) ? data.moniker : data.provider}
+            </Link>
+          ),
+          status: (data) => <StatusCall status={StatusToString(data.status)} />,
+          geolocation: (data) => GeoLocationToString(data.geolocation),
+          stake: (data) => FormatNumber(data.stake),
+          cuSum30Days: (data) => FormatNumber(data.cuSum30Days),
+          relaySum30Days: (data) => FormatNumber(data.relaySum30Days),
+          cuSum90Days: (data) => FormatNumber(data.cuSum90Days),
+          relaySum90Days: (data) => FormatNumber(data.relaySum90Days),
+        }}
+      />
+    </Box>
+  );
+};
 
 
 export default function Spec({ params }: { params: { specid: string } }) {
@@ -99,58 +144,12 @@ export default function Spec({ params }: { params: { specid: string } }) {
           tabs={[
             {
               value: "stakes",
-              content: (
-                <CsvButton
-                  csvDownloadLink={`specStakesCsv/${specId}`}
-                >
-                  Stakes
-                </CsvButton>
-              ),
+              content: "Stakes",
             },
           ]}
         >
           <Box>
-            <DataKeySortableTableInATabComponent
-              columns={[
-                { key: "provider", name: "Provider" },
-                { key: "status", name: "Status" },
-                { key: "geolocation", name: "Geolocation" },
-                { key: "addonsAndExtensions", name: "Addons&Extensions" },
-                { key: "stake", name: "Stake" },
-                { key: "cuSum30Days", name: "30-Day CUs" },
-                { key: "relaySum30Days", name: "30-Day Relays" },
-                { key: "cuSum90Days", name: "90-Day CUs" },
-                { key: "relaySum90Days", name: "90-Day Relays" },
-              ]}
-              dataKey="specStakes"
-              useLastUrlPathInKey={true}
-              defaultSortKey="cuSum90Days|desc"
-              tableAndTabName="stakes"
-              pkey="provider"
-              pkeyUrl="none"
-              rowFormatters={{
-                provider: (data) => (
-                  <Link href={`/provider/${data.provider}`}>
-                    {IsMeaningfulText(data.moniker)
-                      ? data.moniker
-                      : data.provider}
-                  </Link>
-                ),
-                status: (data) => <StatusCall status={StatusToString(data.status)} />,
-                geolocation: (data) =>
-                  GeoLocationToString(data.geolocation),
-                stake: (data) =>
-                  FormatNumber(data.stake),
-                cuSum30Days: (data) =>
-                  FormatNumber(data.cuSum30Days),
-                relaySum30Days: (data) =>
-                  FormatNumber(data.relaySum30Days),
-                cuSum90Days: (data) =>
-                  FormatNumber(data.cuSum90Days),
-                relaySum90Days: (data) =>
-                  FormatNumber(data.relaySum90Days),
-              }}
-            />
+            <SpecStakesTable specid={specId} />
           </Box>
         </JsinfoTabs>
       </Card>

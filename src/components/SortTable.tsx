@@ -15,9 +15,6 @@ import { ErrorDisplay } from './ErrorDisplay';
 
 const JSINFO_QUERY_DEFAULT_ITEMS_PER_PAGE = 20
 
-
-
-
 const useSortableData = (items: any[], defaultSortKey: string): SortableData => {
   if (!Array.isArray(items)) {
     console.error('Invalid type for items. Expected array, received', items);

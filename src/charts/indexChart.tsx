@@ -32,9 +32,6 @@ type IndexChartResponse = {
     data: CuRelayItem[];
 };
 
-
-
-
 export default function IndexChart() {
 
     const [isRelayOrCuSelected, setIsRelayOrCuSelected] = useState(false);

@@ -14,6 +14,8 @@ import axiosRetry from 'axios-retry';
 import { GetRestUrl } from '@jsinfo/common/utils';
 import { CachedFetchDateRange, SortAndPaginationConfig } from '@jsinfo/common/types.jsx';
 
+const AXIOS_TIMEOUT = 20000;
+
 const axiosInstance = axios.create({
     baseURL: GetRestUrl(),
 });
@@ -139,7 +141,7 @@ const fetchDataWithRetry = async (state: FetchState): Promise<void> => {
         }
 
         const res = await axiosInstance.get(state.apiurl, {
-            timeout: 5000,
+            timeout: AXIOS_TIMEOUT,
             params
         });
 
@@ -188,7 +190,7 @@ async function fetchItemCount(apiurl: string, updateItemCount: (count: number) =
     while (retries < maxRetries) {
         try {
             const res = await axiosInstance.get("item-count/" + apiurl, {
-                timeout: 5000,
+                timeout: AXIOS_TIMEOUT,
             });
 
             const itemCount = res.data && res.data['itemCount'];
@@ -362,6 +364,9 @@ export class CachedPaginationFetcher {
         useEffect(() => {
             const fetchTotalItemCount = async () => {
                 const apiurl = getApiUrlFromDataKey(dataKey, useLastUrlPathInKey);
+                // default to 5000
+                // TODO: come back here
+                setTotalItemCountCallback(4999);
                 await fetchItemCount(apiurl, setTotalItemCountCallback);
             };
             fetchTotalItemCount();
