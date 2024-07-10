@@ -95,7 +95,7 @@ export default function Events() {
               ]}
               dataKey="eventsEvents"
               useLastUrlPathInKey={false}
-              defaultSortKey="datetime|desc"
+              defaultSortKey="id|desc"
               tableAndTabName="events"
               pkey="id"
               pkeyUrl="none"
@@ -183,7 +183,7 @@ export default function Events() {
               ]}
               dataKey="eventsRewards"
               useLastUrlPathInKey={false}
-              defaultSortKey="datetime|desc"
+              defaultSortKey="id|desc"
               tableAndTabName="rewards"
               pkey="id"
               pkeyUrl="none"
@@ -240,7 +240,7 @@ export default function Events() {
               ]}
               dataKey="eventsReports"
               useLastUrlPathInKey={false}
-              defaultSortKey="datetime|desc"
+              defaultSortKey="id|desc"
               tableAndTabName="reports"
               pkey="provider,blockId"
               pkeyUrl="none"

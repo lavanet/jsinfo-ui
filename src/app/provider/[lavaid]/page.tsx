@@ -205,7 +205,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
               ]}
               dataKey="providerHealth"
               useLastUrlPathInKey={true}
-              defaultSortKey="timestamp|desc"
+              defaultSortKey="id|desc"
               tableAndTabName="health"
               pkey="id"
               pkeyUrl="none"
@@ -226,7 +226,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
               ]}
               dataKey="providerErrors"
               useLastUrlPathInKey={true}
-              defaultSortKey="date|desc"
+              defaultSortKey="id|desc"
               tableAndTabName="errors"
               pkey="id"
               pkeyUrl="none"
@@ -267,7 +267,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
               ]}
               dataKey="providerEvents"
               useLastUrlPathInKey={true}
-              defaultSortKey="blocks.datetime|desc"
+              defaultSortKey="events.id|desc"
               tableAndTabName="events"
               pkey="events.id"
               pkeyUrl="none"
@@ -369,7 +369,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
               ]}
               dataKey="providerRewards"
               useLastUrlPathInKey={true}
-              defaultSortKey="blocks.datetime|desc"
+              defaultSortKey="relay_payments.id|desc"
               tableAndTabName="rewards"
               pkey="relay_payments.id"
               pkeyUrl="none"
@@ -423,7 +423,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
               ]}
               dataKey="providerReports"
               useLastUrlPathInKey={true}
-              defaultSortKey="blocks.datetime|desc"
+              defaultSortKey="provider_reported.id|desc"
               tableAndTabName="reports"
               pkey="provider_reported.provider,provider_reported.blockId"
               pkeyUrl="none"
@@ -453,7 +453,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
               ]}
               dataKey="providerBlockReports"
               useLastUrlPathInKey={true}
-              defaultSortKey="timestamp|desc"
+              defaultSortKey="id|desc"
               tableAndTabName="blockReports"
               pkey="id"
               pkeyUrl="none"
@@ -485,7 +485,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
               ]}
               dataKey="providerDelegatorRewards"
               useLastUrlPathInKey={true}
-              defaultSortKey="timestamp|desc"
+              defaultSortKey="id|desc"
               tableAndTabName="claimableProviderRewards"
               pkey="id"
               pkeyUrl="none"
