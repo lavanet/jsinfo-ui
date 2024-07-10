@@ -144,7 +144,7 @@ export default function Spec({ params }: { params: { specid: string } }) {
           tabs={[
             {
               value: "stakes",
-              content: "Stake",
+              content: "Stakes",
             },
           ]}
         >
