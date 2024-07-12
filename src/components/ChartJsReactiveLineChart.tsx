@@ -94,13 +94,18 @@ export const ChartJsReactiveLineChart: React.FC<ChartJsReactiveLineChartProps> =
   const boxRef: RefObject<HTMLDivElement> = useRef(null);
 
   useEffect(() => {
+    let lastWidth = 0;
+
     const handleResize = () => {
       if (boxRef.current) {
         let width = boxRef.current.offsetWidth;
         if (width < 100) {
           width = 100;
         }
-        boxRef.current.style.height = `${width / 2}px`;
+        if (width !== lastWidth) {
+          boxRef.current.style.height = `${width / 2}px`;
+          lastWidth = width;
+        }
       }
     };
 

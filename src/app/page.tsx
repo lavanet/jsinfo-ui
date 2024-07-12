@@ -3,36 +3,23 @@
 
 import React from "react";
 import { useEffect } from "react";
-
 import { Flex, Card, Box } from "@radix-ui/themes";
-
 import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
 import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
 import CsvButton from "@jsinfo/components/CsvButton";
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
 import TitledCard from "@jsinfo/components/TitledCard";
-
-
-import {
-  SortableTableInATabComponent,
-  DataKeySortableTableInATabComponent,
-} from "@jsinfo/components/SortTable";
-
+import IndexChart from "@jsinfo/charts/indexChart";
+import { SortableTableInATabComponent, DataKeySortableTableInATabComponent } from "@jsinfo/components/SortTable";
 import { ConvertToChainName } from "@jsinfo/common/convertors";
-import { useCachedFetch } from "@jsinfo/hooks/useCachedFetch";
-
+import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
 import { usePageContext } from "@jsinfo/context/PageContext";
 import { FormatNumber, RenderInFullPageCard } from "@jsinfo/common/utils";
-
-import IndexChart from "@jsinfo/charts/indexChart";
 import { ErrorDisplay } from "@jsinfo/components/ErrorDisplay";
-
-
-
 
 export default function Home() {
 
-  const { data, loading, error } = useCachedFetch({ dataKey: "index" });
+  const { data, loading, error } = useApiDataFetch({ dataKey: "index" });
 
   const { setCurrentPage } = usePageContext();
 
@@ -127,7 +114,6 @@ export default function Home() {
               pkeyUrl="provider"
               firstColumn="moniker"
               dataKey="indexProviders"
-              useLastUrlPathInKey={false}
               rowFormatters={{
                 rewardSum: (data) => FormatNumber(data.rewardSum),
                 totalStake: (data) => FormatNumber(data.totalStake),

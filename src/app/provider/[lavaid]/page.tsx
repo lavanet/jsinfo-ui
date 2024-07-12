@@ -3,20 +3,16 @@
 
 import Link from 'next/link'
 import { Flex, Card, Box } from "@radix-ui/themes";
-
 import {
   StatusToString,
   GeoLocationToString,
   EventTypeToString,
 } from "@jsinfo/common/convertors";
-
 import { DataKeySortableTableInATabComponent } from "@jsinfo/components/SortTable";
-import { useCachedFetch } from "@jsinfo/hooks/useCachedFetch";
+import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
 import { useEffect } from "react";
 import { usePageContext } from "@jsinfo/context/PageContext";
-
 import { FormatNumber, FormatNumberWithString, RenderInFullPageCard } from '@jsinfo/common/utils';
-
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
 import CsvButton from "@jsinfo/components/CsvButton";
 import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
@@ -29,9 +25,6 @@ import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
 import ProviderChart from '@jsinfo/charts/providerChart';
 import ProviderLatestHealthCards from '@jsinfo/components/ProviderLatestHealth';
 
-
-
-
 export default function Provider({ params }: { params: { lavaid: string } }) {
 
   let decodedLavaId = decodeURIComponent(params.lavaid);
@@ -43,9 +36,8 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
     return RenderInFullPageCard(<ErrorDisplay message={error} />);
   }
 
-  const { data, loading, error } = useCachedFetch({
-    dataKey: "provider",
-    useLastUrlPathInKey: true,
+  const { data, loading, error } = useApiDataFetch({
+    dataKey: "provider/" + decodedLavaId,
   });
 
   const { setCurrentPage } = usePageContext();
@@ -203,8 +195,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                 { key: "region", name: "Region" },
                 { key: "message", name: "Message" },
               ]}
-              dataKey="providerHealth"
-              useLastUrlPathInKey={true}
+              dataKey={`providerHealth/${decodedLavaId}`}
               defaultSortKey="id|desc"
               tableAndTabName="health"
               pkey="id"
@@ -224,8 +215,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                 { key: "spec", name: "Spec" },
                 { key: "error", name: "Error" },
               ]}
-              dataKey="providerErrors"
-              useLastUrlPathInKey={true}
+              dataKey={`providerErrors/${decodedLavaId}`}
               defaultSortKey="id|desc"
               tableAndTabName="errors"
               pkey="id"
@@ -265,8 +255,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                 { key: "events.i2", name: "Int2" },
                 { key: "events.i3", name: "Int3" },
               ]}
-              dataKey="providerEvents"
-              useLastUrlPathInKey={true}
+              dataKey={`providerEvents/${decodedLavaId}`}
               defaultSortKey="events.id|desc"
               tableAndTabName="events"
               pkey="events.id"
@@ -340,8 +329,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                 { key: "extensions", name: "Extensions" },
                 { key: "stake", name: "Stake" },
               ]}
-              dataKey="providerStakes"
-              useLastUrlPathInKey={true}
+              dataKey={`providerStakes/${decodedLavaId}`}
               defaultSortKey="specId"
               tableAndTabName="stakes"
               pkey="specId,provider"
@@ -367,8 +355,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                 { key: "relay_payments.qosSync", name: "QoS" },
                 { key: "relay_payments.qosSyncExc", name: "Excellence" },
               ]}
-              dataKey="providerRewards"
-              useLastUrlPathInKey={true}
+              dataKey={`providerRewards/${decodedLavaId}`}
               defaultSortKey="relay_payments.id|desc"
               tableAndTabName="rewards"
               pkey="relay_payments.id"
@@ -421,8 +408,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                 { key: "provider_reported.errors", name: "Errors" },
                 { key: "provider_reported.project", name: "Project" },
               ]}
-              dataKey="providerReports"
-              useLastUrlPathInKey={true}
+              dataKey={`providerReports/${decodedLavaId}`}
               defaultSortKey="provider_reported.id|desc"
               tableAndTabName="reports"
               pkey="provider_reported.provider,provider_reported.blockId"
@@ -451,8 +437,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                 { key: "chainId", name: "Chain" },
                 { key: "chainBlockHeight", name: "Chain Block Height" },
               ]}
-              dataKey="providerBlockReports"
-              useLastUrlPathInKey={true}
+              dataKey={`providerBlockReports/${decodedLavaId}`}
               defaultSortKey="id|desc"
               tableAndTabName="blockReports"
               pkey="id"
@@ -483,8 +468,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                 { key: "chainId", name: "Spec" },
                 { key: "amount", name: "Amount" },
               ]}
-              dataKey="providerDelegatorRewards"
-              useLastUrlPathInKey={true}
+              dataKey={`providerDelegatorRewards/${decodedLavaId}`}
               defaultSortKey="id|desc"
               tableAndTabName="claimableProviderRewards"
               pkey="id"

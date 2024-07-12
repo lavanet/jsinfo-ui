@@ -3,7 +3,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useRef, useState, useEffect } from 'react';
-import { useCachedFetch } from '@jsinfo/hooks/useCachedFetch';
+import { useApiDataFetch } from '@jsinfo/hooks/useApiDataFetch';
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 import { usePageContext } from '@jsinfo/context/PageContext';
 
@@ -16,8 +16,9 @@ export function NavbarSearch() {
         moniker: string;
     }
 
+
     let items: Item[] = [];
-    const { data, loading, error } = useCachedFetch({ dataKey: "autoCompleteLinksHandler" });
+    const { data, loading, error } = useApiDataFetch({ dataKey: "autoCompleteLinksHandler" });
 
     if (!error && !loading && data.data) {
         items = data.data;

@@ -3,14 +3,11 @@
 
 import Link from 'next/link'
 import { Card, Box } from "@radix-ui/themes";
-
-import { useCachedFetch } from "@jsinfo/hooks/useCachedFetch";
-
+import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
 import { EventTypeToString } from "@jsinfo/common/convertors";
 import { DataKeySortableTableInATabComponent } from "@jsinfo/components/SortTable";
 import { useEffect } from "react";
 import { usePageContext } from "@jsinfo/context/PageContext";
-
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
 import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
 import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
@@ -19,12 +16,9 @@ import CsvButton from '@jsinfo/components/CsvButton';
 import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
 import { IsMeaningfulText, RenderInFullPageCard } from '@jsinfo/common/utils';
 
-
-
-
 export default function Events() {
 
-  const { data, loading, error } = useCachedFetch({ dataKey: "events" });
+  const { data, loading, error } = useApiDataFetch({ dataKey: "events" });
 
   const { setCurrentPage } = usePageContext();
 
@@ -94,7 +88,6 @@ export default function Events() {
                 { key: "i3", name: "Int3" },
               ]}
               dataKey="eventsEvents"
-              useLastUrlPathInKey={false}
               defaultSortKey="id|desc"
               tableAndTabName="events"
               pkey="id"
@@ -181,8 +174,7 @@ export default function Events() {
                 { key: "qosSync", name: "QoS" },
                 { key: "qosSyncExc", name: "Excellence" },
               ]}
-              dataKey="eventsRewards"
-              useLastUrlPathInKey={false}
+              dataKey={"eventsRewards"}
               defaultSortKey="id|desc"
               tableAndTabName="rewards"
               pkey="id"
@@ -239,7 +231,6 @@ export default function Events() {
                 { key: "project", name: "Project" },
               ]}
               dataKey="eventsReports"
-              useLastUrlPathInKey={false}
               defaultSortKey="id|desc"
               tableAndTabName="reports"
               pkey="provider,blockId"

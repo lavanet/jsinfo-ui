@@ -1,4 +1,5 @@
 // src/components/RangeDatePicker.tsx
+
 import DateRangePicker, { DateRange, RangeType } from 'rsuite/DateRangePicker';
 const { allowedRange } = DateRangePicker;
 import { subDays, startOfWeek, startOfMonth, startOfYear, addMonths, subMonths, getYear, format, subWeeks } from 'date-fns';
@@ -50,7 +51,6 @@ const predefinedRanges: any[] = [
         label: 'This year',
         value: [startOfYear(new Date()), new Date()],
     },
-    // strange windows bug - leave the disabled here
 ].map(item => ({ ...item, placement: 'left', disabled: false }));
 
 interface RangeDatePickerProps {
@@ -58,7 +58,7 @@ interface RangeDatePickerProps {
     datePickerValue: CachedFetchDateRange;
 }
 
-const RangeDatePickerDebugEnabled = true;
+const RangeDatePickerDebugEnabled = false;
 
 function RangeDatePickerDebugLog(...args: any[]) {
     if (RangeDatePickerDebugEnabled) {

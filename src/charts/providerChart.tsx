@@ -1,7 +1,7 @@
 // src/charts/providerChart.tsx
 
-import { CachedFetchDateRange } from "@jsinfo/common/types";
-import { ConvertDateToServerQueryDate, ConvertJsInfoServerFormatedDateToJsDateObject, RenderInFullPageCard, WrapSetDatesWithFormatingAnd6MonthFromLimit } from "@jsinfo/common/utils";
+import { RenderInFullPageCard } from "@jsinfo/common/utils";
+import { ConvertJsInfoServerFormatedDateToJsDateObject, WrapSetDatesWithFormatingAnd6MonthFromLimit } from "@jsinfo/common/dateutils";
 import {
     CHARTJS_COLORS,
     ChartjsSetLastDotHighInChartData,
@@ -15,9 +15,7 @@ import {
 import { ErrorDisplay } from "@jsinfo/components/ErrorDisplay";
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
 import TextToggle from "@jsinfo/components/TextToggle";
-
-import { useCachedFetch } from "@jsinfo/hooks/useCachedFetch";
-
+import useApiDateFetch from "@jsinfo/hooks/useApiDateFetch";
 import { useState } from "react";
 
 type ProviderChartCuRelay = {
@@ -45,29 +43,12 @@ interface ProviderChartProps {
     addr: string;
 }
 
-
-
-
 export default function ProviderChart({ addr }: ProviderChartProps) {
 
     const [isRelayOrCuSelected, setIsRelayOrCuSelected] = useState(false);
 
-    const today = new Date();
+    const { data, loading, error, initialRange, dates, setDates } = useApiDateFetch("providerCharts/" + addr);
 
-    const ninetyDaysAgo = new Date();
-    ninetyDaysAgo.setDate(today.getDate() - 90);
-
-    const initialRange = { from: ninetyDaysAgo, to: today };
-
-    const [dates, setDates] = useState<CachedFetchDateRange>(initialRange);
-
-    const { data, loading, error } = useCachedFetch({
-        dataKey: "providerCharts/" + addr,
-        useLastUrlPathInKey: false,
-        apiurlDateRangeQuery: { from: ConvertDateToServerQueryDate(dates.from), to: ConvertDateToServerQueryDate(dates.to) }
-    });
-
-    // Then in your render method or function component
     if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
     if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${addr} chart data`} greyText={`${addr} chart`} />);
 
@@ -77,13 +58,9 @@ export default function ProviderChart({ addr }: ProviderChartProps) {
 
     let rawChartData: ProviderChartResponse[] = data.data;
 
-    // First, sort the rawChartData
     rawChartData = rawChartData.sort((a: ProviderChartResponse, b: ProviderChartResponse) => {
-        // Convert the formatted dates back to Date objects
         const dateA = ConvertJsInfoServerFormatedDateToJsDateObject(a.date);
         const dateB = ConvertJsInfoServerFormatedDateToJsDateObject(b.date);
-
-        // Compare the dates
         return dateA.getTime() - dateB.getTime();
     });
 

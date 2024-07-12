@@ -1,11 +1,11 @@
 // src/components/providerLatestHealth.tsx
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Card, Text, Box, Link } from "@radix-ui/themes";
 import LoadingIndicator from '@jsinfo/components/LoadingIndicator';
 import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
 import TimeTooltip from '@jsinfo/components/TimeTooltip';
-import { useCachedFetch } from '@jsinfo/hooks/useCachedFetch';
+import { useApiDataFetch } from '@jsinfo/hooks/useApiDataFetch';
 import { RenderInFullPageCard } from '@jsinfo/common/utils';
 import StatusCall from './StatusCell';
 import Image from 'next/image';
@@ -123,9 +123,8 @@ const renderCard = (specStatusAndInterfaces: SpecStatusAndInterfaces, spec: stri
 
 const ProviderLatestHealthCards: React.FC<ProviderLatestHealthCardsProps> = ({ lavaId }) => {
 
-    const { data, loading, error } = useCachedFetch({
+    const { data, loading, error } = useApiDataFetch({
         dataKey: `providerLatestHealth/${lavaId}`,
-        useLastUrlPathInKey: false,
     });
 
     if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);

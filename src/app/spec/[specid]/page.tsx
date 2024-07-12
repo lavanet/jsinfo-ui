@@ -4,7 +4,7 @@
 import Link from 'next/link'
 import { Flex, Card, Box } from "@radix-ui/themes";
 import { useEffect } from "react";
-import { useCachedFetch } from "@jsinfo/hooks/useCachedFetch";
+import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
 import { SortableTableInATabComponent } from "@jsinfo/components/SortTable";
 import { StatusToString, GeoLocationToString } from "@jsinfo/common/convertors";
 import { usePageContext } from "@jsinfo/context/PageContext";
@@ -22,9 +22,8 @@ interface SpecStakesTableProps {
 }
 
 const SpecStakesTable: React.FC<SpecStakesTableProps> = ({ specid }) => {
-  const { data, loading, error } = useCachedFetch({
-    dataKey: "specStakes",
-    useLastUrlPathInKey: true,
+  const { data, loading, error } = useApiDataFetch({
+    dataKey: "specStakes/" + specid,
   });
 
   if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
@@ -73,16 +72,15 @@ export default function Spec({ params }: { params: { specid: string } }) {
 
   let decodedSpecId = decodeURIComponent(params.specid);
 
-  const specIdPattern = /^[A-Za-z0-9]+$/; // Matches alphanumeric characters
+  const specIdPattern = /^[A-Za-z0-9]+$/;
 
   if (!specIdPattern.test(decodedSpecId)) {
     const error = 'Invalid spec format';
     return RenderInFullPageCard(<ErrorDisplay message={error} />);
   }
 
-  const { data, loading, error } = useCachedFetch({
-    dataKey: "spec",
-    useLastUrlPathInKey: true,
+  const { data, loading, error } = useApiDataFetch({
+    dataKey: "spec/" + specid,
   });
 
   const { setCurrentPage } = usePageContext();
