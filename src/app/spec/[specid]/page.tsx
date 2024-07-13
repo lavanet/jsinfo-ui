@@ -80,7 +80,7 @@ export default function Spec({ params }: { params: { specid: string } }) {
   }
 
   const { data, loading, error } = useApiDataFetch({
-    dataKey: "spec/" + specid,
+    dataKey: "spec/" + decodedSpecId,
   });
 
   const { setCurrentPage } = usePageContext();

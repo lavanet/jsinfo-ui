@@ -2,9 +2,10 @@
 
 import { useRef, useState, Dispatch, SetStateAction } from 'react';
 import { AxiosApiGet } from './axios';
+import { GetAxiosRetryCount } from '@jsinfo/common/env';
 
 export class AxiosDataLoader {
-    private maxRetries = 3;
+    private maxRetries = GetAxiosRetryCount();
 
     private apiurl: string | null;
     private apiurlPaginationQuery: string | null;
@@ -41,8 +42,6 @@ export class AxiosDataLoader {
     }
 
     static initialize(dataKey: string, apiurlDateRangeQuery: any, paginationFetcherHook: any) {
-        console.log("dataKey", dataKey)
-
         const [data, setData] = useState<any>(null);
         const [loading, setLoading] = useState<boolean>(true);
         const [error, setError] = useState<string | null>(null);

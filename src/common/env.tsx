@@ -51,7 +51,7 @@ export function GetAxiosCacheTTL(): number {
 export function GetAxiosRetryCount(): number {
   const timeout = process.env["AXIOS_RETRY_COUNT"] || process.env["NEXT_PUBLIC_RETRY_COUNT"];
   if (!timeout) {
-    return 5
+    return 3
   }
   return parseInt(timeout, 10);
 }

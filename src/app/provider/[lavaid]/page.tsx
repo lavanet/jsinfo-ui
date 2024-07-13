@@ -14,7 +14,7 @@ import { useEffect } from "react";
 import { usePageContext } from "@jsinfo/context/PageContext";
 import { FormatNumber, FormatNumberWithString, RenderInFullPageCard } from '@jsinfo/common/utils';
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
-import CsvButton from "@jsinfo/components/CsvButton";
+import TableCsvButton from "@jsinfo/components/TableCsvButton";
 import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
 import ProviderCard from "@jsinfo/components/ProviderCard";
 import TitledCard from "@jsinfo/components/TitledCard";
@@ -105,83 +105,35 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
           tabs={[
             {
               value: "health",
-              content: (
-                <CsvButton
-                  csvDownloadLink={`providerHealthCsv/${decodedLavaId}`}
-                >
-                  Health
-                </CsvButton>
-              ),
+              content: "Health",
             },
             {
               value: "errors",
-              content: (
-                <CsvButton
-                  csvDownloadLink={`providerErrorsCsv/${decodedLavaId}`}
-                >
-                  Errors
-                </CsvButton>
-              ),
+              content: "Errors",
             },
             {
               value: "stakes",
-              content: (
-                <CsvButton
-                  csvDownloadLink={`providerStakesCsv/${decodedLavaId}`}
-                >
-                  Stakes
-                </CsvButton>
-              ),
+              content: "Stakes",
             },
             {
               value: "events",
-              content: (
-                <CsvButton
-                  csvDownloadLink={`providerEventsCsv/${decodedLavaId}`}
-                >
-                  Events
-                </CsvButton>
-              ),
+              content: "Events",
             },
             {
               value: "rewards",
-              content: (
-                <CsvButton
-                  csvDownloadLink={`providerRewardsCsv/${decodedLavaId}`}
-                >
-                  Rewards
-                </CsvButton>
-              ),
+              content: "Rewards",
             },
             {
               value: "reports",
-              content: (
-                <CsvButton
-                  csvDownloadLink={`providerReportsCsv/${decodedLavaId}`}
-                >
-                  Reports
-                </CsvButton>
-              ),
+              content: "Reports",
             },
             {
               value: "blockReports",
-              content: (
-                <CsvButton
-                  csvDownloadLink={`providerBlockReportsCsv/${decodedLavaId}`}
-                >
-                  Block Reports
-                </CsvButton>
-              ),
+              content: "Block Reports",
             },
             {
               value: "claimableProviderRewards",
-              content: (
-                <CsvButton
-                  csvDownloadLink={`providerDelegatorRewardsCsv/${decodedLavaId}`}
-                >
-                  Claimable Provider Rewards
-                </CsvButton>
-              ),
+              content: "Claimable Provider Rewards",
             },
           ]}
         >
@@ -207,6 +159,13 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                 ),
                 status: (data) => <StatusCall status={data.status} />,
               }}
+              csvButton={(
+                <TableCsvButton
+                  csvDownloadLink={`providerHealthCsv/${decodedLavaId}`}
+                >
+                  Health
+                </TableCsvButton>
+              )}
             />
 
             <DataKeySortableTableInATabComponent
@@ -238,6 +197,11 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                   );
                 },
               }}
+              csvButton={(
+                <TableCsvButton
+                  csvDownloadLink={`providerStakesCsv/${decodedLavaId}`}
+                />
+              )}
             />
 
             <DataKeySortableTableInATabComponent
@@ -318,6 +282,11 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                   );
                 },
               }}
+              csvButton={(
+                <TableCsvButton
+                  csvDownloadLink={`providerEventsCsv/${decodedLavaId}`}
+                />
+              )}
             />
 
             <DataKeySortableTableInATabComponent
@@ -342,6 +311,11 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                 geolocation: (data) => GeoLocationToString(data.geolocation),
                 stake: (data) => FormatNumber(data.stake),
               }}
+              csvButton={(
+                <TableCsvButton
+                  csvDownloadLink={`providerEventsCsv/${decodedLavaId}`}
+                />
+              )}
             />
 
             <DataKeySortableTableInATabComponent
@@ -394,6 +368,11 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                 "relay_payments.qosSyncExc": (payment) =>
                   `${payment.relay_payments.qosSyncExc}, ${payment.relay_payments.qosAvailabilityExc}, ${payment.relay_payments.qosSyncExc}`,
               }}
+              csvButton={(
+                <TableCsvButton
+                  csvDownloadLink={`providerRewardsCsv/${decodedLavaId}`}
+                />
+              )}
             />
 
             <DataKeySortableTableInATabComponent
@@ -428,6 +407,11 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                 "blocks.datetime": (report) =>
                   (<TimeTooltip datetime={report.blocks.datetime} />),
               }}
+              csvButton={(
+                <TableCsvButton
+                  csvDownloadLink={`providerReportsCsv/${decodedLavaId}`}
+                />
+              )}
             />
 
             <DataKeySortableTableInATabComponent
@@ -460,6 +444,11 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                 ),
                 chainBlockHeight: (data) => FormatNumberWithString(data.chainBlockHeight),
               }}
+              csvButton={(
+                <TableCsvButton
+                  csvDownloadLink={`providerBlockReportsCsv/${decodedLavaId}`}
+                />
+              )}
             />
 
             <DataKeySortableTableInATabComponent
@@ -480,6 +469,11 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                 ),
                 amount: (data) => FormatNumberWithString(data.amount.toUpperCase()),
               }}
+              csvButton={(
+                <TableCsvButton
+                  csvDownloadLink={`providerDelegatorRewardsCsv/${decodedLavaId}`}
+                />
+              )}
             />
           </Box>
         </JsinfoTabs>

@@ -2,11 +2,11 @@
 
 import React, { ReactNode } from 'react';
 import Image from 'next/image';
-import { GetRestUrl } from '@jsinfo/common/utils';
+import { GetRestUrl } from '@jsinfo/common/env';
 
 interface CsvButtonProps {
     csvDownloadLink: string;
-    children: ReactNode;
+    children?: ReactNode | null;
 }
 
 const CsvButton: React.FC<CsvButtonProps> = ({ csvDownloadLink, children }) => {
@@ -17,9 +17,11 @@ const CsvButton: React.FC<CsvButtonProps> = ({ csvDownloadLink, children }) => {
     const separator = restUrl.endsWith('/') || csvDownloadLink.startsWith('/') ? '' : '/';
     return (
         <>
-            <div>
-                {children}
-            </div>
+            {children && (
+                <div>
+                    {children}
+                </div>
+            )}
             <a
                 href={`${restUrl}${separator}${csvDownloadLink}`}
                 target="_blank"

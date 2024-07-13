@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { SortAndPaginationConfig } from '@jsinfo/common/types.jsx';
-import { GetApiUrlFromDataKey, ValidateDataKey } from './utils';
+import { ValidateDataKey } from './utils';
 import { AxiosDataLoader } from './AxiosDataLoader';
 
 export class PaginationFetcherHook {
