@@ -16,6 +16,7 @@ import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
 import { usePageContext } from "@jsinfo/context/PageContext";
 import { FormatNumber, RenderInFullPageCard } from "@jsinfo/common/utils";
 import { ErrorDisplay } from "@jsinfo/components/ErrorDisplay";
+import TableCsvButton from "@jsinfo/components/TableCsvButton";
 
 export default function Home() {
 
@@ -81,13 +82,7 @@ export default function Home() {
           tabs={[
             {
               value: "providers",
-              content: (
-                <CsvButton
-                  csvDownloadLink="indexProvidersCsv"
-                >
-                  Providers
-                </CsvButton>
-              ),
+              content: "Providers",
             },
             {
               value: "chains",
@@ -118,6 +113,7 @@ export default function Home() {
                 rewardSum: (data) => FormatNumber(data.rewardSum),
                 totalStake: (data) => FormatNumber(data.totalStake),
               }}
+              csvButton={<TableCsvButton csvDownloadLink="indexProvidersCsv" />}
             />
 
             <SortableTableInATabComponent
