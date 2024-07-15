@@ -1,71 +1,19 @@
 // src/app/spec/[specid]/page.tsx
 "use client";
 
-import Link from 'next/link'
 import { Flex, Card, Box } from "@radix-ui/themes";
 import { useEffect } from "react";
 import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
-import { SortableTableInATabComponent } from "@jsinfo/components/SortTable";
-import { StatusToString, GeoLocationToString } from "@jsinfo/common/convertors";
 import { usePageContext } from "@jsinfo/context/PageContext";
 import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
 import TitledCard from "@jsinfo/components/TitledCard";
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
 import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
-import { FormatNumber, IsMeaningfulText, RenderInFullPageCard } from '@jsinfo/common/utils';
-import StatusCall from '@jsinfo/components/StatusCell';
+import { RenderInFullPageCard } from '@jsinfo/common/utils';
 import SpecChart from '@jsinfo/charts/specChart';
 import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
-
-interface SpecStakesTableProps {
-  specid: string
-}
-
-const SpecStakesTable: React.FC<SpecStakesTableProps> = ({ specid }) => {
-  const { data, loading, error } = useApiDataFetch({
-    dataKey: "specStakes/" + specid,
-  });
-
-  if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
-  if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${specid} stake data`} greyText={`${specid} stake`} />);
-
-  return (
-    <Box>
-      <SortableTableInATabComponent
-        columns={[
-          { key: "provider", name: "Provider" },
-          { key: "status", name: "Status" },
-          { key: "geolocation", name: "Geolocation" },
-          { key: "addonsAndExtensions", name: "Addons&Extensions" },
-          { key: "stake", name: "Stake" },
-          { key: "cuSum30Days", name: "30-Day CUs" },
-          { key: "relaySum30Days", name: "30-Day Relays" },
-          { key: "cuSum90Days", name: "90-Day CUs" },
-          { key: "relaySum90Days", name: "90-Day Relays" },
-        ]}
-        data={data.data}
-        defaultSortKey="cuSum90Days|desc"
-        tableAndTabName="stakes"
-        pkey="provider"
-        pkeyUrl="none"
-        rowFormatters={{
-          provider: (data) => (
-            <Link href={`/provider/${data.provider}`}>
-              {IsMeaningfulText(data.moniker) ? data.moniker : data.provider}
-            </Link>
-          ),
-          status: (data) => <StatusCall status={StatusToString(data.status)} />,
-          geolocation: (data) => GeoLocationToString(data.geolocation),
-          stake: (data) => FormatNumber(data.stake),
-          cuSum30Days: (data) => FormatNumber(data.cuSum30Days),
-          relaySum30Days: (data) => FormatNumber(data.relaySum30Days),
-          cuSum90Days: (data) => FormatNumber(data.cuSum90Days),
-          relaySum90Days: (data) => FormatNumber(data.relaySum90Days),
-        }}
-      />
-    </Box>
-  );
-};
+import SpecEndpointHealthSummary from '@jsinfo/app/spec/[specid]/_components/SpecEndpointHealthSummary';
+import SpecStakesTable from '@jsinfo/app/spec/[specid]/_components/SpecStakesTable';
 
 
 export default function Spec({ params }: { params: { specid: string } }) {
@@ -100,7 +48,7 @@ export default function Spec({ params }: { params: { specid: string } }) {
     <>
       <BlockWithDateCard blockData={data} />
       <Card>
-        <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-5">
+        <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-6">
           <TitledCard
             title="Spec"
             value={data.specId}
@@ -128,10 +76,18 @@ export default function Spec({ params }: { params: { specid: string } }) {
           <TitledCard
             title="Total Rewards"
             value={`${data.rewardSum} ULAVA`}
-            className="col-span-2 md:col-span-1"
+            className="col-span-1 md:col-span-1"
             formatNumber={true}
             tooltip="Total rewards for this spec by all providers"
           />
+          <TitledCard
+            title="Endpoint Status"
+            value={(<SpecEndpointHealthSummary healthy={(data?.endpointHealth?.healthy || 0)} unhealthy={(data?.endpointHealth?.unhealthy || 0)} />)}
+            className="col-span-1 md:col-span-1"
+            formatNumber={true}
+            tooltip="Total rewards for this spec by all providers"
+          />
+
         </Flex>
       </Card>
 

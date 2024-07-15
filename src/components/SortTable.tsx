@@ -106,7 +106,7 @@ const SortableTableHeader: React.FC<SortableTableHeaderProps> = (props) => {
   }
 
   const [localSortConfig, setLocalSortConfig] = useState<SortConfig | null>(props.sortConfig);
-  props.onSortConfigUpdate.callback = setLocalSortConfig;
+  if (props.onSortConfigUpdate) props.onSortConfigUpdate.callback = setLocalSortConfig;
 
   return (
     <Table.Header key={`SortatableHeader_${props.tableAndTabName}`}>
@@ -121,7 +121,7 @@ const SortableTableHeader: React.FC<SortableTableHeaderProps> = (props) => {
           >
             <div style={{ display: 'block', alignItems: 'center', whiteSpace: 'nowrap' }}>
               {column.name}
-              {props.sortConfig && localSortConfig.key === column.key
+              {props.sortConfig && localSortConfig && localSortConfig.key === column.key
                 ? (localSortConfig.direction === 'ascending' ? '↑' : '↓')
                 : <span style={{ color: 'transparent' }}>↓</span>}
               {props.csvButton && index === props.columns.length - 1 && props.csvButton}
