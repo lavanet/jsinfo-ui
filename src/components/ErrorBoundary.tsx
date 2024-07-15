@@ -12,7 +12,6 @@ interface ErrorBoundaryProps {
 }
 
 export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
-    private state: { hasError: boolean; error: null | Error; };
 
     constructor(props: ErrorBoundaryProps) {
         super(props);

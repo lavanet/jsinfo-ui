@@ -8,7 +8,7 @@ mainnet_run:
 	INFO_NETWORK=mainnet_local NEXT_PUBLIC_REST_URL=https://jsinfo.mainnet.lavanet.xyz/ PORT=5100 pnpm dev
 
 build:
-	NEXT_PUBLIC_REST_URL=12 pnpm build
+	INFO_NETWORK=local NEXT_PUBLIC_REST_URL=12 pnpm build
 
 install:
 	pnpm install
