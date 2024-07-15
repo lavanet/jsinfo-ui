@@ -1,7 +1,7 @@
 // src/charts/providerChart.tsx
 
 import { RenderInFullPageCard } from "@jsinfo/common/utils";
-import { ConvertJsInfoServerFormatedDateToJsDateObject, WrapSetDatesWithFormatingAnd6MonthFromLimit } from "@jsinfo/common/dateutils";
+import { ConvertJsInfoServerFormatedDateToJsDateObject } from "@jsinfo/common/dateutils";
 import {
     CHARTJS_COLORS,
     ChartjsSetLastDotHighInChartData,
@@ -47,7 +47,7 @@ export default function ProviderChart({ addr }: ProviderChartProps) {
 
     const [isRelayOrCuSelected, setIsRelayOrCuSelected] = useState(false);
 
-    const { data, loading, error, initialRange, dates, setDates } = useApiDateFetch("providerCharts/" + addr);
+    const { data, loading, error, dates, setDates } = useApiDateFetch("providerCharts/" + addr);
 
     if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
     if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${addr} chart data`} greyText={`${addr} chart`} />);
@@ -225,7 +225,7 @@ export default function ProviderChart({ addr }: ProviderChartProps) {
             data={chartData}
             options={chartOptions}
             title="Qos Score & Relays/CUs for all chains"
-            onDateChange={WrapSetDatesWithFormatingAnd6MonthFromLimit(setDates, initialRange)}
+            onDateChange={setDates}
             rightControl={<TextToggle openText='CU sum' closeText='Relay sum' onChange={relayToCuChange} style={{ marginRight: '10px' }} />}
             datePickerValue={dates} />
     );

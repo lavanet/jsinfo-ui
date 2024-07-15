@@ -54,7 +54,7 @@ const predefinedRanges: any[] = [
 ].map(item => ({ ...item, placement: 'left', disabled: false }));
 
 interface RangeDatePickerProps {
-    onDateChange?: (from: Date, to: Date) => void;
+    onDateChange?: (dates: { from: Date, to: Date }) => void;
     datePickerValue: CachedFetchDateRange;
 }
 
@@ -79,7 +79,7 @@ const RangeDatePicker: React.FC<RangeDatePickerProps> = ({ onDateChange, datePic
         RangeDatePickerDebugLog("handleDateChange: to", to);
         if (onDateChange) {
             RangeDatePickerDebugLog("handleDateChange: calling onDateChange");
-            onDateChange(from, to);
+            onDateChange({ from, to });
         }
         RangeDatePickerDebugLog("handleDateChange: ended");
     };

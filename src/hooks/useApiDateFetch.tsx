@@ -1,33 +1,31 @@
 // src/hooks/useApiDateFetch.tsx
 
-import { ConvertDateToServerQueryDate } from "@jsinfo/common/dateutils";
-import { useMemo, useState, useEffect } from "react";
+import { GetTodayMinus90DaysRangeDefault, CheckAndAdjustDatesForServer } from "@jsinfo/common/dateutils";
+import { useEffect, useState } from "react";
 import { AxiosDataLoader } from "./AxiosDataLoader";
 import { CachedFetchDateRange } from "@jsinfo/common/types";
 import { ValidateDataKey } from "./utils";
 
 export default function useApiDateFetch(dataKey: string) {
-    const initialRange = useMemo(() => {
-        const today = new Date();
-        const ninetyDaysAgo = new Date();
-        ninetyDaysAgo.setDate(today.getDate() - 90);
-        return { from: ninetyDaysAgo, to: today };
-    }, []);
 
     ValidateDataKey(dataKey);
 
-    const [dates, setDates] = useState<CachedFetchDateRange>(initialRange);
+    const { fetcher, data, loading, error } = AxiosDataLoader.initialize(dataKey, null, null);
 
-    const apiurlDateRangeQuery = useMemo(() => ({
-        from: ConvertDateToServerQueryDate(dates.from),
-        to: ConvertDateToServerQueryDate(dates.to)
-    }), [dates.from, dates.to]);
-
-    const { fetcher, data, loading, error } = AxiosDataLoader.initialize(dataKey, apiurlDateRangeQuery, null);
+    const [dates, setDatesInner] = useState<CachedFetchDateRange>(GetTodayMinus90DaysRangeDefault());
 
     useEffect(() => {
+        fetcher.SetApiUrlDateRangeQueryFromDateRange(GetTodayMinus90DaysRangeDefault());
         fetcher.FetchAndPopulateData();
     }, []);
 
-    return { data, loading, error, initialRange, dates, setDates };
+    function setDates(dates: CachedFetchDateRange) {
+        let c_dates = CheckAndAdjustDatesForServer(dates);
+        if (!c_dates) return;
+        fetcher.SetApiUrlDateRangeQueryFromDateRange(c_dates);
+        fetcher.FetchAndPopulateData();
+        setDatesInner(c_dates);
+    }
+
+    return { data, loading, error, dates, setDates };
 }

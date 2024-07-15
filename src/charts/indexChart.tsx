@@ -1,7 +1,7 @@
 // src/charts/indexChart.tsx
 
 import { RenderInFullPageCard } from "@jsinfo/common/utils";
-import { ConvertJsInfoServerFormatedDateToJsDateObject, WrapSetDatesWithFormatingAnd6MonthFromLimit } from "@jsinfo/common/dateutils";
+import { ConvertJsInfoServerFormatedDateToJsDateObject } from "@jsinfo/common/dateutils";
 import {
     CHARTJS_COLORS,
     ChartjsSetLastDotHighInChartData,
@@ -34,7 +34,7 @@ type IndexChartResponse = {
 export default function IndexChart() {
     const [isRelayOrCuSelected, setIsRelayOrCuSelected] = useState(false);
 
-    const { data, loading, error, initialRange, dates, setDates } = useApiDateFetch("indexCharts");
+    const { data, loading, error, dates, setDates } = useApiDateFetch("indexCharts");
 
     if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
     if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading chart data`} greyText={`chart`} />);
@@ -164,7 +164,7 @@ export default function IndexChart() {
             data={chartData}
             options={chartOptions}
             title="Qos Score & Relays/CUs for top 10 Chains"
-            onDateChange={WrapSetDatesWithFormatingAnd6MonthFromLimit(setDates, initialRange)}
+            onDateChange={setDates}
             rightControl={<TextToggle openText='CU sum' closeText='Relay sum' onChange={relayToCuChange} style={{ marginRight: '10px' }} />}
             datePickerValue={dates} />
     );

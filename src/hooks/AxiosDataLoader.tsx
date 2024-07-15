@@ -3,13 +3,16 @@
 import { useRef, useState, Dispatch, SetStateAction } from 'react';
 import { AxiosApiGet } from './axios';
 import { GetAxiosRetryCount } from '@jsinfo/common/env';
+import { ConvertDateForServer } from '@jsinfo/common/dateutils';
+import { CachedFetchDateRange } from '@jsinfo/common/types';
 
 export class AxiosDataLoader {
     private maxRetries = GetAxiosRetryCount();
 
-    private apiurl: string | null;
-    private apiurlPaginationQuery: string | null;
-    private apiurlDateRangeQuery: any | null;
+    private apiurl: string | null = null;
+    private apiurlPaginationQuery: string | null = null;
+    private apiurlDateRangeQuery: any | null = null;
+    private prevData: any | null = null;
     private retryTimeout: React.MutableRefObject<number>;
     private retryCount: React.MutableRefObject<number>;
     private errorCount: React.MutableRefObject<number>;
@@ -28,8 +31,8 @@ export class AxiosDataLoader {
         errorCount: React.MutableRefObject<number>,
         isFetching: React.MutableRefObject<boolean>,
         wasOneFetchDone: React.MutableRefObject<boolean>) {
-        this.apiurlPaginationQuery = paginationFetcherHook ? paginationFetcherHook.serialize() : null;
-        this.apiurlDateRangeQuery = apiurlDateRangeQuery || null;
+        this.SetApiUrlPaginationQuery(paginationFetcherHook);
+        this.SetApiUrlDateRangeQuery(apiurlDateRangeQuery);
         this.setData = setData;
         this.setLoading = setLoading;
         this.setError = setError;
@@ -59,6 +62,25 @@ export class AxiosDataLoader {
 
     public SetApiUrl(apiurl: string) {
         this.apiurl = apiurl;
+    }
+
+    public SetApiUrlPaginationQuery(paginationFetcherHook: any) {
+        this.apiurlPaginationQuery = paginationFetcherHook ? paginationFetcherHook.serialize() : null;
+    }
+
+    public GetApiUrlPaginationQuerySerialized(): string | null {
+        return this.apiurlPaginationQuery;
+    }
+
+    public SetApiUrlDateRangeQuery(apiurlDateRangeQuery: any) {
+        this.apiurlDateRangeQuery = apiurlDateRangeQuery || null;
+    }
+
+    public SetApiUrlDateRangeQueryFromDateRange(dateRange: CachedFetchDateRange) {
+        this.SetApiUrlDateRangeQuery({
+            from: ConvertDateForServer(dateRange.from),
+            to: ConvertDateForServer(dateRange.to)
+        });
     }
 
     async FetchItemCount(updateItemCount: (count: number) => void, retryCount: number = 0): Promise<void> {
@@ -109,7 +131,10 @@ export class AxiosDataLoader {
 
     private async handleData(data: any): Promise<void> {
         this.wasOneFetchDone.current = true;
-        this.setData(data);
+        if (!this.prevData || JSON.stringify(this.prevData) !== JSON.stringify(data)) {
+            this.prevData = data;
+            this.setData(data);
+        }
         this.setLoading(false);
     }
 

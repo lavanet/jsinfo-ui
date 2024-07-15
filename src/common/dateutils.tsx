@@ -87,41 +87,54 @@ export function ConvertJsInfoServerFormatedDateToJsDateObject(dateStr: string): 
     return new Date(year, month, day);
 }
 
-export const ConvertDateToServerQueryDate = (date: Date | string | null | undefined) => {
-    if (date instanceof Date) {
-        return date.toISOString().split('T')[0];
-    } else if (typeof date === 'string') {
-        return date;
+export const ConvertDateForServer = (d: Date | string | null | undefined): string | null => {
+    if (d instanceof Date) {
+        return `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')}Z`;
+    } else if (typeof d === 'string') {
+        return d;
     } else {
         return null;
     }
 };
 
-export const WrapSetDatesWithFormatingAnd6MonthFromLimit = (
-    setDates: React.Dispatch<React.SetStateAction<CachedFetchDateRange>>,
-    initialRange: CachedFetchDateRange
-) => {
-    return (from: Date, to: Date) => {
-        // Use the AdjustFromToDateToSixMonthAgo function to adjust the from and to dates
-        const { from: adjustedFrom, to: adjustedTo } = AdjustFromToDateToSixMonthAgo(from, to);
+export function GetTodayMinus90DaysRangeDefault() {
+    const today = new Date();
+    const ninetyDaysAgo = new Date();
+    ninetyDaysAgo.setDate(today.getDate() - 90);
+    return { from: ninetyDaysAgo, to: today };
+}
 
-        const fromFormatted = ConvertDateToServerQueryDate(adjustedFrom);
-        const toFormatted = ConvertDateToServerQueryDate(adjustedTo);
+export const CheckAndAdjustDatesForServer = (dates: CachedFetchDateRange): CachedFetchDateRange | null => {
+    console.log("CheckAndAdjustDatesForServer - input dates:", dates);
+    const fromFormatted1 = ConvertDateForServer(dates.from);
+    const toFormatted1 = ConvertDateForServer(dates.to);
+    console.log("CheckAndAdjustDatesForServer - fromFormatted1:", fromFormatted1, "toFormatted1:", toFormatted1);
+    if (!fromFormatted1 || !toFormatted1) {
+        console.log("CheckAndAdjustDatesForServer - One of the formatted dates is null, returning GetTodayMinus90DaysRangeDefault()");
+        return GetTodayMinus90DaysRangeDefault();
+    }
+    const { from: fromFormatted, to: toFormatted } = AdjustFromToDateToSixMonthAgo(new Date(fromFormatted1), new Date(toFormatted1));
+    console.log("CheckAndAdjustDatesForServer - Adjusted Dates:", { fromFormatted, toFormatted });
 
-        if (fromFormatted && toFormatted) {
-            const diffInDays = Math.ceil(
-                Math.abs(new Date(toFormatted).getTime() - new Date(fromFormatted).getTime()) / (1000 * 60 * 60 * 24)
-            );
+    if (fromFormatted && toFormatted) {
+        const diffInDays = Math.ceil(
+            Math.abs(new Date(toFormatted).getTime() - new Date(fromFormatted).getTime()) / (1000 * 60 * 60 * 24)
+        );
+        console.log("CheckAndAdjustDatesForServer - diffInDays:", diffInDays);
 
-            if (diffInDays < 1) {
-                setDates(initialRange);
-            } else {
-                const newDates = {
-                    from: new Date(fromFormatted),
-                    to: new Date(toFormatted)
-                };
-                setDates(newDates);
-            }
+        if (diffInDays < 1) {
+            console.log("CheckAndAdjustDatesForServer - diffInDays < 1, returning GetTodayMinus90DaysRangeDefault()");
+            return GetTodayMinus90DaysRangeDefault();
+        } else {
+            const newDates = {
+                from: new Date(fromFormatted),
+                to: new Date(toFormatted)
+            };
+            console.log("CheckAndAdjustDatesForServer - newDates:", newDates);
+            return newDates;
         }
-    };
+    }
+
+    console.log("CheckAndAdjustDatesForServer - fromFormatted or toFormatted is null, returning null");
+    return null;
 };

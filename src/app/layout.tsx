@@ -13,7 +13,7 @@ import '@radix-ui/themes/styles.css';
 import "./styles/globals.css";
 import "./styles/paginationcontrol.css";
 import "./styles/rsuite.css";
-import { GetPageTitle } from "@jsinfo/common/utils";
+import { GetPageTitle } from "@jsinfo/common/env";
 
 const inter = Inter({ subsets: ["latin"] });
 

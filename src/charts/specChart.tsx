@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { RenderInFullPageCard } from "@jsinfo/common/utils";
-import { ConvertJsInfoServerFormatedDateToJsDateObject, WrapSetDatesWithFormatingAnd6MonthFromLimit } from "@jsinfo/common/dateutils";
+import { ConvertJsInfoServerFormatedDateToJsDateObject } from "@jsinfo/common/dateutils";
 import {
     CHARTJS_COLORS,
     ChartjsSetLastDotHighInChartData,
@@ -47,7 +47,7 @@ export default function SpecChart({ specid }: SpecChartProps) {
 
     const [isRelayOrCuSelected, setIsRelayOrCuSelected] = useState(false);
 
-    const { data, loading, error, initialRange, dates, setDates } = useApiDateFetch("specCharts/" + specid);
+    const { data, loading, error, dates, setDates } = useApiDateFetch("specCharts/" + specid);
 
     if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
     if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${specid} chart data`} greyText={`${specid} chart`} />);
@@ -225,7 +225,7 @@ export default function SpecChart({ specid }: SpecChartProps) {
             data={chartData}
             options={chartOptions}
             title="Qos Score & Relays/CUs for top 10 Providers"
-            onDateChange={WrapSetDatesWithFormatingAnd6MonthFromLimit(setDates, initialRange)}
+            onDateChange={setDates}
             rightControl={<TextToggle openText='CU sum' closeText='Relay sum' onChange={relayToCuChange} style={{ marginRight: '10px' }} />}
             datePickerValue={dates} />
     );

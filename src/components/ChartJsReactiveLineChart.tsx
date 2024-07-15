@@ -165,7 +165,7 @@ interface ChartJsReactiveLineChartPropsWithDatePicker {
   data: ChartJsLineChartData;
   options: ChartJsLineChartOptions;
   title?: string;
-  onDateChange: (from: Date, to: Date) => void;
+  onDateChange: (dates: { from: Date, to: Date }) => void;
   datePickerValue: CachedFetchDateRange;
   rightControl?: JSX.Element | null;
 }
@@ -278,107 +278,20 @@ export const ChartJsReactiveLineChartWithDatePicker: React.FC<ChartJsReactiveLin
 };
 
 export function ChartjsSetLastDotHighInChartData(chartData: ChartJsLineChartData): void {
-  chartData.datasets.forEach((dataset: ChartJsLineChartDataset, datasetIndex: number) => {
-    if (!dataset.data || dataset.data.length === 0) {
-      return;
-    }
-    const previousDataPoints = dataset.data.slice(0, -1);
-    const sortedDataPoints = previousDataPoints.sort((a: ChartJsLinePoint, b) => {
-      if (a.y === undefined || b.y === undefined) {
-        console.info(
-          `ChartjsSetLastDotHighInChartData:: Data point's y property is undefined. Data points: ${JSON.stringify(
-            a
-          )}, ${JSON.stringify(b)}`
-        );
-        return 0;
-      }
-      return parseFloat(a.y + "") - parseFloat(b.y + "");
-    });
+  chartData.datasets.forEach((dataset) => {
+    if (!dataset.data || dataset.data.length < 3) return;
 
-    const lowerThirdIndex = Math.floor(sortedDataPoints.length / 1.5);
-    const adjustedDataPoints = sortedDataPoints.slice(lowerThirdIndex);
+    // Calculate the average of all but the last data point
+    const allButLastPoints = dataset.data.slice(0, -1);
+    const averageAllButLast = allButLastPoints.reduce((acc, point) => acc + (Number(point.y) || 0), 0) / allButLastPoints.length;
 
-    let median;
-    if (adjustedDataPoints.length % 2 === 0) {
-      const midIndex1 = adjustedDataPoints.length / 2 - 1;
-      const midIndex2 = adjustedDataPoints.length / 2;
+    // Calculate the maximum y value of the last three data points
+    const lastThreePoints = dataset.data.slice(-3);
+    const maxOfLastThree = Math.max(...lastThreePoints.map(point => Number(point.y) || 0));
 
-      if (
-        !adjustedDataPoints[midIndex1] ||
-        adjustedDataPoints[midIndex1].y === undefined ||
-        !adjustedDataPoints[midIndex2] ||
-        adjustedDataPoints[midIndex2].y === undefined
-      ) {
-        console.info(
-          "ChartjsSetLastDotHighInChartData:: adjustedDataPoints does not have valid elements at indices " +
-          midIndex1 +
-          " and " +
-          midIndex2 +
-          ". adjustedDataPoints: ",
-          adjustedDataPoints
-        );
-        return;
-      }
-
-      median =
-        (parseFloat(adjustedDataPoints[midIndex1].y + "") +
-          parseFloat(adjustedDataPoints[midIndex2].y + "")) /
-        2;
-    } else {
-      median = parseFloat(adjustedDataPoints[(adjustedDataPoints.length - 1) / 2].y + "");
-    }
-
-    const lastDataPoint = dataset.data[dataset.data.length - 1];
-
-    if (!lastDataPoint) {
-      console.info(
-        `ChartjsSetLastDotHighInChartData:: The last data point in dataset ${datasetIndex} is undefined.`
-      );
-      return;
-    }
-
-    if (lastDataPoint.y === undefined) {
-      console.info(
-        `ChartjsSetLastDotHighInChartData:: The last data point's y property in dataset ${datasetIndex} is undefined. Data point: ${JSON.stringify(
-          lastDataPoint
-        )}`
-      );
-      return;
-    }
-
-    if (dataset.data.length < 3) {
-      lastDataPoint.y = Math.max(median, parseFloat(lastDataPoint.y + ""));
-    } else {
-      const secondLastDataPoint = dataset.data[dataset.data.length - 2];
-      const thirdLastDataPoint = dataset.data[dataset.data.length - 3];
-
-      if (!secondLastDataPoint || !thirdLastDataPoint) {
-        console.info(
-          `ChartjsSetLastDotHighInChartData:: One of the last three data points in dataset ${datasetIndex} is undefined.`
-        );
-        return;
-      }
-
-      if (
-        secondLastDataPoint.y === undefined ||
-        thirdLastDataPoint.y === undefined
-      ) {
-        console.info(
-          `ChartjsSetLastDotHighInChartData:: One of the last three data points' y property in dataset ${datasetIndex} is undefined. Data points: ${JSON.stringify(
-            secondLastDataPoint
-          )}, ${JSON.stringify(thirdLastDataPoint)}`
-        );
-        return;
-      }
-
-      const previousDataPointAverage =
-        (parseFloat(secondLastDataPoint.y + "") +
-          parseFloat(thirdLastDataPoint.y + "") +
-          parseFloat(lastDataPoint.y + "")) /
-        3;
-
-      lastDataPoint.y = Math.max(median, previousDataPointAverage);
-    }
+    // Set the last data point's y to the maximum of its current value or the maxOfLastThree
+    const lastPoint = dataset.data[dataset.data.length - 1];
+    lastPoint.y = Math.max(averageAllButLast * 0.6, maxOfLastThree);
   });
 }
 

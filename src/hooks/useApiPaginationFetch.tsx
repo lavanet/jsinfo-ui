@@ -1,7 +1,7 @@
 // src/hooks/PaginationFetcherHook.tsx
 
 import { useState, useEffect } from 'react';
-import { SortAndPaginationConfig } from '@jsinfo/common/types.jsx';
+import { SortAndPaginationConfig, SortConfig } from '@jsinfo/common/types.jsx';
 import { ValidateDataKey } from './utils';
 import { AxiosDataLoader } from './AxiosDataLoader';
 
@@ -135,17 +135,36 @@ export class PaginationFetcherHook {
 
 }
 
-export function useApiPaginationFetch({ paginationString, dataKey, setSortAndPaginationConfig }:
-    {
-        paginationString: string, dataKey: string,
-        setSortAndPaginationConfig: React.Dispatch<React.SetStateAction<SortAndPaginationConfig | null>>
-    }) {
+export function useApiPaginationFetch({
+    paginationString,
+    dataKey,
+    setSortAndPaginationConfig,
+    onSortConfigUpdate
+}: {
+    paginationString: string,
+    dataKey: string,
+    setSortAndPaginationConfig: React.Dispatch<React.SetStateAction<SortAndPaginationConfig | null>>,
+    onSortConfigUpdate: { callback?: React.Dispatch<React.SetStateAction<SortConfig | null>> } | null
+}) {
 
     ValidateDataKey(dataKey);
 
     const [paginationFetcherHook, setPaginationFetcherHook] = useState<PaginationFetcherHook>(() => PaginationFetcherHook.deserialize(paginationString));
 
     const { fetcher, data, loading, error } = AxiosDataLoader.initialize(dataKey, null, paginationFetcherHook);
+
+    function updatePagination() {
+        setPaginationFetcherHook(paginationFetcherHook.duplicate());
+        fetcher.SetApiUrlPaginationQuery(paginationFetcherHook);
+        fetcher.FetchAndPopulateData();
+        if (onSortConfigUpdate && onSortConfigUpdate.callback) {
+            const sc: SortConfig = {
+                key: paginationFetcherHook.GetSortKey(),
+                direction: paginationFetcherHook.GetDirection(),
+            };
+            onSortConfigUpdate.callback(sc)
+        }
+    }
 
     useEffect(() => {
         fetcher.FetchAndPopulateData();
@@ -155,7 +174,7 @@ export function useApiPaginationFetch({ paginationString, dataKey, setSortAndPag
 
     const setTotalItemCountCallback = (count: number) => {
         setTotalItemCount(count);
-        setPaginationFetcherHook(paginationFetcherHook.duplicate());
+        updatePagination();
     };
 
     useEffect(() => {
@@ -168,12 +187,12 @@ export function useApiPaginationFetch({ paginationString, dataKey, setSortAndPag
 
     const requestSort = (key: string) => {
         paginationFetcherHook.requestSort(key);
-        setPaginationFetcherHook(paginationFetcherHook.duplicate());
+        updatePagination();
     };
 
     const setPage = (page: number) => {
         paginationFetcherHook.setPage(page);
-        setPaginationFetcherHook(paginationFetcherHook.duplicate());
+        updatePagination();
     };
 
     useEffect(() => {
