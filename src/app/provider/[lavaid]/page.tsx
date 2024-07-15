@@ -162,9 +162,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
               csvButton={(
                 <TableCsvButton
                   csvDownloadLink={`providerHealthCsv/${decodedLavaId}`}
-                >
-                  Health
-                </TableCsvButton>
+                />
               )}
             />
 
