@@ -1,27 +1,21 @@
-// src/components/CsvButton.tsx
+// src/components/TableCsvButton.tsx
 
-import React, { ReactNode } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import { GetRestUrl } from '@jsinfo/common/env';
 
-interface CsvButtonProps {
+interface TableCsvButtonProps {
     csvDownloadLink: string;
-    children?: ReactNode | null;
 }
 
-const CsvButton: React.FC<CsvButtonProps> = ({ csvDownloadLink, children }) => {
+const TableCsvButton: React.FC<TableCsvButtonProps> = ({ csvDownloadLink }) => {
     const restUrl = GetRestUrl();
     if (!restUrl) {
         return <div>Error: REST URL is empty</div>;
     }
     const separator = restUrl.endsWith('/') || csvDownloadLink.startsWith('/') ? '' : '/';
     return (
-        <>
-            {children && (
-                <div>
-                    {children}
-                </div>
-            )}
+        <div style={{ marginLeft: '10px', padding: '0', float: 'right', margin: '-10px', marginBottom: '-30px' }}>
             <a
                 href={`${restUrl}${separator}${csvDownloadLink}`}
                 target="_blank"
@@ -35,8 +29,8 @@ const CsvButton: React.FC<CsvButtonProps> = ({ csvDownloadLink, children }) => {
                     alt="export-csv"
                 />
             </a >
-        </>
+        </div >
     );
 };
 
-export default CsvButton;
+export default TableCsvButton;

@@ -34,7 +34,6 @@ function PaginationControl({ sortAndPaginationConfig, setPage }: PaginationContr
     }
 
     const handleSetPage = (page: number) => {
-        // console.log(`Setting page to ${page}, sortAndPaginationConfig: ${JSON.stringify(sortAndPaginationConfig)}`);
         setPage(page);
     };
 

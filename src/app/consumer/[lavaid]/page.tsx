@@ -4,29 +4,22 @@
 import Link from 'next/link'
 import { Flex, Text, Card, Box } from "@radix-ui/themes";
 import dayjs from "dayjs";
-
-import { useCachedFetch } from "@jsinfo/hooks/useCachedFetch";
-
+import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
 import {
   ChartJsLineChartData,
   ChartJsLinePoint,
   ChartjsSetLastDotHighInChartData,
   ChartjsSetLastPointToLineInChartOptions,
 } from "@jsinfo/components/ChartJsReactiveLineChart";
-
 import { SortableTableInATabComponent } from "@jsinfo/components/SortTable";
 import { ChartJsReactiveLineChart } from "@jsinfo/components/ChartJsReactiveLineChart";
-
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
 import TitledCard from "@jsinfo/components/TitledCard";
 import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
 import { useEffect } from "react";
-
 import { usePageContext } from '@jsinfo/context/PageContext';
 import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
 import { RenderInFullPageCard } from '@jsinfo/common/utils';
-
-
 
 
 export default function Consumer({ params }: { params: { lavaid: string } }) {
@@ -40,9 +33,8 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
     return RenderInFullPageCard(<ErrorDisplay message={error} />);
   }
 
-  const { data, loading, error } = useCachedFetch({
-    dataKey: "consumer",
-    useLastUrlPathInKey: true,
+  const { data, loading, error } = useApiDataFetch({
+    dataKey: 'consumer/' + decodedLavaId
   });
 
   const { setCurrentPage } = usePageContext();

@@ -1,7 +1,7 @@
 // src/charts/indexChart.tsx
 
-import { CachedFetchDateRange } from "@jsinfo/common/types";
-import { ConvertDateToServerQueryDate, ConvertJsInfoServerFormatedDateToJsDateObject, RenderInFullPageCard, WrapSetDatesWithFormatingAnd6MonthFromLimit } from "@jsinfo/common/utils";
+import { RenderInFullPageCard } from "@jsinfo/common/utils";
+import { ConvertJsInfoServerFormatedDateToJsDateObject } from "@jsinfo/common/dateutils";
 import {
     CHARTJS_COLORS,
     ChartjsSetLastDotHighInChartData,
@@ -15,8 +15,7 @@ import {
 import { ErrorDisplay } from "@jsinfo/components/ErrorDisplay";
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
 import TextToggle from "@jsinfo/components/TextToggle";
-
-import { useCachedFetch } from "@jsinfo/hooks/useCachedFetch";
+import useApiDateFetch from "@jsinfo/hooks/useApiDateFetch";
 
 import { useState } from "react";
 
@@ -33,21 +32,10 @@ type IndexChartResponse = {
 };
 
 export default function IndexChart() {
-
     const [isRelayOrCuSelected, setIsRelayOrCuSelected] = useState(false);
 
-    const today = new Date();
+    const { data, loading, error, dates, setDates } = useApiDateFetch("indexCharts");
 
-    const ninetyDaysAgo = new Date();
-    ninetyDaysAgo.setDate(today.getDate() - 90);
-
-    const initialRange = { from: ninetyDaysAgo, to: today };
-
-    const [dates, setDates] = useState<CachedFetchDateRange>(initialRange);
-
-    const { data, loading, error } = useCachedFetch({ dataKey: "indexCharts", apiurlDateRangeQuery: { from: ConvertDateToServerQueryDate(dates.from), to: ConvertDateToServerQueryDate(dates.to) } });
-
-    // Then in your render method or function component
     if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
     if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading chart data`} greyText={`chart`} />);
 
@@ -57,13 +45,9 @@ export default function IndexChart() {
 
     let rawChartData: IndexChartResponse[] = data.data;
 
-    // First, sort the rawChartData
     rawChartData = rawChartData.sort((a: IndexChartResponse, b: IndexChartResponse) => {
-        // Convert the formatted dates back to Date objects
         const dateA = ConvertJsInfoServerFormatedDateToJsDateObject(a.date);
         const dateB = ConvertJsInfoServerFormatedDateToJsDateObject(b.date);
-
-        // Compare the dates
         return dateA.getTime() - dateB.getTime();
     });
 
@@ -180,7 +164,7 @@ export default function IndexChart() {
             data={chartData}
             options={chartOptions}
             title="Qos Score & Relays/CUs for top 10 Chains"
-            onDateChange={WrapSetDatesWithFormatingAnd6MonthFromLimit(setDates, initialRange)}
+            onDateChange={setDates}
             rightControl={<TextToggle openText='CU sum' closeText='Relay sum' onChange={relayToCuChange} style={{ marginRight: '10px' }} />}
             datePickerValue={dates} />
     );

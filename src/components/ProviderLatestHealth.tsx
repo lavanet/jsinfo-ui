@@ -1,11 +1,11 @@
 // src/components/providerLatestHealth.tsx
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Card, Text, Box, Link } from "@radix-ui/themes";
 import LoadingIndicator from '@jsinfo/components/LoadingIndicator';
 import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
 import TimeTooltip from '@jsinfo/components/TimeTooltip';
-import { useCachedFetch } from '@jsinfo/hooks/useCachedFetch';
+import { useApiDataFetch } from '@jsinfo/hooks/useApiDataFetch';
 import { RenderInFullPageCard } from '@jsinfo/common/utils';
 import StatusCall from './StatusCell';
 import Image from 'next/image';
@@ -121,30 +121,10 @@ const renderCard = (specStatusAndInterfaces: SpecStatusAndInterfaces, spec: stri
     );
 }
 
-const ProviderLatestHealthCards: React.FC<ProviderLatestHealthCardsProps> = ({ lavaId }) => {
-
-    const { data, loading, error } = useCachedFetch({
-        dataKey: `providerLatestHealth/${lavaId}`,
-        useLastUrlPathInKey: false,
-    });
-
-    if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
-    if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${lavaId} latest health stats`} greyText={`${lavaId} latest health`} />);
-
-    const healthData: HealthData | null = data?.data || null;
-
-    if (!healthData || Object.keys(healthData.specs).length === 0) {
-        return null;
-    }
-
-    const { specs } = healthData;
-
-    function handleContainerResize() {
-        const container = document.getElementById('healthcontainer');
-        if (!container) return;
-
+function handleProviderLatestHealthContainerResize() {
+    const containers = document.querySelectorAll('.healthcontainer');
+    containers.forEach(container => {
         const containerWidth = container.getBoundingClientRect().width;
-
         const cards = Array.from(container.children);
 
         let cardLines = [];
@@ -174,9 +154,25 @@ const ProviderLatestHealthCards: React.FC<ProviderLatestHealthCardsProps> = ({ l
                 container.appendChild(card);
             }
         }
+    });
+}
+
+const ProviderLatestHealthCards: React.FC<ProviderLatestHealthCardsProps> = ({ lavaId }) => {
+
+    const { data, loading, error } = useApiDataFetch({
+        dataKey: `providerLatestHealth/${lavaId}`,
+    });
+
+    if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
+    if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${lavaId} latest health stats`} greyText={`${lavaId} latest health`} />);
+
+    const healthData: HealthData | null = data?.data || null;
+
+    if (!healthData || Object.keys(healthData.specs).length === 0) {
+        return null;
     }
 
-    window.addEventListener('resize', handleContainerResize);
+    window.addEventListener('resize', handleProviderLatestHealthContainerResize);
 
     function toggleVisibility() {
         const elements = document.getElementsByClassName('spec-container');
@@ -190,12 +186,7 @@ const ProviderLatestHealthCards: React.FC<ProviderLatestHealthCardsProps> = ({ l
             }
         }
 
-        handleContainerResize();
-        for (let i = 100; i <= 3000; i += 500) {
-            setTimeout(() => {
-                handleContainerResize();
-            }, i);
-        }
+        handleProviderLatestHealthContainerResize();
     }
 
     const cards = healthData.specs.map(({ spec: specName, specData: SpecStatusAndInterfaces }) => {
@@ -214,7 +205,7 @@ const ProviderLatestHealthCards: React.FC<ProviderLatestHealthCardsProps> = ({ l
                     <TextToggle key={hckey(`textoggle`)} openText='Full info' closeText='Basic info' onChange={toggleVisibility} style={{ marginRight: '-5px' }} />
                 </div>
             </div>
-            <div key={hckey(`div`)} id="healthcontainer" style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'flex-start', margin: "-2px", marginBottom: "-15px", fontSize: '10px', width: '100%', marginLeft: "-4px" }}>
+            <div key={hckey(`div`)} className="healthcontainer" style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'flex-start', margin: "-2px", marginBottom: "-15px", fontSize: '10px', width: '100%', marginLeft: "-4px" }}>
                 {cards.map(({ card }, _) => (
                     <div key={hckey(`div`)} style={{ marginRight: '2px' }}>
                         {card}
