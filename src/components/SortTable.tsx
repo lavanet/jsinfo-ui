@@ -82,12 +82,12 @@ interface SortableTableHeaderProps {
   columns: Column[];
   requestSort: (key: string) => void;
   sortConfig: SortConfig | null;
-  onSortConfigUpdate: { callback?: React.Dispatch<React.SetStateAction<SortConfig | null>> | null };
+  onSortConfigUpdate?: { callback?: React.Dispatch<React.SetStateAction<SortConfig | null>> | null };
   columnLengthPercentages: { [key: string]: number } | null;
   csvButton?: ReactNode | null;
 }
 
-const SortableTableHeader: React.FC<SortableTableHeaderProps> = (props) => {
+const SortableTableHeader: React.FC<SortableTableHeaderProps> = (props: SortableTableHeaderProps) => {
   if (typeof props.tableAndTabName !== 'string') {
     throw new Error(`Invalid prop: tableAndTabName should be a string, but received type ${typeof props.tableAndTabName} with value ${props.tableAndTabName}`);
   }
@@ -142,7 +142,7 @@ interface SortableTableRowCellProps {
   pkeyUrl: string | null;
 }
 
-const SortableTableRowCell: React.FC<SortableTableRowCellProps> = (props) => {
+const SortableTableRowCell: React.FC<SortableTableRowCellProps> = (props: SortableTableRowCellProps) => {
 
   if (typeof props.columnName !== 'string') {
     throw new Error(`Invalid prop: key should be a string, but received type ${typeof props.columnName} with value ${props.columnName}`);
@@ -192,7 +192,7 @@ interface SortableTableRowProps {
   rowFormatters?: RowFormatters | null;
 }
 
-const SortableTableRow: React.FC<SortableTableRowProps> = (props) => {
+const SortableTableRow: React.FC<SortableTableRowProps> = (props: SortableTableRowProps) => {
   if (typeof props.rowData !== 'object') {
     throw new Error(`Invalid prop: rowData should be an object, but received type ${typeof props.rowData} with value ${props.rowData}`);
   }
@@ -247,7 +247,7 @@ interface SortableTableBodyProps {
   firstColumn?: string | null;
 }
 
-const SortableTableBody: React.FC<SortableTableBodyProps> = (props) => {
+const SortableTableBody: React.FC<SortableTableBodyProps> = (props: SortableTableBodyProps) => {
 
   if (!Array.isArray(props.tableData)) {
     console.error('Invalid prop: tableData should be an array', props);
@@ -301,7 +301,7 @@ type SortableTableProps = {
   tableData: any[],
   requestSort: (key: string) => void,
   sortConfig: SortConfig,
-  onSortConfigUpdate: { callback?: React.Dispatch<React.SetStateAction<SortConfig | null>> | null };
+  onSortConfigUpdate?: { callback?: React.Dispatch<React.SetStateAction<SortConfig | null>> | null };
   columns: Column[],
   tableAndTabName: string,
   pkey: string,
@@ -311,7 +311,7 @@ type SortableTableProps = {
   csvButton?: ReactNode | null;
 };
 
-const SortableTableContent: React.FC<SortableTableProps> = (props) => {
+const SortableTableContent: React.FC<SortableTableProps> = (props: SortableTableProps) => {
 
   if (!Array.isArray(props.tableData)) {
     throw new Error(`Invalid prop: tableData should be an array, but received type ${typeof props.tableData} with value ${props.tableData}`);
@@ -416,7 +416,7 @@ type SortableTableComponentProps = {
   columns: Column[];
   data: any[];
   defaultSortKey: string;
-  onSortConfigUpdate: { callback?: React.Dispatch<React.SetStateAction<SortConfig | null>> | null };
+  onSortConfigUpdate?: { callback?: React.Dispatch<React.SetStateAction<SortConfig | null>> | null };
   tableAndTabName: string;
   pkey: string;
   pkeyUrl?: string | null;
@@ -425,7 +425,7 @@ type SortableTableComponentProps = {
   csvButton?: ReactNode | null;
 };
 
-export const SortableTableComponent: React.FC<SortableTableComponentProps> = (props) => {
+export const SortableTableComponent: React.FC<SortableTableComponentProps> = (props: SortableTableComponentProps) => {
   // Check if data is an array
   if (!Array.isArray(props.data)) {
     throw new Error("Data is not an array");
@@ -539,7 +539,7 @@ type DataKeySortableTableComponentProps = {
   csvButton?: ReactNode | null;
 };
 
-export const DataKeySortableTableComponent: React.FC<DataKeySortableTableComponentProps> = (props) => {
+export const DataKeySortableTableComponent: React.FC<DataKeySortableTableComponentProps> = (props: DataKeySortableTableComponentProps) => {
 
   if (!props.columns || !Array.isArray(props.columns)) {
     console.error("Invalid type for columns:", props.columns);
@@ -668,6 +668,7 @@ type SortableTableInATabComponentProps = {
   columns: Column[];
   data: any[];
   defaultSortKey: string;
+  onSortConfigUpdate?: { callback?: React.Dispatch<React.SetStateAction<SortConfig | null>> | null };
   tableAndTabName: string;
   pkey: string;
   pkeyUrl?: string | null;
@@ -675,10 +676,11 @@ type SortableTableInATabComponentProps = {
   firstColumn?: string;
 };
 
-export const SortableTableInATabComponent: React.FC<SortableTableInATabComponentProps> = (props) => {
+export const SortableTableInATabComponent: React.FC<SortableTableInATabComponentProps> = (props: SortableTableInATabComponentProps) => {
   return (
     <Tabs.Content value={props.tableAndTabName}>
       <SortableTableComponent
+        onSortConfigUpdate={props.onSortConfigUpdate}
         columns={props.columns}
         data={props.data}
         defaultSortKey={props.defaultSortKey}
@@ -704,7 +706,7 @@ type DataKeySortableTableInATabComponentProps = {
   csvButton?: ReactNode | null;
 };
 
-export const DataKeySortableTableInATabComponent: React.FC<DataKeySortableTableInATabComponentProps> = (props) => {
+export const DataKeySortableTableInATabComponent: React.FC<DataKeySortableTableInATabComponentProps> = (props: DataKeySortableTableInATabComponentProps) => {
   return (
     <Tabs.Content value={props.tableAndTabName}>
       <DataKeySortableTableComponent

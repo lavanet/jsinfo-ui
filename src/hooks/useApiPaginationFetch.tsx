@@ -144,7 +144,7 @@ export function useApiPaginationFetch({
     paginationString: string,
     dataKey: string,
     setSortAndPaginationConfig: React.Dispatch<React.SetStateAction<SortAndPaginationConfig | null>>,
-    onSortConfigUpdate: { callback?: React.Dispatch<React.SetStateAction<SortConfig | null>> } | null
+    onSortConfigUpdate?: { callback?: React.Dispatch<React.SetStateAction<SortConfig | null>> } | null
 }) {
 
     ValidateDataKey(dataKey);
