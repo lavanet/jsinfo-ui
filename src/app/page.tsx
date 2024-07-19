@@ -6,7 +6,6 @@ import { useEffect } from "react";
 import { Flex, Card, Box } from "@radix-ui/themes";
 import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
 import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
-import CsvButton from "@jsinfo/components/CsvButton";
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
 import TitledCard from "@jsinfo/components/TitledCard";
 import IndexChart from "@jsinfo/charts/indexChart";
@@ -17,6 +16,7 @@ import { usePageContext } from "@jsinfo/context/PageContext";
 import { FormatNumber, RenderInFullPageCard } from "@jsinfo/common/utils";
 import { ErrorDisplay } from "@jsinfo/components/ErrorDisplay";
 import TableCsvButton from "@jsinfo/components/TableCsvButton";
+import MonikerWithTooltip from "@jsinfo/components/MonikerWithTooltip";
 
 export default function Home() {
 
@@ -94,7 +94,7 @@ export default function Home() {
             <DataKeySortableTableInATabComponent
               columns={[
                 { key: "moniker", name: "Moniker" },
-                { key: "addr", name: "Provider Address" },
+                { key: "provider", name: "Provider Address" },
                 { key: "rewardSum", name: "Total Rewards" },
                 {
                   key: "totalServices",
@@ -105,11 +105,12 @@ export default function Home() {
               ]}
               defaultSortKey="totalStake|desc"
               tableAndTabName="providers"
-              pkey="addr"
+              pkey="provider"
               pkeyUrl="provider"
               firstColumn="moniker"
               dataKey="indexProviders"
               rowFormatters={{
+                moniker: (data) => (<MonikerWithTooltip provider={data} />),
                 rewardSum: (data) => FormatNumber(data.rewardSum),
                 totalStake: (data) => FormatNumber(data.totalStake),
               }}

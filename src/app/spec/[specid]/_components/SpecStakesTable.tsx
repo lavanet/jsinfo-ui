@@ -11,6 +11,7 @@ import { FormatNumber, IsMeaningfulText, RenderInFullPageCard } from '@jsinfo/co
 import StatusCall from '@jsinfo/components/StatusCell';
 import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
 import SpecProviderEndpointHealthSummary from '@jsinfo/app/spec/[specid]/_components/SpecProviderEndpointHealthSummary';
+import MonikerAndProviderLink from '@jsinfo/components/MonikerAndProviderLink';
 
 interface SpecStakesTableProps {
     specid: string
@@ -44,11 +45,7 @@ const SpecStakesTable: React.FC<SpecStakesTableProps> = ({ specid }) => {
                 pkey="provider"
                 pkeyUrl="none"
                 rowFormatters={{
-                    provider: (data) => (
-                        <Link href={`/provider/${data.provider}`}>
-                            {IsMeaningfulText(data.moniker) ? data.moniker : data.provider}
-                        </Link>
-                    ),
+                    provider: (data) => (<MonikerAndProviderLink provider={data} />),
                     status: (data) => (
                         <div style={{ whiteSpace: 'nowrap' }}>
                             <StatusCall status={StatusToString(data.status)} />
