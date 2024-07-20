@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { Card, Box } from "@radix-ui/themes";
 import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
 import { EventTypeToString } from "@jsinfo/common/convertors";
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/StaticSortTable";
+import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
 import { useEffect } from "react";
 import { usePageContext } from "@jsinfo/context/PageContext";
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
