@@ -4,7 +4,7 @@
 import Link from 'next/link'
 import { Box } from "@radix-ui/themes";
 import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
-import { SortableTableInATabComponent } from "@jsinfo/components/SortTable";
+import { SortableTableInATabComponent } from "@jsinfo/components/StaticSortTable";
 import { StatusToString, GeoLocationToString } from "@jsinfo/common/convertors";
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
 import { FormatNumber, IsMeaningfulText, RenderInFullPageCard } from '@jsinfo/common/utils';

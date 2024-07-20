@@ -64,8 +64,17 @@ export class AxiosDataLoader {
         this.apiurl = apiurl;
     }
 
-    public SetApiUrlPaginationQuery(paginationFetcherHook: any) {
-        this.apiurlPaginationQuery = paginationFetcherHook ? paginationFetcherHook.serialize() : null;
+    public SetApiUrlPaginationQuery(query: string | null | { Serialize: () => string }) {
+        if (query == null) {
+            this.apiurlPaginationQuery = null;
+            return;
+        }
+
+        if (typeof query !== 'string') {
+            throw new Error(`Expected argument of type string, but got ${typeof query}: ${String(query).substring(0, 1000)}`);
+        }
+
+        this.apiurlPaginationQuery = query;
     }
 
     public GetApiUrlPaginationQuerySerialized(): string | null {
