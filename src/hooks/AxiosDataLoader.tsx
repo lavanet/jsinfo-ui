@@ -138,6 +138,13 @@ export class AxiosDataLoader {
         }
     }
 
+    private async setEmptyDataNoRetry(): Promise<void> {
+        this.wasOneFetchDone.current = true;
+        this.setData([]);
+        this.setLoading(false);
+        this.setError("");
+    }
+
     private async handleData(data: any): Promise<void> {
         this.wasOneFetchDone.current = true;
         if (!this.prevData || JSON.stringify(this.prevData) !== JSON.stringify(data)) {
@@ -194,10 +201,13 @@ export class AxiosDataLoader {
 
         } catch (error: any) {
             this.isFetching.current = false;
-
             if (error.response && error.response.data && error.response.data.error) {
-                this.setError(error.response.data.error);
-                this.setLoading(false);
+                if (error.response.data.error.includes("SASL authentication failed")) {
+                    await this.setEmptyDataNoRetry();
+                } else {
+                    this.setError(error.response.data.error);
+                    this.setLoading(false);
+                }
             } else if (error?.code === 'ECONNABORTED' || (error + "").includes('timeout')) {
                 await this.handleEmptyData();
             } else {
