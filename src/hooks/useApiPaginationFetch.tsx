@@ -4,14 +4,13 @@ import { useEffect, useMemo } from 'react';
 import { SortAndPaginationConfig } from '@jsinfo/common/types.jsx';
 import { ValidateDataKey } from './utils';
 import { AxiosDataLoader } from './AxiosDataLoader';
-
 export class PaginationState {
     private sortKey: string;
     private direction: "ascending" | "descending";
     private page: number;
     private itemCountPerPage: number;
     private totalItemCount: number = 60;
-    private updateCallbacks: React.SetStateAction<SortAndPaginationConfig>[] = [];
+    private updateCallbacks: React.Dispatch<React.SetStateAction<SortAndPaginationConfig>>[] = [];
 
     public constructor(sortKey: string, direction: "ascending" | "descending", page: number, itemCountPerPage: number) {
         this.validateInputs(sortKey, direction, page, itemCountPerPage);
@@ -66,7 +65,7 @@ export class PaginationState {
         }
     }
 
-    public RegisterUpdateCallback(callback: React.SetStateAction<SortAndPaginationConfig>): void {
+    public RegisterUpdateCallback(callback: React.Dispatch<React.SetStateAction<SortAndPaginationConfig>>): void {
         if (typeof callback !== 'function') {
             const typeStr = typeof callback;
             let callbackStr;

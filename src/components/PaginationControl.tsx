@@ -30,6 +30,7 @@ const PaginationControl: React.FC<PaginationControlProps> = ({ paginationState, 
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
     useEffect(() => {
+        if (!sortAndPaginationConfig || !sortAndPaginationConfig.totalItemCount || !sortAndPaginationConfig.itemCountPerPage) return;
         const newTotalPages = Math.ceil(sortAndPaginationConfig.totalItemCount / sortAndPaginationConfig.itemCountPerPage) || 3;
         setTotalPages(newTotalPages);
 
