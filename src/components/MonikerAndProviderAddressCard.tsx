@@ -31,7 +31,7 @@ const renderMoniker = (moniker: string, monikerfull: string) => (
 );
 
 const renderProviderAddress = (provider: string) => (
-    <Text as="div" size="2" color="gray" style={{ whiteSpace: 'nowrap' }}>
+    <Text as="div" size="2" color="gray" style={{ marginLeft: '10px', whiteSpace: 'nowrap' }}>
         {provider}
     </Text>
 );

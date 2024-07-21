@@ -14,7 +14,7 @@ import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
 import TimeTooltip from '@jsinfo/components/TimeTooltip';
 import CsvButton from '@jsinfo/components/CsvButton';
 import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
-import { IsMeaningfulText, RenderInFullPageCard } from '@jsinfo/common/utils';
+import { RenderInFullPageCard } from '@jsinfo/common/utils';
 import MonikerAndProviderLink from '@jsinfo/components/MonikerAndProviderLink';
 
 export default function Events() {
