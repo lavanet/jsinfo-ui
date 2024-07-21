@@ -1,17 +1,18 @@
-// src/hooks/PaginationFetcherHook.tsx
+// src/hooks/useApiPaginationFetch.tsx
 
-import { useState, useEffect } from 'react';
-import { SortAndPaginationConfig, SortConfig } from '@jsinfo/common/types.jsx';
+import { useEffect, useMemo } from 'react';
+import { SortAndPaginationConfig } from '@jsinfo/common/types.jsx';
 import { ValidateDataKey } from './utils';
 import { AxiosDataLoader } from './AxiosDataLoader';
-
-export class PaginationFetcherHook {
+export class PaginationState {
     private sortKey: string;
     private direction: "ascending" | "descending";
     private page: number;
     private itemCountPerPage: number;
+    private totalItemCount: number = 60;
+    private updateCallbacks: React.Dispatch<React.SetStateAction<SortAndPaginationConfig>>[] = [];
 
-    constructor(sortKey: string, direction: "ascending" | "descending", page: number, itemCountPerPage: number) {
+    public constructor(sortKey: string, direction: "ascending" | "descending", page: number, itemCountPerPage: number) {
         this.validateInputs(sortKey, direction, page, itemCountPerPage);
         this.sortKey = sortKey;
         this.direction = direction;
@@ -34,23 +35,65 @@ export class PaginationFetcherHook {
         }
     }
 
-    GetSortKey(): string {
+    public GetTotalItemCount(): number {
+        return this.totalItemCount;
+    }
+
+    public SetTotalItemCount(value: number): void {
+        this.totalItemCount = value;
+    }
+
+    public GetSortKey(): string {
         return this.sortKey;
     }
 
-    GetDirection(): "ascending" | "descending" {
+    public GetDirection(): "ascending" | "descending" {
         return this.direction;
     }
 
-    GetPage(): number {
+    public GetPage(): number {
         return this.page;
     }
 
-    FetchItemCountPerPage(): number {
+    public GetSortAndPaginationConfig(): SortAndPaginationConfig {
+        return {
+            sortKey: this.GetSortKey(),
+            direction: this.GetDirection(),
+            page: this.GetPage(),
+            itemCountPerPage: this.GetItemCountPerPage(),
+            totalItemCount: this.GetTotalItemCount()
+        }
+    }
+
+    public RegisterUpdateCallback(callback: React.Dispatch<React.SetStateAction<SortAndPaginationConfig>>): void {
+        if (typeof callback !== 'function') {
+            const typeStr = typeof callback;
+            let callbackStr;
+            try {
+                callbackStr = JSON.stringify(callback).slice(0, 1000);
+            } catch {
+                callbackStr = (callback + "").slice(0, 1000);
+            }
+            throw new Error(`callback must be a function or an instance of SortAndPaginationConfig, got ${typeStr}, callback: ${callbackStr}`);
+        }
+
+        this.updateCallbacks.push(callback);
+    }
+
+    public NotifyConfigUpdate(): void {
+        const sc: SortAndPaginationConfig = this.GetSortAndPaginationConfig();
+        this.updateCallbacks.forEach(callback => {
+            if (typeof callback === 'function') {
+                callback(sc);
+            }
+        });
+    }
+
+    public GetItemCountPerPage(): number {
         return this.itemCountPerPage;
     }
 
-    requestSort(key: string) {
+    public RequestSort(key: string) {
         this.direction = this.getNewDirection(key);
         this.sortKey = key;
     }
@@ -59,29 +102,29 @@ export class PaginationFetcherHook {
         return this.sortKey === key && this.direction === 'ascending' ? 'descending' : 'ascending';
     }
 
-    setPage(page: number) {
+    public SetPage(page: number) {
         if (!Number.isInteger(page) || page < 1) {
             throw new Error(`Invalid page: ${page}. The page must be a positive integer.`);
         }
         this.page = page;
     }
 
-    serialize(): string {
+    public Serialize(): string {
         const sortKey = this.sortKey || '-';
         const direction = this.direction === 'ascending' ? 'a' : 'd';
         return `${sortKey},${direction},${this.page},${this.itemCountPerPage}`;
     }
 
-    static deserialize(paginationString: string): PaginationFetcherHook {
-        const [sortKey, direction, page, itemCountPerPage] = PaginationFetcherHook.ParsePaginationString(paginationString);
-        return new PaginationFetcherHook(sortKey === '-' ? '' : sortKey, direction, Number(page), Number(itemCountPerPage));
+    static Deserialize(paginationString: string): PaginationState {
+        const [sortKey, direction, page, itemCountPerPage] = PaginationState.ParsePaginationString(paginationString);
+        return new PaginationState(sortKey === '-' ? '' : sortKey, direction, Number(page), Number(itemCountPerPage));
     }
 
     private static ParsePaginationString(paginationString: string): [string, "ascending" | "descending", string, string] {
         let parts = paginationString.split(',');
 
         if (parts.length === 3) {
-            parts = PaginationFetcherHook.handleThreeParts(parts);
+            parts = PaginationState.handleThreeParts(parts);
         }
 
         if (parts.length !== 4) {
@@ -100,7 +143,7 @@ export class PaginationFetcherHook {
             throw error;
         }
 
-        let finalDirection = PaginationFetcherHook.getFinalDirection(direction);
+        let finalDirection = PaginationState.getFinalDirection(direction);
 
         return [sortKey, finalDirection, page, itemCountPerPage];
     }
@@ -128,84 +171,66 @@ export class PaginationFetcherHook {
                 throw new Error(`Invalid direction: ${direction}. Expected 'a', 'asc', 'ascending', 'd', 'desc', or 'descending'`);
         }
     }
+}
 
-    duplicate() {
-        return new PaginationFetcherHook(this.GetSortKey(), this.GetDirection(), this.GetPage(), this.FetchItemCountPerPage());
-    }
-
+interface UseApiPaginationFetchReturn {
+    data: any;
+    loading: boolean;
+    error: any;
+    requestSort: (key: string) => void;
+    setPage: (page: number) => void;
+    paginationState: PaginationState;
 }
 
 export function useApiPaginationFetch({
-    paginationString,
     dataKey,
-    setSortAndPaginationConfig,
-    onSortConfigUpdate
+    paginationString,
 }: {
-    paginationString: string,
     dataKey: string,
-    setSortAndPaginationConfig: React.Dispatch<React.SetStateAction<SortAndPaginationConfig | null>>,
-    onSortConfigUpdate?: { callback?: React.Dispatch<React.SetStateAction<SortConfig | null>> } | null
-}) {
+    paginationString: string,
+}): UseApiPaginationFetchReturn {
+
+    if (typeof dataKey !== 'string' || dataKey.trim() === '') {
+        throw new Error('dataKey must be a non-empty string');
+    }
+
+    if (typeof paginationString !== 'string' || paginationString.trim() === '') {
+        throw new Error('paginationString must be a non-empty string');
+    }
 
     ValidateDataKey(dataKey);
 
-    const [paginationFetcherHook, setPaginationFetcherHook] = useState<PaginationFetcherHook>(() => PaginationFetcherHook.deserialize(paginationString));
-
-    const { fetcher, data, loading, error } = AxiosDataLoader.initialize(dataKey, null, paginationFetcherHook);
+    const paginationState: PaginationState = useMemo(() => PaginationState.Deserialize(paginationString), [paginationString]);
+    const { fetcher, data, loading, error } = AxiosDataLoader.initialize(dataKey, null, paginationState.Serialize());
 
     function updatePagination() {
-        setPaginationFetcherHook(paginationFetcherHook.duplicate());
-        fetcher.SetApiUrlPaginationQuery(paginationFetcherHook);
+        fetcher.SetApiUrlPaginationQuery(paginationState.Serialize());
         fetcher.FetchAndPopulateData();
-        if (onSortConfigUpdate && onSortConfigUpdate.callback) {
-            const sc: SortConfig = {
-                key: paginationFetcherHook.GetSortKey(),
-                direction: paginationFetcherHook.GetDirection(),
-            };
-            onSortConfigUpdate.callback(sc)
-        }
+        paginationState.NotifyConfigUpdate();
     }
 
-    useEffect(() => {
-        fetcher.FetchAndPopulateData();
-    }, []);
-
-    const [totalItemCount, setTotalItemCount] = useState<number | null>(null);
-
     const setTotalItemCountCallback = (count: number) => {
-        setTotalItemCount(count);
-        updatePagination();
+        paginationState.SetTotalItemCount(count);
+        paginationState.NotifyConfigUpdate();
     };
 
     useEffect(() => {
         const fetchTotalItemCount = async () => {
-            setTotalItemCountCallback(4999);
             await fetcher.FetchItemCount(setTotalItemCountCallback);
         };
         fetchTotalItemCount();
-    }, [dataKey]);
+        fetcher.FetchAndPopulateData();
+    }, []);
 
     const requestSort = (key: string) => {
-        paginationFetcherHook.requestSort(key);
+        paginationState.RequestSort(key);
         updatePagination();
     };
 
     const setPage = (page: number) => {
-        paginationFetcherHook.setPage(page);
+        paginationState.SetPage(page);
         updatePagination();
     };
 
-    useEffect(() => {
-        const sortAndPaginationConfig: SortAndPaginationConfig = {
-            sortKey: paginationFetcherHook.GetSortKey(),
-            direction: paginationFetcherHook.GetDirection(),
-            page: paginationFetcherHook.GetPage(),
-            itemCountPerPage: paginationFetcherHook.FetchItemCountPerPage(),
-            totalItemCount: totalItemCount
-        };
-        setSortAndPaginationConfig(sortAndPaginationConfig);
-    }, [PaginationFetcherHook, totalItemCount]);
-
-    return { data, loading, error, requestSort, setPage };
+    return { data, loading, error, requestSort, setPage, paginationState };
 }
-

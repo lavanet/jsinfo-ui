@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { Card, Box } from "@radix-ui/themes";
 import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
 import { EventTypeToString } from "@jsinfo/common/convertors";
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/SortTable";
+import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
 import { usePageContext } from "@jsinfo/context/PageContext";
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
 import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";

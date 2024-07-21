@@ -5,10 +5,10 @@ import Link from 'next/link'
 import { useState, useMemo, useEffect, useRef, ReactNode } from 'react';
 import { Table, Tabs } from '@radix-ui/themes';
 import React from 'react';
-import { useApiPaginationFetch } from '@jsinfo/hooks/useApiPaginationFetch';
+import { PaginationState, useApiPaginationFetch } from '@jsinfo/hooks/useApiPaginationFetch';
 import LoadingIndicator from './LoadingIndicator';
 import { Column, SortConfig, RowFormatters, SortableData, SortAndPaginationConfig } from '@jsinfo/common/types';
-import { AddSpacesBeforeCapsAndCapitalize, ConvertToSortConfig, GetNestedProperty } from '@jsinfo/common/utils';
+import { AddSpacesBeforeCapsAndCapitalize, GetNestedProperty } from '@jsinfo/common/utils';
 import { ErrorBoundary } from '@jsinfo/components/ErrorBoundary';
 import PaginationControl from './PaginationControl';
 import { ErrorDisplay } from './ErrorDisplay';
@@ -77,61 +77,66 @@ const useSortableData = (items: any[], defaultSortKey: string): SortableData => 
   return { tableData, requestSort, sortConfig };
 };
 
-interface SortableTableHeaderProps {
+interface SortableTableHeaderWithPaginationSateProps {
   tableAndTabName: string;
   columns: Column[];
   requestSort: (key: string) => void;
-  sortConfig: SortConfig | null;
-  onSortConfigUpdate?: { callback?: React.Dispatch<React.SetStateAction<SortConfig | null>> | null };
+  paginationState: PaginationState;
   columnLengthPercentages: { [key: string]: number } | null;
   csvButton?: ReactNode | null;
 }
 
-const SortableTableHeader: React.FC<SortableTableHeaderProps> = (props: SortableTableHeaderProps) => {
+const SortableTableHeaderWithPaginationSate: React.FC<SortableTableHeaderWithPaginationSateProps> = (props: SortableTableHeaderWithPaginationSateProps) => {
   if (typeof props.tableAndTabName !== 'string') {
     throw new Error(`Invalid prop: tableAndTabName should be a string, but received type ${typeof props.tableAndTabName} with value ${props.tableAndTabName}`);
   }
   if (!Array.isArray(props.columns)) {
     throw new Error('Invalid prop: columns should be an array');
   }
+
   if (typeof props.requestSort !== 'function') {
-    throw new Error('Invalid prop: requestSort should be a function');
-  }
-  if (props.sortConfig !== null && typeof props.sortConfig !== 'object') {
-    throw new Error('Invalid prop: sortConfig should be an object or null');
+    throw new Error(`Invalid prop: requestSort should be a function, but got type ${typeof props.requestSort} with value ${(props.requestSort + "").substring(0, 1000)}`);
   }
 
   if (props.columnLengthPercentages !== null && typeof props.columnLengthPercentages !== 'object') {
     throw new Error('Invalid prop: columnLengthPercentages should be an object or null');
   }
 
-  const [localSortConfig, setLocalSortConfig] = useState<SortConfig | null>(props.sortConfig);
-  if (props.onSortConfigUpdate) props.onSortConfigUpdate.callback = setLocalSortConfig;
+  const [sortAndPaginationConfig, setSortAndPaginationConfig] = useState<SortAndPaginationConfig>(props.paginationState.GetSortAndPaginationConfig());
+  props.paginationState.RegisterUpdateCallback(setSortAndPaginationConfig);
 
   return (
-    <Table.Header key={`SortatableHeader_${props.tableAndTabName}`}>
-      <Table.Row key={`SortatableHeaderColRow_${props.tableAndTabName}`}>
-        {props.columns.map((column, index) => (
-          <Table.ColumnHeaderCell
-            key={`SortatableHeaderCol_${props.tableAndTabName}_${column.key}`}
-            onClick={() => props.requestSort(column.key)}
-            style={{
-              width: `${Math.max((props.columnLengthPercentages && props.columnLengthPercentages[column.key]) || 0, 5)}%`,
-            }}
-          >
-            <div style={{ display: 'block', alignItems: 'center', whiteSpace: 'nowrap' }}>
-              {column.name}
-              {props.sortConfig && localSortConfig && localSortConfig.key === column.key
-                ? (localSortConfig.direction === 'ascending' ? '↑' : '↓')
-                : <span style={{ color: 'transparent' }}>↓</span>}
-              {props.csvButton && index === props.columns.length - 1 && props.csvButton}
-            </div>
-          </Table.ColumnHeaderCell>
-        ))}
+    <Table.Header key={`SortableHeader_${props.tableAndTabName}`}>
+      <Table.Row key={`SortableHeaderColRow_${props.tableAndTabName}`}>
+        {props.columns.map((column: Column, index: number) => {
+          const hasSortIndicator = sortAndPaginationConfig && sortAndPaginationConfig.sortKey && sortAndPaginationConfig.sortKey === column.key;
+          return (
+            <Table.ColumnHeaderCell
+              key={`SortableHeaderCol_${props.tableAndTabName}_${column.key}`}
+              onClick={() => props.requestSort(column.key)}
+              style={{
+                width: "auto"
+              }}
+            >
+              <div
+                style={{
+                  display: 'block',
+                  alignItems: 'center',
+                  whiteSpace: 'nowrap',
+                  width: 'auto'
+                }}
+              >
+                {column.name}
+                {hasSortIndicator ? (sortAndPaginationConfig.direction === 'ascending' ? '↑' : '↓') : <span style={{ color: 'transparent' }}>↓</span>}
+                {props.csvButton && index === props.columns.length - 1 && props.csvButton}
+              </div>
+            </Table.ColumnHeaderCell>
+          );
+        })}
       </Table.Row>
     </Table.Header>
   );
-}
+};
 
 interface SortableTableRowCellProps {
   columnName: string;
@@ -222,7 +227,6 @@ const SortableTableRow: React.FC<SortableTableRowProps> = (props: SortableTableR
   // dont show rows that have an empty pkey
   if (!key) return null;
 
-
   return (
     <Table.Row key={`${tableRowKey}_row`}>
       {props.firstColumn &&
@@ -299,9 +303,8 @@ const SortableTableBody: React.FC<SortableTableBodyProps> = (props: SortableTabl
 
 type SortableTableProps = {
   tableData: any[],
-  requestSort: (key: string) => void,
-  sortConfig: SortConfig,
-  onSortConfigUpdate?: { callback?: React.Dispatch<React.SetStateAction<SortConfig | null>> | null };
+  requestSort: (key: string) => void;
+  paginationState: PaginationState;
   columns: Column[],
   tableAndTabName: string,
   pkey: string,
@@ -347,7 +350,6 @@ const SortableTableContent: React.FC<SortableTableProps> = (props: SortableTable
           const column = props.columns[columnIndex];
           let columnValue = row[column.key] + "";
           const lowerCaseKey = column.key.toLowerCase();
-          // console.log("dasd", props.tableAndTabName, lowerCaseKey, lowerCaseKey.includes("spec"))
           if (!columnValue) continue;
 
           if (lowerCaseKey.includes("date") || lowerCaseKey.includes("time")) {
@@ -365,8 +367,9 @@ const SortableTableContent: React.FC<SortableTableProps> = (props: SortableTable
             }
           }
 
+          // last column has the csv button
           if (columnIndex === props.columns.length - 1) {
-            columnValue += "abcdefghijabcdefghij"; // Append 10 characters
+            columnValue += "abcdefghijabcdefghijabcdefghij"; // Append 30 characters
           }
 
           if (columnValue.length <= 10) columnValue = "abcdefghij"
@@ -401,130 +404,16 @@ const SortableTableContent: React.FC<SortableTableProps> = (props: SortableTable
 
   return (
     <Table.Root>
-      <SortableTableHeader
+      <SortableTableHeaderWithPaginationSate
         tableAndTabName={props.tableAndTabName} columns={props.columns}
-        onSortConfigUpdate={props.onSortConfigUpdate}
-        requestSort={props.requestSort} sortConfig={props.sortConfig}
+        requestSort={props.requestSort}
+        paginationState={props.paginationState}
         columnLengthPercentages={columnLengthPercentagesRef.current}
         csvButton={props.csvButton} />
       <SortableTableBody {...props} />
     </Table.Root>
   );
-}
 
-type SortableTableComponentProps = {
-  columns: Column[];
-  data: any[];
-  defaultSortKey: string;
-  onSortConfigUpdate?: { callback?: React.Dispatch<React.SetStateAction<SortConfig | null>> | null };
-  tableAndTabName: string;
-  pkey: string;
-  pkeyUrl?: string | null;
-  rowFormatters?: RowFormatters;
-  firstColumn?: string;
-  csvButton?: ReactNode | null;
-};
-
-export const SortableTableComponent: React.FC<SortableTableComponentProps> = (props: SortableTableComponentProps) => {
-  // Check if data is an array
-  if (!Array.isArray(props.data)) {
-    throw new Error("Data is not an array");
-  }
-
-  if (props.data.length > 0) {
-    // Check if the first item in the array is an object
-    if (typeof props.data[0] !== 'object') {
-      console.error("First item in the data array is not an object:", props.data);
-      throw new Error("First item in the data array is not an object");
-    }
-
-    // Check if the second item in the array is an object
-    if (props.data.length > 1 && typeof props.data[1] !== 'object') {
-      throw new Error("Second item in the data array is not an object");
-    }
-
-    // Check if the first and second items have the same keys
-    if (props.data.length > 1) {
-      const firstItemKeys = Object.keys(props.data[0]).sort();
-      const secondItemKeys = Object.keys(props.data[1]).sort();
-
-      if (JSON.stringify(firstItemKeys) !== JSON.stringify(secondItemKeys)) {
-        throw new Error("First and second items in the data array do not have the same keys");
-      }
-    }
-  }
-
-  if (!props.columns || !Array.isArray(props.columns)) {
-    console.error("Invalid type for columns:", props.columns);
-    throw new Error(`Invalid type for columns. Expected array, received ${props.columns}`);
-  }
-
-  if (typeof props.defaultSortKey !== 'string') {
-    throw new Error(`Invalid type for defaultSortKey. Expected string, received ${props.defaultSortKey}`);
-  }
-
-  if (typeof props.tableAndTabName !== 'string') {
-    throw new Error(`Invalid type for tableAndTabName. Expected string, received ${props.tableAndTabName}`);
-  }
-
-  if (typeof props.pkey !== 'string') {
-    throw new Error(`Invalid type for pkey. Expected string, received ${props.pkey}`);
-  }
-
-  if (props.pkeyUrl && typeof props.pkeyUrl !== 'string') {
-    throw new Error(`Invalid type for pkeyUrl. Expected string, received ${typeof props.pkeyUrl}`);
-  }
-
-  if (props.firstColumn && typeof props.firstColumn !== 'string') {
-    throw new Error(`Invalid type for firstColumn. Expected string?, received ${typeof props.pkeyUrl}`);
-  }
-
-  if (props.firstColumn && !props.columns.some(column => column.key === props.firstColumn)) {
-    throw new Error(`firstColumn "${props.firstColumn}" is not included in columns`);
-  }
-
-  if (props.data && props.data.length > 0) {
-    const firstEntry = props.data[0];
-    for (let column of props.columns) {
-      // skip the keys that go deep
-      if (column.key.includes('.')) {
-        continue
-      }
-      if (!(column.key in firstEntry)) {
-        if (column.altKey && column.altKey in firstEntry) {
-          column.key = column.altKey;
-        } else {
-          throw new Error(`Column is not present in the first entry of data. Column object: ${JSON.stringify(column)}. First entry: ${JSON.stringify(props.data[0])} of type "${typeof props.data[0]}"`);
-        }
-      }
-    }
-  }
-
-  if (props.data.length === 0) {
-    return (
-      <div style={{ padding: '1em', textAlign: 'center' }}>
-        <h2>No <span style={{ fontWeight: 'bold', color: 'grey' }}>{AddSpacesBeforeCapsAndCapitalize(props.tableAndTabName)}</span> data available</h2>
-      </div>
-    );
-  }
-
-  const { tableData, requestSort, sortConfig }: SortableData = useSortableData(props.data, props.defaultSortKey);
-
-  return (
-    <SortableTableContent
-      tableData={tableData}
-      csvButton={props.csvButton}
-      requestSort={requestSort}
-      onSortConfigUpdate={props.onSortConfigUpdate}
-      sortConfig={sortConfig}
-      columns={[...props.columns]}
-      tableAndTabName={props.tableAndTabName}
-      pkey={props.pkey}
-      pkeyUrl={props.pkeyUrl}
-      rowFormatters={props.rowFormatters}
-      firstColumn={props.firstColumn}
-    />
-  );
 }
 
 type DataKeySortableTableComponentProps = {
@@ -574,18 +463,16 @@ export const DataKeySortableTableComponent: React.FC<DataKeySortableTableCompone
     throw new Error(`firstColumn "${props.firstColumn}" is not included in columns`);
   }
 
-  let onSortConfigUpdate: { callback?: React.Dispatch<React.SetStateAction<SortConfig | null>> } | null = {};
-
-  const [sortAndPaginationConfig, setSortAndPaginationConfig] = useState<SortAndPaginationConfig | null>(null);
-  const { data, loading, error, requestSort, setPage } = useApiPaginationFetch({
-    paginationString: props.defaultSortKey + ",1," + JSINFO_QUERY_DEFAULT_ITEMS_PER_PAGE,
+  const { data, loading, error, requestSort, setPage, paginationState } = useApiPaginationFetch({
     dataKey: props.dataKey,
-    setSortAndPaginationConfig: setSortAndPaginationConfig,
-    onSortConfigUpdate: onSortConfigUpdate,
+    paginationString: props.defaultSortKey + ",1," + JSINFO_QUERY_DEFAULT_ITEMS_PER_PAGE,
   });
 
+  const [sortAndPaginationConfig, setSortAndPaginationConfig] = useState<SortAndPaginationConfig>(paginationState.GetSortAndPaginationConfig());
+  paginationState.RegisterUpdateCallback(setSortAndPaginationConfig)
+
   const [componentData, setComponentData] = useState(<div></div>);
-  const [loadingTimeout, setLoadingTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [loadingTimeout, setLoadingTimeout] = useState<ReturnType<typeof setTimeout> | null>(null);
 
   const loadingRef = useRef(loading);
 
@@ -643,8 +530,7 @@ export const DataKeySortableTableComponent: React.FC<DataKeySortableTableCompone
         <SortableTableContent
           tableData={dataObject}
           requestSort={requestSort}
-          sortConfig={ConvertToSortConfig(sortAndPaginationConfig)}
-          onSortConfigUpdate={onSortConfigUpdate}
+          paginationState={paginationState}
           columns={[...props.columns]}
           tableAndTabName={props.tableAndTabName}
           pkey={props.pkey}
@@ -654,7 +540,7 @@ export const DataKeySortableTableComponent: React.FC<DataKeySortableTableCompone
           csvButton={props.csvButton}
         />
         <PaginationControl
-          sortAndPaginationConfig={sortAndPaginationConfig}
+          paginationState={paginationState}
           setPage={setPage}
         />
       </ErrorBoundary>
@@ -662,36 +548,6 @@ export const DataKeySortableTableComponent: React.FC<DataKeySortableTableCompone
   }, [loading, error, data, sortAndPaginationConfig]);
 
   return componentData;
-}
-
-type SortableTableInATabComponentProps = {
-  columns: Column[];
-  data: any[];
-  defaultSortKey: string;
-  onSortConfigUpdate?: { callback?: React.Dispatch<React.SetStateAction<SortConfig | null>> | null };
-  tableAndTabName: string;
-  pkey: string;
-  pkeyUrl?: string | null;
-  rowFormatters?: RowFormatters;
-  firstColumn?: string;
-};
-
-export const SortableTableInATabComponent: React.FC<SortableTableInATabComponentProps> = (props: SortableTableInATabComponentProps) => {
-  return (
-    <Tabs.Content value={props.tableAndTabName}>
-      <SortableTableComponent
-        onSortConfigUpdate={props.onSortConfigUpdate}
-        columns={props.columns}
-        data={props.data}
-        defaultSortKey={props.defaultSortKey}
-        tableAndTabName={props.tableAndTabName}
-        pkey={props.pkey}
-        pkeyUrl={props.pkeyUrl}
-        rowFormatters={props.rowFormatters}
-        firstColumn={props.firstColumn}
-      />
-    </Tabs.Content>
-  );
 }
 
 type DataKeySortableTableInATabComponentProps = {

@@ -19,6 +19,8 @@ const StatusCall: React.FC<StatusCallProps> = ({ status, style }) => {
                 return "red";
             case "unstaking":
                 return "orange";
+            case "unstaked":
+                return "orange";
             case "inactive":
                 return "grey";
             case "degraded":

@@ -1,11 +1,7 @@
 // src/common/utils.tsx
 
-import Dayjs from "dayjs";
-import relativeTIme from "dayjs/plugin/relativeTime";
 import { SortAndPaginationConfig, SortConfig } from "./types";
 import { Card } from "@radix-ui/themes";
-
-Dayjs.extend(relativeTIme);
 
 export function GetNestedProperty(obj: Record<string, any>, key: string): any {
   if (key.includes(",")) {
@@ -24,15 +20,17 @@ export function GetNestedProperty(obj: Record<string, any>, key: string): any {
 }
 
 export const FormatTimeDifference = (date: Date): string => {
-  const minutesAgo = Dayjs().diff(Dayjs(date), "minute");
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const minutesAgo = Math.floor(diffMs / 60000);
+
   if (minutesAgo < 60) {
     return `${minutesAgo}min ago`;
   } else if (minutesAgo < 1440) {
-    // 1440 minutes in a day
-    let hoursAgo = (minutesAgo / 60).toFixed(0);
+    let hoursAgo = Math.floor(minutesAgo / 60);
     return `${hoursAgo}hrs ago`;
   }
-  let daysAgo = (minutesAgo / 1440).toFixed(0);
+  let daysAgo = Math.floor(minutesAgo / 1440);
   return `${daysAgo}d ago`;
 };
 

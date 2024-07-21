@@ -15,7 +15,7 @@ const TableCsvButton: React.FC<TableCsvButtonProps> = ({ csvDownloadLink }) => {
     }
     const separator = restUrl.endsWith('/') || csvDownloadLink.startsWith('/') ? '' : '/';
     return (
-        <div style={{ marginLeft: '10px', padding: '0', float: 'right', margin: '-10px', marginBottom: '-30px' }}>
+        <span style={{ marginLeft: '10px', padding: '0', float: 'right', margin: '-10px', marginBottom: '-30px' }}>
             <a
                 href={`${restUrl}${separator}${csvDownloadLink}`}
                 target="_blank"
@@ -29,7 +29,7 @@ const TableCsvButton: React.FC<TableCsvButtonProps> = ({ csvDownloadLink }) => {
                     alt="export-csv"
                 />
             </a >
-        </div >
+        </span >
     );
 };
 

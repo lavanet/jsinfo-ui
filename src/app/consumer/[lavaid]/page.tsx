@@ -11,7 +11,7 @@ import {
   ChartjsSetLastDotHighInChartData,
   ChartjsSetLastPointToLineInChartOptions,
 } from "@jsinfo/components/ChartJsReactiveLineChart";
-import { SortableTableInATabComponent } from "@jsinfo/components/SortTable";
+import { SortableTableInATabComponent } from "@jsinfo/components/StaticSortTable";
 import { ChartJsReactiveLineChart } from "@jsinfo/components/ChartJsReactiveLineChart";
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
 import TitledCard from "@jsinfo/components/TitledCard";

@@ -33,7 +33,6 @@ export interface CachedFetchDateRange {
     from?: Date | string | null;
     to?: Date | string | null;
 }
-
 export interface ProviderMonikerFullInfo {
     provider: string;
     moniker: string;

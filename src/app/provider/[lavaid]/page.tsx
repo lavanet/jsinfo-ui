@@ -8,7 +8,7 @@ import {
   GeoLocationToString,
   EventTypeToString,
 } from "@jsinfo/common/convertors";
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/SortTable";
+import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
 import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
 import { useEffect } from "react";
 import { usePageContext } from "@jsinfo/context/PageContext";
