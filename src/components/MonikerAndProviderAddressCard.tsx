@@ -30,8 +30,14 @@ const renderMoniker = (moniker: string, monikerfull: string) => (
     </Text>
 );
 
-const renderProviderAddress = (provider: string) => (
+const renderProviderAddressInLineWithIcon = (provider: string) => (
     <Text as="div" size="2" color="gray" style={{ marginLeft: '10px', whiteSpace: 'nowrap' }}>
+        {provider}
+    </Text>
+);
+
+const renderProviderAddressOnNewLine = (provider: string) => (
+    <Text as="div" size="2" color="gray" style={{ marginLeft: '20px', whiteSpace: 'nowrap' }}>
         {provider}
     </Text>
 );
@@ -56,14 +62,14 @@ const MonikerAndProviderAddressCard: React.FC<MonikerAndProviderAddressCardProps
                             {renderUserIcon()}
                             {renderMoniker(provider.moniker, provider.monikerfull)}
                         </div>
-                        {renderProviderAddress(provider.provider)}
+                        {renderProviderAddressOnNewLine(provider.provider)}
                     </>
                 );
             } else if (IsMeaningfulText(provider.provider)) {
                 return (
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         {renderUserIcon()}
-                        {renderProviderAddress(provider.provider)}
+                        {renderProviderAddressInLineWithIcon(provider.provider)}
                     </div>
                 );
             } else {
