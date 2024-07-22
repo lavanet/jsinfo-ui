@@ -5,7 +5,6 @@ import { AxiosApiGet } from './axios';
 import { GetAxiosRetryCount } from '@jsinfo/common/env';
 import { ConvertDateForServer } from '@jsinfo/common/dateutils';
 import { CachedFetchDateRange } from '@jsinfo/common/types';
-
 export class AxiosDataLoader {
     private maxRetries = GetAxiosRetryCount();
 

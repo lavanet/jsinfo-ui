@@ -16,7 +16,7 @@ import { FormatNumber, FormatNumberWithString, RenderInFullPageCard } from '@jsi
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
 import TableCsvButton from "@jsinfo/components/TableCsvButton";
 import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
-import ProviderCard from "@jsinfo/components/ProviderCard";
+import MonikerAndProviderAddressCard from "@jsinfo/components/MonikerAndProviderAddressCard";
 import TitledCard from "@jsinfo/components/TitledCard";
 import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
 import TimeTooltip from '@jsinfo/components/TimeTooltip';
@@ -56,7 +56,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
   return (
     <>
       <BlockWithDateCard blockData={data} />
-      <ProviderCard provider={provider} />
+      <MonikerAndProviderAddressCard provider={provider} />
       <Card>
         <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-4">
           <TitledCard
