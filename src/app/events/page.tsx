@@ -1,12 +1,12 @@
 // src/app/events/page.tsx
 "use client";
 
-import Link from 'next/link'
+import Link from 'next/link';
+import { useEffect } from "react";
 import { Card, Box } from "@radix-ui/themes";
 import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
 import { EventTypeToString } from "@jsinfo/common/convertors";
 import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
-import { useEffect } from "react";
 import { usePageContext } from "@jsinfo/context/PageContext";
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
 import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
@@ -14,7 +14,8 @@ import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
 import TimeTooltip from '@jsinfo/components/TimeTooltip';
 import CsvButton from '@jsinfo/components/CsvButton';
 import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
-import { IsMeaningfulText, RenderInFullPageCard } from '@jsinfo/common/utils';
+import { RenderInFullPageCard } from '@jsinfo/common/utils';
+import MonikerAndProviderLink from '@jsinfo/components/MonikerAndProviderLink';
 
 export default function Events() {
 
@@ -93,16 +94,7 @@ export default function Events() {
               pkey="id"
               pkeyUrl="none"
               rowFormatters={{
-                provider: (evt) =>
-                  evt.provider ? (
-                    <Link href={`/provider/${evt.provider}`}>
-                      {evt.moniker
-                        ? evt.moniker
-                        : evt.provider}
-                    </Link>
-                  ) : (
-                    ""
-                  ),
+                provider: (evt) => (<MonikerAndProviderLink provider={evt} />),
                 eventType: (evt) => (
                   <Link
                     href={
@@ -121,8 +113,7 @@ export default function Events() {
                     {evt.blockId}
                   </Link>
                 ),
-                datetime: (evt) =>
-                  (<TimeTooltip datetime={evt.datetime} />),
+                datetime: (evt) => (<TimeTooltip datetime={evt.datetime} />),
                 text1: (evt) => {
                   return (
                     <div
@@ -180,16 +171,7 @@ export default function Events() {
               pkey="id"
               pkeyUrl="none"
               rowFormatters={{
-                provider: (payment) =>
-                  payment.provider ? (
-                    <Link href={`/provider/${payment.provider}`}>
-                      {IsMeaningfulText(payment.moniker)
-                        ? payment.moniker
-                        : payment.provider}
-                    </Link>
-                  ) : (
-                    ""
-                  ),
+                provider: (payment) => (<MonikerAndProviderLink provider={payment} />),
                 specId: (payment) => (
                   <Link href={`/spec/${payment.specId}`}>
                     {payment.specId}
@@ -236,16 +218,7 @@ export default function Events() {
               pkey="provider,blockId"
               pkeyUrl="none"
               rowFormatters={{
-                provider: (report) =>
-                  report.provider ? (
-                    <Link href={`/provider/${report.provider}`}>
-                      {IsMeaningfulText(report.moniker)
-                        ? report.moniker
-                        : report.provider}
-                    </Link>
-                  ) : (
-                    ""
-                  ),
+                provider: (report) => (<MonikerAndProviderLink provider={report} />),
                 blockId: (report) => (
                   <Link
                     href={
