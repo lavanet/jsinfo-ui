@@ -24,9 +24,10 @@ const renderUserIcon = () => (
 
 const renderMoniker = (moniker: string, monikerfull: string) => (
     <Text as="div" size="2" weight="bold" style={{ marginLeft: '10px', whiteSpace: 'nowrap' }}>
-        <span title={monikerfull}>
+        {/* <span title={monikerfull}>
             <ProviderMoniker moniker={moniker} />
-        </span>
+        </span> */}
+        <ProviderMoniker moniker={monikerfull} />
     </Text>
 );
 
