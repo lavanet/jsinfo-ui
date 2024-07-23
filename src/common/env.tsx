@@ -1,5 +1,6 @@
 // src/common/utils.tsx
 
+
 let cachedUrl: string | null = null;
 
 export function GetRestUrl() {
@@ -14,6 +15,24 @@ export function GetRestUrl() {
   }
 
   cachedUrl = url;
+
+  return url;
+}
+
+let logoUrl: string | null = null;
+
+export function GetLogoUrl() {
+  if (logoUrl !== null) {
+    return logoUrl;
+  }
+
+  const url = process.env["LOGO_URL"] || process.env["NEXT_PUBLIC_LOGO_URL"];
+
+  if (!url) {
+    throw new Error("LOGO_URL environment variable is not defined or is an empty string.");
+  }
+
+  logoUrl = url;
 
   return url;
 }
