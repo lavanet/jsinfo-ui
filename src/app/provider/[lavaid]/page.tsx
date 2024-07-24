@@ -112,6 +112,10 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
               content: "Errors",
             },
             {
+              value: "attributes",
+              content: "Attributes",
+            },
+            {
               value: "stakes",
               content: "Stakes",
             },
@@ -197,7 +201,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
               }}
               csvButton={(
                 <TableCsvButton
-                  csvDownloadLink={`providerStakesCsv/${decodedLavaId}`}
+                  csvDownloadLink={`providerErrorsCsv/${decodedLavaId}`}
                 />
               )}
             />
@@ -294,12 +298,11 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                 { key: "geolocation", name: "Geolocation" },
                 { key: "addons", name: "Addons" },
                 { key: "extensions", name: "Extensions" },
-                { key: "stake", name: "Stake" },
               ]}
               dataKey={`providerStakes/${decodedLavaId}`}
               defaultSortKey="specId"
-              tableAndTabName="stakes"
-              pkey="specId,provider"
+              tableAndTabName="attributes"
+              pkey="specId"
               pkeyUrl="spec"
               rowFormatters={{
                 specId: (data) => (
@@ -307,11 +310,38 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                 ),
                 status: (data) => <StatusCall status={StatusToString(data.status)} />,
                 geolocation: (data) => GeoLocationToString(data.geolocation),
-                stake: (data) => FormatNumber(data.stake),
               }}
               csvButton={(
                 <TableCsvButton
-                  csvDownloadLink={`providerEventsCsv/${decodedLavaId}`}
+                  csvDownloadLink={`providerStakesCsv/${decodedLavaId}`}
+                />
+              )}
+            />
+
+            <DataKeySortableTableInATabComponent
+              columns={[
+                { key: "specId", name: "Spec" },
+                { key: "totalStake", name: "Total Stake" },
+                { key: "stake", name: "Self Stake" },
+                { key: "delegateLimit", name: "Delegation Limit" },
+                { key: "delegateTotal", name: "Delegation Total" },
+                { key: "delegateCommission", name: "Delegate Commission" },
+              ]}
+              dataKey={`providerStakes/${decodedLavaId}`}
+              defaultSortKey="specId"
+              tableAndTabName="stakes"
+              pkey="specId"
+              pkeyUrl="spec"
+              rowFormatters={{
+                totalStake: (data) => FormatNumber(data.totalStake),
+                stake: (data) => FormatNumber(data.stake),
+                delegateLimit: (data) => FormatNumber(data.delegateLimit),
+                delegateTotal: (data) => FormatNumber(data.delegateTotal),
+                delegateCommission: (data) => FormatNumber(data.delegateCommission),
+              }}
+              csvButton={(
+                <TableCsvButton
+                  csvDownloadLink={`providerStakesCsv/${decodedLavaId}`}
                 />
               )}
             />
@@ -325,7 +355,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                 { key: "relay_payments.relays", name: "Relays" },
                 { key: "relay_payments.cu", name: "CU" },
                 { key: "relay_payments.qosSync", name: "QoS" },
-                { key: "relay_payments.qosSyncExc", name: "Excellence" },
+                { key: "relay_payments.qosSyncExc", name: "QoS Excellence" },
               ]}
               dataKey={`providerRewards/${decodedLavaId}`}
               defaultSortKey="relay_payments.id|desc"
@@ -362,9 +392,13 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                 "relay_payments.pay": (payment) =>
                   `${payment.relay_payments.pay} ULAVA`,
                 "relay_payments.qosSync": (payment) =>
-                  `${payment.relay_payments.qosSync}, ${payment.relay_payments.qosAvailability}, ${payment.relay_payments.qosSync}`,
+                  <span title={`Sync: ${payment.relay_payments.qosSync}, Availability: ${payment.relay_payments.qosAvailability}, Latency: ${payment.relay_payments.qosLatency}`}>
+                    {payment.relay_payments.qosSync}, {payment.relay_payments.qosAvailability}, {payment.relay_payments.qosLatency}
+                  </span>,
                 "relay_payments.qosSyncExc": (payment) =>
-                  `${payment.relay_payments.qosSyncExc}, ${payment.relay_payments.qosAvailabilityExc}, ${payment.relay_payments.qosSyncExc}`,
+                  <span title={`SyncExc: ${payment.relay_payments.qosSyncExc}, AvailabilityExc: ${payment.relay_payments.qosAvailabilityExc}, LatencyExc: ${payment.relay_payments.qosLatencyExc}`}>
+                    {payment.relay_payments.qosSyncExc}, {payment.relay_payments.qosAvailabilityExc}, {payment.relay_payments.qosLatencyExc}
+                  </span>,
               }}
               csvButton={(
                 <TableCsvButton

@@ -14,7 +14,7 @@ import SpecChart from '@jsinfo/charts/specChart';
 import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
 import SpecEndpointHealthSummary from '@jsinfo/app/spec/[specid]/_components/SpecEndpointHealthSummary';
 import SpecStakesTable from '@jsinfo/app/spec/[specid]/_components/SpecStakesTable';
-
+import SpecRelaysTable from "./_components/SpecRelaysTable";
 
 export default function Spec({ params }: { params: { specid: string } }) {
 
@@ -94,14 +94,21 @@ export default function Spec({ params }: { params: { specid: string } }) {
       <SpecChart specid={specId} />
 
       <Card>
-        <JsinfoTabs defaultValue="stakes"
+        <JsinfoTabs defaultValue="relays"
           tabs={[
+            {
+              value: "relays",
+              content: "Relays",
+            },
             {
               value: "stakes",
               content: "Stakes",
             },
           ]}
         >
+          <Box>
+            <SpecRelaysTable specid={specId} />
+          </Box>
           <Box>
             <SpecStakesTable specid={specId} />
           </Box>
