@@ -35,7 +35,7 @@ const MonikerAndProviderLink: React.FC<MonikerAndProviderLinkProps> = ({ provide
         } else {
             return (<>
                 <Text color="red">
-                    Incomplete provider/moniker information
+                    No provider address
                 </Text>
             </>)
         }
