@@ -11,7 +11,7 @@ interface TextToggleProps {
 }
 
 const TextToggle: React.FC<TextToggleProps> = ({ openText, closeText, onChange, style }) => (
-    <Toggle size="xs" checkedChildren={openText} unCheckedChildren={closeText} onChange={onChange} style={style} />
+    <Toggle size="xs" checkedChildren={openText} unCheckedChildren={closeText} onChange={onChange} style={{ ...style, whiteSpace: 'nowrap' }} />
 );
 
 export default TextToggle;

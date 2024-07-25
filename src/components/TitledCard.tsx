@@ -25,9 +25,9 @@ const TitledCard: React.FC<TitledCardProps> = ({ title, value, className, format
     }
 
     const card = (
-        <Card className={`w-full ${className}`}>
+        <Card className={`w-full ${className}`} style={{ fontSize: '16px', padding: '14px', paddingLeft: '16px' }}>
             {title}
-            <Text as="div" size="1" weight="bold">
+            <Text as="div" style={{ fontSize: '20px' }} weight="bold">
                 {formattedValue}
             </Text>
         </Card>

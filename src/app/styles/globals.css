@@ -8,6 +8,62 @@
   }
 }
 
+/* -------- Changes to remove boxes -------- */
+
+:root {
+  --box-margin: 10px;
+}
+
+.box-margin-bottom {
+  margin-bottom: var(--box-margin);
+}
+
+.box-margin-div {
+  height: var(--box-margin);
+}
+
+/* -------- Dynamic page size -------- */
+
+body,
+body > div,
+body > div > div,
+body > div > div > div {
+  width: 100vw;
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  justify-content: flex-start; /* Center children vertically */
+  align-items: center; /* Center children horizontally */
+  margin: 0 auto; /* Remove default margin */
+}
+
+/* Add this to your CSS file */
+.body-div {
+  margin: var(--box-margin);
+  width: 1340px; /* Default width */
+}
+
+/* For screens smaller than 1400px */
+@media (max-width: 1400px) {
+  .body-div {
+    width: 97%; /* Adjust width to be 90% of the screen */
+  }
+}
+
+/* For smaller devices */
+@media (max-width: 768px) {
+  .body-div {
+    width: 95%; /* Adjust width to be 100% of the screen */
+  }
+}
+
+@media (max-width: 600px) {
+  .body-div {
+    width: 120%; /* Adjust width to be 100% of the screen */
+  }
+}
+
+/* -------- Reference pallete -------- */
+
 /* Designers base color pallete
 :root {
     --color-primary/key-600: #290900ff;

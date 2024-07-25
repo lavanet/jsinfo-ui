@@ -262,8 +262,8 @@ export const ChartJsReactiveLineChartWithDatePicker: React.FC<ChartJsReactiveLin
   return (
     <Box style={{ width: '100%', maxHeight: '100vh' }}>
       <Card style={{ width: '100%', height: '100%' }}>
-        <div style={{ marginBottom: '5px' }}>
-          {title && <Box style={{ float: 'left', marginLeft: '11px', userSelect: 'text' }}>{title}</Box>}
+        <div style={{ marginBottom: '7px' }}>
+          {title && <Box style={{ float: 'left', marginLeft: '11px', userSelect: 'text', fontSize: '18px' }}>{title}</Box>}
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             {rightControl ? rightControl : null}
             <RangeDatePicker onDateChange={onDateChange} datePickerValue={datePickerValue} />
@@ -273,7 +273,7 @@ export const ChartJsReactiveLineChartWithDatePicker: React.FC<ChartJsReactiveLin
           <Line data={data} options={responsiveChartOptions}></Line>
         </div>
       </Card>
-    </Box>
+    </Box >
   );
 };
 

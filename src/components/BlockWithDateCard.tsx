@@ -13,11 +13,8 @@ interface BlockWithDateCardProps {
     blockData: BlockData;
 }
 
-
-
-
 const BlockWithDateCard: FC<BlockWithDateCardProps> = ({ blockData }) => (
-    <Card>
+    <Card className='box-margin-bottom'>
         <Flex gap="3" align="center">
             <Box style={{ paddingLeft: '5px' }}>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -28,10 +25,10 @@ const BlockWithDateCard: FC<BlockWithDateCardProps> = ({ blockData }) => (
                         alt="export-csv"
                         style={{ display: 'inline-block', verticalAlign: 'middle', margin: '-15px', paddingBottom: '2px' }}
                     />
-                    <Text size="2" weight="bold">
-                        <span style={{ marginLeft: '10px', whiteSpace: 'nowrap' }}>Block {blockData.height}</span>
+                    <Text size="2">
+                        <span style={{ marginLeft: '10px', whiteSpace: 'nowrap', fontSize: '16px' }}>Block {blockData.height}</span>
                     </Text>
-                    <Text size="1" color="gray" style={{ marginLeft: '6px', whiteSpace: 'nowrap' }}>
+                    <Text size="1" color="gray" style={{ marginLeft: '6px', whiteSpace: 'nowrap', fontSize: '14px', marginTop: '2px' }}>
                         <TimeTooltip datetime={blockData.datetime} />
                     </Text>
                 </div>

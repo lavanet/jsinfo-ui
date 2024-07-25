@@ -197,15 +197,15 @@ const ProviderLatestHealthCards: React.FC<ProviderLatestHealthCardsProps> = ({ l
 
     return RenderInFullPageCard(
         <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-            <div style={{ marginBottom: '9px' }}>
-                <Box style={{ float: 'left', marginLeft: '8px', userSelect: 'text' }}>
+            <div style={{ marginBottom: '12px' }}>
+                <Box style={{ float: 'left', marginLeft: '8px', userSelect: 'text', fontSize: '18px' }}>
                     Latest health metrics for provider specs queried from US/EU regions
                 </Box>
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                     <TextToggle key={hckey(`textoggle`)} openText='Full info' closeText='Basic info' onChange={toggleVisibility} style={{ marginRight: '-5px' }} />
                 </div>
             </div>
-            <div key={hckey(`div`)} className="healthcontainer" style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'flex-start', margin: "-2px", marginBottom: "-15px", fontSize: '10px', width: '100%', marginLeft: "-4px" }}>
+            <div key={hckey(`div`)} className="healthcontainer" style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'flex-start', margin: "-2px", marginBottom: "-8px", fontSize: '10px', width: '100%', marginLeft: "-4px" }}>
                 {cards.map(({ card }, _) => (
                     <div key={hckey(`div`)} style={{ marginRight: '2px' }}>
                         {card}

@@ -44,7 +44,7 @@ export default function RootLayout({
         >
           <Container>
             <SpeedInsights />
-            <div style={{ margin: "10px" }}>
+            <div className="body-div">
               <PageProvider>
                 <Navbar />
                 <main>{children}</main>

@@ -57,7 +57,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
     <>
       <BlockWithDateCard blockData={data} />
       <MonikerAndProviderAddressCard provider={provider} />
-      <Card>
+      <div style={{ marginTop: 'var(--box-margin)', marginBottom: 'var(--box-margin)' }}>
         <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-4">
           <TitledCard
             title="Total CU"
@@ -94,12 +94,12 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
             formatNumber={true}
           /> */}
         </Flex>
-      </Card>
+      </div>
 
       <ProviderChart addr={decodedLavaId} />
-
+      <div className="box-margin-div"></div>
       <ProviderLatestHealthCards lavaId={decodedLavaId} />
-
+      <div className="box-margin-div"></div>
       <Card>
         <JsinfoTabs defaultValue="health"
           tabs={[

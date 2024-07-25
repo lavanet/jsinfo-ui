@@ -2,80 +2,18 @@
 "use client";
 
 import Link from 'next/link'
-import { useState, useMemo, useEffect, useRef, ReactNode } from 'react';
+import { useState, useEffect, useRef, ReactNode } from 'react';
 import { Table, Tabs } from '@radix-ui/themes';
 import React from 'react';
 import { PaginationState, useApiPaginationFetch } from '@jsinfo/hooks/useApiPaginationFetch';
 import LoadingIndicator from './LoadingIndicator';
-import { Column, SortConfig, RowFormatters, SortableData, SortAndPaginationConfig } from '@jsinfo/common/types';
+import { Column, RowFormatters, SortAndPaginationConfig } from '@jsinfo/common/types';
 import { AddSpacesBeforeCapsAndCapitalize, GetNestedProperty } from '@jsinfo/common/utils';
 import { ErrorBoundary } from '@jsinfo/components/ErrorBoundary';
 import PaginationControl from './PaginationControl';
 import { ErrorDisplay } from './ErrorDisplay';
 
 const JSINFO_QUERY_DEFAULT_ITEMS_PER_PAGE = 20
-
-const useSortableData = (items: any[], defaultSortKey: string): SortableData => {
-  if (!Array.isArray(items)) {
-    console.error('Invalid type for items. Expected array, received', items);
-    throw new Error(`Invalid type for items. Expected array, received ${Object.prototype.toString.call(items)}`);
-  }
-
-  let initialDirection: "ascending" | "descending" = 'ascending';
-  let initialKey = defaultSortKey;
-  if (defaultSortKey.endsWith('|desc')) {
-    initialDirection = 'descending';
-    initialKey = defaultSortKey.slice(0, -5);
-  }
-
-  const [sortConfig, setSortConfig] = useState<SortConfig>({ key: initialKey, direction: initialDirection });
-
-  const tableData = useMemo(() => {
-    let sortableItems = [...items];
-    if (sortConfig !== null) {
-      sortableItems.sort((a, b) => {
-        let aValue = GetNestedProperty(a, sortConfig.key);
-        let bValue = GetNestedProperty(b, sortConfig.key);
-
-        // Handle null or undefined values
-        if (aValue === null || aValue === undefined) {
-          aValue = '';
-        }
-        if (bValue === null || bValue === undefined) {
-          bValue = '';
-        }
-
-        // If both values are numbers or can be converted to numbers, compare as numbers
-        let aValueNumber = Number(aValue);
-        let bValueNumber = Number(bValue);
-        if (!isNaN(aValueNumber) && !isNaN(bValueNumber)) {
-          return (aValueNumber - bValueNumber) * (sortConfig.direction === 'ascending' ? 1 : -1);
-        }
-
-        // Convert numbers to strings for comparison
-        if (typeof aValue === 'number') {
-          aValue = aValue.toString();
-        }
-        if (typeof bValue === 'number') {
-          bValue = bValue.toString();
-        }
-
-        return aValue.localeCompare(bValue) * (sortConfig.direction === 'ascending' ? 1 : -1);
-      });
-    }
-    return sortableItems;
-  }, [items, sortConfig]);
-
-  const requestSort = (key: string) => {
-    let direction: "ascending" | "descending" = 'ascending';
-    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
-      direction = 'descending';
-    }
-    setSortConfig({ key, direction });
-  };
-
-  return { tableData, requestSort, sortConfig };
-};
 
 interface SortableTableHeaderWithPaginationSateProps {
   tableAndTabName: string;

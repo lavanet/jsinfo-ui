@@ -23,7 +23,7 @@ const renderUserIcon = () => (
 );
 
 const renderMoniker = (moniker: string, monikerfull: string) => (
-    <Text as="div" size="2" weight="bold" style={{ marginLeft: '10px', whiteSpace: 'nowrap' }}>
+    <Text as="div" weight="bold" style={{ marginLeft: '10px', whiteSpace: 'nowrap', fontSize: '16px' }}>
         <span title={monikerfull}>
             <ProviderMoniker moniker={moniker} />
         </span>
@@ -31,19 +31,19 @@ const renderMoniker = (moniker: string, monikerfull: string) => (
 );
 
 const renderProviderAddressInLineWithIcon = (provider: string) => (
-    <Text as="div" size="2" color="gray" style={{ marginLeft: '10px', whiteSpace: 'nowrap' }}>
+    <Text as="div" style={{ marginLeft: '10px', whiteSpace: 'nowrap', fontSize: '16px', color: 'white' }}>
         {provider}
     </Text>
 );
 
 const renderProviderAddressOnNewLine = (provider: string) => (
-    <Text as="div" size="2" color="gray" style={{ marginLeft: '20px', whiteSpace: 'nowrap' }}>
+    <Text as="div" style={{ marginLeft: '20px', whiteSpace: 'nowrap', fontSize: '14px', marginTop: '4px' }}>
         {provider}
     </Text>
 );
 
 const renderError = () => (
-    <Text as="div" size="2" color="red" style={{ marginLeft: '10px', whiteSpace: 'nowrap' }}>
+    <Text as="div" style={{ marginLeft: '10px', whiteSpace: 'nowrap' }}>
         Error: Incomplete provider information
     </Text>
 );

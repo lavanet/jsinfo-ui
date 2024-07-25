@@ -47,7 +47,7 @@ export default function Spec({ params }: { params: { specid: string } }) {
   return (
     <>
       <BlockWithDateCard blockData={data} />
-      <Card>
+      <div style={{ marginTop: 'var(--box-margin)', marginBottom: 'var(--box-margin)' }}>
         <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-6">
           <TitledCard
             title="Spec"
@@ -89,9 +89,10 @@ export default function Spec({ params }: { params: { specid: string } }) {
           />
 
         </Flex>
-      </Card>
+      </div>
 
       <SpecChart specid={specId} />
+      <div className="box-margin-div"></div>
 
       <Card>
         <JsinfoTabs defaultValue="relays"

@@ -8,8 +8,8 @@ import { GetLogoUrl } from '@jsinfo/common/env';
 export function Navbar() {
     return (
         <>
-            <img src={GetLogoUrl()} alt="Logo" className="mb-2 ml-3" />
-            <Card className="relative flex justify-between overflow-visible h-[50px]" style={{ contain: "none", overflow: "visible" }}>
+            <img src={GetLogoUrl()} alt="Logo" className="mb-2 ml-2" />
+            <div className="box-margin-bottom relative flex justify-between overflow-visible h-[40px]" style={{ contain: "none", overflow: "visible", padding: '7px' }}>
                 <div id="NavBarButtons" className="flex gap-3">
                     <Link href='/'>
                         <Button id="indexbtn" variant="soft">
@@ -25,7 +25,7 @@ export function Navbar() {
                 <div className="absolute right-2">
                     <NavbarSearch />
                 </div>
-            </Card>
+            </div>
         </>
     )
 }

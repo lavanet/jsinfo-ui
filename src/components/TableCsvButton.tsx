@@ -1,5 +1,7 @@
 // src/components/TableCsvButton.tsx
 
+// TODO: write csv report next to the download icon
+
 import React from 'react';
 import Image from 'next/image';
 import { GetRestUrl } from '@jsinfo/common/env';

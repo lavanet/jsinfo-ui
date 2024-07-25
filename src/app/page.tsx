@@ -53,7 +53,7 @@ export default function Home() {
     <>
       <BlockWithDateCard blockData={data} />
 
-      <Card>
+      <div style={{ marginTop: 'var(--box-margin)', marginBottom: 'var(--box-margin)' }}>
         <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-3 ">
           <TitledCard
             title="Relays"
@@ -74,9 +74,10 @@ export default function Home() {
             formatNumber={true}
           />
         </Flex>
-      </Card>
+      </div>
 
       <IndexChart />
+      <div className="box-margin-div"></div>
 
       <Card>
         <JsinfoTabs defaultValue="providers"

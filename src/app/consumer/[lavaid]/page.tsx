@@ -21,7 +21,6 @@ import { usePageContext } from '@jsinfo/context/PageContext';
 import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
 import { RenderInFullPageCard } from '@jsinfo/common/utils';
 
-
 export default function Consumer({ params }: { params: { lavaid: string } }) {
 
   let decodedLavaId = decodeURIComponent(params.lavaid);
@@ -93,7 +92,7 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
         </Flex>
       </Card>
 
-      <Card>
+      <div style={{ marginTop: 'var(--box-margin)', marginBottom: 'var(--box-margin)' }}>
         <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-3">
           <TitledCard
             title="Cu Sum"
@@ -114,9 +113,11 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
             formatNumber={true}
           />
         </Flex>
-      </Card>
+      </div>
 
       <ChartJsReactiveLineChart data={chartData} options={chartOptions} />
+      <div className="box-margin-div"></div>
+
       <Card>
         <JsinfoTabs defaultValue="subscriptions"
           tabs={[
