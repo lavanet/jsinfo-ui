@@ -9,11 +9,12 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Theme } from "@radix-ui/themes";
 import { PageProvider } from "@jsinfo/components/PageProvider";
 
+import { GetPageTitle } from "@jsinfo/common/env";
+
 import '@radix-ui/themes/styles.css';
 import "./styles/globals.css";
 import "./styles/paginationcontrol.css";
 import "./styles/rsuite.css";
-import { GetPageTitle } from "@jsinfo/common/env";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,6 +32,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       <body className={inter.className}>

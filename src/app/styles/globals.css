@@ -24,41 +24,44 @@
 
 /* -------- Dynamic page size -------- */
 
-body,
-body > div,
-body > div > div,
-body > div > div > div {
-  width: 100vw;
+.rt-ContainerInner {
+  max-width: 1360px;
+  width: 100%;
+  padding: 10px;
+}
+
+/* -------- chartjs 2 lines on mobile -------- */
+
+.chartjs-reactivechart-title {
+  float: left;
+  margin-left: 11px;
+  user-select: text;
+  font-size: 18px;
+}
+
+.chartjs-reactivechart-controls {
   display: flex;
-  flex-direction: column; /* Stack children vertically */
-  justify-content: flex-start; /* Center children vertically */
-  align-items: center; /* Center children horizontally */
-  margin: 0 auto; /* Remove default margin */
+  justify-content: flex-end;
 }
 
-/* Add this to your CSS file */
-.body-div {
-  margin: var(--box-margin);
-  width: 1340px; /* Default width */
-}
-
-/* For screens smaller than 1400px */
-@media (max-width: 1400px) {
-  .body-div {
-    width: 97%; /* Adjust width to be 90% of the screen */
-  }
-}
-
-/* For smaller devices */
-@media (max-width: 768px) {
-  .body-div {
-    width: 95%; /* Adjust width to be 100% of the screen */
-  }
-}
-
+/* Responsive adjustments for mobile devices */
 @media (max-width: 600px) {
-  .body-div {
-    width: 120%; /* Adjust width to be 100% of the screen */
+  .chartjs-reactivechart-title {
+    float: none;
+    margin-left: 0;
+    display: block;
+    width: 100%;
+    padding-bottom: 5px;
+  }
+  .chartjs-reactivechart-controls {
+    justify-content: center;
+    display: block; /* Change flex to block to stack children vertically */
+    width: 100%; /* Ensure it takes up full width */
+    padding-bottom: 5px;
+  }
+  div.rs-picker-daterange,
+  div.rs-picker-daterange > div.rs-input-group {
+    width: 320px;
   }
 }
 

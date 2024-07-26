@@ -1,7 +1,7 @@
 // src/components/Navbar.tsx
 
 import Link from 'next/link'
-import { Button, Card } from '@radix-ui/themes';
+import { Button } from '@radix-ui/themes';
 import { NavbarSearch } from './NavbarSearch';
 import { GetLogoUrl } from '@jsinfo/common/env';
 

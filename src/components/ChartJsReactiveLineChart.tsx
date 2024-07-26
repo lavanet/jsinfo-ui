@@ -258,13 +258,12 @@ export const ChartJsReactiveLineChartWithDatePicker: React.FC<ChartJsReactiveLin
 
   let responsiveChartOptions = { ...options, responsive: true };
 
-  // Todo: chart labels are showing up on top of the chart on mobile
   return (
     <Box style={{ width: '100%', maxHeight: '100vh' }}>
       <Card style={{ width: '100%', height: '100%' }}>
         <div style={{ marginBottom: '7px' }}>
-          {title && <Box style={{ float: 'left', marginLeft: '11px', userSelect: 'text', fontSize: '18px' }}>{title}</Box>}
-          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          {title && <Box className="chartjs-reactivechart-title">{title}</Box>}
+          <div className="chartjs-reactivechart-controls">
             {rightControl ? rightControl : null}
             <RangeDatePicker onDateChange={onDateChange} datePickerValue={datePickerValue} />
           </div>
