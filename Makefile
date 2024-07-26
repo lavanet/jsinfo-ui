@@ -11,7 +11,7 @@ mainnet_run:
 	LOGO_URL=https://gateway-fe-public-assets.s3.amazonaws.com/env/LavaMainnet.svg INFO_NETWORK=mainnet_local NEXT_PUBLIC_REST_URL=https://jsinfo.mainnet.lavanet.xyz/ PORT=5100 pnpm dev
 
 build:
-	INFO_NETWORK=local NEXT_PUBLIC_REST_URL=12 pnpm build
+	LOGO_URL=nothing INFO_NETWORK=local NEXT_PUBLIC_REST_URL=12 pnpm build
 
 install:
 	pnpm install

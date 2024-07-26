@@ -11,7 +11,7 @@ interface TextToggleProps {
 }
 
 const isNotPC = () => {
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
     // Simple checks for mobile (Android/iOS) user agents
     return /android|iphone|ipad|ipod/i.test(userAgent);
 };
