@@ -6,6 +6,7 @@ import { RenderInFullPageCard } from '@jsinfo/common/utils';
 import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
 import ReactJson from 'react-json-view';
 import { AxiosDataLoader } from '@jsinfo/hooks/AxiosDataLoader';
+import Image from 'next/image';
 
 const AccountInfoCard: React.FC<{ addr: string }> = ({ addr }) => {
     console.log("AccountInfoCard Rendered", { addr });
@@ -108,15 +109,18 @@ const AccountInfoCard: React.FC<{ addr: string }> = ({ addr }) => {
                         backgroundColor: idx === maxIdx ? 'transparent' : ''
                     }}
                 >&gt;</button>
+                {(idx || maxIdx) && (
+                    <span className='accountinfocard_pagecounter'>
+                        Page {idx + 1} of {maxIdx + 1}
+                    </span>
+                )}
                 <span className='accountinfocard_floatright'>
-                    {(idx || maxIdx) && (
-                        <span style={{ color: 'grey', marginLeft: '10px' }}>
-                            Page {idx + 1} of {maxIdx + 1}
-                        </span>
+                    {data.data.timestamp && (
+                        <>
+                            <TimeTooltip datetime={data.data.timestamp} />
+                            <span style={{ marginLeft: '20px' }}></span>
+                        </>
                     )}
-                    <span style={{ marginLeft: '15px' }}></span>
-                    {data.data.timestamp && <TimeTooltip datetime={data.data.timestamp} />}
-                    <span style={{ marginLeft: '15px' }}></span>
                     <a
                         href="#"
                         onClick={(e) => {
@@ -132,9 +136,16 @@ const AccountInfoCard: React.FC<{ addr: string }> = ({ addr }) => {
                         }}
                         style={{ cursor: 'pointer', textDecoration: 'underline', color: 'blue' }}
                     >
+                        <Image
+                            width={31}
+                            height={31}
+                            src="/download-json.svg"
+                            alt="download-json"
+                            style={{ display: 'inline-block', verticalAlign: 'middle', margin: '-4px', paddingBottom: '2px', marginRight: '2px' }}
+                        />
                         Download JSON
                     </a>
-                    <span style={{ marginLeft: '15px' }}></span>
+                    <span style={{ marginLeft: '20px' }}></span>
                     <a
                         href="#"
                         onClick={(e) => {
@@ -145,13 +156,20 @@ const AccountInfoCard: React.FC<{ addr: string }> = ({ addr }) => {
                         }}
                         style={{ cursor: 'pointer', textDecoration: 'underline', color: 'blue' }}
                     >
+                        <Image
+                            width={37}
+                            height={37}
+                            src="/copy.svg"
+                            alt="copy-json"
+                            style={{ display: 'inline-block', verticalAlign: 'middle', margin: '-4px', paddingBottom: '2px', marginRight: '-2px' }}
+                        />
                         Copy to Clipboard
                     </a>
                 </span>
             </div>
             <div style={{ marginTop: '6px' }}></div>
-            <div className='accountinfocard_container2'>
-                <ReactJson src={json} theme="solarized" displayDataTypes={false} collapsed={1} />
+            <div className='accountinfocard_jsoncontainer'>
+                <ReactJson src={json} theme="summerfruit" displayDataTypes={false} collapsed={1} />
             </div>
         </div>
     );

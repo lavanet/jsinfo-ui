@@ -23,10 +23,13 @@
   font-size: 9px;
 }
 
-.accountinfocard_container2 {
+.accountinfocard_jsoncontainer {
   max-height: 800px auto;
   overflow-y: auto;
-  border-radius: 15px;
+  border-radius: 10px;
+  border: 2px solid #212630;
+  padding: 8px;
+  background-color: #151515;
 }
 
 .accountinfocard_leftrightbuttons .active:hover {
@@ -40,7 +43,18 @@
 }
 
 .accountinfocard_floatright {
-  float: inline-end;
-  margin-top: 10px;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 6px;
   margin-right: 11px;
+  flex-wrap: nowrap;
+  align-items: right;
+  float: right;
+}
+
+.accountinfocard_pagecounter {
+  margin-left: 6px;
+  color: grey;
+  position: relative;
+  top: 3px;
 }
