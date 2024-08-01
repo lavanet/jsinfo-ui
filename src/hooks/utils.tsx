@@ -10,7 +10,8 @@ export function ValidateDataKey(dataKey: string) {
 
     if (parts.length > 1) {
         // Test the part after the slash
-        if (!/^[A-Za-z0-9\@]+$/.test(parts[1])) {
+        const parts1 = parts[1].split('?')[0];
+        if (!/^[A-Za-z0-9\@]+$/.test(parts1)) {
             console.error(`Invalid arguments: dataKey=${dataKey}`);
             throw new Error(`Invalid LastUrlPath: ${parts[1]}. The LastUrlPath must match a lava id, starting with 'lava@' or spec id: [A-Za-z0-9]+`);
         }

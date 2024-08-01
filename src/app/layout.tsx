@@ -14,6 +14,7 @@ import { GetPageTitle } from "@jsinfo/common/env";
 import '@radix-ui/themes/styles.css';
 import "./styles/globals.css";
 import "./styles/paginationcontrol.css";
+import "./styles/accountinfocard.css";
 import "./styles/rsuite.css";
 
 const inter = Inter({ subsets: ["latin"] });

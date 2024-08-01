@@ -1,4 +1,4 @@
-// src/components/providerLatestHealth.tsx
+// src/app/provider/[lavaid]/_components/ProviderLatestHealth.tsx
 
 import React from 'react';
 import { Card, Text, Box, Link } from "@radix-ui/themes";
@@ -7,9 +7,9 @@ import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
 import TimeTooltip from '@jsinfo/components/TimeTooltip';
 import { useApiDataFetch } from '@jsinfo/hooks/useApiDataFetch';
 import { RenderInFullPageCard } from '@jsinfo/common/utils';
-import StatusCall from './StatusCell';
+import StatusCall from '../../../../components/StatusCell';
 import Image from 'next/image';
-import TextToggle from './TextToggle';
+import TextToggle from '../../../../components/TextToggle';
 
 interface InterfaceStatus {
     status: string;
