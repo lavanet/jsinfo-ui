@@ -364,6 +364,7 @@ type DataKeySortableTableComponentProps = {
   rowFormatters?: RowFormatters;
   firstColumn?: string;
   csvButton?: ReactNode | null;
+  tableDescription?: string | null | ReactNode;
 };
 
 export const DataKeySortableTableComponent: React.FC<DataKeySortableTableComponentProps> = (props: DataKeySortableTableComponentProps) => {
@@ -465,6 +466,7 @@ export const DataKeySortableTableComponent: React.FC<DataKeySortableTableCompone
 
     setComponentData(
       <ErrorBoundary>
+        {props.tableDescription && <div style={{ color: 'grey', margin: '5px', marginLeft: '13px' }}>{props.tableDescription}</div>}
         <SortableTableContent
           tableData={dataObject}
           requestSort={requestSort}
@@ -498,6 +500,7 @@ type DataKeySortableTableInATabComponentProps = {
   rowFormatters?: RowFormatters;
   firstColumn?: string;
   csvButton?: ReactNode | null;
+  tableDescription?: string | null | ReactNode;
 };
 
 export const DataKeySortableTableInATabComponent: React.FC<DataKeySortableTableInATabComponentProps> = (props: DataKeySortableTableInATabComponentProps) => {
@@ -513,6 +516,7 @@ export const DataKeySortableTableInATabComponent: React.FC<DataKeySortableTableI
         rowFormatters={props.rowFormatters}
         firstColumn={props.firstColumn}
         csvButton={props.csvButton}
+        tableDescription={props.tableDescription}
       />
     </Tabs.Content>
   );

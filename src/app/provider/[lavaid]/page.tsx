@@ -1,30 +1,35 @@
 // src/app/provider/[lavaid]/page.tsx
 "use client";
 
-import Link from 'next/link'
-import { Flex, Card, Box, Tabs } from "@radix-ui/themes";
-import {
-  StatusToString,
-  GeoLocationToString,
-  EventTypeToString,
-} from "@jsinfo/common/convertors";
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
-import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
 import { useEffect } from "react";
+
+import { Flex, Card, Box } from "@radix-ui/themes";
+import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
 import { usePageContext } from "@jsinfo/context/PageContext";
-import { FormatNumber, FormatNumberWithString, RenderInFullPageCard } from '@jsinfo/common/utils';
+
+import { RenderInFullPageCard } from '@jsinfo/common/utils';
+import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
+
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
-import TableCsvButton from "@jsinfo/components/TableCsvButton";
 import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
 import MonikerAndProviderAddressCard from "@jsinfo/components/MonikerAndProviderAddressCard";
 import TitledCard from "@jsinfo/components/TitledCard";
 import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
-import TimeTooltip from '@jsinfo/components/TimeTooltip';
-import StatusCall from '@jsinfo/components/StatusCell';
-import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
+
 import ProviderChart from '@jsinfo/charts/providerChart';
+
 import ProviderLatestHealthCards from '@jsinfo/app/provider/[lavaid]/_components/ProviderLatestHealth';
-import AccountInfoCard from './_components/AccountInfoCard';
+
+import ProviderHealthTab from './_components/ProviderHealthTab';
+import ProviderErrorsTab from './_components/ProviderErrorsTab';
+import ProviderEventsTab from './_components/ProviderEventsTab';
+import ProviderAttributesTab from './_components/ProviderAttributesTab';
+import ProviderStakesTab from './_components/ProviderStakesTab';
+import ProviderRewardsTab from './_components/ProviderRewardsTab';
+import ProviderReportsTab from './_components/ProviderReportsTab';
+import ProviderBlockReportsTab from './_components/ProviderBlockReportsTab';
+import ProviderAccountInfoTab from './_components/ProviderAccountInfoTab';
+import ProviderClaimableRewardsTab from "./_components/ProviderClaimableRewardsTab";
 
 export default function Provider({ params }: { params: { lavaid: string } }) {
 
@@ -149,375 +154,17 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
           ]}
         >
           <Box>
-            <DataKeySortableTableInATabComponent
-              columns={[
-                { key: "timestamp", name: "Time" },
-                { key: "spec", name: "Spec" },
-                { key: "interface", name: "Interface" },
-                { key: "status", name: "Status" },
-                { key: "region", name: "Region" },
-                { key: "message", name: "Message" },
-              ]}
-              dataKey={`providerHealth/${decodedLavaId}`}
-              defaultSortKey="id|desc"
-              tableAndTabName="health"
-              pkey="id"
-              pkeyUrl="none"
-              rowFormatters={{
-                timestamp: (data) => (<TimeTooltip datetime={data.timestamp} />),
-                spec: (data) => (
-                  <Link href={`/spec/${data.spec}`}>{data.spec}</Link>
-                ),
-                status: (data) => <StatusCall status={data.status} />,
-              }}
-              csvButton={(
-                <TableCsvButton
-                  csvDownloadLink={`providerHealthCsv/${decodedLavaId}`}
-                />
-              )}
-            />
 
-            <DataKeySortableTableInATabComponent
-              columns={[
-                { key: "date", name: "Date" },
-                { key: "spec", name: "Spec" },
-                { key: "error", name: "Error" },
-              ]}
-              dataKey={`providerErrors/${decodedLavaId}`}
-              defaultSortKey="id|desc"
-              tableAndTabName="errors"
-              pkey="id"
-              pkeyUrl="none"
-              rowFormatters={{
-                date: (data) => (<TimeTooltip datetime={data.date} />),
-                spec: (data) => (
-                  <Link href={`/spec/${data.spec}`}>{data.spec}</Link>
-                ),
-                error: (data) => {
-                  return (
-                    <div
-                      style={{
-                        wordBreak: "break-all",
-                        whiteSpace: "pre-wrap",
-                      }}
-                    >
-                      {data.error}
-                    </div>
-                  );
-                },
-              }}
-              csvButton={(
-                <TableCsvButton
-                  csvDownloadLink={`providerErrorsCsv/${decodedLavaId}`}
-                />
-              )}
-            />
-
-            <DataKeySortableTableInATabComponent
-              columns={[
-                { key: "events.eventType", name: "Event Type" },
-                { key: "blocks.height", name: "Block Height" },
-                { key: "blocks.datetime", name: "Time" },
-                { key: "events.t1", name: "Text1" },
-                { key: "events.t2", name: "Text2" },
-                { key: "events.t3", name: "Text3" },
-                { key: "events.b1", name: "BigInt1" },
-                { key: "events.b2", name: "BigInt2" },
-                { key: "events.b3", name: "BigInt3" },
-                { key: "events.i1", name: "Int1" },
-                { key: "events.i2", name: "Int2" },
-                { key: "events.i3", name: "Int3" },
-              ]}
-              dataKey={`providerEvents/${decodedLavaId}`}
-              defaultSortKey="events.id|desc"
-              tableAndTabName="events"
-              pkey="events.id"
-              pkeyUrl="none"
-              rowFormatters={{
-                "events.eventType": (evt) => (
-                  <Link
-                    href={
-                      evt.events.tx
-                        ? `https://lava.explorers.guru/transaction/${evt.events.tx}`
-                        : `https://lava.explorers.guru/block/${evt.events.blockId}`
-                    }
-                  >
-                    {EventTypeToString(evt.events.eventType)}
-                  </Link>
-                ),
-                "blocks.height": (evt) => (
-                  <Link
-                    href={`https://lava.explorers.guru/block/${evt.events.blockId}`}
-                  >
-                    {evt.events.blockId}
-                  </Link>
-                ),
-                "blocks.datetime": (evt) =>
-                  (<TimeTooltip datetime={evt.blocks.datetime} />),
-                text1: (evt) => {
-                  return (
-                    <div
-                      style={{
-                        wordBreak: "break-all",
-                        whiteSpace: "pre-wrap",
-                      }}
-                    >
-                      {evt.events.t1}
-                    </div>
-                  );
-                },
-                text2: (evt) => {
-                  return (
-                    <div
-                      style={{
-                        wordBreak: "break-all",
-                        whiteSpace: "pre-wrap",
-                      }}
-                    >
-                      {evt.events.t2}
-                    </div>
-                  );
-                },
-                text3: (evt) => {
-                  return (
-                    <div
-                      style={{
-                        wordBreak: "break-all",
-                        whiteSpace: "pre-wrap",
-                      }}
-                    >
-                      {evt.events.t3}
-                    </div>
-                  );
-                },
-              }}
-              csvButton={(
-                <TableCsvButton
-                  csvDownloadLink={`providerEventsCsv/${decodedLavaId}`}
-                />
-              )}
-            />
-
-            <DataKeySortableTableInATabComponent
-              columns={[
-                { key: "specId", name: "Spec" },
-                { key: "status", name: "Status" },
-                { key: "geolocation", name: "Geolocation" },
-                { key: "addons", name: "Addons" },
-                { key: "extensions", name: "Extensions" },
-              ]}
-              dataKey={`providerStakes/${decodedLavaId}`}
-              defaultSortKey="specId"
-              tableAndTabName="attributes"
-              pkey="specId"
-              pkeyUrl="spec"
-              rowFormatters={{
-                specId: (data) => (
-                  <Link href={`/spec/${data.specId}`}>{data.specId}</Link>
-                ),
-                status: (data) => <StatusCall status={StatusToString(data.status)} />,
-                geolocation: (data) => GeoLocationToString(data.geolocation),
-              }}
-              csvButton={(
-                <TableCsvButton
-                  csvDownloadLink={`providerStakesCsv/${decodedLavaId}`}
-                />
-              )}
-            />
-
-            <DataKeySortableTableInATabComponent
-              columns={[
-                { key: "specId", name: "Spec" },
-                { key: "totalStake", name: "Total Stake" },
-                { key: "stake", name: "Self Stake" },
-                { key: "delegateLimit", name: "Delegation Limit" },
-                { key: "delegateTotal", name: "Delegation Total" },
-                { key: "delegateCommission", name: "Delegate Commission" },
-              ]}
-              dataKey={`providerStakes/${decodedLavaId}`}
-              defaultSortKey="specId"
-              tableAndTabName="stakes"
-              pkey="specId"
-              pkeyUrl="spec"
-              rowFormatters={{
-                totalStake: (data) => FormatNumber(data.totalStake),
-                stake: (data) => FormatNumber(data.stake),
-                delegateLimit: (data) => FormatNumber(data.delegateLimit),
-                delegateTotal: (data) => FormatNumber(data.delegateTotal),
-                delegateCommission: (data) => FormatNumber(data.delegateCommission),
-              }}
-              csvButton={(
-                <TableCsvButton
-                  csvDownloadLink={`providerStakesCsv/${decodedLavaId}`}
-                />
-              )}
-            />
-
-            <DataKeySortableTableInATabComponent
-              columns={[
-                { key: "relay_payments.specId", name: "Spec" },
-                { key: "relay_payments.blockId", name: "Block" },
-                { key: "blocks.datetime", name: "Time" },
-                { key: "relay_payments.consumer", name: "Consumer" },
-                { key: "relay_payments.relays", name: "Relays" },
-                { key: "relay_payments.cu", name: "CU" },
-                { key: "relay_payments.qosSync", name: "QoS" },
-                { key: "relay_payments.qosSyncExc", name: "QoS Excellence" },
-              ]}
-              dataKey={`providerRewards/${decodedLavaId}`}
-              defaultSortKey="relay_payments.id|desc"
-              tableAndTabName="rewards"
-              pkey="relay_payments.id"
-              pkeyUrl="none"
-              rowFormatters={{
-                "relay_payments.specId": (payment) => (
-                  <Link href={`/spec/${payment.relay_payments.specId}`}>
-                    {payment.relay_payments.specId}
-                  </Link>
-                ),
-                "relay_payments.blockId": (payment) => (
-                  <Link
-                    href={
-                      payment.relay_payments.tx
-                        ? `https://lava.explorers.guru/transaction/${payment.relay_payments.tx}`
-                        : `https://lava.explorers.guru/block/${payment.relay_payments.blockId}`
-                    }
-                  >
-                    {payment.relay_payments.blockId}
-                  </Link>
-                ),
-                "blocks.datetime": (payment) =>
-                  (<TimeTooltip datetime={payment.blocks.datetime} />),
-                "relay_payments.consumer": (payment) => (
-                  <Link href={`/consumer/${payment.relay_payments.consumer}`}>
-                    {payment.relay_payments.consumer}
-                  </Link>
-                ),
-                "relay_payments.relays": (payment) =>
-                  payment.relay_payments.relays,
-                "relay_payments.cu": (payment) => payment.relay_payments.cu,
-                "relay_payments.pay": (payment) =>
-                  `${payment.relay_payments.pay} ULAVA`,
-                "relay_payments.qosSync": (payment) =>
-                  <span title={`Sync: ${payment.relay_payments.qosSync}, Availability: ${payment.relay_payments.qosAvailability}, Latency: ${payment.relay_payments.qosLatency}`}>
-                    {payment.relay_payments.qosSync}, {payment.relay_payments.qosAvailability}, {payment.relay_payments.qosLatency}
-                  </span>,
-                "relay_payments.qosSyncExc": (payment) =>
-                  <span title={`SyncExc: ${payment.relay_payments.qosSyncExc}, AvailabilityExc: ${payment.relay_payments.qosAvailabilityExc}, LatencyExc: ${payment.relay_payments.qosLatencyExc}`}>
-                    {payment.relay_payments.qosSyncExc}, {payment.relay_payments.qosAvailabilityExc}, {payment.relay_payments.qosLatencyExc}
-                  </span>,
-              }}
-              csvButton={(
-                <TableCsvButton
-                  csvDownloadLink={`providerRewardsCsv/${decodedLavaId}`}
-                />
-              )}
-            />
-
-            <DataKeySortableTableInATabComponent
-              columns={[
-                { key: "provider_reported.blockId", name: "Block" },
-                { key: "blocks.datetime", name: "Time" },
-                { key: "provider_reported.cu", name: "CU" },
-                {
-                  key: "provider_reported.disconnections",
-                  name: "Disconnections",
-                },
-                { key: "provider_reported.errors", name: "Errors" },
-                { key: "provider_reported.project", name: "Project" },
-              ]}
-              dataKey={`providerReports/${decodedLavaId}`}
-              defaultSortKey="provider_reported.id|desc"
-              tableAndTabName="reports"
-              pkey="provider_reported.provider,provider_reported.blockId"
-              pkeyUrl="none"
-              rowFormatters={{
-                "provider_reported.blockId": (report) => (
-                  <Link
-                    href={
-                      report.provider_reported.tx
-                        ? `https://lava.explorers.guru/transaction/${report.provider_reported.tx}`
-                        : `https://lava.explorers.guru/block/${report.provider_reported.blockId}`
-                    }
-                  >
-                    {report.provider_reported.blockId}
-                  </Link>
-                ),
-                "blocks.datetime": (report) =>
-                  (<TimeTooltip datetime={report.blocks.datetime} />),
-              }}
-              csvButton={(
-                <TableCsvButton
-                  csvDownloadLink={`providerReportsCsv/${decodedLavaId}`}
-                />
-              )}
-            />
-
-            <DataKeySortableTableInATabComponent
-              columns={[
-                { key: "blockId", name: "Block" },
-                { key: "timestamp", name: "Time" },
-                { key: "chainId", name: "Chain" },
-                { key: "chainBlockHeight", name: "Chain Block Height" },
-              ]}
-              dataKey={`providerBlockReports/${decodedLavaId}`}
-              defaultSortKey="id|desc"
-              tableAndTabName="blockReports"
-              pkey="id"
-              pkeyUrl="none"
-              rowFormatters={{
-                "blockId": (data) => (
-                  <Link
-                    href={
-                      data.tx
-                        ? `https://lava.explorers.guru/transaction/${data.tx}`
-                        : `https://lava.explorers.guru/block/${data.blockId}`
-                    }
-                  >
-                    {data.blockId}
-                  </Link>
-                ),
-                timestamp: (data) => (<TimeTooltip datetime={data.timestamp} />),
-                chainId: (stake) => (
-                  <Link href={`/spec/${stake.chainId}`}>{stake.chainId}</Link>
-                ),
-                chainBlockHeight: (data) => FormatNumberWithString(data.chainBlockHeight),
-              }}
-              csvButton={(
-                <TableCsvButton
-                  csvDownloadLink={`providerBlockReportsCsv/${decodedLavaId}`}
-                />
-              )}
-            />
-
-            <DataKeySortableTableInATabComponent
-              columns={[
-                { key: "timestamp", name: "Time" },
-                { key: "chainId", name: "Spec" },
-                { key: "amount", name: "Amount" },
-              ]}
-              dataKey={`providerDelegatorRewards/${decodedLavaId}`}
-              defaultSortKey="id|desc"
-              tableAndTabName="claimableProviderRewards"
-              pkey="id"
-              pkeyUrl="none"
-              rowFormatters={{
-                timestamp: (data) => (<TimeTooltip datetime={data.timestamp} />),
-                chainId: (data) => (
-                  <Link href={`/spec/${data.chainId}`}>{data.chainId}</Link>
-                ),
-                amount: (data) => FormatNumberWithString(data.amount.toUpperCase()),
-              }}
-              csvButton={(
-                <TableCsvButton
-                  csvDownloadLink={`providerDelegatorRewardsCsv/${decodedLavaId}`}
-                />
-              )}
-            />
-
-            <Tabs.Content value={"accountInfo"}>
-              <AccountInfoCard addr={decodedLavaId} />
-            </Tabs.Content>
+            <ProviderHealthTab addr={decodedLavaId} />
+            <ProviderErrorsTab addr={decodedLavaId} />
+            <ProviderEventsTab addr={decodedLavaId} />
+            <ProviderAttributesTab addr={decodedLavaId} />
+            <ProviderStakesTab addr={decodedLavaId} />
+            <ProviderRewardsTab addr={decodedLavaId} />
+            <ProviderReportsTab addr={decodedLavaId} />
+            <ProviderBlockReportsTab addr={decodedLavaId} />
+            <ProviderClaimableRewardsTab addr={decodedLavaId} />
+            <ProviderAccountInfoTab addr={decodedLavaId} />
 
           </Box>
         </JsinfoTabs>
