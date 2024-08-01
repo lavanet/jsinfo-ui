@@ -1,0 +1,46 @@
+.accountinfocard_container {
+  display: block;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+  align-items: left;
+}
+
+.accountinfocard_leftrightbuttons {
+  font-family: "Helvetica Neue", sans-serif;
+  padding-top: 10px;
+}
+
+.accountinfocard_leftrightbuttons button {
+  padding: 5px;
+  margin: 5px;
+  border-radius: 15px;
+  border: none;
+  cursor: pointer;
+  width: 35px;
+  text-align: center;
+  color: white;
+  background-color: #cc2f00ff;
+  font-size: 9px;
+}
+
+.accountinfocard_container2 {
+  max-height: 800px auto;
+  overflow-y: auto;
+  border-radius: 15px;
+}
+
+.accountinfocard_leftrightbuttons .active:hover {
+  font-weight: bold;
+  background-color: transparent;
+}
+
+.accountinfocard_timestamp {
+  margin-top: 10px;
+  margin-left: 5px;
+}
+
+.accountinfocard_floatright {
+  float: inline-end;
+  margin-top: 10px;
+  margin-right: 11px;
+}

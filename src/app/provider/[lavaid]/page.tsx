@@ -2,7 +2,7 @@
 "use client";
 
 import Link from 'next/link'
-import { Flex, Card, Box } from "@radix-ui/themes";
+import { Flex, Card, Box, Tabs } from "@radix-ui/themes";
 import {
   StatusToString,
   GeoLocationToString,
@@ -23,7 +23,8 @@ import TimeTooltip from '@jsinfo/components/TimeTooltip';
 import StatusCall from '@jsinfo/components/StatusCell';
 import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
 import ProviderChart from '@jsinfo/charts/providerChart';
-import ProviderLatestHealthCards from '@jsinfo/components/ProviderLatestHealth';
+import ProviderLatestHealthCards from '@jsinfo/app/provider/[lavaid]/_components/ProviderLatestHealth';
+import AccountInfoCard from './_components/AccountInfoCard';
 
 export default function Provider({ params }: { params: { lavaid: string } }) {
 
@@ -98,8 +99,10 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
 
       <ProviderChart addr={decodedLavaId} />
       <div className="box-margin-div"></div>
+
       <ProviderLatestHealthCards lavaId={decodedLavaId} />
       <div className="box-margin-div"></div>
+
       <Card>
         <JsinfoTabs defaultValue="health"
           tabs={[
@@ -138,6 +141,10 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
             {
               value: "claimableProviderRewards",
               content: "Claimable Provider Rewards",
+            },
+            {
+              value: "accountInfo",
+              content: "Account Info",
             },
           ]}
         >
@@ -507,6 +514,11 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
                 />
               )}
             />
+
+            <Tabs.Content value={"accountInfo"}>
+              <AccountInfoCard addr={decodedLavaId} />
+            </Tabs.Content>
+
           </Box>
         </JsinfoTabs>
       </Card>

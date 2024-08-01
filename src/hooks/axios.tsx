@@ -15,7 +15,7 @@ axiosRetry(axiosInstance, { retries: GetAxiosRetryCount() });
 
 const cache = new NodeCache({ stdTTL: GetAxiosCacheTTL() });
 
-export async function AxiosApiGet(apiurl: string, params?: any): Promise<any> {
+export async function AxiosApiGet(apiurl: string, params?: any, timeout: number = AXIOS_TIMEOUT): Promise<any> {
     const cacheKey = `${apiurl}-${JSON.stringify(params)}`;
     const cachedResponse = cache.get(cacheKey);
 
@@ -23,7 +23,7 @@ export async function AxiosApiGet(apiurl: string, params?: any): Promise<any> {
         return cachedResponse;
     } else {
         const response = await axiosInstance.get(apiurl, {
-            timeout: AXIOS_TIMEOUT,
+            timeout: timeout,
             params,
         });
 
