@@ -111,7 +111,7 @@ const AccountInfoCard: React.FC<{ addr: string }> = ({ addr }) => {
                 >&gt;</button>
                 {(idx || maxIdx) && (
                     <span className='accountinfocard_pagecounter'>
-                        Page {idx + 1} of {maxIdx + 1}
+                        Item {idx + 1} of {maxIdx + 1}
                     </span>
                 )}
                 <span className='accountinfocard_floatright'>
