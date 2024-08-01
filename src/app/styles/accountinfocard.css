@@ -52,6 +52,10 @@
   float: right;
 }
 
+.accountinfocard_floatright a {
+  color: #d3580c !important;
+}
+
 .accountinfocard_pagecounter {
   margin-left: 6px;
   color: grey;
