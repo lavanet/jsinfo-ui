@@ -1,4 +1,5 @@
-// src/app/provider/[lavaid]/_components/AccountInfoCard.tsx
+// src/app/provider/[lavaid]/_components/ProviderAccountInfoTab.tsx
+
 import React, { useEffect, useState } from 'react';
 import TimeTooltip from '@jsinfo/components/TimeTooltip';
 import LoadingIndicator from '@jsinfo/components/LoadingIndicator';
@@ -7,22 +8,23 @@ import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
 import ReactJson from 'react-json-view';
 import { AxiosDataLoader } from '@jsinfo/hooks/AxiosDataLoader';
 import Image from 'next/image';
+import { Tabs } from '@radix-ui/themes';
 
 const AccountInfoCard: React.FC<{ addr: string }> = ({ addr }) => {
-    console.log("AccountInfoCard Rendered", { addr });
+    // console.log("AccountInfoCard Rendered", { addr });
 
     const [idx, setIdx] = useState(0);
     const [maxIdx, setMaxIdx] = useState(0);
     const dataKey = `providerAccountInfo/${addr}?idx=${idx}`;
 
-    console.log("State values", { idx, maxIdx, dataKey });
+    // console.log("State values", { idx, maxIdx, dataKey });
 
     const { fetcher, data, loading, error } = AxiosDataLoader.initialize(dataKey, null, null);
 
-    console.log("AxiosDataLoader initialized", { dataKey, data, loading, error });
+    // console.log("AxiosDataLoader initialized", { dataKey, data, loading, error });
 
     useEffect(() => {
-        console.log("AccountInfoCard useEffect for idx", idx);
+        // console.log("AccountInfoCard useEffect for idx", idx);
         fetcher.SetApiUrl(`providerAccountInfo/${addr}?idx=${idx}`);
         fetcher.FetchAndPopulateData();
     }, [addr, idx]);
@@ -31,21 +33,21 @@ const AccountInfoCard: React.FC<{ addr: string }> = ({ addr }) => {
     let json = null;
 
     useEffect(() => {
-        console.log("AccountInfoCard useEffect for data change", data);
+        // console.log("AccountInfoCard useEffect for data change", data);
         if (data && data.itemCount) {
-            console.log("Setting maxIdx", data.itemCount - 1);
+            // console.log("Setting maxIdx", data.itemCount - 1);
             setMaxIdx(data.itemCount - 1);
         }
     }, [data]);
 
     if (error) {
-        console.log("Error state", error);
+        // console.log("Error state", error);
         content = <ErrorDisplay message={error} />;
     } else if (loading) {
-        console.log("Loading state", { addr });
+        // console.log("Loading state", { addr });
         content = <LoadingIndicator loadingText={`Loading ${addr} account info`} greyText={`${addr}`} />;
     } else if (!data.data) {
-        console.log("Data is empty");
+        // console.log("Data is empty");
         content = <ErrorDisplay message={"data is empty"} />;
     } else {
         try {
@@ -58,26 +60,25 @@ const AccountInfoCard: React.FC<{ addr: string }> = ({ addr }) => {
     }
 
     if (content) {
-        console.log("Rendering content", content);
+        // console.log("Rendering content", content);
         return RenderInFullPageCard(content);
     }
 
     if (!json) {
-        console.log("Json is empty");
+        // console.log("Json is empty");
         return RenderInFullPageCard(<ErrorDisplay message={"Json is empty"} />);
     }
 
     const handlePrevClick = () => {
-        console.log("Prev button clicked", { currentIdx: idx });
+        // console.log("Prev button clicked", { currentIdx: idx });
         setIdx(Math.max(0, idx - 1));
     };
 
     const handleNextClick = () => {
-        console.log("Next button clicked", { currentIdx: idx });
+        // console.log("Next button clicked", { currentIdx: idx });
         setIdx(Math.min(idx + 1, maxIdx));
     };
 
-    console.log("Rendering AccountInfoCard", { idx, maxIdx });
 
     const formatDateForDownload = () => {
         const date = new Date(data.data.timestamp);
@@ -175,5 +176,15 @@ const AccountInfoCard: React.FC<{ addr: string }> = ({ addr }) => {
     );
 };
 
+interface ProviderAccountInfoTabProps {
+    addr: string;
+}
 
-export default AccountInfoCard;
+const ProviderAccountInfoTab: React.FC<ProviderAccountInfoTabProps> = ({ addr }) => {
+    return (
+        <Tabs.Content value={"accountInfo"}>
+            <AccountInfoCard addr={addr} />
+        </Tabs.Content>
+    )
+}
+export default ProviderAccountInfoTab;
