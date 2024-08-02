@@ -23,7 +23,7 @@ const ProviderHealthTab: React.FC<ProviderHealthTabProps> = ({ addr }) => {
                 { key: "region", name: "Region" },
                 { key: "message", name: "Message" },
             ]}
-            tableDescription="Lava is running a health probes against all providers periodically from 2 regions - US and EU"
+            tableDescription="Lava is running a health probe against all providers periodically from 2 regions - US and EU"
             dataKey={`providerHealth/${addr}`}
             defaultSortKey="id|desc"
             tableAndTabName="health"
