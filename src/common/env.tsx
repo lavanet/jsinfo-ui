@@ -1,48 +1,64 @@
 // src/common/utils.tsx
 
+const envCache: Record<string, string> = {};
 
-let cachedUrl: string | null = null;
-
-export function GetRestUrl() {
-  if (cachedUrl !== null) {
-    return cachedUrl;
-  }
-
-  const url = process.env["REST_URL"] || process.env["NEXT_PUBLIC_REST_URL"];
-
-  if (!url) {
-    throw new Error("REST_URL environment variable is not defined or is an empty string.");
-  }
-
-  cachedUrl = url;
-
-  return url;
+const envVars = {
+  REST_URL: process.env.REST_URL,
+  LOGO_URL: process.env.LOGO_URL,
+  INFO_NETWORK: process.env.INFO_NETWORK,
+  AXIOS_CACHE_TIMEOUT: process.env.AXIOS_CACHE_TIMEOUT,
+  AXIOS_CACHE_TTL: process.env.AXIOS_CACHE_TTL,
+  AXIOS_RETRY_COUNT: process.env.AXIOS_RETRY_COUNT,
+  NEXT_PUBLIC_REST_URL: process.env.NEXT_PUBLIC_REST_URL,
+  NEXT_PUBLIC_LOGO_URL: process.env.NEXT_PUBLIC_LOGO_URL,
+  NEXT_PUBLIC_INFO_NETWORK: process.env.NEXT_PUBLIC_INFO_NETWORK,
+  NEXT_PUBLIC_AXIOS_CACHE_TIMEOUT:
+    process.env.NEXT_PUBLIC_AXIOS_CACHE_TIMEOUT,
+  NEXT_PUBLIC_AXIOS_CACHE_TTL: process.env.NEXT_PUBLIC_AXIOS_CACHE_TTL,
+  NEXT_PUBLIC_AXIOS_RETRY_COUNT: process.env.NEXT_PUBLIC_AXIOS_RETRY_COUNT,
 }
 
-let logoUrl: string | null = null;
+export function GetEnvVariable(primary: string, defaultValue: string | null = null): string {
+  if (envCache[primary]) {
+    return envCache[primary];
+  }
+
+  let normalizedPrimary = primary.toLowerCase().trim();
+
+  for (const [key, val] of Object.entries(envVars)) {
+    let normalizedKey = key.toLowerCase().trim();
+    normalizedKey = normalizedKey.replace('next_public_', '');
+    if (normalizedKey === normalizedPrimary && val) {
+      envCache[primary] = val;
+      return val;
+    }
+  }
+
+  if (defaultValue) {
+    envCache[primary] = defaultValue;
+    return defaultValue;
+  }
+
+  console.log(`Primary: ${process.env[primary]}, process.env: ${JSON.stringify(process.env)}`);
+  throw new Error(`${primary} environment variable is not defined and has no default value.`);
+
+}
+
+export function GetExplorersGuruUrl() {
+  const network = GetInfoNetwork().toLowerCase().trim();
+  return network.includes("mainnet") ? "https://lava.explorers.guru" : "https://testnet.lava.explorers.guru";
+}
+
+export function GetRestUrl() {
+  return GetEnvVariable("REST_URL");
+}
 
 export function GetLogoUrl() {
-  if (logoUrl !== null) {
-    return logoUrl;
-  }
-
-  const url = process.env["LOGO_URL"] || process.env["NEXT_PUBLIC_LOGO_URL"];
-
-  if (!url) {
-    throw new Error("LOGO_URL environment variable is not defined or is an empty string.");
-  }
-
-  logoUrl = url;
-
-  return url;
+  return GetEnvVariable("LOGO_URL");
 }
 
 export function GetInfoNetwork() {
-  const network = process.env["INFO_NETWORK"] || process.env["NEXT_PUBLIC_INFO_NETWORK"];
-  if (!network) {
-    throw new Error("INFO_NETWORK environment variable is not defined or is an empty string.");
-  }
-  return network;
+  return GetEnvVariable("INFO_NETWORK");
 }
 
 export function GetPageTitle() {
@@ -52,25 +68,13 @@ export function GetPageTitle() {
 }
 
 export function GetAxiosCacheTimeout(): number {
-  const timeout = process.env["AXIOS_CACHE_TIMEOUT"] || process.env["NEXT_PUBLIC_AXIOS_CACHE_TIMEOUT"];
-  if (!timeout) {
-    return 20000;
-  }
-  return parseInt(timeout, 10);
+  return parseInt(GetEnvVariable("AXIOS_CACHE_TIMEOUT", "20000"), 10);
 }
 
 export function GetAxiosCacheTTL(): number {
-  const timeout = process.env["AXIOS_CACHE_TTL"] || process.env["NEXT_PUBLIC_AXIOS_CACHE_TTL"];
-  if (!timeout) {
-    return 30
-  }
-  return parseInt(timeout, 10);
+  return parseInt(GetEnvVariable("AXIOS_CACHE_TTL", "30"), 10);
 }
 
 export function GetAxiosRetryCount(): number {
-  const timeout = process.env["AXIOS_RETRY_COUNT"] || process.env["NEXT_PUBLIC_RETRY_COUNT"];
-  if (!timeout) {
-    return 3
-  }
-  return parseInt(timeout, 10);
+  return parseInt(GetEnvVariable("AXIOS_RETRY_COUNT", "3"), 10);
 }

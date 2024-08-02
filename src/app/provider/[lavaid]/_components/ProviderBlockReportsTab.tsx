@@ -7,6 +7,7 @@ import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicS
 import TableCsvButton from "@jsinfo/components/TableCsvButton";
 import TimeTooltip from '@jsinfo/components/TimeTooltip';
 import { FormatNumberWithString } from '@jsinfo/common/utils';
+import { GetExplorersGuruUrl } from '@jsinfo/common/env';
 
 interface ProviderBlockReportsTabProps {
     addr: string;
@@ -36,8 +37,8 @@ const ProviderBlockReportsTab: React.FC<ProviderBlockReportsTabProps> = ({ addr 
                     <Link
                         href={
                             data.tx
-                                ? `https://lava.explorers.guru/transaction/${data.tx}`
-                                : `https://lava.explorers.guru/block/${data.blockId}`
+                                ? `${GetExplorersGuruUrl()}/transaction/${data.tx}`
+                                : `${GetExplorersGuruUrl()}/block/${data.blockId}`
                         }
                     >
                         {data.blockId}

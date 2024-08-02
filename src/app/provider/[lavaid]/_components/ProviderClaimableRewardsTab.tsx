@@ -39,7 +39,7 @@ const ProviderClaimableRewardsTab: React.FC<ProviderClaimableRewardsTabProps> = 
             }}
             csvButton={(
                 <TableCsvButton
-                    csvDownloadLink={`ProviderClaimableRewardsCsv/${addr}`}
+                    csvDownloadLink={`providerDelegatorRewardsCsv/${addr}`}
                 />
             )}
         />
