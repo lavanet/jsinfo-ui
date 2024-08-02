@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
 import TableCsvButton from "@jsinfo/components/TableCsvButton";
 import TimeTooltip from '@jsinfo/components/TimeTooltip';
+import { GetExplorersGuruUrl } from '@jsinfo/common/env';
 
 interface ProviderRewardsTabProps {
     addr: string;
@@ -44,8 +45,8 @@ const ProviderRewardsTab: React.FC<ProviderRewardsTabProps> = ({ addr }) => {
                     <Link
                         href={
                             payment.relay_payments.tx
-                                ? `https://lava.explorers.guru/transaction/${payment.relay_payments.tx}`
-                                : `https://lava.explorers.guru/block/${payment.relay_payments.blockId}`
+                                ? `${GetExplorersGuruUrl()}/transaction/${payment.relay_payments.tx}`
+                                : `${GetExplorersGuruUrl()}/block/${payment.relay_payments.blockId}`
                         }
                     >
                         {payment.relay_payments.blockId}

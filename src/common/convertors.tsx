@@ -52,6 +52,12 @@ export function EventTypeToString(evtType: number) {
             return "IPRPC Pool Emission";
         case 25:
             return "Distribution Pools Refill";
+        case 26:
+            return "Provider Temporary Jailed";
+        case 27:
+            return "Delegator Claimed Rewards";
+        case 28:
+            return "Set Subscription Policy Event";
         default:
             return "Unknown Event Type";
     }

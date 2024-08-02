@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
 import TableCsvButton from "@jsinfo/components/TableCsvButton";
 import TimeTooltip from '@jsinfo/components/TimeTooltip';
+import { GetExplorersGuruUrl } from '@jsinfo/common/env';
 
 interface ProviderReportsTabProps {
     addr: string;
@@ -40,8 +41,8 @@ const ProviderReportsTab: React.FC<ProviderReportsTabProps> = ({ addr }) => {
                     <Link
                         href={
                             report.provider_reported.tx
-                                ? `https://lava.explorers.guru/transaction/${report.provider_reported.tx}`
-                                : `https://lava.explorers.guru/block/${report.provider_reported.blockId}`
+                                ? `${GetExplorersGuruUrl()}/transaction/${report.provider_reported.tx}`
+                                : `${GetExplorersGuruUrl()}/block/${report.provider_reported.blockId}`
                         }
                     >
                         {report.provider_reported.blockId}

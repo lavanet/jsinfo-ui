@@ -7,6 +7,7 @@ import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicS
 import TableCsvButton from "@jsinfo/components/TableCsvButton";
 import TimeTooltip from '@jsinfo/components/TimeTooltip';
 import { EventTypeToString } from '@jsinfo/common/convertors';
+import { GetExplorersGuruUrl } from '@jsinfo/common/env';
 
 interface ProviderEventsTabProps {
     addr: string;
@@ -44,8 +45,8 @@ const ProviderEventsTab: React.FC<ProviderEventsTabProps> = ({ addr }) => {
                     <Link
                         href={
                             evt.events.tx
-                                ? `https://lava.explorers.guru/transaction/${evt.events.tx}`
-                                : `https://lava.explorers.guru/block/${evt.events.blockId}`
+                                ? `${GetExplorersGuruUrl()}/transaction/${evt.events.tx}`
+                                : `${GetExplorersGuruUrl()}/block/${evt.events.blockId}`
                         }
                     >
                         {EventTypeToString(evt.events.eventType)}
@@ -53,7 +54,7 @@ const ProviderEventsTab: React.FC<ProviderEventsTabProps> = ({ addr }) => {
                 ),
                 "blocks.height": (evt) => (
                     <Link
-                        href={`https://lava.explorers.guru/block/${evt.events.blockId}`}
+                        href={`${GetExplorersGuruUrl()}/block/${evt.events.blockId}`}
                     >
                         {evt.events.blockId}
                     </Link>

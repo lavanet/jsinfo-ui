@@ -16,6 +16,7 @@ import CsvButton from '@jsinfo/components/CsvButton';
 import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
 import { RenderInFullPageCard } from '@jsinfo/common/utils';
 import MonikerAndProviderLink from '@jsinfo/components/MonikerAndProviderLink';
+import { GetExplorersGuruUrl } from '@jsinfo/common/env';
 
 export default function Events() {
 
@@ -99,8 +100,8 @@ export default function Events() {
                   <Link
                     href={
                       evt.tx
-                        ? `https://lava.explorers.guru/transaction/${evt.tx}`
-                        : `https://lava.explorers.guru/block/${evt.blockId}`
+                        ? `${GetExplorersGuruUrl()}/transaction/${evt.tx}`
+                        : `${GetExplorersGuruUrl()}/block/${evt.blockId}`
                     }
                   >
                     {EventTypeToString(evt.eventType)}
@@ -108,7 +109,7 @@ export default function Events() {
                 ),
                 blockId: (evt) => (
                   <Link
-                    href={`https://lava.explorers.guru/block/${evt.blockId}`}
+                    href={`${GetExplorersGuruUrl()}/block/${evt.blockId}`}
                   >
                     {evt.blockId}
                   </Link>
@@ -181,8 +182,8 @@ export default function Events() {
                   <Link
                     href={
                       payment.tx
-                        ? `https://lava.explorers.guru/transaction/${payment.tx}`
-                        : `https://lava.explorers.guru/block/${payment.blockId}`
+                        ? `${GetExplorersGuruUrl()}/transaction/${payment.tx}`
+                        : `${GetExplorersGuruUrl()}/block/${payment.blockId}`
                     }
                   >
                     {payment.blockId}
@@ -223,8 +224,8 @@ export default function Events() {
                   <Link
                     href={
                       report.tx
-                        ? `https://lava.explorers.guru/transaction/${report.tx}`
-                        : `https://lava.explorers.guru/block/${report.blockId}`
+                        ? `${GetExplorersGuruUrl()}/transaction/${report.tx}`
+                        : `${GetExplorersGuruUrl()}/block/${report.blockId}`
                     }
                   >
                     {report.blockId}
