@@ -25,6 +25,14 @@ const NoDataAvailableComponent: React.FC<{}> = () => {
 };
 
 const NavigationButtons: React.FC<{ idx: number; maxIdx: number; onPrevClick: () => void; onNextClick: () => void, json: string, timestamp: string, addr: string }> = ({ idx, maxIdx, onPrevClick, onNextClick, json, timestamp, addr }) => {
+    if (maxIdx <= 1) {
+        return (
+            <div className='accountinfocard_pagecounter' style={{ marginBottom: '12px' }}>
+                <span style={{ marginTop: '4px' }}>Item 1 of 1</span>
+                <AccountInfoActions json={json} timestamp={timestamp} addr={addr} />
+            </div>
+        )
+    }
     return (
         <div className="accountinfocard_leftrightbuttons">
             <span>
