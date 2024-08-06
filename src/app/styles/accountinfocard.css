@@ -45,7 +45,7 @@
 .accountinfocard_floatright {
   justify-content: space-between;
   align-items: flex-end;
-  margin-top: 6px;
+  margin-top: 2px;
   margin-right: 11px;
   flex-wrap: nowrap;
   align-items: right;
@@ -60,5 +60,5 @@
   margin-left: 6px;
   color: grey;
   position: relative;
-  top: 3px;
+  top: 1px;
 }

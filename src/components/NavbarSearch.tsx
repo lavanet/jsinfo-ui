@@ -143,6 +143,7 @@ export function NavbarSearch() {
     }, [windowWidth, isHovered, isFocused]);
 
     function deFocus() {
+        if (typeof document === 'undefined') return;
         setPreventChange(true);
         setTimeout(() => setPreventChange(false), 300);
         const searchElement = document.querySelector('button');

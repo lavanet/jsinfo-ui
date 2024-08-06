@@ -4,7 +4,7 @@ import DateRangePicker, { DateRange, RangeType } from 'rsuite/DateRangePicker';
 const { allowedRange } = DateRangePicker;
 import { subDays, startOfWeek, startOfMonth, startOfYear, addMonths, subMonths, getYear, format, subWeeks } from 'date-fns';
 import { CachedFetchDateRange } from '@jsinfo/common/types';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const predefinedRanges: any[] = [
     {
@@ -84,7 +84,8 @@ const RangeDatePicker: React.FC<RangeDatePickerProps> = ({ onDateChange, datePic
         RangeDatePickerDebugLog("handleDateChange: ended");
     };
 
-    const handleOk = (date: DateRange, event: React.SyntheticEvent) => {
+    // all document calls need to be in useEffect because of SSR
+    const handleOkInner = (date: DateRange) => {
         RangeDatePickerDebugLog("handleOk: started");
         RangeDatePickerDebugLog("handleOk: date", date);
         RangeDatePickerDebugLog("handleOk: event", event);
@@ -92,6 +93,17 @@ const RangeDatePicker: React.FC<RangeDatePickerProps> = ({ onDateChange, datePic
         handleDateChange(date[0], date[1]);
         RangeDatePickerDebugLog("handleOk: ended");
     };
+
+    const [selectedRange, setSelectedRange] = useState<DateRange | null>(null);
+
+    const handleOk = (date: DateRange, event: React.SyntheticEvent) => {
+        setSelectedRange(date);
+    };
+
+    useEffect(() => {
+        if (selectedRange) handleOkInner(selectedRange);
+    }, [selectedRange, handleOkInner]);
+
 
     const handleShortcutClick = (range: RangeType<DateRange>, event: React.MouseEvent) => {
         // this is the normal flow - this works on all machines
@@ -106,6 +118,7 @@ const RangeDatePicker: React.FC<RangeDatePickerProps> = ({ onDateChange, datePic
     };
 
     function handleOnOverlayEntered() {
+        if (typeof document === 'undefined') return;
         // this is the additional flow for the windows bug/chrome - very rare - don't touch this
         RangeDatePickerDebugLog("handleOnOverlayEntered: started");
         const buttons = document.querySelectorAll('div.rs-stack-item button[placement="left"][type="button"][aria-disabled="false"].rs-btn.rs-btn-link.rs-btn-sm');
@@ -151,8 +164,7 @@ const RangeDatePicker: React.FC<RangeDatePickerProps> = ({ onDateChange, datePic
 
     return (
         <DateRangePicker
-            // this is the additional flow for the windows bug/chrome - very rare - don't touch this
-            disabled={false}
+            disabled={false} // this is the additional flow for the windows bug/chrome - very rare - don't touch this
             ranges={predefinedRanges}
             placement={"bottomEnd"}
             style={{ width: 200 }}

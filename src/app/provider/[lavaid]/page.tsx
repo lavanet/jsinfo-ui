@@ -30,6 +30,7 @@ import ProviderReportsTab from './_components/ProviderReportsTab';
 import ProviderBlockReportsTab from './_components/ProviderBlockReportsTab';
 import ProviderAccountInfoTab from './_components/ProviderAccountInfoTab';
 import ProviderClaimableRewardsTab from "./_components/ProviderClaimableRewardsTab";
+import ProviderCards from "./_components/ProviderCards";
 
 export default function Provider({ params }: { params: { lavaid: string } }) {
 
@@ -63,44 +64,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
     <>
       <BlockWithDateCard blockData={data} />
       <MonikerAndProviderAddressCard provider={provider} />
-      <div style={{ marginTop: 'var(--box-margin)', marginBottom: 'var(--box-margin)' }}>
-        <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-4">
-          <TitledCard
-            title="Total CU"
-            value={provider.cuSum}
-            className="col-span-1"
-            formatNumber={true}
-            tooltip="Total compute units for provider"
-          />
-          <TitledCard
-            title="Total Relays"
-            value={provider.relaySum}
-            className="col-span-1"
-            formatNumber={true}
-            tooltip="Total relays for provider"
-          />
-          <TitledCard
-            title="Total Rewards"
-            value={`${provider.rewardSum} ULAVA`}
-            className="col-span-2 md:col-span-1"
-            formatNumber={true}
-            tooltip="Total rewards for provider"
-          />
-          <TitledCard
-            title="Total Stake"
-            value={`${provider.stakeSum} ULAVA`}
-            className="col-span-2 md:col-span-1"
-            formatNumber={true}
-            tooltip="Total stake for all specs"
-          />
-          {/* <TitledCard
-            title="Claimable Rewards"
-            value={provider.claimableRewards.toUpperCase()}
-            className="col-span-2 md:col-span-1"
-            formatNumber={true}
-          /> */}
-        </Flex>
-      </div>
+      <ProviderCards addr={decodedLavaId} />
 
       <ProviderChart addr={decodedLavaId} />
       <div className="box-margin-div"></div>

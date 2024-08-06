@@ -1,6 +1,6 @@
 // src/app/provider/[lavaid]/_components/ProviderLatestHealth.tsx
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Text, Box, Link } from "@radix-ui/themes";
 import LoadingIndicator from '@jsinfo/components/LoadingIndicator';
 import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
@@ -163,6 +163,13 @@ const ProviderLatestHealthCards: React.FC<ProviderLatestHealthCardsProps> = ({ l
         dataKey: `providerLatestHealth/${lavaId}`,
     });
 
+    // calls to document must done via useEffect
+    const [visibility, setVisibility] = useState(false);
+
+    useEffect(() => {
+        toggleVisibilityInner();
+    }, [visibility]);
+
     if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
     if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${lavaId} latest health stats`} greyText={`${lavaId} latest health`} />);
 
@@ -174,7 +181,11 @@ const ProviderLatestHealthCards: React.FC<ProviderLatestHealthCardsProps> = ({ l
 
     window.addEventListener('resize', handleProviderLatestHealthContainerResize);
 
-    function toggleVisibility() {
+    const toggleVisibility = () => {
+        setVisibility(!visibility);
+    };
+
+    function toggleVisibilityInner() {
         const elements = document.getElementsByClassName('spec-container');
 
         for (let i = 0; i < elements.length; i++) {
