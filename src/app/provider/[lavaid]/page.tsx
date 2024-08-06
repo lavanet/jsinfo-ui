@@ -3,7 +3,7 @@
 
 import { useEffect } from "react";
 
-import { Flex, Card, Box } from "@radix-ui/themes";
+import { Card, Box } from "@radix-ui/themes";
 import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
 import { usePageContext } from "@jsinfo/context/PageContext";
 
@@ -13,7 +13,6 @@ import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
 import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
 import MonikerAndProviderAddressCard from "@jsinfo/components/MonikerAndProviderAddressCard";
-import TitledCard from "@jsinfo/components/TitledCard";
 import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
 
 import ProviderChart from '@jsinfo/charts/providerChart';
