@@ -17,7 +17,7 @@ const ProviderCards: React.FC<ProviderCardsProps> = ({ addr }) => {
     });
 
     if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
-    if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${addr} provider page`} greyText={`${addr} provider`} />);
+    if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${addr} details`} greyText={`${addr} provider`} />);
 
     const provider = data;
 
