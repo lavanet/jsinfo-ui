@@ -28,7 +28,7 @@ const NavigationButtons: React.FC<{ idx: number; maxIdx: number; onPrevClick: ()
     if (maxIdx <= 1) {
         return (
             <div className='accountinfocard_pagecounter' style={{ marginBottom: '12px' }}>
-                <span style={{ marginTop: '4px' }}>Item 1 of 1</span>
+                <span style={{ marginTop: '5px', display: "inline-block" }}>Item 1 of 1</span>
                 <AccountInfoActions json={json} timestamp={timestamp} addr={addr} />
             </div>
         )
