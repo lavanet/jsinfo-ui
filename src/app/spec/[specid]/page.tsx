@@ -89,7 +89,7 @@ export default function Spec({ params }: { params: { specid: string } }) {
             tooltip={`Total rewards for ${data.specId} by all providers`}
           />
           <TitledCard
-            title="Cache hit"
+            title="Cache hit/total (30 days)"
             value={data.cacheHitRate}
             className="col-span-1 md:col-span-1"
             formatNumber={true}
