@@ -21,6 +21,14 @@ const ProviderCards: React.FC<ProviderCardsProps> = ({ addr }) => {
 
     const provider = data;
 
+    const requiredFields = ['cuSum', 'relaySum', 'rewardSum', 'stakeSum', 'claimedRewardsAllTime', 'claimedRewards30DaysAgo', 'claimableRewards'];
+
+    const allFieldsPresent = requiredFields.every(field => provider.hasOwnProperty(field));
+
+    if (!allFieldsPresent) {
+        return RenderInFullPageCard(<ErrorDisplay message="Provider data is incomplete or unavailable." />);
+    }
+
     return (
         <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-4">
             <TitledCard
