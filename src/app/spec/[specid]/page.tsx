@@ -44,11 +44,12 @@ export default function Spec({ params }: { params: { specid: string } }) {
   if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
   if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${specId} spec page`} greyText={`${specId} spec`} />);
 
+
   return (
     <>
       <BlockWithDateCard blockData={data} />
       <div style={{ marginTop: 'var(--box-margin)', marginBottom: 'var(--box-margin)' }}>
-        <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-6">
+        <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-4">
           <TitledCard
             title="Spec"
             value={data.specId}
@@ -64,30 +65,36 @@ export default function Spec({ params }: { params: { specid: string } }) {
             value={data.cuSum}
             className="col-span-1"
             formatNumber={true}
-            tooltip="Total compute units for this spec by all providers"
+            tooltip={`Total compute units for ${data.specId} by all providers`}
           />
           <TitledCard
             title="Total Relays"
             value={data.relaySum}
             className="col-span-1"
             formatNumber={true}
-            tooltip="Total relays for this spec by all providers"
+            tooltip={`Total relays for ${data.specId} by all providers`}
           />
           <TitledCard
             title="Total Rewards"
             value={`${data.rewardSum} ULAVA`}
             className="col-span-1 md:col-span-1"
             formatNumber={true}
-            tooltip="Total rewards for this spec by all providers"
+            tooltip={`Total rewards for ${data.specId} by all providers`}
           />
           <TitledCard
             title="Endpoint Status"
             value={(<SpecEndpointHealthSummary healthy={(data?.endpointHealth?.healthy || 0)} unhealthy={(data?.endpointHealth?.unhealthy || 0)} />)}
             className="col-span-1 md:col-span-1"
             formatNumber={true}
-            tooltip="Total rewards for this spec by all providers"
+            tooltip={`Total rewards for ${data.specId} by all providers`}
           />
-
+          <TitledCard
+            title="Cache hit"
+            value={data.cacheHitRate}
+            className="col-span-1 md:col-span-1"
+            formatNumber={true}
+            tooltip={`Cache hit/total for ${data.specId} in the last 30 days`}
+          />
         </Flex>
       </div>
 
