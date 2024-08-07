@@ -54,7 +54,7 @@ export default function Home() {
       <BlockWithDateCard blockData={data} />
 
       <div style={{ marginTop: 'var(--box-margin)', marginBottom: 'var(--box-margin)' }}>
-        <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-3 ">
+        <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-4">
           <TitledCard
             title="Relays"
             value={data.relaySum}
@@ -72,6 +72,13 @@ export default function Home() {
             value={`${data.stakeSum} ULAVA`}
             className="col-span-2 md:col-span-1"
             formatNumber={true}
+          />
+          <TitledCard
+            title="Cache hit/total (30 days)"
+            value={data.cacheHitRate ? `${data.cacheHitRate} %` : "0"}
+            className="col-span-1 md:col-span-1"
+            formatNumber={true}
+            tooltip={`Cache hit/total for all specs in the last 30 days`}
           />
         </Flex>
       </div>
