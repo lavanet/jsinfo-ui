@@ -21,6 +21,11 @@ export function Navbar() {
                             Events
                         </Button>
                     </Link>
+                    <Link href='/consumers'>
+                        <Button id="eventsbtn" variant="soft">
+                            Consumers
+                        </Button>
+                    </Link>
                 </div>
                 <div className="absolute right-2">
                     <NavbarSearch />

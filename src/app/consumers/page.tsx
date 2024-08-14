@@ -1,4 +1,5 @@
-// src/app/page.tsx
+// src/app/consumers/page.tsx
+
 "use client";
 
 import React from "react";
@@ -8,31 +9,29 @@ import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
 import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
 import TitledCard from "@jsinfo/components/TitledCard";
-import IndexChart from "@jsinfo/charts/indexChart";
 import { SortableTableInATabComponent } from "@jsinfo/components/StaticSortTable";
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
 import { ConvertToChainName } from "@jsinfo/common/convertors";
 import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
 import { usePageContext } from "@jsinfo/context/PageContext";
 import { FormatNumber, RenderInFullPageCard } from "@jsinfo/common/utils";
 import { ErrorDisplay } from "@jsinfo/components/ErrorDisplay";
-import TableCsvButton from "@jsinfo/components/TableCsvButton";
-import MonikerWithTooltip from "@jsinfo/components/MonikerWithTooltip";
+import ConsumersChart from "@jsinfo/charts/consumersChart";
+import ConsumersConsumersTable from './_components/ConsumersConsumersTable';
 
 export default function Home() {
 
-  const { data, loading, error } = useApiDataFetch({ dataKey: "index" });
+  const { data, loading, error } = useApiDataFetch({ dataKey: "consumerspage" });
 
   const { setCurrentPage } = usePageContext();
 
   useEffect(() => {
     if (!loading && !error) {
-      setCurrentPage('home');
+      setCurrentPage('consumers');
     }
   }, [loading, error, setCurrentPage]);
 
   if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
-  if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText="Loading Landing page" greyText="Landing" />);
+  if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText="Loading Consumers page" greyText="Consumers" />);
 
   interface Item {
     chainId: string;
@@ -54,7 +53,7 @@ export default function Home() {
       <BlockWithDateCard blockData={data} />
 
       <div style={{ marginTop: 'var(--box-margin)', marginBottom: 'var(--box-margin)' }}>
-        <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-4">
+        <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-3">
           <TitledCard
             title="Relays"
             value={data.relaySum}
@@ -68,30 +67,23 @@ export default function Home() {
             formatNumber={true}
           />
           <TitledCard
-            title="Stake"
-            value={`${data.stakeSum} ULAVA`}
-            className="col-span-2 md:col-span-1"
+            title="Total Count"
+            value={data.consumerCount}
+            className="col-span-1"
             formatNumber={true}
-          />
-          <TitledCard
-            title="Cache hit/total (30 days)"
-            value={data.cacheHitRate ? `${data.cacheHitRate} %` : "0"}
-            className="col-span-1 md:col-span-1"
-            formatNumber={true}
-            tooltip={`Cache hit/total for all specs in the last 30 days`}
           />
         </Flex>
       </div>
 
-      <IndexChart />
+      <ConsumersChart />
       <div className="box-margin-div"></div>
 
       <Card>
-        <JsinfoTabs defaultValue="providers"
+        <JsinfoTabs defaultValue="consumers"
           tabs={[
             {
-              value: "providers",
-              content: "Providers",
+              value: "consumers",
+              content: "Consumers",
             },
             {
               value: "chains",
@@ -100,38 +92,14 @@ export default function Home() {
           ]}
         >
           <Box>
-            <DataKeySortableTableInATabComponent
-              columns={[
-                { key: "moniker", name: "Moniker" },
-                { key: "provider", name: "Provider Address" },
-                { key: "rewardSum", name: "Total Rewards" },
-                {
-                  key: "totalServices",
-                  name: "Total Services",
-                  altKey: "nStakes",
-                },
-                { key: "totalStake", name: "Total Stake" },
-              ]}
-              defaultSortKey="totalStake|desc"
-              tableAndTabName="providers"
-              pkey="provider"
-              pkeyUrl="provider"
-              firstColumn="moniker"
-              dataKey="indexProviders"
-              rowFormatters={{
-                moniker: (data) => (<MonikerWithTooltip provider={data} />),
-                rewardSum: (data) => FormatNumber(data.rewardSum),
-                totalStake: (data) => FormatNumber(data.totalStake),
-              }}
-              csvButton={<TableCsvButton csvDownloadLink="indexProvidersCsv" />}
-            />
+            <ConsumersConsumersTable />
 
             <SortableTableInATabComponent
               columns={[
                 { key: "chainId", name: "Spec" },
                 { key: "chainName", name: "Chain Name" },
                 { key: "relaySum", name: "Total Relays" },
-                { key: "cuSum", name: "Total Cus" },
+                { key: "cuSum", name: "Total CUs" },
               ]}
               data={transformedSpecData}
               defaultSortKey="relaySum|desc"
@@ -140,6 +108,7 @@ export default function Home() {
               pkeyUrl="spec"
               rowFormatters={{
                 relaySum: (data) => FormatNumber(data.relaySum),
+                cuSum: (data) => FormatNumber(data.cuSum),
               }}
             />
           </Box>

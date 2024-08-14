@@ -1,4 +1,4 @@
-// src/charts/providerChart.tsx
+// src/charts/consumersChart.tsx
 
 import { RenderInFullPageCard } from "@jsinfo/common/utils";
 import { ConvertJsInfoServerFormatedDateToJsDateObject } from "@jsinfo/common/dateutils";
@@ -16,49 +16,36 @@ import { ErrorDisplay } from "@jsinfo/components/ErrorDisplay";
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
 import TextToggle from "@jsinfo/components/TextToggle";
 import useApiDateFetch from "@jsinfo/hooks/useApiDateFetch";
+
 import { useState } from "react";
 
-type ProviderChartCuRelay = {
-    specId: string;
-    cus: number;
-    relays: number;
+type CuRelayItem = {
+    chainId: string;
+    cuSum: number;
+    relaySum: number;
 };
 
-type ProviderChartResponse = {
-    data: ProviderChartCuRelay[];
-} & ProviderQosData;
-
-interface ProviderQosQueryData {
+type ConsumersChartResponse = {
     date: string;
-    qosSyncAvg: number;
-    qosAvailabilityAvg: number;
-    qosLatencyAvg: number;
-}
-
-type ProviderQosData = {
     qos: number;
-} & ProviderQosQueryData;
+    data: CuRelayItem[];
+};
 
-interface ProviderChartProps {
-    addr: string;
-}
-
-export default function ProviderChart({ addr }: ProviderChartProps) {
-
+export default function ConsumersChart() {
     const [isRelayOrCuSelected, setIsRelayOrCuSelected] = useState(false);
 
-    const { data, loading, error, dates, setDates } = useApiDateFetch("providerCharts/" + addr);
+    const { data, loading, error, dates, setDates } = useApiDateFetch("consumerspageCharts");
 
     if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
-    if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${addr} chart data`} greyText={`${addr} chart`} />);
+    if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading consumers chart data`} greyText={`consumers chart`} />);
 
     if (!Array.isArray(data.data) || data.data.length === 0) {
         return RenderInFullPageCard(<ErrorDisplay message={"No data for chart loaded"} />);
     }
 
-    let rawChartData: ProviderChartResponse[] = data.data;
+    let rawChartData: ConsumersChartResponse[] = data.data;
 
-    rawChartData = rawChartData.sort((a: ProviderChartResponse, b: ProviderChartResponse) => {
+    rawChartData = rawChartData.sort((a: ConsumersChartResponse, b: ConsumersChartResponse) => {
         const dateA = ConvertJsInfoServerFormatedDateToJsDateObject(a.date);
         const dateB = ConvertJsInfoServerFormatedDateToJsDateObject(b.date);
         return dateA.getTime() - dateB.getTime();
@@ -87,6 +74,7 @@ export default function ProviderChart({ addr }: ProviderChartProps) {
                 position: "right",
                 min: 0,
                 max: 1.01,
+
                 // grid line settings
                 grid: {
                     drawOnChartArea: false, // only want the grid lines for one axis to show up
@@ -117,10 +105,10 @@ export default function ProviderChart({ addr }: ProviderChartProps) {
         },
     });
 
-    const specProviderToDatasetMap: ChartJsSpecIdToDatasetMap = {};
+    const specIdToDatasetMap: ChartJsSpecIdToDatasetMap = {};
     let i = 0;
 
-    let qosScoreData: ChartJsLineChartDataset = {
+    let qosData: ChartJsLineChartDataset = {
         label: "QoS Score",
         data: [],
         fill: false,
@@ -130,91 +118,42 @@ export default function ProviderChart({ addr }: ProviderChartProps) {
         borderDash: [30, 1],
     };
 
-    let qosSyncData: ChartJsLineChartDataset = {
-        label: "Sync Score",
-        data: [],
-        fill: false,
-        borderColor: "#FFC53D",
-        backgroundColor: "#FFC53D",
-        yAxisID: "y1",
-        borderDash: [30, 1],
-    };
-
-    let qosAvailabilityData: ChartJsLineChartDataset = {
-        label: "Availability Score",
-        data: [],
-        fill: false,
-        borderColor: "#46A758",
-        backgroundColor: "#46A758",
-        yAxisID: "y1",
-        borderDash: [30, 1],
-    };
-
-    let qosLatencyData: ChartJsLineChartDataset = {
-        label: "Latency Score",
-        data: [],
-        fill: false,
-        borderColor: "#6E56CF",
-        backgroundColor: "#6E56CF",
-        yAxisID: "y1",
-        borderDash: [30, 1],
-    };
-
     const relayToCuChange = (checked: boolean, event: React.ChangeEvent<HTMLInputElement>) => {
         setIsRelayOrCuSelected(checked);
     };
 
-    rawChartData.forEach((providerChartResponse: ProviderChartResponse) => {
-        for (const specCuRelayItem of providerChartResponse.data) {
-            if (!specCuRelayItem.specId) continue;
-            if (specProviderToDatasetMap[specCuRelayItem.specId] == undefined) {
-                specProviderToDatasetMap[specCuRelayItem.specId] = {
-                    label: !isRelayOrCuSelected ? specCuRelayItem.specId + " Relays" : specCuRelayItem.specId + " CUs",
+    rawChartData.forEach((consumersChartResponse: ConsumersChartResponse) => {
+        for (const cuRelayItem of consumersChartResponse.data) {
+            if (!cuRelayItem.chainId) continue
+            if (specIdToDatasetMap[cuRelayItem.chainId] == undefined) {
+                specIdToDatasetMap[cuRelayItem.chainId] = {
+                    label: !isRelayOrCuSelected ? cuRelayItem.chainId + " Relays" : cuRelayItem.chainId + " CUs",
                     data: [],
                     fill: false,
                     borderColor: CHARTJS_COLORS[i],
                     backgroundColor: CHARTJS_COLORS[i],
-                    yAxisID: specCuRelayItem.specId === "All Specs" ? "y2" : "y",
-                    borderDash: specCuRelayItem.specId === "All Specs" ? [15, 1] : undefined,
+                    yAxisID: cuRelayItem.chainId === "All Chains" ? "y2" : "y",
+                    borderDash: cuRelayItem.chainId === "All Chains" ? [15, 1] : undefined,
                 };
                 i++;
                 if (i > CHARTJS_COLORS.length - 1) {
                     i = 0;
                 }
             }
-            specProviderToDatasetMap[specCuRelayItem.specId].data.push({
-                x: providerChartResponse.date,
-                y: !isRelayOrCuSelected ? specCuRelayItem.relays : specCuRelayItem.cus,
+            specIdToDatasetMap[cuRelayItem.chainId].data.push({
+                x: consumersChartResponse.date,
+                y: !isRelayOrCuSelected ? cuRelayItem.relaySum : cuRelayItem.cuSum,
             });
         }
 
-        qosScoreData.data.push({
-            x: providerChartResponse.date,
-            y: providerChartResponse.qos,
-        });
-
-        qosSyncData.data.push({
-            x: providerChartResponse.date,
-            y: providerChartResponse.qosSyncAvg,
-        });
-
-        qosAvailabilityData.data.push({
-            x: providerChartResponse.date,
-            y: providerChartResponse.qosAvailabilityAvg,
-        });
-
-        qosLatencyData.data.push({
-            x: providerChartResponse.date,
-            y: providerChartResponse.qosLatencyAvg,
+        qosData.data.push({
+            x: consumersChartResponse.date,
+            y: consumersChartResponse.qos,
         });
     });
 
-    chartData.datasets.push(qosScoreData);
-    chartData.datasets.push(qosSyncData);
-    chartData.datasets.push(qosAvailabilityData);
-    chartData.datasets.push(qosLatencyData);
-
-    for (const [key, value] of Object.entries(specProviderToDatasetMap)) {
+    chartData.datasets.push(qosData);
+    for (const [key, value] of Object.entries(specIdToDatasetMap)) {
         chartData.datasets.push(value);
     }
 
@@ -224,7 +163,7 @@ export default function ProviderChart({ addr }: ProviderChartProps) {
         <ChartJsReactiveLineChartWithDatePicker
             data={chartData}
             options={chartOptions}
-            title="Qos Score & Relays/CUs for provider"
+            title="Qos Score & Relays/CUs for top 10 Chains"
             onDateChange={setDates}
             rightControl={<TextToggle openText='CU sum' closeText='Relay sum' onChange={relayToCuChange} style={{ marginRight: '10px' }} />}
             datePickerValue={dates} />
