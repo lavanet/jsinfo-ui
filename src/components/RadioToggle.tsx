@@ -1,6 +1,6 @@
 // src/components/RadioToggle.tsx
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import Radio from 'rsuite/Radio';
 import RadioGroup from 'rsuite/RadioGroup';
 
@@ -14,7 +14,7 @@ interface RadioToggleProps {
 const RadioToggle: React.FC<RadioToggleProps> = ({ options, onChange, style, className }) => {
     return (
         <span className={className}>
-            <RadioGroup onChange={onChange} style={{ ...style }} inline={true}>
+            <RadioGroup onChange={onChange} style={{ ...style }} inline={true} defaultValue={options[0]}>
                 {options.map((option, index) => (
                     <Radio color="red" key={index} value={option} style={{ whiteSpace: 'nowrap' }}>{option}</Radio>
                 ))

@@ -33,7 +33,7 @@ type IndexChartResponse = {
 
 export default function IndexChart() {
     const [isRelayOrCuSelected, setIsRelayOrCuSelected] = useState(false);
-    const [isUniqueVisitorsSelected, setIsUniqueVisitorsSelected] = useState(false);
+    const [isUniqueVisitorsSelected, setIsUniqueVisitorsSelected] = useState(true);
 
     const { data, loading, error, dates, setDates } = useApiDateFetch("indexCharts");
 
