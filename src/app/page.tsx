@@ -31,8 +31,22 @@ export default function Home() {
     }
   }, [loading, error, setCurrentPage]);
 
+
+  // i want to return this but still have the rest of the shit below continue loading
   if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
-  if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText="Loading Landing page" greyText="Landing" />);
+
+  if (loading) {
+    const loadingContent = (
+      <>
+        <LoadingIndicator loadingText="Loading Landing page" greyText="Landing" />
+        <div style={{ display: 'none' }}>
+          <IndexChart />
+        </div>
+      </>
+    );
+
+    return RenderInFullPageCard(loadingContent);
+  }
 
   interface Item {
     chainId: string;
