@@ -54,7 +54,7 @@ export default function Home() {
       <BlockWithDateCard blockData={data} />
 
       <div style={{ marginTop: 'var(--box-margin)', marginBottom: 'var(--box-margin)' }}>
-        <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-4">
+        <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-3">
           <TitledCard
             title="Relays"
             value={data.relaySum}
@@ -71,6 +71,18 @@ export default function Home() {
             title="Stake"
             value={`${data.stakeSum} ULAVA`}
             className="col-span-2 md:col-span-1"
+            formatNumber={true}
+          />
+          <TitledCard
+            title="Relays (30 days)"
+            value={data.relaySum30Days}
+            className="col-span-1"
+            formatNumber={true}
+          />
+          <TitledCard
+            title="CU (30 days)"
+            value={data.cuSum30Days}
+            className="col-span-1"
             formatNumber={true}
           />
           <TitledCard
