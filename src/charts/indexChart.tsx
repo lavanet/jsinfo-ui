@@ -17,6 +17,7 @@ import ChartJsWithRadioToggle from "@jsinfo/components/ChartJsWithRadioToggle";
 import useApiDateFetch from "@jsinfo/hooks/useApiDateFetch";
 
 import { useState } from "react";
+import { CachedFetchDateRange } from "@jsinfo/common/types";
 
 type CuRelayItem = {
     chainId: string;
@@ -51,6 +52,27 @@ export default function IndexChart() {
         const dateB = ConvertJsInfoServerFormatedDateToJsDateObject(b.date);
         return dateA.getTime() - dateB.getTime();
     });
+
+    const chartChangeRadio = (value: any) => {
+        if (value == 'CU sum') {
+            setIsUniqueVisitorsSelected(false);
+            setIsRelayOrCuSelected(false);
+            return;
+        }
+        if (value == 'Relay sum') {
+            setIsUniqueVisitorsSelected(false);
+            setIsRelayOrCuSelected(true);
+            return;
+        }
+        // if (value == 'Unique Visitors')
+        setIsUniqueVisitorsSelected(true);
+        return;
+    };
+
+    if (isUniqueVisitorsSelected) {
+        return UniqueVisitorsChart(rawChartData, dates, setDates, chartChangeRadio);
+    }
+
 
     const chartData: ChartJsLineChartData = {
         datasets: [],
@@ -91,10 +113,136 @@ export default function IndexChart() {
                 display: false, // hide this axis
                 stacked: false, // not stacked
             },
-            y4: {
+            x: {
+                ticks: {
+                    autoSkip: false,
+                    maxTicksLimit: 200, // bigger then 6 * 30 - we store date up to 6 month ago
+                    callback: (t, i) => {
+                        // If there are less than 15 items, return the date for all
+                        if (rawChartData.length < 15) {
+                            return rawChartData[i]["date"];
+                        }
+
+                        // Otherwise, use the existing logic
+                        return i % 5 && i != 0 && i + 1 != rawChartData.length
+                            ? ""
+                            : rawChartData[i]["date"];
+                    }
+                },
+            },
+        },
+    });
+
+    const specIdToDatasetMap: ChartJsSpecIdToDatasetMap = {};
+    let i = 0;
+
+    let qosData: ChartJsLineChartDataset = {
+        label: "QoS Score",
+        data: [],
+        fill: false,
+        borderColor: "#AAFF00",
+        backgroundColor: "#AAFF00",
+        yAxisID: "y1",
+        borderDash: [30, 1],
+    };
+
+    rawChartData.forEach((indexChartResponse: IndexChartResponse) => {
+        for (const cuRelayItem of indexChartResponse.data) {
+            if (!cuRelayItem.chainId) continue
+            if (specIdToDatasetMap[cuRelayItem.chainId] == undefined) {
+                specIdToDatasetMap[cuRelayItem.chainId] = {
+                    label: !isRelayOrCuSelected ? cuRelayItem.chainId + " Relays" : cuRelayItem.chainId + " CUs",
+                    data: [],
+                    fill: false,
+                    borderColor: CHARTJS_COLORS[i],
+                    backgroundColor: CHARTJS_COLORS[i],
+                    yAxisID: cuRelayItem.chainId === "All Chains" ? "y2" : "y",
+                    borderDash: cuRelayItem.chainId === "All Chains" ? [15, 1] : undefined,
+                };
+                i++;
+                if (i > CHARTJS_COLORS.length - 1) {
+                    i = 0;
+                }
+            }
+            specIdToDatasetMap[cuRelayItem.chainId].data.push({
+                x: indexChartResponse.date,
+                y: !isRelayOrCuSelected ? cuRelayItem.relaySum : cuRelayItem.cuSum,
+            });
+        }
+
+        qosData.data.push({
+            x: indexChartResponse.date,
+            y: indexChartResponse.qos,
+        });
+    });
+
+    chartData.datasets.push(qosData);
+
+    for (const [key, value] of Object.entries(specIdToDatasetMap)) {
+        chartData.datasets.push(value);
+    }
+
+
+    ChartjsSetLastDotHighInChartData(chartData);
+
+    return (
+        <ChartJsWithRadioToggle
+            data={chartData}
+            options={chartOptions}
+            title="QoS Score, Relays/CUs & Unique Visitors for Top 10 Chains"
+            onDateChange={setDates}
+            datePickerValue={dates}
+            rangeOptions={['Unique Visitors', 'CU sum', 'Relay sum']}
+            rangeOnChange={chartChangeRadio}
+        />
+    );
+}
+
+
+export function UniqueVisitorsChart(
+    rawChartData: IndexChartResponse[],
+    dates: CachedFetchDateRange,
+    setDates: (dates: { from: Date; to: Date }) => void,
+    rangeOnChange: (value: any) => void
+) {
+    const chartData: ChartJsLineChartData = {
+        datasets: [],
+    };
+
+    const chartOptions: ChartJsLineChartOptions = ChartjsSetLastPointToLineInChartOptions({
+        interaction: {
+            mode: "index",
+            intersect: false,
+        },
+        stacked: false,
+        scales: {
+            y: {
+                type: "linear",
+                display: true,
+                position: "left",
+                stacked: true,
+            },
+            y1: {
+                type: "linear",
+                display: true,
+                position: "right",
+                min: 0,
+                max: 1.01,
+
+                // grid line settings
+                grid: {
+                    drawOnChartArea: false, // only want the grid lines for one axis to show up
+                },
+            },
+            y2: {
                 type: "linear",
                 display: false, // hide this axis
                 stacked: false, // not stacked
+            },
+            y4: {
+                type: "linear",
+                display: false,
+                stacked: false,
             },
             x: {
                 ticks: {
@@ -139,102 +287,46 @@ export default function IndexChart() {
         borderDash: [30, 1],
     };
 
-    const chartChangeRadio = (value: any) => {
-        if (value == 'CU sum') {
-            setIsUniqueVisitorsSelected(false);
-            setIsRelayOrCuSelected(false);
-            return;
-        }
-        if (value == 'Relay sum') {
-            setIsUniqueVisitorsSelected(false);
-            setIsRelayOrCuSelected(true);
-            return;
-        }
-        // if (value == 'Unique Visitors')
-        setIsUniqueVisitorsSelected(true);
-        return;
-    };
-
     rawChartData.forEach((indexChartResponse: IndexChartResponse) => {
-        if (isUniqueVisitorsSelected) {
-            for (const cuRelayItem of indexChartResponse.data) {
-                if (cuRelayItem.chainId != "All Chains") continue;
-                if (specIdToDatasetMap["All Chains CUs"] == undefined) {
-                    specIdToDatasetMap["All Chains CUs"] = {
-                        label: "All Chains CUs",
-                        data: [],
-                        fill: false,
-                        borderColor: CHARTJS_COLORS[i],
-                        backgroundColor: CHARTJS_COLORS[i],
-                        yAxisID: "y",
-                        borderDash: true ? [15, 1] : undefined,
-                    };
-                    i++;
-                    if (i > CHARTJS_COLORS.length - 1) {
-                        i = 0;
-                    }
-
-                    specIdToDatasetMap["All Chains Relays"] = {
-                        label: "All Chains Relays",
-                        data: [],
-                        fill: false,
-                        borderColor: CHARTJS_COLORS[i],
-                        backgroundColor: CHARTJS_COLORS[i],
-                        yAxisID: "y2",
-                        borderDash: true ? [15, 1] : undefined,
-                    };
-                    i++;
-                    if (i > CHARTJS_COLORS.length - 1) {
-                        i = 0;
-                    }
-                }
-                specIdToDatasetMap["All Chains CUs"].data.push({
-                    x: indexChartResponse.date,
-                    y: cuRelayItem.cuSum,
-                });
-
-                specIdToDatasetMap["All Chains Relays"].data.push({
-                    x: indexChartResponse.date,
-                    y: cuRelayItem.relaySum,
-                });
-            }
-
-            qosData.data.push({
-                x: indexChartResponse.date,
-                y: indexChartResponse.qos,
-            });
-
-            if (indexChartResponse.uniqueVisitors) {
-                uniqueVisitorData.data.push({
-                    x: indexChartResponse.date,
-                    y: indexChartResponse.uniqueVisitors,
-                });
-            }
-
-            return
-        }
-
-
         for (const cuRelayItem of indexChartResponse.data) {
-            if (!cuRelayItem.chainId) continue
-            if (specIdToDatasetMap[cuRelayItem.chainId] == undefined) {
-                specIdToDatasetMap[cuRelayItem.chainId] = {
-                    label: !isRelayOrCuSelected ? cuRelayItem.chainId + " Relays" : cuRelayItem.chainId + " CUs",
+            if (cuRelayItem.chainId != "All Chains") continue;
+            if (specIdToDatasetMap["All Chains CUs"] == undefined) {
+                specIdToDatasetMap["All Chains CUs"] = {
+                    label: "All Chains CUs",
                     data: [],
                     fill: false,
                     borderColor: CHARTJS_COLORS[i],
                     backgroundColor: CHARTJS_COLORS[i],
-                    yAxisID: cuRelayItem.chainId === "All Chains" ? "y2" : "y",
-                    borderDash: cuRelayItem.chainId === "All Chains" ? [15, 1] : undefined,
+                    yAxisID: "y",
+                    borderDash: true ? [15, 1] : undefined,
+                };
+                i++;
+                if (i > CHARTJS_COLORS.length - 1) {
+                    i = 0;
+                }
+
+                specIdToDatasetMap["All Chains Relays"] = {
+                    label: "All Chains Relays",
+                    data: [],
+                    fill: false,
+                    borderColor: CHARTJS_COLORS[i],
+                    backgroundColor: CHARTJS_COLORS[i],
+                    yAxisID: "y2",
+                    borderDash: true ? [15, 1] : undefined,
                 };
                 i++;
                 if (i > CHARTJS_COLORS.length - 1) {
                     i = 0;
                 }
             }
-            specIdToDatasetMap[cuRelayItem.chainId].data.push({
+            specIdToDatasetMap["All Chains CUs"].data.push({
                 x: indexChartResponse.date,
-                y: !isRelayOrCuSelected ? cuRelayItem.relaySum : cuRelayItem.cuSum,
+                y: cuRelayItem.cuSum,
+            });
+
+            specIdToDatasetMap["All Chains Relays"].data.push({
+                x: indexChartResponse.date,
+                y: cuRelayItem.relaySum,
             });
         }
 
@@ -242,13 +334,18 @@ export default function IndexChart() {
             x: indexChartResponse.date,
             y: indexChartResponse.qos,
         });
+
+        if (indexChartResponse.uniqueVisitors) {
+            uniqueVisitorData.data.push({
+                x: indexChartResponse.date,
+                y: indexChartResponse.uniqueVisitors,
+            });
+        }
     });
 
     chartData.datasets.push(qosData);
 
-    if (isUniqueVisitorsSelected) {
-        chartData.datasets.push(uniqueVisitorData);
-    }
+    chartData.datasets.push(uniqueVisitorData);
 
     for (const [key, value] of Object.entries(specIdToDatasetMap)) {
         chartData.datasets.push(value);
@@ -265,7 +362,7 @@ export default function IndexChart() {
             onDateChange={setDates}
             datePickerValue={dates}
             rangeOptions={['Unique Visitors', 'CU sum', 'Relay sum']}
-            rangeOnChange={chartChangeRadio}
+            rangeOnChange={rangeOnChange}
         />
     );
 }
