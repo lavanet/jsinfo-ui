@@ -51,6 +51,13 @@ const renderInterface = (specStatusAndInterfaces: SpecStatusAndInterfaces, spec:
     const interfaceData = specStatusAndInterfaces.interfaces![intf];
     if (!interfaceData) return null;
 
+    const regionOrder = ["US", "EU", "ASIA"];
+
+    const sortedRegions = Object.keys(interfaceData)
+        .filter(region => regionOrder.includes(region))
+        .sort((a, b) => regionOrder.indexOf(a) - regionOrder.indexOf(b));
+
+
     return (
         <Box key={hckey(`${spec}_${intf}_box`)} style={{ marginTop: '-2px', marginBottom: '0px' }}>
             <Image
@@ -62,7 +69,7 @@ const renderInterface = (specStatusAndInterfaces: SpecStatusAndInterfaces, spec:
                 style={{ display: 'inline-block', verticalAlign: 'middle', paddingBottom: '0px', marginRight: '3px' }}
             />
             <Text key={hckey(`${spec}_${intf}_text`)} weight="bold" style={{ fontSize: '12px', color: 'grey' }}>{intf}</Text>
-            {Object.keys(interfaceData).map(region => {
+            {sortedRegions.map(region => {
                 const regionData = interfaceData[region];
                 const status = regionData.status;
                 const timestamp = regionData.timestamp;
@@ -163,13 +170,6 @@ const ProviderLatestHealthCards: React.FC<ProviderLatestHealthCardsProps> = ({ l
         dataKey: `providerLatestHealth/${lavaId}`,
     });
 
-    // calls to document must done via useEffect
-    const [visibility, setVisibility] = useState(false);
-
-    useEffect(() => {
-        toggleVisibilityInner();
-    }, [visibility]);
-
     if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
     if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${lavaId} latest health stats`} greyText={`${lavaId} latest health`} />);
 
@@ -181,11 +181,7 @@ const ProviderLatestHealthCards: React.FC<ProviderLatestHealthCardsProps> = ({ l
 
     window.addEventListener('resize', handleProviderLatestHealthContainerResize);
 
-    const toggleVisibility = () => {
-        setVisibility(!visibility);
-    };
-
-    function toggleVisibilityInner() {
+    function toggleVisibility() {
         const elements = document.getElementsByClassName('spec-container');
 
         for (let i = 0; i < elements.length; i++) {
@@ -210,7 +206,7 @@ const ProviderLatestHealthCards: React.FC<ProviderLatestHealthCardsProps> = ({ l
         <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
             <div style={{ marginBottom: '12px' }}>
                 <Box style={{ float: 'left', marginLeft: '8px', userSelect: 'text', fontSize: '18px' }}>
-                    Latest health metrics for provider specs queried from US/EU regions
+                    Latest health metrics for provider specs queried from US,EU and ASIA regions
                 </Box>
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                     <TextToggle key={hckey(`textoggle`)} openText='Full info' closeText='Basic info' onChange={toggleVisibility} style={{ marginRight: '-5px' }} />
