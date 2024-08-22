@@ -86,6 +86,16 @@ export default function IndexChart() {
                 display: false, // hide this axis
                 stacked: false, // not stacked
             },
+            y3: {
+                type: "linear",
+                display: false, // hide this axis
+                stacked: false, // not stacked
+            },
+            y4: {
+                type: "linear",
+                display: false, // hide this axis
+                stacked: false, // not stacked
+            },
             x: {
                 ticks: {
                     autoSkip: false,
@@ -125,7 +135,7 @@ export default function IndexChart() {
         fill: false,
         borderColor: "#F1DF10",
         backgroundColor: "#F1DF10",
-        yAxisID: "y",
+        yAxisID: "y4",
         borderDash: [30, 1],
     };
 
@@ -156,7 +166,7 @@ export default function IndexChart() {
                         fill: false,
                         borderColor: CHARTJS_COLORS[i],
                         backgroundColor: CHARTJS_COLORS[i],
-                        yAxisID: true ? "y2" : "y",
+                        yAxisID: "y",
                         borderDash: true ? [15, 1] : undefined,
                     };
                     i++;
@@ -170,7 +180,7 @@ export default function IndexChart() {
                         fill: false,
                         borderColor: CHARTJS_COLORS[i],
                         backgroundColor: CHARTJS_COLORS[i],
-                        yAxisID: true ? "y2" : "y",
+                        yAxisID: "y2",
                         borderDash: true ? [15, 1] : undefined,
                     };
                     i++;
@@ -194,10 +204,12 @@ export default function IndexChart() {
                 y: indexChartResponse.qos,
             });
 
-            uniqueVisitorData.data.push({
-                x: indexChartResponse.date,
-                y: indexChartResponse.uniqueVisitors,
-            });
+            if (indexChartResponse.uniqueVisitors) {
+                uniqueVisitorData.data.push({
+                    x: indexChartResponse.date,
+                    y: indexChartResponse.uniqueVisitors,
+                });
+            }
 
             return
         }
