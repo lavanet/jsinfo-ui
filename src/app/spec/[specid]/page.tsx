@@ -15,6 +15,7 @@ import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
 import SpecEndpointHealthSummary from '@jsinfo/app/spec/[specid]/_components/SpecEndpointHealthSummary';
 import SpecStakesTable from '@jsinfo/app/spec/[specid]/_components/SpecStakesTable';
 import SpecRelaysTable from "./_components/SpecRelaysTable";
+import LavaWithTooltip from "@jsinfo/components/LavaWithTooltip";
 
 export default function Spec({ params }: { params: { specid: string } }) {
 
@@ -76,23 +77,23 @@ export default function Spec({ params }: { params: { specid: string } }) {
           />
           <TitledCard
             title="Total Rewards"
-            value={`${data.rewardSum} ULAVA`}
+            value={<LavaWithTooltip amount={data.rewardSum} />}
             className="col-span-1 md:col-span-1"
-            formatNumber={true}
+            formatNumber={false}
             tooltip={`Total rewards for ${data.specId} by all providers`}
           />
           <TitledCard
             title="Endpoint Status"
             value={(<SpecEndpointHealthSummary healthy={(data?.endpointHealth?.healthy || 0)} unhealthy={(data?.endpointHealth?.unhealthy || 0)} />)}
             className="col-span-1 md:col-span-1"
-            formatNumber={true}
+            formatNumber={false}
             tooltip={`Total rewards for ${data.specId} by all providers`}
           />
           <TitledCard
             title="Cache hit/total (30 days)"
             value={data.cacheHitRate ? `${data.cacheHitRate} %` : "0"}
             className="col-span-1 md:col-span-1"
-            formatNumber={true}
+            formatNumber={false}
             tooltip={`Cache hit/total for ${data.specId} in the last 30 days`}
           />
         </Flex>

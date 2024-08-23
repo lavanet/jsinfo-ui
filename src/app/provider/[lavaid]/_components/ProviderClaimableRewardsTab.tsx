@@ -7,6 +7,7 @@ import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicS
 import TableCsvButton from "@jsinfo/components/TableCsvButton";
 import TimeTooltip from '@jsinfo/components/TimeTooltip';
 import { FormatNumberWithString } from '@jsinfo/common/utils';
+import LavaWithTooltip from '@jsinfo/components/LavaWithTooltip';
 
 interface ProviderClaimableRewardsTabProps {
     addr: string;
@@ -35,7 +36,7 @@ const ProviderClaimableRewardsTab: React.FC<ProviderClaimableRewardsTabProps> = 
                 chainId: (data) => (
                     <Link href={`/spec/${data.chainId}`}>{data.chainId}</Link>
                 ),
-                amount: (data) => FormatNumberWithString(data.amount.toUpperCase()),
+                amount: (data) => <LavaWithTooltip amount={data.amount} />,
             }}
             csvButton={(
                 <TableCsvButton
@@ -43,6 +44,7 @@ const ProviderClaimableRewardsTab: React.FC<ProviderClaimableRewardsTabProps> = 
                 />
             )}
         />
+
     );
 };
 

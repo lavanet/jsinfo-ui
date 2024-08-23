@@ -18,6 +18,7 @@ import { FormatNumber, RenderInFullPageCard } from "@jsinfo/common/utils";
 import { ErrorDisplay } from "@jsinfo/components/ErrorDisplay";
 import TableCsvButton from "@jsinfo/components/TableCsvButton";
 import MonikerWithTooltip from "@jsinfo/components/MonikerWithTooltip";
+import LavaWithTooltip from "@jsinfo/components/LavaWithTooltip";
 
 export default function Home() {
 
@@ -83,9 +84,9 @@ export default function Home() {
           />
           <TitledCard
             title="Stake"
-            value={`${data.stakeSum} ULAVA`}
-            className="col-span-2 md:col-span-1"
-            formatNumber={true}
+            value={<LavaWithTooltip amount={data.stakeSum} />}
+            className="col-span-1 md:col-span-1"
+            formatNumber={false}
           />
           <TitledCard
             title="Relays (30 days)"
@@ -103,7 +104,7 @@ export default function Home() {
             title="Cache hit/total (30 days)"
             value={data.cacheHitRate ? `${data.cacheHitRate} %` : "0"}
             className="col-span-1 md:col-span-1"
-            formatNumber={true}
+            formatNumber={false}
             tooltip={`Cache hit/total for all specs in the last 30 days`}
           />
         </Flex>
@@ -146,8 +147,8 @@ export default function Home() {
               dataKey="indexProviders"
               rowFormatters={{
                 moniker: (data) => (<MonikerWithTooltip provider={data} />),
-                rewardSum: (data) => FormatNumber(data.rewardSum),
-                totalStake: (data) => FormatNumber(data.totalStake),
+                rewardSum: (data) => (<LavaWithTooltip amount={data.rewardSum} />),
+                totalStake: (data) => (<LavaWithTooltip amount={data.totalStake} />),
               }}
               csvButton={<TableCsvButton csvDownloadLink="indexProvidersCsv" />}
             />

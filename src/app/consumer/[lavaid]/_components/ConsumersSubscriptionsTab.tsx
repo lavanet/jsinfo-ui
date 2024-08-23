@@ -2,7 +2,7 @@
 
 "use client";
 
-import { FormatNumber, FormatNumberWithString } from '@jsinfo/common/utils';
+import { FormatNumber, FormatNumberWithString, IsMeaningfulText } from '@jsinfo/common/utils';
 import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
 import TimeTooltip from '@jsinfo/components/TimeTooltip';
 
@@ -10,12 +10,32 @@ interface ConsumerSubscriptionsTabProps {
     addr: string;
 }
 
+function FormatMonthExpiry(data: any): React.ReactNode {
+    try {
+        if (!IsMeaningfulText(data.month_expiry)) return "";
+
+        const expiryDate = new Date(parseInt(data.month_expiry + ""));
+        const displayDate = expiryDate.toLocaleString('en-US', {
+            month: 'short', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+        });
+        if (displayDate.includes("Jan 21, 1970") || displayDate.includes("Jan 20, 1970")) return "-";
+
+        const fullDateTitle = expiryDate.toISOString();
+
+        return (
+            <span title={fullDateTitle}>{displayDate}</span>
+        );
+    } catch (error) {
+        return data.month_expiry + "";
+    }
+}
+
 const ConsumerSubscriptionsTab: React.FC<ConsumerSubscriptionsTabProps> = ({ addr }) => {
 
     return (
         <DataKeySortableTableInATabComponent
             columns={[
-                { key: "createdAt", name: "Update Timestamp" },
+                { key: "createdAt", name: "Updated" },
                 { key: "plan", name: "Plan" },
                 { key: "duration_bought", name: "Duration Bought" },
                 { key: "duration_left", name: "Duration Left" },
@@ -41,25 +61,7 @@ const ConsumerSubscriptionsTab: React.FC<ConsumerSubscriptionsTabProps> = ({ add
                 month_cu_left: (data: any) => FormatNumber(data.month_cu_left),
                 month_cu_total: (data: any) => FormatNumber(data.month_cu_total),
                 credit: (data: any) => FormatNumberWithString(data.credit),
-                month_expiry: (data: any) => {
-                    try {
-                        const expiryDate = new Date(parseInt(data.month_expiry + ""));
-
-                        const displayDate = expiryDate.toLocaleString('en-US', {
-                            month: 'short', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
-                        });
-
-                        if (displayDate.includes("Jan 21, 1970")) return "-";
-
-                        const fullDateTitle = expiryDate.toISOString();
-
-                        return (
-                            <span title={fullDateTitle}>{displayDate}</span>
-                        );
-                    } catch (error) {
-                        return data.month_expiry + "";
-                    }
-                },
+                month_expiry: (data: any) => FormatMonthExpiry(data.month_expiry),
                 createdAt: (data: any) => <TimeTooltip datetime={data.createdAt} />,
             }}
         />

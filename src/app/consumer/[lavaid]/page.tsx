@@ -14,6 +14,7 @@ import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
 import { RenderInFullPageCard } from '@jsinfo/common/utils';
 import ConsumerChart from '@jsinfo/charts/consumerChart';
 import ConsumerSubscriptionsTable from './_components/ConsumersSubscriptionsTab';
+import ConsumersEventsTab from './_components/ConsumersEventsTab';
 
 export default function Consumer({ params }: { params: { lavaid: string } }) {
 
@@ -95,6 +96,10 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
               value: "conflicts",
               content: "Conflicts",
             },
+            {
+              value: "events",
+              content: "Events",
+            },
           ]}
         >
           <Box>
@@ -122,6 +127,8 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
               }}
             />
           </Box>
+
+          <ConsumersEventsTab addr={decodedLavaId} />
         </JsinfoTabs>
       </Card>
     </>
