@@ -3,16 +3,16 @@
 
 import Link from 'next/link'
 import { Flex, Text, Card, Box } from "@radix-ui/themes";
-import dayjs from "dayjs";
+// import dayjs from "dayjs";
 import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
-import {
-  ChartJsLineChartData,
-  ChartJsLinePoint,
-  ChartjsSetLastDotHighInChartData,
-  ChartjsSetLastPointToLineInChartOptions,
-} from "@jsinfo/components/ChartJsReactiveLineChart";
+// import {
+//   ChartJsLineChartData,
+//   ChartJsLinePoint,
+//   ChartjsSetLastDotHighInChartData,
+//   ChartjsSetLastPointToLineInChartOptions,
+// } from "@jsinfo/components/ChartJsReactiveLineChart";
 import { SortableTableInATabComponent } from "@jsinfo/components/StaticSortTable";
-import { ChartJsReactiveLineChart } from "@jsinfo/components/ChartJsReactiveLineChart";
+// import { ChartJsReactiveLineChart } from "@jsinfo/components/ChartJsReactiveLineChart";
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
 import TitledCard from "@jsinfo/components/TitledCard";
 import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
@@ -49,33 +49,33 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
 
   const consumer = data;
 
-  const chartOptions = ChartjsSetLastPointToLineInChartOptions({});
+  // const chartOptions = ChartjsSetLastPointToLineInChartOptions({});
 
-  const chartData: ChartJsLineChartData = {
-    datasets: [],
-  };
+  // const chartData: ChartJsLineChartData = {
+  //   datasets: [],
+  // };
 
-  const metricData: ChartJsLinePoint[] = [];
+  // const metricData: ChartJsLinePoint[] = [];
 
-  interface Metric {
-    date: Date
-    relaySum: number
-  }
+  // interface Metric {
+  //   date: Date
+  //   relaySum: number
+  // }
 
-  consumer.data.forEach((metric: Metric) => {
-    const formattedDate = dayjs(metric.date).format("MMM D");
-    metricData.push({ x: formattedDate, y: metric.relaySum });
-  });
+  // consumer.data.forEach((metric: Metric) => {
+  //   const formattedDate = dayjs(metric.date).format("MMM D");
+  //   metricData.push({ x: formattedDate, y: metric.relaySum });
+  // });
 
-  chartData.datasets.push({
-    label: "Relays",
-    data: metricData,
-    fill: true,
-    borderColor: "#8c333a",
-    backgroundColor: "#3b1219",
-  });
+  // chartData.datasets.push({
+  //   label: "Relays",
+  //   data: metricData,
+  //   fill: true,
+  //   borderColor: "#8c333a",
+  //   backgroundColor: "#3b1219",
+  // });
 
-  ChartjsSetLastDotHighInChartData(chartData);
+  // ChartjsSetLastDotHighInChartData(chartData);
 
   return (
     <>
@@ -115,8 +115,8 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
         </Flex>
       </div>
 
-      <ChartJsReactiveLineChart data={chartData} options={chartOptions} />
-      <div className="box-margin-div"></div>
+      {/* <ChartJsReactiveLineChart data={chartData} options={chartOptions} />
+      <div className="box-margin-div"></div> */}
 
       <Card>
         <JsinfoTabs defaultValue="subscriptions"
