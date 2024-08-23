@@ -3,16 +3,8 @@
 
 import Link from 'next/link'
 import { Flex, Text, Card, Box } from "@radix-ui/themes";
-import dayjs from "dayjs";
 import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
-import {
-  ChartJsLineChartData,
-  ChartJsLinePoint,
-  ChartjsSetLastDotHighInChartData,
-  ChartjsSetLastPointToLineInChartOptions,
-} from "@jsinfo/components/ChartJsReactiveLineChart";
 import { SortableTableInATabComponent } from "@jsinfo/components/StaticSortTable";
-import { ChartJsReactiveLineChart } from "@jsinfo/components/ChartJsReactiveLineChart";
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
 import TitledCard from "@jsinfo/components/TitledCard";
 import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
@@ -20,6 +12,9 @@ import { useEffect } from "react";
 import { usePageContext } from '@jsinfo/context/PageContext';
 import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
 import { RenderInFullPageCard } from '@jsinfo/common/utils';
+import ConsumerChart from '@jsinfo/charts/consumerChart';
+import ConsumerSubscriptionsTable from './_components/ConsumersSubscriptionsTab';
+import ConsumersEventsTab from './_components/ConsumersEventsTab';
 
 export default function Consumer({ params }: { params: { lavaid: string } }) {
 
@@ -48,34 +43,6 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
   if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${decodedLavaId} consumer page`} greyText={`${decodedLavaId} consumer`} />);
 
   const consumer = data;
-
-  const chartOptions = ChartjsSetLastPointToLineInChartOptions({});
-
-  const chartData: ChartJsLineChartData = {
-    datasets: [],
-  };
-
-  const metricData: ChartJsLinePoint[] = [];
-
-  interface Metric {
-    date: Date
-    relaySum: number
-  }
-
-  consumer.data.forEach((metric: Metric) => {
-    const formattedDate = dayjs(metric.date).format("MMM D");
-    metricData.push({ x: formattedDate, y: metric.relaySum });
-  });
-
-  chartData.datasets.push({
-    label: "Relays",
-    data: metricData,
-    fill: true,
-    borderColor: "#8c333a",
-    backgroundColor: "#3b1219",
-  });
-
-  ChartjsSetLastDotHighInChartData(chartData);
 
   return (
     <>
@@ -115,7 +82,7 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
         </Flex>
       </div>
 
-      <ChartJsReactiveLineChart data={chartData} options={chartOptions} />
+      <ConsumerChart addr={decodedLavaId} />
       <div className="box-margin-div"></div>
 
       <Card>
@@ -129,30 +96,24 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
               value: "conflicts",
               content: "Conflicts",
             },
+            {
+              value: "events",
+              content: "Events",
+            },
           ]}
         >
           <Box>
-            <SortableTableInATabComponent
-              columns={[
-                { key: "blockId", name: "height" },
-                { key: "duration", name: "duration" },
-                { key: "plan", name: "plan" },
-              ]}
-              data={consumer.subsBuy}
-              defaultSortKey="blockId"
-              tableAndTabName="subscriptions"
-              pkey="consumer,blockId,plan"
-              pkeyUrl="none"
-            />
+
+            <ConsumerSubscriptionsTable addr={decodedLavaId} />
 
             <SortableTableInATabComponent
               columns={[
-                { key: "specId", name: "specId" },
-                { key: "requestBlock", name: "requestBlock" },
-                { key: "apiInterface", name: "apiInterface" },
-                { key: "connectionType", name: "connectionType" },
-                { key: "requestData", name: "requestData" },
-                { key: "apiURL", name: "apiURL" },
+                { key: "specId", name: "Spec" },
+                { key: "requestBlock", name: "Block" },
+                { key: "apiInterface", name: "Interface" },
+                { key: "connectionType", name: "Connection Type" },
+                { key: "requestData", name: "Request Data" },
+                { key: "apiURL", name: "Api URL" },
               ]}
               data={consumer.conflicts}
               defaultSortKey="requestBlock"
@@ -166,6 +127,8 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
               }}
             />
           </Box>
+
+          <ConsumersEventsTab addr={decodedLavaId} />
         </JsinfoTabs>
       </Card>
     </>
