@@ -249,17 +249,17 @@ export function UniqueVisitorsChart(
                     autoSkip: false,
                     maxTicksLimit: 200, // bigger then 6 * 30 - we store date up to 6 month ago
                     callback: (t, i) => {
-                        if (!rawChartData[i]) return rawChartData[i];
+                        if (!rawChartData[i]) return undefined;
 
                         // If there are less than 15 items, return the date for all
                         if (rawChartData.length < 15) {
-                            return rawChartData[i].date;
+                            return rawChartData[i]["date"];
                         }
 
                         // Otherwise, use the existing logic
                         return i % 2 && i != 0 && i + 1 != rawChartData.length
                             ? ""
-                            : rawChartData[i].date;
+                            : rawChartData[i]["date"];
                     }
                 },
             },

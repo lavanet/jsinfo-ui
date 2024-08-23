@@ -44,7 +44,7 @@ const ChartJsWithRadioToggle: React.FC<ChartJsWithRadioToggleProps> = (
 
     const boxRef: RefObject<HTMLDivElement> = useRef(null);
 
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
 
     useEffect(() => {
         const handleResize = () => {
