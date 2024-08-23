@@ -23,7 +23,7 @@ export const IndexTotalCUCard: React.FC = () => {
     if (error) return ErrorDisplay({ message: error });
     if (loading) return (
         <TitledCard
-            title="CU"
+            title="Relays"
             value={<LoaderImageForCards />}
             className="col-span-1"
             formatNumber={false}
@@ -31,8 +31,8 @@ export const IndexTotalCUCard: React.FC = () => {
     );
     return (
         <TitledCard
-            title="CU"
-            value={data.cuSum}
+            title="Relays"
+            value={data.relaySum}
             className="col-span-1"
             formatNumber={true}
         />
@@ -44,7 +44,7 @@ export const Index30DayCUCard: React.FC = () => {
     if (error) return ErrorDisplay({ message: error });
     if (loading) return (
         <TitledCard
-            title="CU (30 days)"
+            title="Relays (30 days)"
             value={<LoaderImageForCards />}
             className="col-span-1"
             formatNumber={false}
@@ -52,8 +52,8 @@ export const Index30DayCUCard: React.FC = () => {
     );
     return (
         <TitledCard
-            title="CU (30 days)"
-            value={data.cuSum30Days}
+            title="Relays (30 days)"
+            value={data.relaySum30Days}
             className="col-span-1"
             formatNumber={true}
         />
