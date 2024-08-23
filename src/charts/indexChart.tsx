@@ -36,12 +36,12 @@ export default function IndexChart() {
     const [isRelayOrCuSelected, setIsRelayOrCuSelected] = useState(false);
     const [isUniqueVisitorsSelected, setIsUniqueVisitorsSelected] = useState(true);
 
-    const { data, loading, error, dates, setDates } = useApiDateFetch("indexCharts");
+    const { data, loading, error, dates, setDates } = useApiDateFetch("indexChartsV2");
     const uvfetch = useApiDataFetch({ dataKey: "indexUniqueVisitorsChart" });
 
     if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
     if (uvfetch.error) return RenderInFullPageCard(<ErrorDisplay message={uvfetch.error} />);
-    if (uvfetch.loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading chart data`} greyText={`chart`} />);
+    if (uvfetch.loading) return null;
 
     let uvfetchData: UniqueVisitorsData[] = uvfetch.data.data;
 
@@ -61,7 +61,7 @@ export default function IndexChart() {
             setIsRelayOrCuSelected(true);
             return;
         }
-        // if (value == 'Unique Visitors')
+        // if (value == 'Unique users')
         setIsUniqueVisitorsSelected(true);
         return;
     };
@@ -203,10 +203,10 @@ export default function IndexChart() {
         <ChartJsWithRadioToggle
             data={chartData}
             options={chartOptions}
-            title="QoS Score, Relays/CUs & Unique Visitors for Top 10 Chains"
+            title="QoS Score, Relays/CUs for Top 10 Chains"
             onDateChange={setDates}
             datePickerValue={dates}
-            rangeOptions={['Unique Visitors', 'CU sum', 'Relay sum']}
+            rangeOptions={['Unique users', 'CU sum', 'Relay sum']}
             rangeOnChange={chartChangeRadio}
             chartKey={"RelayCuChart"}
         />
@@ -267,7 +267,7 @@ export function UniqueVisitorsChart(
     });
 
     let uniqueVisitorData: ChartJsLineChartDataset = {
-        label: "Unique Visitors",
+        label: "Unique users",
         data: [],
         fill: false,
         borderColor: "#F1DF10",
@@ -296,7 +296,7 @@ export function UniqueVisitorsChart(
             options={chartOptions}
             title="Unique users in the last 30 days"
             noDatePicker={true}
-            rangeOptions={['Unique Visitors', 'CU sum', 'Relay sum']}
+            rangeOptions={['Unique users', 'CU sum', 'Relay sum']}
             rangeOnChange={rangeOnChange}
             chartKey={"UniqueUsersChart"}
         />

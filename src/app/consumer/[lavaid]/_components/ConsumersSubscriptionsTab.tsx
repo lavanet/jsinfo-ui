@@ -4,6 +4,7 @@
 
 import { FormatNumber, FormatNumberWithString, IsMeaningfulText } from '@jsinfo/common/utils';
 import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
+import LavaWithTooltip from '@jsinfo/components/LavaWithTooltip';
 import TimeTooltip from '@jsinfo/components/TimeTooltip';
 
 interface ConsumerSubscriptionsTabProps {
@@ -60,7 +61,7 @@ const ConsumerSubscriptionsTab: React.FC<ConsumerSubscriptionsTabProps> = ({ add
             rowFormatters={{
                 month_cu_left: (data: any) => FormatNumber(data.month_cu_left),
                 month_cu_total: (data: any) => FormatNumber(data.month_cu_total),
-                credit: (data: any) => FormatNumberWithString(data.credit),
+                credit: (data: any) => <LavaWithTooltip amount={data.credit} />,
                 month_expiry: (data: any) => FormatMonthExpiry(data.month_expiry),
                 createdAt: (data: any) => <TimeTooltip datetime={data.createdAt} />,
             }}

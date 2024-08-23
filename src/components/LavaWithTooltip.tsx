@@ -52,14 +52,17 @@ const LavaWithTooltip: React.FC<LavaWithTooltipProps> = ({ amount }: LavaWithToo
 
     if (lavaValue) {
         return (
-            <span title={ulavaValue}>
+            <span title={ulavaValue} style={{ whiteSpace: 'nowrap' }}>
                 {lavaValue}
             </span>
         );
     }
 
-    return ulavaValue;
-
+    return (
+        <span style={{ whiteSpace: 'nowrap' }}>
+            {ulavaValue}
+        </span>
+    );
 };
 
 export default LavaWithTooltip;

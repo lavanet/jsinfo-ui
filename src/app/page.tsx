@@ -1,112 +1,32 @@
 // src/app/page.tsx
 "use client";
 
-import React from "react";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { Flex, Card, Box } from "@radix-ui/themes";
 import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
-import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
-import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
-import TitledCard from "@jsinfo/components/TitledCard";
 import IndexChart from "@jsinfo/charts/indexChart";
-import { SortableTableInATabComponent } from "@jsinfo/components/StaticSortTable";
 import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
-import { ConvertToChainName } from "@jsinfo/common/convertors";
-import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
-import { usePageContext } from "@jsinfo/context/PageContext";
-import { FormatNumber, RenderInFullPageCard } from "@jsinfo/common/utils";
-import { ErrorDisplay } from "@jsinfo/components/ErrorDisplay";
 import TableCsvButton from "@jsinfo/components/TableCsvButton";
 import MonikerWithTooltip from "@jsinfo/components/MonikerWithTooltip";
 import LavaWithTooltip from "@jsinfo/components/LavaWithTooltip";
+import { IndexAllCards, LatestBlockCard } from "./_components/indexPageCards";
+import IndexChainsTab from "./_components/indexChainsTab";
+import { usePageContext } from "@jsinfo/context/PageContext";
 
 export default function Home() {
-
-  const { data, loading, error } = useApiDataFetch({ dataKey: "index" });
-
   const { setCurrentPage } = usePageContext();
 
   useEffect(() => {
-    if (!loading && !error) {
-      setCurrentPage('home');
-    }
-  }, [loading, error, setCurrentPage]);
-
-
-  // i want to return this but still have the rest of the shit below continue loading
-  if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
-
-  if (loading) {
-    const loadingContent = (
-      <>
-        <LoadingIndicator loadingText="Loading Landing page" greyText="Landing" />
-        <div style={{ display: 'none' }}>
-          <IndexChart />
-        </div>
-      </>
-    );
-
-    return RenderInFullPageCard(loadingContent);
-  }
-
-  interface Item {
-    chainId: string;
-    [key: string]: any;
-  }
-
-  function transformSpecsData(data: Item[]) {
-    if (!data) return [];
-    return data.map((item) => ({
-      ...item,
-      chainName: ConvertToChainName(item.chainId),
-    }));
-  }
-
-  const transformedSpecData = transformSpecsData(data.allSpecs);
+    setCurrentPage('home');
+  }, [setCurrentPage]);
 
   return (
     <>
-      <BlockWithDateCard blockData={data} />
+      <LatestBlockCard />
 
       <div style={{ marginTop: 'var(--box-margin)', marginBottom: 'var(--box-margin)' }}>
         <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-3">
-          <TitledCard
-            title="Relays"
-            value={data.relaySum}
-            className="col-span-1"
-            formatNumber={true}
-          />
-          <TitledCard
-            title="CU"
-            value={data.cuSum}
-            className="col-span-1"
-            formatNumber={true}
-          />
-          <TitledCard
-            title="Stake"
-            value={<LavaWithTooltip amount={data.stakeSum} />}
-            className="col-span-1 md:col-span-1"
-            formatNumber={false}
-          />
-          <TitledCard
-            title="Relays (30 days)"
-            value={data.relaySum30Days}
-            className="col-span-1"
-            formatNumber={true}
-          />
-          <TitledCard
-            title="CU (30 days)"
-            value={data.cuSum30Days}
-            className="col-span-1"
-            formatNumber={true}
-          />
-          <TitledCard
-            title="Cache hit/total (30 days)"
-            value={data.cacheHitRate ? `${data.cacheHitRate} %` : "0"}
-            className="col-span-1 md:col-span-1"
-            formatNumber={false}
-            tooltip={`Cache hit/total for all specs in the last 30 days`}
-          />
+          <IndexAllCards />
         </Flex>
       </div>
 
@@ -153,22 +73,7 @@ export default function Home() {
               csvButton={<TableCsvButton csvDownloadLink="indexProvidersCsv" />}
             />
 
-            <SortableTableInATabComponent
-              columns={[
-                { key: "chainId", name: "Spec" },
-                { key: "chainName", name: "Chain Name" },
-                { key: "relaySum", name: "Total Relays" },
-                { key: "cuSum", name: "Total Cus" },
-              ]}
-              data={transformedSpecData}
-              defaultSortKey="relaySum|desc"
-              tableAndTabName="chains"
-              pkey="chainId"
-              pkeyUrl="spec"
-              rowFormatters={{
-                relaySum: (data) => FormatNumber(data.relaySum),
-              }}
-            />
+            <IndexChainsTab />
           </Box>
         </JsinfoTabs>
       </Card>

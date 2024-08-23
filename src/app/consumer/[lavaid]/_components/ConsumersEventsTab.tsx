@@ -4,7 +4,6 @@
 
 import Link from 'next/link'
 import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
-import TableCsvButton from "@jsinfo/components/TableCsvButton";
 import TimeTooltip from '@jsinfo/components/TimeTooltip';
 import { EventTypeToString } from '@jsinfo/common/convertors';
 import { GetExplorersGuruUrl } from '@jsinfo/common/env';
@@ -98,11 +97,6 @@ const ConsumersEventsTab: React.FC<ConsumersEventsTabProps> = ({ addr }) => {
                     );
                 },
             }}
-            csvButton={(
-                <TableCsvButton
-                    csvDownloadLink={`consumerEventsCsv/${addr}`}
-                />
-            )}
         />
     );
 };

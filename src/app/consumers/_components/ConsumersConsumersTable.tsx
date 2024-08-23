@@ -9,6 +9,7 @@ import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
 import { FormatNumber, RenderInFullPageCard } from '@jsinfo/common/utils';
 import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
 import Link from "next/link";
+import LavaWithTooltip from "@jsinfo/components/LavaWithTooltip";
 
 const ConsumersConsumersTable: React.FC<{}> = () => {
     const { data, loading, error } = useApiDataFetch({
@@ -41,7 +42,7 @@ const ConsumersConsumersTable: React.FC<{}> = () => {
                     </Link>),
                     cuSum: (data) => FormatNumber(data.cuSum),
                     relaySum: (data) => FormatNumber(data.relaySum),
-                    rewardSum: (data) => FormatNumber(data.rewardSum),
+                    rewardSum: (data) => <LavaWithTooltip amount={data.rewardSum} />,
                     qosSyncAvg: (data) => FormatNumber(data.qosSyncAvg),
                     qosSyncExcAvg: (data) => FormatNumber(data.qosSyncExcAvg),
                 }}
