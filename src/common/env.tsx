@@ -68,11 +68,11 @@ export function GetPageTitle() {
 }
 
 export function GetAxiosCacheTimeout(): number {
-  return parseInt(GetEnvVariable("AXIOS_CACHE_TIMEOUT", "20000"), 10);
+  return parseInt(GetEnvVariable("AXIOS_CACHE_TIMEOUT", "30000"), 10); // 30 seconds
 }
 
 export function GetAxiosCacheTTL(): number {
-  return parseInt(GetEnvVariable("AXIOS_CACHE_TTL", "30"), 10);
+  return parseInt(GetEnvVariable("AXIOS_CACHE_TTL", "10"), 10); // 10 seconds
 }
 
 export function GetAxiosRetryCount(): number {

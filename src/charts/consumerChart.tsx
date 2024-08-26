@@ -1,4 +1,4 @@
-// src/charts/providerChart.tsx
+// src/charts/consumerChart.tsx
 
 import { RenderInFullPageCard } from "@jsinfo/common/utils";
 import { ConvertJsInfoServerFormatedDateToJsDateObject } from "@jsinfo/common/dateutils";
@@ -18,36 +18,36 @@ import TextToggle from "@jsinfo/components/TextToggle";
 import useApiDateFetch from "@jsinfo/hooks/useApiDateFetch";
 import { useState } from "react";
 
-type ProviderChartCuRelay = {
+type ConsumerChartCuRelay = {
     specId: string;
     cus: number;
     relays: number;
 };
 
-type ProviderChartResponse = {
-    data: ProviderChartCuRelay[];
-} & ProviderQosData;
+type ConsumerChartResponse = {
+    data: ConsumerChartCuRelay[];
+} & ConsumerQosData;
 
-interface ProviderQosQueryData {
+interface ConsumerQosQueryData {
     date: string;
     qosSyncAvg: number;
     qosAvailabilityAvg: number;
     qosLatencyAvg: number;
 }
 
-type ProviderQosData = {
+type ConsumerQosData = {
     qos: number;
-} & ProviderQosQueryData;
+} & ConsumerQosQueryData;
 
-interface ProviderChartProps {
+interface ConsumerChartProps {
     addr: string;
 }
 
-export default function ProviderChart({ addr }: ProviderChartProps) {
+export default function ConsumerChart({ addr }: ConsumerChartProps) {
 
     const [isRelayOrCuSelected, setIsRelayOrCuSelected] = useState(false);
 
-    const { data, loading, error, dates, setDates } = useApiDateFetch("providerCharts/" + addr);
+    const { data, loading, error, dates, setDates } = useApiDateFetch("consumerCharts/" + addr);
 
     if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
     if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${addr} chart data`} greyText={`${addr} chart`} />);
@@ -56,9 +56,9 @@ export default function ProviderChart({ addr }: ProviderChartProps) {
         return RenderInFullPageCard(<ErrorDisplay message={"No data for chart loaded"} />);
     }
 
-    let rawChartData: ProviderChartResponse[] = data.data;
+    let rawChartData: ConsumerChartResponse[] = data.data;
 
-    rawChartData = rawChartData.sort((a: ProviderChartResponse, b: ProviderChartResponse) => {
+    rawChartData = rawChartData.sort((a: ConsumerChartResponse, b: ConsumerChartResponse) => {
         const dateA = ConvertJsInfoServerFormatedDateToJsDateObject(a.date);
         const dateB = ConvertJsInfoServerFormatedDateToJsDateObject(b.date);
         return dateA.getTime() - dateB.getTime();
@@ -117,7 +117,7 @@ export default function ProviderChart({ addr }: ProviderChartProps) {
         },
     });
 
-    const specProviderToDatasetMap: ChartJsSpecIdToDatasetMap = {};
+    const specConsumerToDatasetMap: ChartJsSpecIdToDatasetMap = {};
     let i = 0;
 
     let qosScoreData: ChartJsLineChartDataset = {
@@ -164,11 +164,11 @@ export default function ProviderChart({ addr }: ProviderChartProps) {
         setIsRelayOrCuSelected(checked);
     };
 
-    rawChartData.forEach((providerChartResponse: ProviderChartResponse) => {
-        for (const specCuRelayItem of providerChartResponse.data) {
+    rawChartData.forEach((consumerChartResponse: ConsumerChartResponse) => {
+        for (const specCuRelayItem of consumerChartResponse.data) {
             if (!specCuRelayItem.specId) continue;
-            if (specProviderToDatasetMap[specCuRelayItem.specId] == undefined) {
-                specProviderToDatasetMap[specCuRelayItem.specId] = {
+            if (specConsumerToDatasetMap[specCuRelayItem.specId] == undefined) {
+                specConsumerToDatasetMap[specCuRelayItem.specId] = {
                     label: !isRelayOrCuSelected ? specCuRelayItem.specId + " Relays" : specCuRelayItem.specId + " CUs",
                     data: [],
                     fill: false,
@@ -182,30 +182,30 @@ export default function ProviderChart({ addr }: ProviderChartProps) {
                     i = 0;
                 }
             }
-            specProviderToDatasetMap[specCuRelayItem.specId].data.push({
-                x: providerChartResponse.date,
+            specConsumerToDatasetMap[specCuRelayItem.specId].data.push({
+                x: consumerChartResponse.date,
                 y: !isRelayOrCuSelected ? specCuRelayItem.relays : specCuRelayItem.cus,
             });
         }
 
         qosScoreData.data.push({
-            x: providerChartResponse.date,
-            y: providerChartResponse.qos,
+            x: consumerChartResponse.date,
+            y: consumerChartResponse.qos,
         });
 
         qosSyncData.data.push({
-            x: providerChartResponse.date,
-            y: providerChartResponse.qosSyncAvg,
+            x: consumerChartResponse.date,
+            y: consumerChartResponse.qosSyncAvg,
         });
 
         qosAvailabilityData.data.push({
-            x: providerChartResponse.date,
-            y: providerChartResponse.qosAvailabilityAvg,
+            x: consumerChartResponse.date,
+            y: consumerChartResponse.qosAvailabilityAvg,
         });
 
         qosLatencyData.data.push({
-            x: providerChartResponse.date,
-            y: providerChartResponse.qosLatencyAvg,
+            x: consumerChartResponse.date,
+            y: consumerChartResponse.qosLatencyAvg,
         });
     });
 
@@ -214,7 +214,7 @@ export default function ProviderChart({ addr }: ProviderChartProps) {
     chartData.datasets.push(qosAvailabilityData);
     chartData.datasets.push(qosLatencyData);
 
-    for (const [key, value] of Object.entries(specProviderToDatasetMap)) {
+    for (const [key, value] of Object.entries(specConsumerToDatasetMap)) {
         chartData.datasets.push(value);
     }
 
@@ -224,7 +224,7 @@ export default function ProviderChart({ addr }: ProviderChartProps) {
         <ChartJsReactiveLineChartWithDatePicker
             data={chartData}
             options={chartOptions}
-            title="Qos Score & Relays/CUs for provider"
+            title="Qos Score & Relays/CUs for consumer"
             onDateChange={setDates}
             rightControl={<TextToggle openText='CU sum' closeText='Relay sum' onChange={relayToCuChange} style={{ marginRight: '10px' }} />}
             datePickerValue={dates} />

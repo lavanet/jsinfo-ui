@@ -22,6 +22,9 @@ export default function useApiDateFetch(dataKey: string) {
     function setDates(dates: CachedFetchDateRange) {
         let c_dates = CheckAndAdjustDatesForServer(dates);
         if (!c_dates) return;
+        if (JSON.stringify(dates) === JSON.stringify(c_dates)) {
+            return;
+        }
         fetcher.SetApiUrlDateRangeQueryFromDateRange(c_dates);
         fetcher.FetchAndPopulateData();
         setDatesInner(c_dates);

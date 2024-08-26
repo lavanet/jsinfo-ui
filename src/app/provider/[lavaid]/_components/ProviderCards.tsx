@@ -6,6 +6,7 @@ import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
 import { RenderInFullPageCard } from "@jsinfo/common/utils";
 import { ErrorDisplay } from "@jsinfo/components/ErrorDisplay";
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
+import LavaWithTooltip from "@jsinfo/components/LavaWithTooltip";
 
 interface ProviderCardsProps {
     addr: string;
@@ -47,35 +48,35 @@ const ProviderCards: React.FC<ProviderCardsProps> = ({ addr }) => {
             />
             <TitledCard
                 title="Total Rewards"
-                value={`${provider.rewardSum} ULAVA`}
+                value={<LavaWithTooltip amount={provider.rewardSum} />}
                 className="col-span-2 md:col-span-1"
-                formatNumber={true}
+                formatNumber={false}
                 tooltip="Total rewards for provider"
             />
             <TitledCard
                 title="Total Stake"
-                value={`${provider.stakeSum} ULAVA`}
+                value={<LavaWithTooltip amount={provider.stakeSum} />}
                 className="col-span-2 md:col-span-1"
-                formatNumber={true}
+                formatNumber={false}
                 tooltip="Total stake for all specs"
             />
             <TitledCard
                 title="Total Claimed Rewards (All Time)"
-                value={provider.claimedRewardsAllTime.toUpperCase()}
+                value={<LavaWithTooltip amount={provider.claimedRewardsAllTime} />}
                 className="col-span-2 md:col-span-1"
-                formatNumber={true}
+                formatNumber={false}
             />
             <TitledCard
                 title="Total Claimed Rewards (30 days ago)"
-                value={provider.claimedRewards30DaysAgo.toUpperCase()}
+                value={<LavaWithTooltip amount={provider.claimedRewards30DaysAgo} />}
                 className="col-span-2 md:col-span-1"
-                formatNumber={true}
+                formatNumber={false}
             />
             <TitledCard
                 title="Claimable Rewards"
-                value={provider.claimableRewards.toUpperCase()}
+                value={<LavaWithTooltip amount={provider.claimableRewards} />}
                 className="col-span-2 md:col-span-1"
-                formatNumber={true}
+                formatNumber={false}
             />
         </Flex>
     );

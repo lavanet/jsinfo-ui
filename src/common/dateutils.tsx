@@ -105,36 +105,36 @@ export function GetTodayMinus90DaysRangeDefault() {
 }
 
 export const CheckAndAdjustDatesForServer = (dates: CachedFetchDateRange): CachedFetchDateRange | null => {
-    console.log("CheckAndAdjustDatesForServer - input dates:", dates);
+    // console.log("CheckAndAdjustDatesForServer - input dates:", dates);
     const fromFormatted1 = ConvertDateForServer(dates.from);
     const toFormatted1 = ConvertDateForServer(dates.to);
-    console.log("CheckAndAdjustDatesForServer - fromFormatted1:", fromFormatted1, "toFormatted1:", toFormatted1);
+    // console.log("CheckAndAdjustDatesForServer - fromFormatted1:", fromFormatted1, "toFormatted1:", toFormatted1);
     if (!fromFormatted1 || !toFormatted1) {
         console.log("CheckAndAdjustDatesForServer - One of the formatted dates is null, returning GetTodayMinus90DaysRangeDefault()");
         return GetTodayMinus90DaysRangeDefault();
     }
     const { from: fromFormatted, to: toFormatted } = AdjustFromToDateToSixMonthAgo(new Date(fromFormatted1), new Date(toFormatted1));
-    console.log("CheckAndAdjustDatesForServer - Adjusted Dates:", { fromFormatted, toFormatted });
+    // console.log("CheckAndAdjustDatesForServer - Adjusted Dates:", { fromFormatted, toFormatted });
 
     if (fromFormatted && toFormatted) {
         const diffInDays = Math.ceil(
             Math.abs(new Date(toFormatted).getTime() - new Date(fromFormatted).getTime()) / (1000 * 60 * 60 * 24)
         );
-        console.log("CheckAndAdjustDatesForServer - diffInDays:", diffInDays);
+        // console.log("CheckAndAdjustDatesForServer - diffInDays:", diffInDays);
 
         if (diffInDays < 1) {
-            console.log("CheckAndAdjustDatesForServer - diffInDays < 1, returning GetTodayMinus90DaysRangeDefault()");
+            // console.log("CheckAndAdjustDatesForServer - diffInDays < 1, returning GetTodayMinus90DaysRangeDefault()");
             return GetTodayMinus90DaysRangeDefault();
         } else {
             const newDates = {
                 from: new Date(fromFormatted),
                 to: new Date(toFormatted)
             };
-            console.log("CheckAndAdjustDatesForServer - newDates:", newDates);
+            // console.log("CheckAndAdjustDatesForServer - newDates:", newDates);
             return newDates;
         }
     }
 
-    console.log("CheckAndAdjustDatesForServer - fromFormatted or toFormatted is null, returning null");
+    // console.log("CheckAndAdjustDatesForServer - fromFormatted or toFormatted is null, returning null");
     return null;
 };

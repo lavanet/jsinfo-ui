@@ -1,5 +1,7 @@
 @import "rsuite/DateRangePicker/styles/index.css";
 @import "rsuite/Toggle/styles/index.css";
+@import "rsuite/Radio/styles/index.css";
+@import "rsuite/RadioGroup/styles/index.css";
 
 /* var overriders */
 :root {
@@ -225,4 +227,34 @@
 .rs-toggle-presentation {
   background-color: var(--interactive-element-background-color) !important;
   color: var(--interactive-element-color) !important;
+}
+
+/* rsuite radio group */
+.newline > .rs-radio-group-inline {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: 11px;
+  padding: 0px;
+  font-size: 12px;
+  display: block;
+  position: relative;
+  clear: both;
+}
+
+.inline > .rs-radio-group-inline {
+  margin-top: -5px;
+  margin-bottom: -10px;
+  margin-left: -20px;
+  padding: 0px;
+  font-size: 12px;
+  display: flex;
+  white-space: nowrap;
+}
+
+.rs-radio-label {
+  margin-left: -3px;
+}
+
+.rs-radio-checker {
+  line-height: 15px;
 }

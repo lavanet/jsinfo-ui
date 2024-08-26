@@ -1,9 +1,6 @@
 // src/components/ChartJsReactiveLineChart.tsx
 "use client"
 
-
-
-
 import React, { useRef, useEffect, RefObject } from 'react';
 import { Box, Card } from '@radix-ui/themes';
 import { Line } from 'react-chartjs-2';
@@ -161,6 +158,7 @@ export const ChartJsReactiveLineChart: React.FC<ChartJsReactiveLineChartProps> =
     </Box>
   );
 };
+
 interface ChartJsReactiveLineChartPropsWithDatePicker {
   data: ChartJsLineChartData;
   options: ChartJsLineChartOptions;

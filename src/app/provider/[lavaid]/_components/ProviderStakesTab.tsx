@@ -4,7 +4,7 @@
 
 import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
 import TableCsvButton from "@jsinfo/components/TableCsvButton";
-import { FormatNumber } from '@jsinfo/common/utils';
+import LavaWithTooltip from "@jsinfo/components/LavaWithTooltip";
 
 interface ProviderStakesTabProps {
     addr: string;
@@ -31,12 +31,13 @@ const ProviderStakesTab: React.FC<ProviderStakesTabProps> = ({ addr }) => {
             tableAndTabName="stakes"
             pkey="specId"
             pkeyUrl="spec"
+
             rowFormatters={{
-                totalStake: (data) => FormatNumber(data.totalStake),
-                stake: (data) => FormatNumber(data.stake),
-                delegateLimit: (data) => FormatNumber(data.delegateLimit),
-                delegateTotal: (data) => FormatNumber(data.delegateTotal),
-                delegateCommission: (data) => FormatNumber(data.delegateCommission),
+                totalStake: (data) => <LavaWithTooltip amount={data.totalStake} />,
+                stake: (data) => <LavaWithTooltip amount={data.stake} />,
+                delegateLimit: (data) => <LavaWithTooltip amount={data.delegateLimit} />,
+                delegateTotal: (data) => <LavaWithTooltip amount={data.delegateTotal} />,
+                delegateCommission: (data) => <LavaWithTooltip amount={data.delegateCommission} />,
             }}
             csvButton={(
                 <TableCsvButton

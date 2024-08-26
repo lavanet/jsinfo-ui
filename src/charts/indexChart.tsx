@@ -10,14 +10,14 @@ import {
     ChartJsLineChartData,
     ChartJsLineChartDataset,
     ChartJsSpecIdToDatasetMap,
-    ChartJsReactiveLineChartWithDatePicker
 } from "@jsinfo/components/ChartJsReactiveLineChart";
 import { ErrorDisplay } from "@jsinfo/components/ErrorDisplay";
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
-import TextToggle from "@jsinfo/components/TextToggle";
+import ChartJsWithRadioToggle from "@jsinfo/components/ChartJsWithRadioToggle";
 import useApiDateFetch from "@jsinfo/hooks/useApiDateFetch";
 
 import { useState } from "react";
+import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
 
 type CuRelayItem = {
     chainId: string;
@@ -28,16 +28,52 @@ type CuRelayItem = {
 type IndexChartResponse = {
     date: string;
     qos: number;
+    uniqueVisitors: number;
     data: CuRelayItem[];
 };
 
 export default function IndexChart() {
     const [isRelayOrCuSelected, setIsRelayOrCuSelected] = useState(false);
+    const [isUniqueVisitorsSelected, setIsUniqueVisitorsSelected] = useState(true);
 
-    const { data, loading, error, dates, setDates } = useApiDateFetch("indexCharts");
+    const { data, loading, error, dates, setDates } = useApiDateFetch("indexChartsV2");
+    const uvfetch = useApiDataFetch({ dataKey: "indexUniqueVisitorsChart" });
 
     if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
-    if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading chart data`} greyText={`chart`} />);
+    if (uvfetch.error) return RenderInFullPageCard(<ErrorDisplay message={uvfetch.error} />);
+    if (uvfetch.loading) return null;
+
+    let uvfetchData: UniqueVisitorsData[] = uvfetch.data.data;
+
+    console.log("uvfetchData", uvfetchData)
+    if (!Array.isArray(uvfetchData) || uvfetchData.length === 0) {
+        return RenderInFullPageCard(<ErrorDisplay message={"No data for chart loaded"} />);
+    }
+
+    const chartChangeRadio = (value: any) => {
+        if (value == 'CU sum') {
+            setIsUniqueVisitorsSelected(false);
+            setIsRelayOrCuSelected(false);
+            return;
+        }
+        if (value == 'Relay sum') {
+            setIsUniqueVisitorsSelected(false);
+            setIsRelayOrCuSelected(true);
+            return;
+        }
+        // if (value == 'Unique users')
+        setIsUniqueVisitorsSelected(true);
+        return;
+    };
+
+    if (isUniqueVisitorsSelected) {
+        const uvfetchdata = uvfetchData.sort((a: UniqueVisitorsData, b: UniqueVisitorsData) => {
+            const dateA = ConvertJsInfoServerFormatedDateToJsDateObject(a.date);
+            const dateB = ConvertJsInfoServerFormatedDateToJsDateObject(b.date);
+            return dateA.getTime() - dateB.getTime();
+        });
+        return UniqueVisitorsChart(uvfetchdata, chartChangeRadio);
+    }
 
     if (!Array.isArray(data.data) || data.data.length === 0) {
         return RenderInFullPageCard(<ErrorDisplay message={"No data for chart loaded"} />);
@@ -51,6 +87,8 @@ export default function IndexChart() {
         return dateA.getTime() - dateB.getTime();
     });
 
+    if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading chart data`} greyText={`chart`} />);
+
     const chartData: ChartJsLineChartData = {
         datasets: [],
     };
@@ -60,7 +98,12 @@ export default function IndexChart() {
             mode: "index",
             intersect: false,
         },
-        stacked: false,
+        stacked: true,
+        plugins: {
+            legend: {
+                display: true
+            }
+        },
         scales: {
             y: {
                 type: "linear",
@@ -114,12 +157,8 @@ export default function IndexChart() {
         fill: false,
         borderColor: "#AAFF00",
         backgroundColor: "#AAFF00",
-        yAxisID: "y1",
+        yAxisID: "y",
         borderDash: [30, 1],
-    };
-
-    const relayToCuChange = (checked: boolean, event: React.ChangeEvent<HTMLInputElement>) => {
-        setIsRelayOrCuSelected(checked);
     };
 
     rawChartData.forEach((indexChartResponse: IndexChartResponse) => {
@@ -153,6 +192,7 @@ export default function IndexChart() {
     });
 
     chartData.datasets.push(qosData);
+
     for (const [key, value] of Object.entries(specIdToDatasetMap)) {
         chartData.datasets.push(value);
     }
@@ -160,12 +200,106 @@ export default function IndexChart() {
     ChartjsSetLastDotHighInChartData(chartData);
 
     return (
-        <ChartJsReactiveLineChartWithDatePicker
+        <ChartJsWithRadioToggle
             data={chartData}
             options={chartOptions}
-            title="Qos Score & Relays/CUs for top 10 Chains"
+            title="QoS Score, Relays/CUs for Top 10 Chains"
             onDateChange={setDates}
-            rightControl={<TextToggle openText='CU sum' closeText='Relay sum' onChange={relayToCuChange} style={{ marginRight: '10px' }} />}
-            datePickerValue={dates} />
+            datePickerValue={dates}
+            rangeOptions={['Unique users', 'CU sum', 'Relay sum']}
+            rangeOnChange={chartChangeRadio}
+            chartKey={"RelayCuChart"}
+        />
     );
 }
+
+interface UniqueVisitorsData {
+    date: string;
+    uniqueVisitors: number | null;
+}
+
+export function UniqueVisitorsChart(
+    rawChartData: UniqueVisitorsData[],
+    rangeOnChange: (value: any) => void
+) {
+    const chartData: ChartJsLineChartData = {
+        datasets: [],
+    };
+
+    const chartOptions: ChartJsLineChartOptions = ChartjsSetLastPointToLineInChartOptions({
+        interaction: {
+            mode: "index",
+            intersect: false,
+        },
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        stacked: false,
+        scales: {
+            yuv: {
+                type: "linear",
+                display: true,
+                position: "left",
+                stacked: true,
+            },
+            xuv: {
+                ticks: {
+                    autoSkip: false,
+                    maxTicksLimit: 200, // bigger then 6 * 30 - we store date up to 6 month ago
+                    callback: (t, i) => {
+                        if (!rawChartData[i]) return undefined;
+
+                        // If there are less than 15 items, return the date for all
+                        if (rawChartData.length < 15) {
+                            return rawChartData[i]["date"];
+                        }
+
+                        // Otherwise, use the existing logic
+                        return i % 2 && i != 0 && i + 1 != rawChartData.length
+                            ? ""
+                            : rawChartData[i]["date"];
+                    }
+                },
+            },
+        },
+    });
+
+    let uniqueVisitorData: ChartJsLineChartDataset = {
+        label: "Unique users",
+        data: [],
+        fill: false,
+        borderColor: "#F1DF10",
+        backgroundColor: "#F1DF10",
+        yAxisID: "yuv",
+        xAxisID: "xuv",
+        borderDash: [30, 1],
+    };
+
+    rawChartData.forEach((indexChartResponse: UniqueVisitorsData) => {
+        if (indexChartResponse.uniqueVisitors) {
+            uniqueVisitorData.data.push({
+                x: indexChartResponse.date,
+                y: indexChartResponse.uniqueVisitors,
+            });
+        }
+    });
+
+    chartData.datasets.push(uniqueVisitorData);
+
+    ChartjsSetLastDotHighInChartData(chartData);
+
+    return (
+        <ChartJsWithRadioToggle
+            data={chartData}
+            options={chartOptions}
+            title="Unique users in the last 30 days"
+            noDatePicker={true}
+            rangeOptions={['Unique users', 'CU sum', 'Relay sum']}
+            rangeOnChange={rangeOnChange}
+            chartKey={"UniqueUsersChart"}
+        />
+    );
+}
+

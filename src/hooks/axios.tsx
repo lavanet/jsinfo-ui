@@ -14,27 +14,45 @@ const axiosInstance = axios.create({
 axiosRetry(axiosInstance, { retries: GetAxiosRetryCount() });
 
 const cache = new NodeCache({ stdTTL: GetAxiosCacheTTL() });
+const fetchPromises = new Map();
 
-export async function AxiosApiGet(apiurl: string, params?: any, timeout: number = AXIOS_TIMEOUT): Promise<any> {
+interface AxiosApiResponse {
+    data: any;
+    status: number;
+    statusText: string;
+}
+
+export async function AxiosApiGet(apiurl: string, params?: any, timeout: number = AXIOS_TIMEOUT): Promise<AxiosApiResponse> {
     const cacheKey = `${apiurl}-${JSON.stringify(params)}`;
     const cachedResponse = cache.get(cacheKey);
 
     if (cachedResponse) {
-        return cachedResponse;
+        return cachedResponse as AxiosApiResponse;
     } else {
-        const response = await axiosInstance.get(apiurl, {
+        // Check if there's an ongoing fetch for the same request
+        if (fetchPromises.has(cacheKey)) {
+            return fetchPromises.get(cacheKey);
+        }
+
+        const fetchPromise = axiosInstance.get(apiurl, {
             timeout: timeout,
             params,
+        }).then(response => {
+            const responseData = {
+                data: response.data,
+                status: response.status,
+                statusText: response.statusText,
+            };
+            cache.set(cacheKey, responseData);
+            fetchPromises.delete(cacheKey);
+            return responseData;
+        }).catch(error => {
+            fetchPromises.delete(cacheKey);
+            throw error;
         });
 
-        const responseData = {
-            data: response.data,
-            status: response.status,
-            statusText: response.statusText,
-        };
+        fetchPromises.set(cacheKey, fetchPromise);
 
-        cache.set(cacheKey, responseData);
-
-        return responseData;
+        return fetchPromise;
     }
 }
