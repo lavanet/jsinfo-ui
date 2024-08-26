@@ -150,12 +150,12 @@ export const IndexStakeCard: React.FC = () => {
 export const IndexAllCards: React.FC = () => {
     return (
         <>
-            <IndexTotalCUCard />
             <IndexUniqueUsersCard />
             <IndexUniqueUsersAvgCard />
+            <IndexTotalCUCard />
             <Index30DayCUCard />
-            <IndexChacheHitCard />
             <IndexStakeCard />
+            <IndexChacheHitCard />
         </>
     );
 };
