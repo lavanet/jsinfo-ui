@@ -46,7 +46,7 @@ export const IndexPageComponent: React.FC = () => {
                                 { key: "rewardSum", name: "Total Rewards" },
                                 {
                                     key: "totalServices",
-                                    name: "Total Services",
+                                    name: "Active/Total Services",
                                     altKey: "nStakes",
                                 },
                                 { key: "totalStake", name: "Total Stake" },
@@ -61,6 +61,7 @@ export const IndexPageComponent: React.FC = () => {
                                 moniker: (data) => (<MonikerWithTooltip provider={data} />),
                                 rewardSum: (data) => (<LavaWithTooltip amount={data.rewardSum} />),
                                 totalStake: (data) => (<LavaWithTooltip amount={data.totalStake} />),
+                                totalServices: (data) => (<span title={`The total number of active chains serviced by the provider (excluding frozen services) / the total number of serviced chains for the provider`}>{data.totalServices}</span>)
                             }}
                             csvButton={<TableCsvButton csvDownloadLink="indexProvidersCsv" />}
                         />

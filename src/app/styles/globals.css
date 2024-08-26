@@ -8,7 +8,18 @@
   }
 }
 
-/* -------- Changes to remove boxes -------- */
+/* -------- fonts --------------------------- */
+:root {
+  --default-font-family: -apple-system, system-ui, BlinkMacSystemFont,
+    "Segoe UI", Roboto;
+}
+.body,
+.rt-BaseCard,
+.radix-themes {
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto;
+}
+
+/* -------- Changes to remove boxes --------- */
 
 :root {
   --box-margin: 10px;
@@ -22,7 +33,7 @@
   height: var(--box-margin);
 }
 
-/* -------- Dynamic page size -------- */
+/* -------- Dynamic page size ---------------- */
 
 .rt-ContainerInner {
   max-width: 1360px;
