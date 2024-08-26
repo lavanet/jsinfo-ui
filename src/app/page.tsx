@@ -1,175 +1,31 @@
 // src/app/page.tsx
 "use client";
 
-import React from "react";
 import { useEffect } from "react";
-import { Flex, Card, Box } from "@radix-ui/themes";
-import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
-import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
-import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
-import TitledCard from "@jsinfo/components/TitledCard";
-import IndexChart from "@jsinfo/charts/indexChart";
-import { SortableTableInATabComponent } from "@jsinfo/components/StaticSortTable";
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
-import { ConvertToChainName } from "@jsinfo/common/convertors";
-import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
 import { usePageContext } from "@jsinfo/context/PageContext";
-import { FormatNumber, RenderInFullPageCard } from "@jsinfo/common/utils";
-import { ErrorDisplay } from "@jsinfo/components/ErrorDisplay";
-import TableCsvButton from "@jsinfo/components/TableCsvButton";
-import MonikerWithTooltip from "@jsinfo/components/MonikerWithTooltip";
+import dynamic from 'next/dynamic';
+import { IndexPageComponent } from "./_components/indexPageComponent";
+import React from "react";
+
+const NoSsr = (props: { children: any }) => (
+  <React.Fragment>{props.children}</React.Fragment>
+)
+
+function loadNoSsrDynamically() {
+  return dynamic(() => Promise.resolve(NoSsr), {
+    ssr: false,
+  });
+}
+
+const NoSsrComponent = loadNoSsrDynamically();
 
 export default function Home() {
-
-  const { data, loading, error } = useApiDataFetch({ dataKey: "index" });
 
   const { setCurrentPage } = usePageContext();
 
   useEffect(() => {
-    if (!loading && !error) {
-      setCurrentPage('home');
-    }
-  }, [loading, error, setCurrentPage]);
+    setCurrentPage('home');
+  }, [setCurrentPage]);
 
-
-  // i want to return this but still have the rest of the shit below continue loading
-  if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
-
-  if (loading) {
-    const loadingContent = (
-      <>
-        <LoadingIndicator loadingText="Loading Landing page" greyText="Landing" />
-        <div style={{ display: 'none' }}>
-          <IndexChart />
-        </div>
-      </>
-    );
-
-    return RenderInFullPageCard(loadingContent);
-  }
-
-  interface Item {
-    chainId: string;
-    [key: string]: any;
-  }
-
-  function transformSpecsData(data: Item[]) {
-    if (!data) return [];
-    return data.map((item) => ({
-      ...item,
-      chainName: ConvertToChainName(item.chainId),
-    }));
-  }
-
-  const transformedSpecData = transformSpecsData(data.allSpecs);
-
-  return (
-    <>
-      <BlockWithDateCard blockData={data} />
-
-      <div style={{ marginTop: 'var(--box-margin)', marginBottom: 'var(--box-margin)' }}>
-        <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-3">
-          <TitledCard
-            title="Relays"
-            value={data.relaySum}
-            className="col-span-1"
-            formatNumber={true}
-          />
-          <TitledCard
-            title="CU"
-            value={data.cuSum}
-            className="col-span-1"
-            formatNumber={true}
-          />
-          <TitledCard
-            title="Stake"
-            value={`${data.stakeSum} ULAVA`}
-            className="col-span-2 md:col-span-1"
-            formatNumber={true}
-          />
-          <TitledCard
-            title="Relays (30 days)"
-            value={data.relaySum30Days}
-            className="col-span-1"
-            formatNumber={true}
-          />
-          <TitledCard
-            title="CU (30 days)"
-            value={data.cuSum30Days}
-            className="col-span-1"
-            formatNumber={true}
-          />
-          <TitledCard
-            title="Cache hit/total (30 days)"
-            value={data.cacheHitRate ? `${data.cacheHitRate} %` : "0"}
-            className="col-span-1 md:col-span-1"
-            formatNumber={true}
-            tooltip={`Cache hit/total for all specs in the last 30 days`}
-          />
-        </Flex>
-      </div>
-
-      <IndexChart />
-      <div className="box-margin-div"></div>
-
-      <Card>
-        <JsinfoTabs defaultValue="providers"
-          tabs={[
-            {
-              value: "providers",
-              content: "Providers",
-            },
-            {
-              value: "chains",
-              content: "Chains",
-            },
-          ]}
-        >
-          <Box>
-            <DataKeySortableTableInATabComponent
-              columns={[
-                { key: "moniker", name: "Moniker" },
-                { key: "provider", name: "Provider Address" },
-                { key: "rewardSum", name: "Total Rewards" },
-                {
-                  key: "totalServices",
-                  name: "Total Services",
-                  altKey: "nStakes",
-                },
-                { key: "totalStake", name: "Total Stake" },
-              ]}
-              defaultSortKey="totalStake|desc"
-              tableAndTabName="providers"
-              pkey="provider"
-              pkeyUrl="provider"
-              firstColumn="moniker"
-              dataKey="indexProviders"
-              rowFormatters={{
-                moniker: (data) => (<MonikerWithTooltip provider={data} />),
-                rewardSum: (data) => FormatNumber(data.rewardSum),
-                totalStake: (data) => FormatNumber(data.totalStake),
-              }}
-              csvButton={<TableCsvButton csvDownloadLink="indexProvidersCsv" />}
-            />
-
-            <SortableTableInATabComponent
-              columns={[
-                { key: "chainId", name: "Spec" },
-                { key: "chainName", name: "Chain Name" },
-                { key: "relaySum", name: "Total Relays" },
-              ]}
-              data={transformedSpecData}
-              defaultSortKey="relaySum|desc"
-              tableAndTabName="chains"
-              pkey="chainId"
-              pkeyUrl="spec"
-              rowFormatters={{
-                relaySum: (data) => FormatNumber(data.relaySum),
-              }}
-            />
-          </Box>
-        </JsinfoTabs>
-      </Card>
-    </>
-  );
+  return <NoSsrComponent><IndexPageComponent /></NoSsrComponent>
 }

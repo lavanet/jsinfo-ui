@@ -179,7 +179,9 @@ const ProviderLatestHealthCards: React.FC<ProviderLatestHealthCardsProps> = ({ l
         return null;
     }
 
-    window.addEventListener('resize', handleProviderLatestHealthContainerResize);
+    if (typeof window !== 'undefined') {
+        window.addEventListener('resize', handleProviderLatestHealthContainerResize);
+    }
 
     function toggleVisibility() {
         const elements = document.getElementsByClassName('spec-container');

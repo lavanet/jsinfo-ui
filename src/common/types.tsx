@@ -12,7 +12,7 @@ export type SortConfig = {
 };
 
 export type RowFormatters = {
-    [key: string]: (rowData: any) => JSX.Element | string | null;
+    [key: string]: (rowData: any) => JSX.Element | React.ReactNode | string | null;
 };
 
 export interface SortableData {

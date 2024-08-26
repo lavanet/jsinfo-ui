@@ -15,14 +15,16 @@ interface ChartJsWithRadioToggleProps {
     data: ChartJsLineChartData;
     options: ChartJsLineChartOptions;
     title: string;
-    onDateChange: (dates: { from: Date, to: Date }) => void;
-    datePickerValue: CachedFetchDateRange;
+    onDateChange?: (dates: { from: Date, to: Date }) => void;
+    datePickerValue?: CachedFetchDateRange;
     rangeOptions: string[];
     rangeOnChange: (value: any) => void;
+    noDatePicker?: boolean
+    chartKey: string
 }
 
 const ChartJsWithRadioToggle: React.FC<ChartJsWithRadioToggleProps> = (
-    { data, options, title, onDateChange, datePickerValue, rangeOptions, rangeOnChange }
+    { data, options, title, onDateChange, datePickerValue, rangeOptions, rangeOnChange, noDatePicker, chartKey }
 ) => {
 
     if (!data || typeof data !== 'object') {
@@ -40,19 +42,9 @@ const ChartJsWithRadioToggle: React.FC<ChartJsWithRadioToggleProps> = (
         throw new Error('title should be a string');
     }
 
-    if (!onDateChange || typeof onDateChange !== 'function') {
-        console.error('onDateChange is required and should be a function', onDateChange);
-        throw new Error('onDateChange is required and should be a function');
-    }
-
-    if (!datePickerValue || typeof datePickerValue !== 'object') {
-        console.error('datePickerValue is required and should be an object', datePickerValue);
-        throw new Error('datePickerValue is required and should be an object');
-    }
-
     const boxRef: RefObject<HTMLDivElement> = useRef(null);
 
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
 
     useEffect(() => {
         const handleResize = () => {
@@ -116,11 +108,13 @@ const ChartJsWithRadioToggle: React.FC<ChartJsWithRadioToggleProps> = (
                 <div>
                     <RadioToggle options={rangeOptions} onChange={rangeOnChange} style={{ marginRight: '10px' }} className='newline' />
                 </div>
-                <div style={{ marginLeft: '9px', marginBottom: '10px' }}>
-                    <RangeDatePicker onDateChange={onDateChange} datePickerValue={datePickerValue} />
-                </div>
+                {!noDatePicker && (
+                    <div style={{ marginLeft: '9px', marginBottom: '10px' }}>
+                        <RangeDatePicker onDateChange={onDateChange!} datePickerValue={datePickerValue!} />
+                    </div>
+                )}
                 <div ref={boxRef} style={{ position: 'relative', height: '100%', width: '100%' }}>
-                    <Line data={data} options={responsiveChartOptions}></Line>
+                    <Line key={chartKey} data={data} options={responsiveChartOptions}></Line>
                 </div>
             </Card>
         </Box >)
@@ -133,11 +127,13 @@ const ChartJsWithRadioToggle: React.FC<ChartJsWithRadioToggleProps> = (
                     <Box className="chartjs-reactivechart-title">{title}</Box>
                     <div className="chartjs-reactivechart-controls">
                         <RadioToggle options={rangeOptions} onChange={rangeOnChange} style={{ marginRight: '10px' }} className='inline' />
-                        <RangeDatePicker onDateChange={onDateChange} datePickerValue={datePickerValue} />
+                        {!noDatePicker && (
+                            <RangeDatePicker onDateChange={onDateChange!} datePickerValue={datePickerValue!} />
+                        )}
                     </div>
                 </div>
                 <div ref={boxRef} style={{ position: 'relative', height: '100%', width: '100%' }}>
-                    <Line data={data} options={responsiveChartOptions}></Line>
+                    <Line key={chartKey} data={data} options={responsiveChartOptions}></Line>
                 </div>
             </Card>
         </Box >

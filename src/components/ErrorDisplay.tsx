@@ -7,6 +7,13 @@ interface ErrorDisplayProps {
 }
 
 export const ErrorDisplay: React.FC<ErrorDisplayProps> = ({ message }) => {
+    if (message === "No data for chart loaded") {
+        return (
+            <div style={{ color: 'grey' }}>
+                No chart data available
+            </div>
+        );
+    }
     return (
         <div>
             <Image

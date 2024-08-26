@@ -4,13 +4,11 @@
 import { Box } from "@radix-ui/themes";
 import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
 import { SortableTableInATabComponent } from "@jsinfo/components/StaticSortTable";
-import { StatusToString, GeoLocationToString } from "@jsinfo/common/convertors";
 import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
-import { FormatNumber, RenderInFullPageCard } from '@jsinfo/common/utils';
-import StatusCall from '@jsinfo/components/StatusCell';
+import { RenderInFullPageCard } from '@jsinfo/common/utils';
 import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
-import SpecProviderEndpointHealthSummary from '@jsinfo/app/spec/[specid]/_components/SpecProviderEndpointHealthSummary';
 import MonikerAndProviderLink from '@jsinfo/components/MonikerAndProviderLink';
+import LavaWithTooltip from "@jsinfo/components/LavaWithTooltip";
 
 interface SpecStakesTableProps {
     specid: string
@@ -42,11 +40,11 @@ const SpecStakesTable: React.FC<SpecStakesTableProps> = ({ specid }) => {
                 pkeyUrl="none"
                 rowFormatters={{
                     provider: (data) => (<MonikerAndProviderLink provider={data} />),
-                    stake: (data) => FormatNumber(data.stake),
-                    totalStake: (data) => FormatNumber(data.totalStake),
-                    delegateLimit: (data) => FormatNumber(data.delegateLimit),
-                    delegateTotal: (data) => FormatNumber(data.delegateTotal),
-                    delegateCommission: (data) => FormatNumber(data.delegateCommission),
+                    totalStake: (data) => <LavaWithTooltip amount={data.totalStake} />,
+                    stake: (data) => <LavaWithTooltip amount={data.stake} />,
+                    delegateLimit: (data) => <LavaWithTooltip amount={data.delegateLimit} />,
+                    delegateTotal: (data) => <LavaWithTooltip amount={data.delegateTotal} />,
+                    delegateCommission: (data) => <LavaWithTooltip amount={data.delegateCommission} />,
                 }}
             />
         </Box>

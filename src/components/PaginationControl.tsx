@@ -27,7 +27,7 @@ const PaginationControl: React.FC<PaginationControlProps> = ({ paginationState, 
 
     const [totalPages, setTotalPages] = useState(0);
     const [pageNumbers, setPageNumbers] = useState<number[]>([]);
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+    const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth <= 768 : 0);
 
     useEffect(() => {
         if (!sortAndPaginationConfig || !sortAndPaginationConfig.totalItemCount || !sortAndPaginationConfig.itemCountPerPage) return;
