@@ -4,9 +4,10 @@ import React from 'react';
 import { useApiDataFetch } from '@jsinfo/hooks/useApiDataFetch';
 import { ErrorDisplay } from "@jsinfo/components/ErrorDisplay";
 import TitledCard from '@jsinfo/components/TitledCard';
-import LavaWithTooltip from '@jsinfo/components/LavaWithTooltip';
+import { FormatAsULava } from '@jsinfo/components/LavaWithTooltip';
 import BlockWithDateCard from '@jsinfo/components/BlockWithDateCard';
 import LoaderImageForCards from '@jsinfo/components/LoaderImageForCards';
+import { FormatNumber, FormatNumberKMB } from '@jsinfo/common/utils';
 
 export const LatestBlockCard: React.FC = () => {
     const { data, loading, error } = useApiDataFetch({ dataKey: "indexLatestBlock" });
@@ -23,21 +24,31 @@ export const IndexTotalCUCard: React.FC = () => {
     if (error) return ErrorDisplay({ message: error });
     if (loading) return (
         <TitledCard
-            title="Relays"
+            title="Relays (All Time)"
             value={<LoaderImageForCards />}
             className="col-span-1"
             formatNumber={false}
         />
     );
+
+    const tooltip = FormatNumber(data.relaySum);
+    const value = FormatNumberKMB(data.relaySum);
+
     return (
         <TitledCard
-            title="Relays"
-            value={data.relaySum}
+            title="Relays (All Time)"
+            value={
+                <span title={tooltip} style={{ whiteSpace: 'nowrap' }}>
+                    {value}
+                </span>
+            }
             className="col-span-1"
-            formatNumber={true}
+            formatNumber={false}
         />
     )
 };
+
+
 
 export const Index30DayCUCard: React.FC = () => {
     const { data, loading, error } = useApiDataFetch({ dataKey: "index30DayCu" });
@@ -50,12 +61,20 @@ export const Index30DayCUCard: React.FC = () => {
             formatNumber={false}
         />
     );
+
+    const tooltip = FormatNumber(data.relaySum30Days);
+    const value = FormatNumberKMB(data.relaySum30Days);
+
     return (
         <TitledCard
             title="Relays (30 days)"
-            value={data.relaySum30Days}
+            value={
+                <span title={tooltip} style={{ whiteSpace: 'nowrap' }}>
+                    {value}
+                </span>
+            }
             className="col-span-1"
-            formatNumber={true}
+            formatNumber={false}
         />
     )
 };
@@ -86,16 +105,24 @@ export const IndexUniqueUsersAvgCard: React.FC = () => {
     if (error) return ErrorDisplay({ message: error });
     if (loading) return (
         <TitledCard
-            title="Unique Users (daily avg)"
+            title="Unique Users (Daily Average)"
             value={<LoaderImageForCards />}
             className="col-span-1"
             formatNumber={false}
         />
     );
+
+    const tooltip = FormatNumber(data.monthlyUsersAvg);
+    const value = FormatNumberKMB(data.monthlyUsersAvg);
+
     return (
         <TitledCard
-            title="Unique Users (daily avg)"
-            value={data.monthlyUsersAvg}
+            title="Unique Users (Daily Average)"
+            value={
+                <span title={tooltip} style={{ whiteSpace: 'nowrap' }}>
+                    {value}
+                </span>
+            }
             className="col-span-1"
             formatNumber={false}
         />
@@ -135,10 +162,18 @@ export const IndexStakeCard: React.FC = () => {
             formatNumber={false}
         />
     );
+
+    let ulavaValue = FormatAsULava(data.stakeSum);
+    let stakeSumLava = parseInt(data.stakeSum + "", 10) / 1000000
+    let lavaValue = FormatNumberKMB(stakeSumLava + "");
+
     return (
         <TitledCard
             title="Stake"
-            value={< LavaWithTooltip amount={data.stakeSum} />}
+            value={
+                <span title={ulavaValue} style={{ whiteSpace: 'nowrap' }}>
+                    {lavaValue} LAVA
+                </span>}
             className="col-span-1"
             formatNumber={false}
             tooltip={`Cache hit/total for all specs in the last 30 days`}

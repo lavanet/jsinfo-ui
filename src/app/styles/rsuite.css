@@ -2,6 +2,7 @@
 @import "rsuite/Toggle/styles/index.css";
 @import "rsuite/Radio/styles/index.css";
 @import "rsuite/RadioGroup/styles/index.css";
+@import "rsuite/Checkbox/styles/index.css";
 
 /* var overriders */
 :root {
@@ -257,4 +258,18 @@
 
 .rs-radio-checker {
   line-height: 15px;
+}
+
+/* rsuite checkbox */
+.rs-checkbox-control {
+  margin-left: -8px;
+}
+
+.rs-checkbox-checker > label > .rs-checkbox-label {
+  margin-left: -12px;
+}
+
+.rs-checkbox-label {
+  position: relative;
+  top: -1px;
 }

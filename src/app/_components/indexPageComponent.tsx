@@ -4,12 +4,9 @@ import React from "react";
 import { Flex, Card, Box } from "@radix-ui/themes";
 import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
 import IndexChart from "@jsinfo/charts/indexChart";
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
-import TableCsvButton from "@jsinfo/components/TableCsvButton";
-import MonikerWithTooltip from "@jsinfo/components/MonikerWithTooltip";
-import LavaWithTooltip from "@jsinfo/components/LavaWithTooltip";
 import { IndexAllCards, LatestBlockCard } from "./indexPageCards";
 import IndexChainsTab from "./indexChainsTab";
+import IndexProvidersTab from "./indexProvidersTab";
 
 export const IndexPageComponent: React.FC = () => {
     return (
@@ -39,33 +36,7 @@ export const IndexPageComponent: React.FC = () => {
                     ]}
                 >
                     <Box>
-                        <DataKeySortableTableInATabComponent
-                            columns={[
-                                { key: "moniker", name: "Moniker" },
-                                { key: "provider", name: "Provider Address" },
-                                { key: "rewardSum", name: "Total Rewards" },
-                                {
-                                    key: "totalServices",
-                                    name: "Active/Total Services",
-                                    altKey: "nStakes",
-                                },
-                                { key: "totalStake", name: "Total Stake" },
-                            ]}
-                            defaultSortKey="totalStake|desc"
-                            tableAndTabName="providers"
-                            pkey="provider"
-                            pkeyUrl="provider"
-                            firstColumn="moniker"
-                            dataKey="indexProviders"
-                            rowFormatters={{
-                                moniker: (data) => (<MonikerWithTooltip provider={data} />),
-                                rewardSum: (data) => (<LavaWithTooltip amount={data.rewardSum} />),
-                                totalStake: (data) => (<LavaWithTooltip amount={data.totalStake} />),
-                                totalServices: (data) => (<span title={`The total number of active chains serviced by the provider (excluding frozen services) / the total number of serviced chains for the provider`}>{data.totalServices}</span>)
-                            }}
-                            csvButton={<TableCsvButton csvDownloadLink="indexProvidersCsv" />}
-                        />
-
+                        <IndexProvidersTab />
                         <IndexChainsTab />
                     </Box>
                 </JsinfoTabs>

@@ -91,3 +91,31 @@ export const IsMeaningfulText = (text: string): boolean => {
 
   return true;
 };
+
+export function FormatNumberKMB(input: string | null): string {
+  if (input === null) return "0";
+
+  let str = input.toString().replace(/,/g, "");
+
+  let numberPart = str.split(" ")[0];
+
+  let number = parseFloat(numberPart);
+
+  if (isNaN(number)) return "0";
+
+  let suffix = '';
+  if (number >= 1e9) {
+    suffix = 'B';
+    number /= 1e9;
+  } else if (number >= 1e6) {
+    suffix = 'M';
+    number /= 1e6;
+  } else if (number >= 1e3) {
+    suffix = 'K';
+    number /= 1e3;
+  }
+
+  let roundedNumber = parseFloat(number.toFixed(2));
+
+  return FormatNumber(roundedNumber) + suffix;
+}
