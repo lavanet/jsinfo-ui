@@ -19,8 +19,6 @@ import "./styles/accountinfocard.css";
 import "./styles/rsuite.css";
 import "./styles/ui.css";
 
-
-
 export const metadata: Metadata = {
   title: GetPageTitle(),
   description: "Lava Blockchain Insights Hub",
