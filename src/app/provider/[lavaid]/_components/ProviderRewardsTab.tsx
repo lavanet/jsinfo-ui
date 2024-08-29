@@ -37,12 +37,12 @@ const ProviderRewardsTab: React.FC<ProviderRewardsTabProps> = ({ addr }) => {
             pkeyUrl="none"
             rowFormatters={{
                 "relay_payments.specId": (payment) => (
-                    <Link href={`/spec/${payment.relay_payments.specId}`}>
+                    <Link className='orangelinks' href={`/spec/${payment.relay_payments.specId}`}>
                         {payment.relay_payments.specId}
                     </Link>
                 ),
                 "relay_payments.blockId": (payment) => (
-                    <Link
+                    <Link className='orangelinks'
                         href={
                             payment.relay_payments.tx
                                 ? `${GetExplorersGuruUrl()}/transaction/${payment.relay_payments.tx}`
@@ -55,7 +55,7 @@ const ProviderRewardsTab: React.FC<ProviderRewardsTabProps> = ({ addr }) => {
                 "blocks.datetime": (payment) =>
                     (<TimeTooltip datetime={payment.blocks.datetime} />),
                 "relay_payments.consumer": (payment) => (
-                    <Link href={`/consumer/${payment.relay_payments.consumer}`}>
+                    <Link className='orangelinks' href={`/consumer/${payment.relay_payments.consumer}`}>
                         {payment.relay_payments.consumer}
                     </Link>
                 ),

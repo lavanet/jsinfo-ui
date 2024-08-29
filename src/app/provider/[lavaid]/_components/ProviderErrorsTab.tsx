@@ -36,7 +36,7 @@ const ProviderErrorsTab: React.FC<ProviderErrorsTabProps> = ({ addr }) => {
             rowFormatters={{
                 date: (data) => (<TimeTooltip datetime={data.date} />),
                 spec: (data) => (
-                    <Link href={`/spec/${data.spec}`}>{data.spec}</Link>
+                    <Link className='orangelinks' href={`/spec/${data.spec}`}>{data.spec}</Link>
                 ),
                 error: (data) => {
                     return (

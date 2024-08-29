@@ -91,7 +91,7 @@ const ProvidersTable = () => {
         <TableBody>
           {providers.map((provider: any, index) => (
             <TableRow key={index}>
-              <Link href={`/provider/${provider.provider}`}>
+              <Link className='orangelinks' href={`/provider/${provider.provider}`}>
                 <TableCell>{provider.moniker}</TableCell>
               </Link>
               <TableCell>{provider.totalServices}</TableCell>

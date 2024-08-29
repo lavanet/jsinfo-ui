@@ -41,7 +41,7 @@ const ConsumersEventsTab: React.FC<ConsumersEventsTabProps> = ({ addr }) => {
             pkeyUrl="none"
             rowFormatters={{
                 "events.eventType": (evt) => (
-                    <Link
+                    <Link className='orangelinks'
                         href={
                             evt.events.tx
                                 ? `${GetExplorersGuruUrl()}/transaction/${evt.events.tx}`
@@ -52,7 +52,7 @@ const ConsumersEventsTab: React.FC<ConsumersEventsTabProps> = ({ addr }) => {
                     </Link>
                 ),
                 "blocks.height": (evt) => (
-                    <Link
+                    <Link className='orangelinks'
                         href={`${GetExplorersGuruUrl()}/block/${evt.events.blockId}`}
                     >
                         {evt.events.blockId}

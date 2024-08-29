@@ -29,7 +29,7 @@ const ProviderMoniker: React.FC<ProviderMonikerProps> = ({ moniker }) => {
     const url = monikerUrls[moniker];
     if (url) {
         return (
-            <Link href={url} target="_blank" rel="noopener noreferrer">
+            <Link className='orangelinks' href={url} target="_blank" rel="noopener noreferrer">
                 {moniker}
             </Link>
         );

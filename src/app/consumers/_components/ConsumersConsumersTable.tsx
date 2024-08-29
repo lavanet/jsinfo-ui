@@ -38,7 +38,7 @@ const ConsumersConsumersTable: React.FC<{}> = () => {
                 pkey="consumer"
                 pkeyUrl="consumer"
                 rowFormatters={{
-                    consumer: (data) => (<Link href={`/consumer/${data.consumer}`}>
+                    consumer: (data) => (<Link className='orangelinks' href={`/consumer/${data.consumer}`}>
                         {data.consumer}
                     </Link>),
                     cuSum: (data) => FormatNumber(data.cuSum),

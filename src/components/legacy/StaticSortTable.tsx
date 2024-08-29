@@ -158,7 +158,7 @@ const SortableTableRowCell: React.FC<SortableTableRowCellProps> = (props: Sortab
   if (props.rowFormatters && props.rowFormatters[props.columnName]) {
     cellContent = props.rowFormatters[props.columnName](props.rowData);
   } else if (props.columnName === props.pkey && props.pkeyUrl) {
-    cellContent = <Link href={`/${props.pkeyUrl}/${GetNestedProperty(props.rowData, props.pkey)}`}>{GetNestedProperty(props.rowData, props.pkey)}</Link>;
+    cellContent = <Link className='orangelinks' href={`/${props.pkeyUrl}/${GetNestedProperty(props.rowData, props.pkey)}`}>{GetNestedProperty(props.rowData, props.pkey)}</Link>;
   } else {
     cellContent = GetNestedProperty(props.rowData, props.columnName);
   }

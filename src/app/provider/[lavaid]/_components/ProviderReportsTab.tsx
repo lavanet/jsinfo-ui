@@ -38,7 +38,7 @@ const ProviderReportsTab: React.FC<ProviderReportsTabProps> = ({ addr }) => {
             pkeyUrl="none"
             rowFormatters={{
                 "provider_reported.blockId": (report) => (
-                    <Link
+                    <Link className='orangelinks'
                         href={
                             report.provider_reported.tx
                                 ? `${GetExplorersGuruUrl()}/transaction/${report.provider_reported.tx}`

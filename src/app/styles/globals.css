@@ -36,9 +36,15 @@
 /* -------- Dynamic page size ---------------- */
 
 .rt-ContainerInner {
-  max-width: 1360px;
   width: 100%;
-  padding: 10px;
+}
+
+:where(.rt-Container.rt-r-size-4) .rt-ContainerInner {
+  max-width: none;
+}
+
+.rt-ContainerInner {
+  max-width: none !important;
 }
 
 /* -------- chartjs 2 lines on mobile -------- */
@@ -185,7 +191,7 @@ iframe {
   display: none;
 }
 
-a {
+.orangelinks {
   cursor: var(--cursor-link) !important;
   text-decoration-line: none !important;
   text-decoration-style: solid !important;
@@ -195,7 +201,7 @@ a {
   color: var(--interactive-element-line-color) !important;
 }
 
-a:hover {
+.orangelinks:hover {
   text-decoration-line: underline !important;
 }
 

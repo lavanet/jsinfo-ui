@@ -97,7 +97,7 @@ export default function Events() {
               rowFormatters={{
                 provider: (evt) => (<MonikerAndProviderLink provider={evt} />),
                 eventType: (evt) => (
-                  <Link
+                  <Link className='orangelinks'
                     href={
                       evt.tx
                         ? `${GetExplorersGuruUrl()}/transaction/${evt.tx}`
@@ -108,7 +108,7 @@ export default function Events() {
                   </Link>
                 ),
                 blockId: (evt) => (
-                  <Link
+                  <Link className='orangelinks'
                     href={`${GetExplorersGuruUrl()}/block/${evt.blockId}`}
                   >
                     {evt.blockId}
@@ -174,12 +174,12 @@ export default function Events() {
               rowFormatters={{
                 provider: (payment) => (<MonikerAndProviderLink provider={payment} />),
                 specId: (payment) => (
-                  <Link href={`/spec/${payment.specId}`}>
+                  <Link className='orangelinks' href={`/spec/${payment.specId}`}>
                     {payment.specId}
                   </Link>
                 ),
                 blockId: (payment) => (
-                  <Link
+                  <Link className='orangelinks'
                     href={
                       payment.tx
                         ? `${GetExplorersGuruUrl()}/transaction/${payment.tx}`
@@ -191,7 +191,7 @@ export default function Events() {
                 ),
                 datetime: (payment) => (<TimeTooltip datetime={payment.datetime} />),
                 consumer: (payment) => (
-                  <Link href={`/consumer/${payment.consumer}`}>
+                  <Link className='orangelinks' href={`/consumer/${payment.consumer}`}>
                     {payment.consumer}
                   </Link>
                 ),
@@ -221,7 +221,7 @@ export default function Events() {
               rowFormatters={{
                 provider: (report) => (<MonikerAndProviderLink provider={report} />),
                 blockId: (report) => (
-                  <Link
+                  <Link className='orangelinks'
                     href={
                       report.tx
                         ? `${GetExplorersGuruUrl()}/transaction/${report.tx}`

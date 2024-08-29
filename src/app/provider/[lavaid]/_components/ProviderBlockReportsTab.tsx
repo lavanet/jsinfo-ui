@@ -34,7 +34,7 @@ const ProviderBlockReportsTab: React.FC<ProviderBlockReportsTabProps> = ({ addr 
             pkeyUrl="none"
             rowFormatters={{
                 "blockId": (data) => (
-                    <Link
+                    <Link className='orangelinks'
                         href={
                             data.tx
                                 ? `${GetExplorersGuruUrl()}/transaction/${data.tx}`
@@ -46,7 +46,7 @@ const ProviderBlockReportsTab: React.FC<ProviderBlockReportsTabProps> = ({ addr 
                 ),
                 timestamp: (data) => (<TimeTooltip datetime={data.timestamp} />),
                 chainId: (stake) => (
-                    <Link href={`/spec/${stake.chainId}`}>{stake.chainId}</Link>
+                    <Link className='orangelinks' href={`/spec/${stake.chainId}`}>{stake.chainId}</Link>
                 ),
                 chainBlockHeight: (data) => FormatNumberWithString(data.chainBlockHeight),
             }}

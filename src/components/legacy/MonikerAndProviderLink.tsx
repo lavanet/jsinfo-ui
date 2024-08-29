@@ -21,14 +21,14 @@ const MonikerAndProviderLink: React.FC<MonikerAndProviderLinkProps> = ({ provide
         if (IsMeaningfulText(provider.moniker) && IsMeaningfulText(provider.provider)) {
             return (
                 <span title={provider.monikerfull || provider.moniker}>
-                    <Link href={`/provider/${provider.provider}`}>
+                    <Link className='orangelinks' href={`/provider/${provider.provider}`}>
                         {provider.moniker}
                     </Link>
                 </span>
             );
         } else if (IsMeaningfulText(provider.provider)) {
             return (
-                <Link href={`/provider/${provider.provider}`}>
+                <Link className='orangelinks' href={`/provider/${provider.provider}`}>
                     {provider.provider}
                 </Link>
             );

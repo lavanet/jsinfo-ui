@@ -78,7 +78,7 @@ const ProviderPage = ({ address }: { address: string }) => {
 
   return (
     <div className="container mx-auto p-4">
-      <Link href="/" passHref>
+      <Link className='orangelinks' href="/" passHref>
         <Button variant="outline" className="mb-4">
           <ArrowLeft className="mr-2 h-4 w-4" /> Back to Dashboard
         </Button>

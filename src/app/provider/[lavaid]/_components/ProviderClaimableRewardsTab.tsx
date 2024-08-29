@@ -33,7 +33,7 @@ const ProviderClaimableRewardsTab: React.FC<ProviderClaimableRewardsTabProps> = 
             rowFormatters={{
                 timestamp: (data) => (<TimeTooltip datetime={data.timestamp} />),
                 chainId: (data) => (
-                    <Link href={`/spec/${data.chainId}`}>{data.chainId}</Link>
+                    <Link className='orangelinks' href={`/spec/${data.chainId}`}>{data.chainId}</Link>
                 ),
                 amount: (data) => <LavaWithTooltip amount={data.amount} />,
             }}

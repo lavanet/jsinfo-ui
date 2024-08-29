@@ -11,19 +11,19 @@ export default function Navigation() {
         <Package2 className="h-6 w-6" />
         <span className="sr-only">Acme Inc</span>
       </Link>
-      <Link href="/" className="text-foreground transition-colors hover:text-foreground">
+      <Link href="/" className="reset-link-color text-foreground transition-colors hover:text-foreground">
         Dashboard
       </Link>
-      <Link href="/pools" className="text-muted-foreground transition-colors hover:text-foreground">
+      <Link href="/pools" className="reset-link-color text-muted-foreground transition-colors hover:text-foreground">
         Pools
       </Link>
-      <Link href="/providers" className="text-muted-foreground transition-colors hover:text-foreground">
+      <Link href="/providers" className="reset-link-color text-muted-foreground transition-colors hover:text-foreground">
         Providers
       </Link>
-      <Link href="/chains" className="text-muted-foreground transition-colors hover:text-foreground">
+      <Link href="/chains" className="reset-link-color text-muted-foreground transition-colors hover:text-foreground">
         Chains
       </Link>
-      <Link href="/consumers" className="text-muted-foreground transition-colors hover:text-foreground">
+      <Link href="/consumers" className="reset-link-color text-muted-foreground transition-colors hover:text-foreground">
         Consumers
       </Link>
     </nav>
