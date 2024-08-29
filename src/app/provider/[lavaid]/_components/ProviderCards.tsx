@@ -1,12 +1,12 @@
 // src/app/provider/[lavaid]/_components/ProviderCards.tsx
 
 import { Flex } from "@radix-ui/themes";
-import TitledCard from "@jsinfo/components/TitledCard";
+import TitledCard from "@jsinfo/components/legacy/TitledCard";
 import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
-import { RenderInFullPageCard } from "@jsinfo/common/utils";
-import { ErrorDisplay } from "@jsinfo/components/ErrorDisplay";
-import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
-import LavaWithTooltip from "@jsinfo/components/LavaWithTooltip";
+import { RenderInFullPageCard } from "@jsinfo/lib/utils";
+import { ErrorDisplay } from "@jsinfo/components/legacy/ErrorDisplay";
+import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
+import LavaWithTooltip from "@jsinfo/components/legacy/LavaWithTooltip";
 
 interface ProviderCardsProps {
     addr: string;

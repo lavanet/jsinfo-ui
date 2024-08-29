@@ -4,7 +4,7 @@
 import { useEffect } from "react";
 import { usePageContext } from "@jsinfo/context/PageContext";
 import dynamic from 'next/dynamic';
-import { IndexPageComponent } from "./_components/indexPageComponent";
+import { IndexPageComponent } from "./_components/IndexPageComponent";
 import React from "react";
 
 const NoSsr = (props: { children: any }) => (

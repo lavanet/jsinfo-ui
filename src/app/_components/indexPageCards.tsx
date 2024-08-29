@@ -1,13 +1,13 @@
-// src/app/_components/indexPageCards.tsx
+// src/app/_components/IndexPageCards.tsx
 
 import React from 'react';
 import { useApiDataFetch } from '@jsinfo/hooks/useApiDataFetch';
-import { ErrorDisplay } from "@jsinfo/components/ErrorDisplay";
-import TitledCard from '@jsinfo/components/TitledCard';
-import { FormatAsULava } from '@jsinfo/components/LavaWithTooltip';
-import BlockWithDateCard from '@jsinfo/components/BlockWithDateCard';
-import LoaderImageForCards from '@jsinfo/components/LoaderImageForCards';
-import { FormatNumber, FormatNumberKMB } from '@jsinfo/common/utils';
+import { ErrorDisplay } from "@jsinfo/components/legacy/ErrorDisplay";
+import TitledCard from '@jsinfo/components/legacy/TitledCard';
+import { FormatAsULava } from '@jsinfo/components/legacy/LavaWithTooltip';
+import BlockWithDateCard from '@jsinfo/components/legacy/BlockWithDateCard';
+import LoaderImageForCards from '@jsinfo/components/legacy/LoaderImageForCards';
+import { FormatNumber, FormatNumberKMB } from '@jsinfo/lib/formatting';
 
 export const LatestBlockCard: React.FC = () => {
     const { data, loading, error } = useApiDataFetch({ dataKey: "indexLatestBlock" });

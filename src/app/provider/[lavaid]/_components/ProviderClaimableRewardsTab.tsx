@@ -3,11 +3,10 @@
 "use client";
 
 import Link from 'next/link'
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
-import TableCsvButton from "@jsinfo/components/TableCsvButton";
-import TimeTooltip from '@jsinfo/components/TimeTooltip';
-import { FormatNumberWithString } from '@jsinfo/common/utils';
-import LavaWithTooltip from '@jsinfo/components/LavaWithTooltip';
+import { DataKeySortableTableInATabComponent } from "@jsinfo/components/legacy/DynamicSortTable";
+import TableCsvButton from "@jsinfo/components/legacy/TableCsvButton";
+import TimeTooltip from '@jsinfo/components/legacy/TimeTooltip';
+import LavaWithTooltip from '@jsinfo/components/legacy/LavaWithTooltip';
 
 interface ProviderClaimableRewardsTabProps {
     addr: string;

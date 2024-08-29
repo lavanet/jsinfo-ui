@@ -2,14 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 import { Card, Text, Box, Link } from "@radix-ui/themes";
-import LoadingIndicator from '@jsinfo/components/LoadingIndicator';
-import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
-import TimeTooltip from '@jsinfo/components/TimeTooltip';
+import LoadingIndicator from '@jsinfo/components/legacy/LoadingIndicator';
+import { ErrorDisplay } from '@jsinfo/components/legacy/ErrorDisplay';
+import TimeTooltip from '@jsinfo/components/legacy/TimeTooltip';
 import { useApiDataFetch } from '@jsinfo/hooks/useApiDataFetch';
-import { RenderInFullPageCard } from '@jsinfo/common/utils';
-import StatusCall from '../../../../components/StatusCell';
+import { RenderInFullPageCard } from '@jsinfo/lib/utils';
+import StatusCall from '../../../../components/legacy/StatusCell';
 import Image from 'next/image';
-import TextToggle from '../../../../components/TextToggle';
+import TextToggle from '../../../../components/legacy/TextToggle';
 
 interface InterfaceStatus {
     status: string;

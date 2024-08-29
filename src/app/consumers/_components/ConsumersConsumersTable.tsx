@@ -4,12 +4,13 @@
 
 import { Box } from "@radix-ui/themes";
 import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
-import { SortableTableInATabComponent } from "@jsinfo/components/StaticSortTable";
-import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
-import { FormatNumber, RenderInFullPageCard } from '@jsinfo/common/utils';
-import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
+import { SortableTableInATabComponent } from "@jsinfo/components/legacy/StaticSortTable";
+import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
+import { FormatNumber } from '@jsinfo/lib/formatting';
+import { RenderInFullPageCard } from '@jsinfo/lib/utils';
+import { ErrorDisplay } from '@jsinfo/components/legacy/ErrorDisplay';
 import Link from "next/link";
-import LavaWithTooltip from "@jsinfo/components/LavaWithTooltip";
+import LavaWithTooltip from "@jsinfo/components/legacy/LavaWithTooltip";
 
 const ConsumersConsumersTable: React.FC<{}> = () => {
     const { data, loading, error } = useApiDataFetch({

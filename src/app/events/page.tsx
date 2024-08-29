@@ -5,18 +5,18 @@ import Link from 'next/link';
 import { useEffect } from "react";
 import { Card, Box } from "@radix-ui/themes";
 import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
-import { EventTypeToString } from "@jsinfo/common/convertors";
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
+import { EventTypeToString } from "@jsinfo/lib/convertors";
+import { DataKeySortableTableInATabComponent } from "@jsinfo/components/legacy/DynamicSortTable";
 import { usePageContext } from "@jsinfo/context/PageContext";
-import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
-import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
-import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
-import TimeTooltip from '@jsinfo/components/TimeTooltip';
-import CsvButton from '@jsinfo/components/CsvButton';
-import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
-import { RenderInFullPageCard } from '@jsinfo/common/utils';
-import MonikerAndProviderLink from '@jsinfo/components/MonikerAndProviderLink';
-import { GetExplorersGuruUrl } from '@jsinfo/common/env';
+import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
+import BlockWithDateCard from "@jsinfo/components/legacy/BlockWithDateCard";
+import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
+import TimeTooltip from '@jsinfo/components/legacy/TimeTooltip';
+import CsvButton from '@jsinfo/components/legacy/CsvButton';
+import { ErrorDisplay } from '@jsinfo/components/legacy/ErrorDisplay';
+import { RenderInFullPageCard } from '@jsinfo/lib/utils';
+import MonikerAndProviderLink from '@jsinfo/components/legacy/MonikerAndProviderLink';
+import { GetExplorersGuruUrl } from '@jsinfo/lib/env';
 
 export default function Events() {
 

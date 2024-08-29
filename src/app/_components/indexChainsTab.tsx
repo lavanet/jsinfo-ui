@@ -1,14 +1,14 @@
-// src/app/_components/indexChainsTab.tsx
+// src/app/_components/IndexChainsTab.tsx
 "use client";
 
 import React from "react";
 import { Tabs } from "@radix-ui/themes";
-import { SortableTableInATabComponent } from "@jsinfo/components/StaticSortTable";
-import { ConvertToChainName } from "@jsinfo/common/convertors";
+import { SortableTableInATabComponent } from "@jsinfo/components/legacy/StaticSortTable";
+import { ConvertToChainName } from "@jsinfo/lib/convertors";
 import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
-import { FormatNumber } from "@jsinfo/common/utils";
-import { ErrorDisplay } from "@jsinfo/components/ErrorDisplay";
-import LoaderImageForCards from "@jsinfo/components/LoaderImageForCards";
+import { FormatNumber } from "@jsinfo/lib/formatting";
+import { ErrorDisplay } from "@jsinfo/components/legacy/ErrorDisplay";
+import LoaderImageForCards from "@jsinfo/components/legacy/LoaderImageForCards";
 
 interface Item {
     chainId: string;

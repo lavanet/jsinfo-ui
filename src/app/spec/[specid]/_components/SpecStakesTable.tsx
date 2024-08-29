@@ -3,12 +3,12 @@
 
 import { Box } from "@radix-ui/themes";
 import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
-import { SortableTableInATabComponent } from "@jsinfo/components/StaticSortTable";
-import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
-import { RenderInFullPageCard } from '@jsinfo/common/utils';
-import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
-import MonikerAndProviderLink from '@jsinfo/components/MonikerAndProviderLink';
-import LavaWithTooltip from "@jsinfo/components/LavaWithTooltip";
+import { SortableTableInATabComponent } from "@jsinfo/components/legacy/StaticSortTable";
+import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
+import { RenderInFullPageCard } from '@jsinfo/lib/utils';
+import { ErrorDisplay } from '@jsinfo/components/legacy/ErrorDisplay';
+import MonikerAndProviderLink from '@jsinfo/components/legacy/MonikerAndProviderLink';
+import LavaWithTooltip from "@jsinfo/components/legacy/LavaWithTooltip";
 
 interface SpecStakesTableProps {
     specid: string

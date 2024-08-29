@@ -3,11 +3,11 @@
 "use client";
 
 import Link from 'next/link'
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
-import TableCsvButton from "@jsinfo/components/TableCsvButton";
-import TimeTooltip from '@jsinfo/components/TimeTooltip';
-import { FormatNumberWithString } from '@jsinfo/common/utils';
-import { GetExplorersGuruUrl } from '@jsinfo/common/env';
+import { DataKeySortableTableInATabComponent } from "@jsinfo/components/legacy/DynamicSortTable";
+import TableCsvButton from "@jsinfo/components/legacy/TableCsvButton";
+import TimeTooltip from '@jsinfo/components/legacy/TimeTooltip';
+import { FormatNumberWithString } from '@jsinfo/lib/formatting';
+import { GetExplorersGuruUrl } from '@jsinfo/lib/env';
 
 interface ProviderBlockReportsTabProps {
     addr: string;

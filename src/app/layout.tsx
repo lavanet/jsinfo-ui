@@ -1,23 +1,25 @@
 // src/app/layout.tsx
 
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { Container } from "@radix-ui/themes";
-import { Navbar } from "@jsinfo/components/Navbar";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Theme } from "@radix-ui/themes";
-import { PageProvider } from "@jsinfo/components/PageProvider";
-
-import { GetPageTitle } from "@jsinfo/common/env";
+import { PageProvider } from "@jsinfo/components/legacy/PageProvider";
+import { GetPageTitle } from "@jsinfo/lib/env";
+import { Inter as FontSans } from "next/font/google";
+import Header from "@jsinfo/components/layout/Header";
+import Footer from "@jsinfo/components/layout/Footer";
+import { cn } from "@jsinfo/lib/css"
 
 import '@radix-ui/themes/styles.css';
 import "./styles/globals.css";
 import "./styles/paginationcontrol.css";
 import "./styles/accountinfocard.css";
 import "./styles/rsuite.css";
+import "./styles/ui.css";
 
-const inter = Inter({ subsets: ["latin"] });
+
 
 export const metadata: Metadata = {
   title: GetPageTitle(),
@@ -28,6 +30,11 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 }
 
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+})
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -36,21 +43,28 @@ export default function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable
+        )}
+      >
         <Theme
           appearance="dark"
           accentColor="tomato"
           grayColor="slate"
           panelBackground="solid"
           radius="full"
-          scaling="90%"
         >
           <Container>
             <SpeedInsights />
-            <div className="body-div">
+            <div className="flex min-h-screen mx-auto max-w-screen-2xl flex-col">
               <PageProvider>
-                <Navbar />
-                <main>{children}</main>
+                <Header />
+                <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
+                  {children}
+                </main>
+                <Footer />
               </PageProvider>
               <Analytics />
             </div>

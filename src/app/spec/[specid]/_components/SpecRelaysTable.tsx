@@ -3,14 +3,15 @@
 
 import { Box } from "@radix-ui/themes";
 import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
-import { SortableTableInATabComponent } from "@jsinfo/components/StaticSortTable";
-import { StatusToString, GeoLocationToString } from "@jsinfo/common/convertors";
-import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
-import { FormatNumber, RenderInFullPageCard } from '@jsinfo/common/utils';
-import StatusCall from '@jsinfo/components/StatusCell';
-import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
+import { SortableTableInATabComponent } from "@jsinfo/components/legacy/StaticSortTable";
+import { StatusToString, GeoLocationToString } from "@jsinfo/lib/convertors";
+import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
+import { RenderInFullPageCard } from '@jsinfo/lib/utils';
+import { FormatNumber } from '@jsinfo/lib/formatting';
+import StatusCall from '@jsinfo/components/legacy/StatusCell';
+import { ErrorDisplay } from '@jsinfo/components/legacy/ErrorDisplay';
 import SpecProviderEndpointHealthSummary from '@jsinfo/app/spec/[specid]/_components/SpecProviderEndpointHealthSummary';
-import MonikerAndProviderLink from '@jsinfo/components/MonikerAndProviderLink';
+import MonikerAndProviderLink from '@jsinfo/components/legacy/MonikerAndProviderLink';
 
 interface SpecRelaysTableProps {
     specid: string

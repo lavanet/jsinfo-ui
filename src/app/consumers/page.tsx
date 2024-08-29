@@ -5,14 +5,14 @@
 import React from "react";
 import { useEffect } from "react";
 import { Card, Box } from "@radix-ui/themes";
-import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
-import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
-import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
-import { ConvertToChainName } from "@jsinfo/common/convertors";
+import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
+import BlockWithDateCard from "@jsinfo/components/legacy/BlockWithDateCard";
+import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
+import { ConvertToChainName } from "@jsinfo/lib/convertors";
 import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
 import { usePageContext } from "@jsinfo/context/PageContext";
-import { RenderInFullPageCard } from "@jsinfo/common/utils";
-import { ErrorDisplay } from "@jsinfo/components/ErrorDisplay";
+import { RenderInFullPageCard } from "@jsinfo/lib/utils";
+import { ErrorDisplay } from "@jsinfo/components/legacy/ErrorDisplay";
 import ConsumersConsumersTable from './_components/ConsumersConsumersTable';
 
 export default function Home() {

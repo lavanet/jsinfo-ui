@@ -1,11 +1,11 @@
 // src/app/_components/IndexProviderTab.tsx
 
 import React, { useState } from "react";
-import { DataKeySortableTableComponent } from "@jsinfo/components/DynamicSortTable";
-import TableCsvButton from "@jsinfo/components/TableCsvButton";
-import MonikerWithTooltip from "@jsinfo/components/MonikerWithTooltip";
-import LavaWithTooltip from "@jsinfo/components/LavaWithTooltip";
-import TextCheckbox from "@jsinfo/components/TextCheckbox";
+import { DataKeySortableTableComponent } from "@jsinfo/components/legacy/DynamicSortTable";
+import TableCsvButton from "@jsinfo/components/legacy/TableCsvButton";
+import MonikerWithTooltip from "@jsinfo/components/legacy/MonikerWithTooltip";
+import LavaWithTooltip from "@jsinfo/components/legacy/LavaWithTooltip";
+import TextCheckbox from "@jsinfo/components/legacy/TextCheckbox";
 import { Tabs } from "@radix-ui/themes";
 
 export default function IndexProviderTab() {

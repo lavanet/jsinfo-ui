@@ -5,17 +5,17 @@ import { Flex, Card, Box } from "@radix-ui/themes";
 import { useEffect } from "react";
 import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
 import { usePageContext } from "@jsinfo/context/PageContext";
-import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
-import TitledCard from "@jsinfo/components/TitledCard";
-import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
-import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
-import { RenderInFullPageCard } from '@jsinfo/common/utils';
-import SpecChart from '@jsinfo/charts/specChart';
-import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
+import BlockWithDateCard from "@jsinfo/components/legacy/BlockWithDateCard";
+import TitledCard from "@jsinfo/components/legacy/TitledCard";
+import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
+import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
+import { RenderInFullPageCard } from '@jsinfo/lib/utils';
+import SpecChart from '@jsinfo/components/charts/SpecChart';
+import { ErrorDisplay } from '@jsinfo/components/legacy/ErrorDisplay';
 import SpecEndpointHealthSummary from '@jsinfo/app/spec/[specid]/_components/SpecEndpointHealthSummary';
 import SpecStakesTable from '@jsinfo/app/spec/[specid]/_components/SpecStakesTable';
 import SpecRelaysTable from "./_components/SpecRelaysTable";
-import LavaWithTooltip from "@jsinfo/components/LavaWithTooltip";
+import LavaWithTooltip from "@jsinfo/components/legacy/LavaWithTooltip";
 
 export default function Spec({ params }: { params: { specid: string } }) {
 

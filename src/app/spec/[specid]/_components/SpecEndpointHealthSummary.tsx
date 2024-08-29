@@ -1,7 +1,6 @@
 // src/components/SpecProviderHealthSummary.tsx
 
 import React, { CSSProperties } from 'react';
-
 interface SpecProviderHealthSummaryProps {
     healthy: number;
     unhealthy: number;

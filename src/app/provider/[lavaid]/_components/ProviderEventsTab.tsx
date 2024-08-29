@@ -3,11 +3,11 @@
 "use client";
 
 import Link from 'next/link'
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
-import TableCsvButton from "@jsinfo/components/TableCsvButton";
-import TimeTooltip from '@jsinfo/components/TimeTooltip';
-import { EventTypeToString } from '@jsinfo/common/convertors';
-import { GetExplorersGuruUrl } from '@jsinfo/common/env';
+import { DataKeySortableTableInATabComponent } from "@jsinfo/components/legacy/DynamicSortTable";
+import TableCsvButton from "@jsinfo/components/legacy/TableCsvButton";
+import TimeTooltip from '@jsinfo/components/legacy/TimeTooltip';
+import { EventTypeToString } from '@jsinfo/lib/convertors';
+import { GetExplorersGuruUrl } from '@jsinfo/lib/env';
 
 interface ProviderEventsTabProps {
     addr: string;

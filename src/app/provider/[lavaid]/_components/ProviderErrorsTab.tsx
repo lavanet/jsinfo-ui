@@ -3,9 +3,9 @@
 "use client";
 
 import Link from 'next/link'
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
-import TableCsvButton from "@jsinfo/components/TableCsvButton";
-import TimeTooltip from '@jsinfo/components/TimeTooltip';
+import { DataKeySortableTableInATabComponent } from "@jsinfo/components/legacy/DynamicSortTable";
+import TableCsvButton from "@jsinfo/components/legacy/TableCsvButton";
+import TimeTooltip from '@jsinfo/components/legacy/TimeTooltip';
 
 interface ProviderErrorsTabProps {
     addr: string;

@@ -3,10 +3,10 @@
 "use client";
 
 import Link from 'next/link'
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
-import TableCsvButton from "@jsinfo/components/TableCsvButton";
-import { GeoLocationToString, StatusToString } from '@jsinfo/common/convertors';
-import StatusCall from '@jsinfo/components/StatusCell';
+import { DataKeySortableTableInATabComponent } from "@jsinfo/components/legacy/DynamicSortTable";
+import TableCsvButton from "@jsinfo/components/legacy/TableCsvButton";
+import { GeoLocationToString, StatusToString } from '@jsinfo/lib/convertors';
+import StatusCall from '@jsinfo/components/legacy/StatusCell';
 
 interface ProviderEventsTabProps {
     addr: string;

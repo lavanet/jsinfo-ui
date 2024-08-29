@@ -3,10 +3,10 @@
 "use client";
 
 import Link from 'next/link'
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
-import TableCsvButton from "@jsinfo/components/TableCsvButton";
-import TimeTooltip from '@jsinfo/components/TimeTooltip';
-import StatusCall from '@jsinfo/components/StatusCell';
+import { DataKeySortableTableInATabComponent } from "@jsinfo/components/legacy/DynamicSortTable";
+import TableCsvButton from "@jsinfo/components/legacy/TableCsvButton";
+import TimeTooltip from '@jsinfo/components/legacy/TimeTooltip';
+import StatusCall from '@jsinfo/components/legacy/StatusCell';
 
 interface ProviderHealthTabProps {
     addr: string;

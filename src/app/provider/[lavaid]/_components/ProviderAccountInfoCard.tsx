@@ -1,9 +1,9 @@
 "use client"
 
 import React, { useEffect, useState } from 'react';
-import TimeTooltip from '@jsinfo/components/TimeTooltip';
-import LoadingIndicator from '@jsinfo/components/LoadingIndicator';
-import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
+import TimeTooltip from '@jsinfo/components/legacy/TimeTooltip';
+import LoadingIndicator from '@jsinfo/components/legacy/LoadingIndicator';
+import { ErrorDisplay } from '@jsinfo/components/legacy/ErrorDisplay';
 import ReactJson from 'react-json-view';
 import { AxiosDataLoader } from '@jsinfo/hooks/AxiosDataLoader';
 import Image from 'next/image';

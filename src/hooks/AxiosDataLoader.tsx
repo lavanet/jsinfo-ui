@@ -2,9 +2,9 @@
 
 import { useRef, useState, Dispatch, SetStateAction } from 'react';
 import { AxiosApiGet } from './axios';
-import { GetAxiosRetryCount } from '@jsinfo/common/env';
-import { ConvertDateForServer } from '@jsinfo/common/dateutils';
-import { CachedFetchDateRange } from '@jsinfo/common/types';
+import { GetAxiosRetryCount } from '@jsinfo/lib/env';
+import { ConvertDateForServer } from '@jsinfo/lib/dateutils';
+import { CachedFetchDateRange } from '@jsinfo/lib/types';
 export class AxiosDataLoader {
     private maxRetries = GetAxiosRetryCount();
 

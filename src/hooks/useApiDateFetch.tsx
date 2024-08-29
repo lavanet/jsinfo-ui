@@ -1,9 +1,9 @@
 // src/hooks/useApiDateFetch.tsx
 
-import { GetTodayMinus90DaysRangeDefault, CheckAndAdjustDatesForServer } from "@jsinfo/common/dateutils";
+import { GetTodayMinus90DaysRangeDefault, CheckAndAdjustDatesForServer } from "@jsinfo/lib/dateutils";
 import { useEffect, useState } from "react";
 import { AxiosDataLoader } from "./AxiosDataLoader";
-import { CachedFetchDateRange } from "@jsinfo/common/types";
+import { CachedFetchDateRange } from "@jsinfo/lib/types";
 import { ValidateDataKey } from "./utils";
 
 export default function useApiDateFetch(dataKey: string) {

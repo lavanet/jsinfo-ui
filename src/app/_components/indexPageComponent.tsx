@@ -1,11 +1,11 @@
-// src/app/_components/indexPageComponent.tsx
+// src/app/_components/IndexPageComponent.tsx
 
 import React from "react";
 import { Flex, Card, Box } from "@radix-ui/themes";
-import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
-import IndexChart from "@jsinfo/charts/indexChart";
-import { IndexAllCards, LatestBlockCard } from "./indexPageCards";
-import IndexChainsTab from "./indexChainsTab";
+import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
+import IndexChart from "@jsinfo/components/charts/IndexChart";
+import { IndexAllCards, LatestBlockCard } from "./IndexPageCards";
+import IndexChainsTab from "./IndexChainsTab";
 import IndexProvidersTab from "./indexProvidersTab";
 
 export const IndexPageComponent: React.FC = () => {

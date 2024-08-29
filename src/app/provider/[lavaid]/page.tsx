@@ -7,15 +7,15 @@ import { Card, Box } from "@radix-ui/themes";
 import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
 import { usePageContext } from "@jsinfo/context/PageContext";
 
-import { RenderInFullPageCard } from '@jsinfo/common/utils';
-import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
+import { RenderInFullPageCard } from '@jsinfo/lib/utils';
+import { ErrorDisplay } from '@jsinfo/components/legacy/ErrorDisplay';
 
-import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
-import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
-import MonikerAndProviderAddressCard from "@jsinfo/components/MonikerAndProviderAddressCard";
-import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
+import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
+import BlockWithDateCard from "@jsinfo/components/legacy/BlockWithDateCard";
+import MonikerAndProviderAddressCard from "@jsinfo/components/legacy/MonikerAndProviderAddressCard";
+import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
 
-import ProviderChart from '@jsinfo/charts/providerChart';
+import ProviderChart from '@jsinfo/components/charts/ProviderChart';
 
 import ProviderLatestHealthCards from '@jsinfo/app/provider/[lavaid]/_components/ProviderLatestHealth';
 

@@ -4,15 +4,15 @@
 import Link from 'next/link'
 import { Flex, Text, Card, Box } from "@radix-ui/themes";
 import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
-import { SortableTableInATabComponent } from "@jsinfo/components/StaticSortTable";
-import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
-import TitledCard from "@jsinfo/components/TitledCard";
-import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
+import { SortableTableInATabComponent } from "@jsinfo/components/legacy/StaticSortTable";
+import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
+import TitledCard from "@jsinfo/components/legacy/TitledCard";
+import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
 import { useEffect } from "react";
 import { usePageContext } from '@jsinfo/context/PageContext';
-import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
-import { RenderInFullPageCard } from '@jsinfo/common/utils';
-import ConsumerChart from '@jsinfo/charts/consumerChart';
+import { ErrorDisplay } from '@jsinfo/components/legacy/ErrorDisplay';
+import { RenderInFullPageCard } from '@jsinfo/lib/utils';
+import ConsumerChart from '@jsinfo/components/charts/ConsumerChart';
 import ConsumerSubscriptionsTable from './_components/ConsumersSubscriptionsTab';
 import ConsumersEventsTab from './_components/ConsumersEventsTab';
 
