@@ -51,12 +51,12 @@ export default function IndexChart() {
     }
 
     const chartChangeRadio = (value: any) => {
-        if (value == 'CU sum') {
+        if (value == 'By CU') {
             setIsUniqueVisitorsSelected(false);
             setIsRelayOrCuSelected(false);
             return;
         }
-        if (value == 'Relay sum') {
+        if (value == 'By Relays') {
             setIsUniqueVisitorsSelected(false);
             setIsRelayOrCuSelected(true);
             return;
@@ -206,7 +206,7 @@ export default function IndexChart() {
             title="QoS Score, Relays/CUs for Top 10 Chains"
             onDateChange={setDates}
             datePickerValue={dates}
-            rangeOptions={['Unique users', 'CU sum', 'Relay sum']}
+            rangeOptions={['Unique users', 'By Relays', 'By CU']}
             rangeOnChange={chartChangeRadio}
             chartKey={"RelayCuChart"}
         />
@@ -294,9 +294,9 @@ export function UniqueVisitorsChart(
         <ChartJsWithRadioToggle
             data={chartData}
             options={chartOptions}
-            title="Unique users in the last 30 days"
+            title="Unique users (30 days)"
             noDatePicker={true}
-            rangeOptions={['Unique users', 'CU sum', 'Relay sum']}
+            rangeOptions={['Unique users', 'By Relays', 'By CU']}
             rangeOnChange={rangeOnChange}
             chartKey={"UniqueUsersChart"}
         />
