@@ -4,15 +4,13 @@ import React from "react";
 import { Flex, Card, Box } from "@radix-ui/themes";
 import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
 import IndexChart from "@jsinfo/components/charts/IndexChart";
-import { IndexAllCards, LatestBlockCard } from "./IndexPageCards";
+import { IndexAllCards } from "./IndexPageCards";
 import IndexChainsTab from "./IndexChainsTab";
 import IndexProvidersTab from "./indexProvidersTab";
 
 export const IndexPageComponent: React.FC = () => {
     return (
         <>
-            <LatestBlockCard />
-
             <div style={{ marginTop: 'var(--box-margin)', marginBottom: 'var(--box-margin)' }}>
                 <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-3">
                     <IndexAllCards />

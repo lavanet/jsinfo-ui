@@ -1,16 +1,24 @@
 // src/components/modern/CurrencyChangeButton.tsx
+"use client"
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import { DollarSign } from 'lucide-react';
 import { Toggle } from '@jsinfo/components/ui/Toggle';
 import { GetInfoNetwork } from '@jsinfo/lib/env';
 
 const CurrencyChangeButton: FC = () => {
-    const [currency, setCurrency] = useState(localStorage.getItem('currency') || 'USD');
+    const isBrowser = typeof window !== 'undefined';
+
+    const [currency, setCurrency] = useState(() => {
+        return isBrowser ? localStorage.getItem('currency') || 'USD' : 'USD';
+    });
+
     const isMainnet = GetInfoNetwork().toLowerCase() === 'mainnet';
 
     useEffect(() => {
-        localStorage.setItem('currency', currency);
+        if (isBrowser) {
+            localStorage.setItem('currency', currency);
+        }
     }, [currency]);
 
     const toggleCurrency = () => {

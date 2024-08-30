@@ -3,7 +3,7 @@
 "use client";
 
 import { Box } from "@radix-ui/themes";
-import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
+import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { SortableTableInATabComponent } from "@jsinfo/components/legacy/StaticSortTable";
 import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
 import { FormatNumber } from '@jsinfo/lib/formatting';
@@ -13,9 +13,7 @@ import Link from "next/link";
 import LavaWithTooltip from "@jsinfo/components/legacy/LavaWithTooltip";
 
 const ConsumersConsumersTable: React.FC<{}> = () => {
-    const { data, loading, error } = useApiDataFetch({
-        dataKey: "consumerspageConsumers",
-    });
+    const { data, loading, error } = useApiFetch("consumerspageConsumers");
 
     if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
     if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading consumers table data`} greyText={`consumers table`} />);

@@ -2,9 +2,10 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Menu, Package2 } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import { Button } from '@jsinfo/components/ui/Button';
 import { Sheet, SheetContent, SheetTrigger } from '@jsinfo/components/ui/Sheet';
+import LavaLogoLink from '../modern/LavaLogoLink';
 
 export default function MobileNavigation() {
   return (
@@ -17,10 +18,7 @@ export default function MobileNavigation() {
       </SheetTrigger>
       <SheetContent side="left">
         <nav className="grid gap-6 text-lg font-medium">
-          <Link href="/" className="flex items-center gap-2 text-lg font-semibold">
-            <Package2 className="h-6 w-6" />
-            <span className="sr-only">Acme Inc</span>
-          </Link>
+          <LavaLogoLink />
           <Link href="/" className="hover:text-foreground">
             Dashboard
           </Link>

@@ -2,7 +2,7 @@
 "use client";
 
 import { Box } from "@radix-ui/themes";
-import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
+import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { SortableTableInATabComponent } from "@jsinfo/components/legacy/StaticSortTable";
 import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
 import { RenderInFullPageCard } from '@jsinfo/lib/utils';
@@ -15,9 +15,7 @@ interface SpecStakesTableProps {
 }
 
 const SpecStakesTable: React.FC<SpecStakesTableProps> = ({ specid }) => {
-    const { data, loading, error } = useApiDataFetch({
-        dataKey: "specStakes/" + specid,
-    });
+    const { data, loading, error } = useApiFetch("specStakes/" + specid);
 
     if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
     if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${specid} stake data`} greyText={`${specid} stake`} />);

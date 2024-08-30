@@ -1,9 +1,9 @@
 // src/components/modern/LastUpdateBadge.tsx
 
 import React from 'react';
-import useApiSWR from '@jsinfo/hooks/useApiSWR';
 import { Badge } from '@jsinfo/components/ui/Badge';
 import { Tooltip, TooltipContent, TooltipTrigger } from "./Tooltip";
+import { useApiFetch } from '@jsinfo/hooks/useApiFetch';
 
 interface BlockData {
     height: number;
@@ -11,7 +11,8 @@ interface BlockData {
 }
 
 const LastUpdateBadge = () => {
-    const { data, isLoading } = useApiSWR<BlockData>('indexLatestBlock');
+    const { data, loading } = useApiFetch("indexLatestBlock");
+    const blockData = data as BlockData;
 
     const formatLastUpdate = (date: Date) => {
         const diff = Math.floor((new Date().getTime() - date.getTime()) / 60000);
@@ -27,18 +28,18 @@ const LastUpdateBadge = () => {
         <Tooltip>
             <TooltipTrigger>
                 <Badge variant="outline" className="last-update-badge-content">
-                    {isLoading || !data ? (
+                    {loading || !blockData ? (
                         <>
                             <span className="last-update-badge-update-text">Last update</span>
                             <span className="last-update-badge-time-text">1 min ago</span>
                         </>
                     ) : (
-                        formatLastUpdate(new Date(data.datetime))
+                        formatLastUpdate(new Date(blockData.datetime))
                     )}
                 </Badge>
             </TooltipTrigger>
             <TooltipContent className="last-update-badge-no-wrap">
-                {`Latest block height: ${data ? data.height : 'Loading...'}`}
+                {`Latest block height: ${blockData ? blockData.height : 'Loading...'}`}
             </TooltipContent>
         </Tooltip>
     );

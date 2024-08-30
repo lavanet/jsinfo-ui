@@ -3,7 +3,7 @@
 
 import Link from 'next/link'
 import { Flex, Text, Card, Box } from "@radix-ui/themes";
-import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
+import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { SortableTableInATabComponent } from "@jsinfo/components/legacy/StaticSortTable";
 import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
 import TitledCard from "@jsinfo/components/legacy/TitledCard";
@@ -27,9 +27,7 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
     return RenderInFullPageCard(<ErrorDisplay message={error} />);
   }
 
-  const { data, loading, error } = useApiDataFetch({
-    dataKey: 'consumer/' + decodedLavaId
-  });
+  const { data, loading, error } = useApiFetch('consumer/' + decodedLavaId);
 
   const { setCurrentPage } = usePageContext();
 

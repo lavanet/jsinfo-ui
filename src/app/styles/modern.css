@@ -26,3 +26,27 @@
 .last-update-badge-no-wrap {
   white-space: nowrap;
 }
+
+.topbar-nav {
+  display: flex;
+}
+
+@media (max-width: 900px) {
+  .topbar-nav {
+    display: none;
+  }
+}
+
+.lava-logo-image {
+  max-width: fit-content;
+  margin-bottom: 3px;
+  margin-right: 10px;
+  min-width: fit-content;
+}
+
+@media (max-width: 900px) {
+  .lava-logo-image {
+    margin-bottom: 3px;
+    margin-right: 0;
+  }
+}

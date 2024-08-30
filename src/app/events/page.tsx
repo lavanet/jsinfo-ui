@@ -4,38 +4,25 @@
 import Link from 'next/link';
 import { useEffect } from "react";
 import { Card, Box } from "@radix-ui/themes";
-import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
 import { EventTypeToString } from "@jsinfo/lib/convertors";
 import { DataKeySortableTableInATabComponent } from "@jsinfo/components/legacy/DynamicSortTable";
 import { usePageContext } from "@jsinfo/context/PageContext";
-import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
-import BlockWithDateCard from "@jsinfo/components/legacy/BlockWithDateCard";
 import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
 import TimeTooltip from '@jsinfo/components/legacy/TimeTooltip';
 import CsvButton from '@jsinfo/components/legacy/CsvButton';
-import { ErrorDisplay } from '@jsinfo/components/legacy/ErrorDisplay';
-import { RenderInFullPageCard } from '@jsinfo/lib/utils';
 import MonikerAndProviderLink from '@jsinfo/components/legacy/MonikerAndProviderLink';
 import { GetExplorersGuruUrl } from '@jsinfo/lib/env';
 
 export default function Events() {
 
-  const { data, loading, error } = useApiDataFetch({ dataKey: "events" });
-
   const { setCurrentPage } = usePageContext();
 
   useEffect(() => {
-    if (!loading && !error) {
-      setCurrentPage('events');
-    }
-  }, [loading, error, setCurrentPage]);
-
-  if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
-  if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading events page`} greyText={`events`} />);
+    setCurrentPage('events');
+  }, []);
 
   return (
     <>
-      <BlockWithDateCard blockData={data} />
       <Card>
         <JsinfoTabs defaultValue="events"
           tabs={[

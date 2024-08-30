@@ -4,14 +4,13 @@
 import { useEffect } from "react";
 
 import { Card, Box } from "@radix-ui/themes";
-import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
+import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { usePageContext } from "@jsinfo/context/PageContext";
 
 import { RenderInFullPageCard } from '@jsinfo/lib/utils';
 import { ErrorDisplay } from '@jsinfo/components/legacy/ErrorDisplay';
 
 import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
-import BlockWithDateCard from "@jsinfo/components/legacy/BlockWithDateCard";
 import MonikerAndProviderAddressCard from "@jsinfo/components/legacy/MonikerAndProviderAddressCard";
 import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
 
@@ -42,9 +41,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
     return RenderInFullPageCard(<ErrorDisplay message={error} />);
   }
 
-  const { data, loading, error } = useApiDataFetch({
-    dataKey: "provider/" + decodedLavaId,
-  });
+  const { data, loading, error } = useApiFetch("provider/" + decodedLavaId);
 
   const { setCurrentPage } = usePageContext();
 
@@ -61,7 +58,6 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
 
   return (
     <>
-      <BlockWithDateCard blockData={data} />
       <MonikerAndProviderAddressCard provider={provider} />
       <ProviderCards addr={decodedLavaId} />
 

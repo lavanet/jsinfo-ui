@@ -1,26 +1,15 @@
 // src/app/_components/IndexPageCards.tsx
 
 import React from 'react';
-import { useApiDataFetch } from '@jsinfo/hooks/useApiDataFetch';
+import { useApiFetch } from '@jsinfo/hooks/useApiFetch';
 import { ErrorDisplay } from "@jsinfo/components/legacy/ErrorDisplay";
 import TitledCard from '@jsinfo/components/legacy/TitledCard';
 import { FormatAsULava } from '@jsinfo/components/legacy/LavaWithTooltip';
-import BlockWithDateCard from '@jsinfo/components/legacy/BlockWithDateCard';
 import LoaderImageForCards from '@jsinfo/components/legacy/LoaderImageForCards';
 import { FormatNumber, FormatNumberKMB } from '@jsinfo/lib/formatting';
 
-export const LatestBlockCard: React.FC = () => {
-    const { data, loading, error } = useApiDataFetch({ dataKey: "indexLatestBlock" });
-    if (error) return ErrorDisplay({ message: error });
-    if (loading) return null;
-
-    return (
-        <BlockWithDateCard blockData={data} />
-    );
-};
-
 export const IndexTotalCUCard: React.FC = () => {
-    const { data, loading, error } = useApiDataFetch({ dataKey: "indexTotalCu" });
+    const { data, loading, error } = useApiFetch("indexTotalCu");
     if (error) return ErrorDisplay({ message: error });
     if (loading) return (
         <TitledCard
@@ -51,7 +40,7 @@ export const IndexTotalCUCard: React.FC = () => {
 
 
 export const Index30DayCUCard: React.FC = () => {
-    const { data, loading, error } = useApiDataFetch({ dataKey: "index30DayCu" });
+    const { data, loading, error } = useApiFetch("index30DayCu");
     if (error) return ErrorDisplay({ message: error });
     if (loading) return (
         <TitledCard
@@ -80,7 +69,7 @@ export const Index30DayCUCard: React.FC = () => {
 };
 
 export const IndexUniqueUsersCard: React.FC = () => {
-    const { data, loading, error } = useApiDataFetch({ dataKey: "indexMonthlyUsers" });
+    const { data, loading, error } = useApiFetch("indexMonthlyUsers");
     if (error) return ErrorDisplay({ message: error });
     if (loading) return (
         <TitledCard
@@ -101,7 +90,7 @@ export const IndexUniqueUsersCard: React.FC = () => {
 };
 
 export const IndexUniqueUsersAvgCard: React.FC = () => {
-    const { data, loading, error } = useApiDataFetch({ dataKey: "indexMonthlyUsersAvg" });
+    const { data, loading, error } = useApiFetch("indexMonthlyUsersAvg");
     if (error) return ErrorDisplay({ message: error });
     if (loading) return (
         <TitledCard
@@ -130,7 +119,7 @@ export const IndexUniqueUsersAvgCard: React.FC = () => {
 };
 
 export const IndexChacheHitCard: React.FC = () => {
-    const { data, loading, error } = useApiDataFetch({ dataKey: "indexCachedMetrics" });
+    const { data, loading, error } = useApiFetch("indexCachedMetrics");
     if (error) return ErrorDisplay({ message: error });
     if (loading) return (
         <TitledCard
@@ -152,7 +141,7 @@ export const IndexChacheHitCard: React.FC = () => {
 };
 
 export const IndexStakeCard: React.FC = () => {
-    const { data, loading, error } = useApiDataFetch({ dataKey: "indexStakesHandler" });
+    const { data, loading, error } = useApiFetch("indexStakesHandler");
     if (error) return ErrorDisplay({ message: error });
     if (loading) return (
         <TitledCard

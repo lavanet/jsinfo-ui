@@ -5,7 +5,7 @@ import React from "react";
 import { Tabs } from "@radix-ui/themes";
 import { SortableTableInATabComponent } from "@jsinfo/components/legacy/StaticSortTable";
 import { ConvertToChainName } from "@jsinfo/lib/convertors";
-import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
+import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { FormatNumber } from "@jsinfo/lib/formatting";
 import { ErrorDisplay } from "@jsinfo/components/legacy/ErrorDisplay";
 import LoaderImageForCards from "@jsinfo/components/legacy/LoaderImageForCards";
@@ -16,7 +16,7 @@ interface Item {
 }
 
 export default function IndexChainsTab() {
-    const { data, loading, error } = useApiDataFetch({ dataKey: "indexTopChains" });
+    const { data, loading, error } = useApiFetch("indexTopChains");
     if (error) return <ErrorDisplay message={error} />;
     if (loading) return (
         <Tabs.Content value="chains"><LoaderImageForCards /></Tabs.Content>

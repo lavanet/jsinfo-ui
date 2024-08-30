@@ -2,7 +2,7 @@
 
 import { Flex } from "@radix-ui/themes";
 import TitledCard from "@jsinfo/components/legacy/TitledCard";
-import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
+import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { RenderInFullPageCard } from "@jsinfo/lib/utils";
 import { ErrorDisplay } from "@jsinfo/components/legacy/ErrorDisplay";
 import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
@@ -13,9 +13,7 @@ interface ProviderCardsProps {
 }
 
 const ProviderCards: React.FC<ProviderCardsProps> = ({ addr }) => {
-    const { data, loading, error } = useApiDataFetch({
-        dataKey: "providerCards/" + addr,
-    });
+    const { data, loading, error } = useApiFetch("providerCards/" + addr);
 
     if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
     if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${addr} details`} greyText={`${addr} provider`} />);

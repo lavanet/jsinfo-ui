@@ -3,9 +3,8 @@
 
 import { Flex, Card, Box } from "@radix-ui/themes";
 import { useEffect } from "react";
-import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
+import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { usePageContext } from "@jsinfo/context/PageContext";
-import BlockWithDateCard from "@jsinfo/components/legacy/BlockWithDateCard";
 import TitledCard from "@jsinfo/components/legacy/TitledCard";
 import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
 import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
@@ -28,9 +27,7 @@ export default function Spec({ params }: { params: { specid: string } }) {
     return RenderInFullPageCard(<ErrorDisplay message={error} />);
   }
 
-  const { data, loading, error } = useApiDataFetch({
-    dataKey: "spec/" + decodedSpecId,
-  });
+  const { data, loading, error } = useApiFetch("spec/" + decodedSpecId);
 
   const { setCurrentPage } = usePageContext();
 
@@ -48,7 +45,6 @@ export default function Spec({ params }: { params: { specid: string } }) {
 
   return (
     <>
-      <BlockWithDateCard blockData={data} />
       <div style={{ marginTop: 'var(--box-margin)', marginBottom: 'var(--box-margin)' }}>
         <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-4">
           <TitledCard

@@ -17,7 +17,7 @@ import ChartJsWithRadioToggle from "@jsinfo/components/legacy/ChartJsWithRadioTo
 import useApiDateFetch from "@jsinfo/hooks/useApiDateFetch";
 
 import { useState } from "react";
-import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
+import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 
 type CuRelayItem = {
     chainId: string;
@@ -37,7 +37,7 @@ export default function IndexChart() {
     const [isUniqueVisitorsSelected, setIsUniqueVisitorsSelected] = useState(true);
 
     const { data, loading, error, dates, setDates } = useApiDateFetch("indexChartsV2");
-    const uvfetch = useApiDataFetch({ dataKey: "indexUniqueVisitorsChart" });
+    const uvfetch = useApiFetch("indexUniqueVisitorsChart");
 
     if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
     if (uvfetch.error) return RenderInFullPageCard(<ErrorDisplay message={uvfetch.error} />);

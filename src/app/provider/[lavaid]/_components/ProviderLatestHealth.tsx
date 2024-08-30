@@ -5,7 +5,7 @@ import { Card, Text, Box, Link } from "@radix-ui/themes";
 import LoadingIndicator from '@jsinfo/components/legacy/LoadingIndicator';
 import { ErrorDisplay } from '@jsinfo/components/legacy/ErrorDisplay';
 import TimeTooltip from '@jsinfo/components/legacy/TimeTooltip';
-import { useApiDataFetch } from '@jsinfo/hooks/useApiDataFetch';
+import { useApiFetch } from '@jsinfo/hooks/useApiFetch';
 import { RenderInFullPageCard } from '@jsinfo/lib/utils';
 import StatusCall from '../../../../components/legacy/StatusCell';
 import Image from 'next/image';
@@ -166,9 +166,7 @@ function handleProviderLatestHealthContainerResize() {
 
 const ProviderLatestHealthCards: React.FC<ProviderLatestHealthCardsProps> = ({ lavaId }) => {
 
-    const { data, loading, error } = useApiDataFetch({
-        dataKey: `providerLatestHealth/${lavaId}`,
-    });
+    const { data, loading, error } = useApiFetch(`providerLatestHealth/${lavaId}`);
 
     if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
     if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${lavaId} latest health stats`} greyText={`${lavaId} latest health`} />);
