@@ -11,6 +11,7 @@ import { Inter as FontSans } from "next/font/google";
 import Header from "@jsinfo/components/layout/Header";
 import Footer from "@jsinfo/components/layout/Footer";
 import { cn } from "@jsinfo/lib/css"
+import { TooltipProvider } from "@jsinfo/components/modern/Tooltip";
 
 import '@radix-ui/themes/styles.css';
 import "./styles/globals.css";
@@ -18,6 +19,8 @@ import "./styles/paginationcontrol.css";
 import "./styles/accountinfocard.css";
 import "./styles/rsuite.css";
 import "./styles/ui.css";
+import "./styles/modern.css";
+import "./styles/legacy.css";
 
 export const metadata: Metadata = {
   title: GetPageTitle(),
@@ -58,11 +61,13 @@ export default function RootLayout({
             <SpeedInsights />
             <div className="flex min-h-screen mx-auto max-w-screen-2xl flex-col">
               <PageProvider>
-                <Header />
-                <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
-                  {children}
-                </main>
-                <Footer />
+                <TooltipProvider>
+                  <Header />
+                  <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
+                    {children}
+                  </main>
+                  <Footer />
+                </TooltipProvider>
               </PageProvider>
               <Analytics />
             </div>

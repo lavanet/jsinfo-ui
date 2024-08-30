@@ -1,0 +1,28 @@
+/* Base style */
+.last-update-badge-update-text,
+.last-update-badge-time-text {
+  display: inline;
+  margin-right: 4px; /* Adjust spacing as needed */
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .last-update-badge-update-text,
+  .last-update-badge-time-text {
+    display: block;
+    margin-right: 0;
+    white-space: nowrap;
+  }
+
+  .last-update-badge-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    scale: 0.95;
+  }
+}
+
+.last-update-badge-no-wrap {
+  white-space: nowrap;
+}

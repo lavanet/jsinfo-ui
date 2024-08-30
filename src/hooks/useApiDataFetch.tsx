@@ -3,7 +3,7 @@
 
 import { useEffect } from 'react';
 import { ValidateDataKey } from './utils';
-import { AxiosDataLoader } from './AxiosDataLoader';
+import { AxiosDataLoader } from '../fetching/AxiosDataLoader';
 
 interface useApiDataFetchProps {
     dataKey: string;

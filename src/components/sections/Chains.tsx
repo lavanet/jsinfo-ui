@@ -18,7 +18,7 @@ export default function Chains() {
           </CardDescription>
         </div>
         <Button asChild size="sm" className="ml-auto gap-1">
-          <Link href="#">
+          <Link className='orangelinks' href="#">
             View All
             <ArrowUpRight className="h-4 w-4" />
           </Link>

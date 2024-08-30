@@ -2,7 +2,7 @@
 
 import { GetTodayMinus90DaysRangeDefault, CheckAndAdjustDatesForServer } from "@jsinfo/lib/dateutils";
 import { useEffect, useState } from "react";
-import { AxiosDataLoader } from "./AxiosDataLoader";
+import { AxiosDataLoader } from "../fetching/AxiosDataLoader";
 import { CachedFetchDateRange } from "@jsinfo/lib/types";
 import { ValidateDataKey } from "./utils";
 

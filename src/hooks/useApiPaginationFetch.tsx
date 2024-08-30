@@ -3,7 +3,7 @@
 import { useEffect, useMemo } from 'react';
 import { SortAndPaginationConfig } from '@jsinfo/lib/types.jsx';
 import { ValidateDataKey } from './utils';
-import { AxiosDataLoader } from './AxiosDataLoader';
+import { AxiosDataLoader } from '../fetching/AxiosDataLoader';
 export class PaginationState {
     private sortKey: string;
     private direction: "ascending" | "descending";

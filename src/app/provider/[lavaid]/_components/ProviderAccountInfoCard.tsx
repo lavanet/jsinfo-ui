@@ -5,7 +5,7 @@ import TimeTooltip from '@jsinfo/components/legacy/TimeTooltip';
 import LoadingIndicator from '@jsinfo/components/legacy/LoadingIndicator';
 import { ErrorDisplay } from '@jsinfo/components/legacy/ErrorDisplay';
 import ReactJson from 'react-json-view';
-import { AxiosDataLoader } from '@jsinfo/hooks/AxiosDataLoader';
+import { AxiosDataLoader } from '@jsinfo/fetching/AxiosDataLoader';
 import Image from 'next/image';
 
 const ErrorComponent: React.FC<{ message: string }> = ({ message }) => {

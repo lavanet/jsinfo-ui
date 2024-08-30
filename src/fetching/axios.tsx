@@ -1,4 +1,4 @@
-// src/hooks/axios.tsx
+// src/fetching/axios.tsx
 
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
@@ -16,7 +16,7 @@ axiosRetry(axiosInstance, { retries: GetAxiosRetryCount() });
 const cache = new NodeCache({ stdTTL: GetAxiosCacheTTL() });
 const fetchPromises = new Map();
 
-interface AxiosApiResponse {
+export interface AxiosApiResponse {
     data: any;
     status: number;
     statusText: string;
