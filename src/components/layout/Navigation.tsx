@@ -5,20 +5,20 @@ import Link from 'next/link';
 
 export default function Navigation() {
   return (
-    <nav className="topbar-nav flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
-      <Link href="/" className="text-foreground transition-colors hover:text-foreground">
+    <nav className="topbar-nav flex-col text-lg font-medium md:flex md:flex-row md:items-center md:text-sm gap-3 md:gap-4 lg:gap-5">
+      <Link href="/" className="nav-link nav-link-selected">
         Dashboard
       </Link>
-      <Link href="/pools" className="text-muted-foreground transition-colors hover:text-foreground">
+      <Link href="/pools" className="nav-link">
         Pools
       </Link>
-      <Link href="/providers" className="text-muted-foreground transition-colors hover:text-foreground">
+      <Link href="/providers" className="nav-link">
         Providers
       </Link>
-      <Link href="/chains" className="text-muted-foreground transition-colors hover:text-foreground">
+      <Link href="/chains" className="nav-link">
         Chains
       </Link>
-      <Link href="/consumers" className="text-muted-foreground transition-colors hover:text-foreground">
+      <Link href="/consumers" className="nav-link">
         Consumers
       </Link>
     </nav>

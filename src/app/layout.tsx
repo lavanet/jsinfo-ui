@@ -42,6 +42,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
+  //  max-w-screen-2xl
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -59,12 +61,14 @@ export default function RootLayout({
         >
           <Container>
             <SpeedInsights />
-            <div className="flex min-h-screen mx-auto max-w-screen-2xl flex-col">
+            <div className="flex min-h-screen mx-auto flex-col">
               <PageProvider>
                 <TooltipProvider>
                   <Header />
                   <main className="body-content flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
-                    {children}
+                    <div className="max-w-screen-2xl mx-auto">
+                      {children}
+                    </div>
                   </main>
                   <Footer />
                 </TooltipProvider>
