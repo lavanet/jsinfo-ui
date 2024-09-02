@@ -16,26 +16,28 @@ export default function MobileNavigation() {
           <span className="sr-only">Toggle navigation menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className='mobile-navbar'>
-        <nav className="mobile-navbar-inner grid gap-6 text-lg font-medium">
-          <LavaLogoLink />
-          <Link href="/" className="nav-link nav-link-selected">
-            Dashboard
-          </Link>
-          <Link href="/pools" className="nav-link">
-            Pools
-          </Link>
-          <Link href="/providers" className="nav-link">
-            Providers
-          </Link>
-          <Link href="/chains" className="nav-link">
-            Chains
-          </Link>
-          <Link href="/consumers" className="nav-link">
-            Consumers
-          </Link>
-        </nav>
-      </SheetContent>
+      <div>
+        <SheetContent side="left" className='mobile-navbar'>
+          <nav className="mobile-navbar-inner grid gap-6 text-lg font-medium">
+            <LavaLogoLink />
+            <Link href="/" className="nav-link nav-link-selected">
+              Dashboard
+            </Link>
+            <Link href="/pools" className="nav-link">
+              Pools
+            </Link>
+            <Link href="/providers" className="nav-link">
+              Providers
+            </Link>
+            <Link href="/chains" className="nav-link">
+              Chains
+            </Link>
+            <Link href="/consumers" className="nav-link">
+              Consumers
+            </Link>
+          </nav>
+        </SheetContent>
+      </div>
     </Sheet>
   );
 }
