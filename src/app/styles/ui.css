@@ -76,5 +76,6 @@ body {
 }
 
 .body-content {
-  background-color: var(--navbar-background-color);
+  background-color: var(--background-color);
+  height: 100%;
 }

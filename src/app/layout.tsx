@@ -64,7 +64,9 @@ export default function RootLayout({
                   <Header />
                   <main className="body-content">
                     <div className="body-content-boundary">
-                      {children}
+                      <div className="body-content-boundary-inner">
+                        {children}
+                      </div>
                     </div>
                   </main>
                   <Footer />
