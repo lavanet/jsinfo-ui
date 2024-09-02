@@ -1,3 +1,16 @@
+/* -------- documnet body ------------------- */
+.body-content-boundary {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 5px;
+  margin: 0 auto;
+  max-width: 1536px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* -------- last update badge styles -------- */
 
 .last-update-badge-content {
@@ -44,6 +57,10 @@
   .topbar-nav {
     display: none;
   }
+}
+
+.header-fade {
+  transition: opacity 0.5s ease-in-out;
 }
 
 /* -------- logo image styles -------- */

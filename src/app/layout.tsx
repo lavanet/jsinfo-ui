@@ -41,9 +41,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-  //  max-w-screen-2xl
-
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -65,8 +62,8 @@ export default function RootLayout({
               <PageProvider>
                 <TooltipProvider>
                   <Header />
-                  <main className="body-content flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
-                    <div className="max-w-screen-2xl mx-auto">
+                  <main className="body-content">
+                    <div className="body-content-boundary">
                       {children}
                     </div>
                   </main>

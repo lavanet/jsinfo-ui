@@ -2,7 +2,7 @@
 
 "use client";
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Search } from 'lucide-react';
 import { Input } from '@jsinfo/components/ui/Input';
 import Navigation from './Navigation';
@@ -12,8 +12,24 @@ import CurrencyChangeButton from '../modern/CurrencyChangeButton';
 import LavaLogoLink from '../modern/LavaLogoLink';
 
 export default function Header() {
+  const [opacity, setOpacity] = useState(1);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const threshold = 60;
+      const currentScroll = window.scrollY;
+
+      const newOpacity = currentScroll < threshold ? 1 : 0;
+      setOpacity(newOpacity);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
+    <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 header-fade" style={{ opacity }}>
       <MobileNavigation />
       <LavaLogoLink />
       <Navigation />
@@ -24,7 +40,7 @@ export default function Header() {
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               type="search"
-              placeholder="Search products..."
+              placeholder="Search ..."
               className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
             />
           </div>
