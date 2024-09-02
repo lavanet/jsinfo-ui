@@ -11,12 +11,13 @@
   margin-left: auto;
   margin-right: auto;
   background-color: var(--background-color);
-  height: calc(100vh - 63.99px - 63.99px);
+  min-height: calc(100vh - 63.99px - 63.99px - 10px);
+  padding-bottom: 50px;
 }
 
 @media (max-width: 600px) {
   .body-content-boundary {
-    height: calc(100vh / 0.8 - (63.99px) - (63.99px));
+    height: calc(100vh / 0.8 - (63.99px) - (63.99px) - 10px);
   }
 }
 
