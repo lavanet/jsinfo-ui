@@ -181,6 +181,7 @@ export function ConvertToChainName(abbreviation: string): string {
         SQDSUBGRAPH: "Subsquid Subgraphs",
         FTM4002: "Fantom Testnet",
         MORALIS: "Moralis",
+        LAVA: "Lava Network",
     };
 
     return mapping[abbreviation] || "";
