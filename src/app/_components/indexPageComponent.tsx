@@ -6,7 +6,7 @@ import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
 import IndexChart from "@jsinfo/components/charts/IndexChart";
 import { IndexAllCards } from "./IndexPageCards";
 import IndexChainsTab from "./IndexChainsTab";
-import IndexProvidersTab from "./indexProvidersTab";
+import IndexProvidersTab from "./IndexProvidersTab";
 
 export const IndexPageComponent: React.FC = () => {
     return (

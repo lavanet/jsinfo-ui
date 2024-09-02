@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import { Card, Box } from "@radix-ui/themes";
 import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
 import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
-import { ConvertToChainName } from "@jsinfo/lib/convertors";
 import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { usePageContext } from "@jsinfo/context/PageContext";
 import { RenderInFullPageCard } from "@jsinfo/lib/utils";
@@ -16,7 +15,7 @@ import ConsumersConsumersTable from './_components/ConsumersConsumersTable';
 
 export default function Home() {
 
-  const { data, loading, error } = useApiFetch({ dataKey: "consumerspage" });
+  const { data, loading, error } = useApiFetch("consumerspage");
 
   const { setCurrentPage } = usePageContext();
 
@@ -28,21 +27,6 @@ export default function Home() {
 
   if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
   if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText="Loading Consumers page" greyText="Consumers" />);
-
-  interface Item {
-    chainId: string;
-    [key: string]: any;
-  }
-
-  function transformSpecsData(data: Item[]) {
-    if (!data) return [];
-    return data.map((item) => ({
-      ...item,
-      chainName: ConvertToChainName(item.chainId),
-    }));
-  }
-
-  const transformedSpecData = transformSpecsData(data.allSpecs);
 
   return (
     <>

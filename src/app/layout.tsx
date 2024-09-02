@@ -12,6 +12,7 @@ import Header from "@jsinfo/components/layout/Header";
 import Footer from "@jsinfo/components/layout/Footer";
 import { cn } from "@jsinfo/lib/css"
 import { TooltipProvider } from "@jsinfo/components/modern/Tooltip";
+import { NoSsrComponent } from "@jsinfo/components/helpers/NoSsrComponent";
 
 import '@radix-ui/themes/styles.css';
 import "./styles/globals.css";
@@ -61,15 +62,17 @@ export default function RootLayout({
             <div className="flex min-h-screen mx-auto flex-col">
               <PageProvider>
                 <TooltipProvider>
-                  <Header />
-                  <main className="body-content">
-                    <div className="body-content-boundary">
-                      <div className="body-content-boundary-inner">
-                        {children}
+                  <NoSsrComponent>
+                    <Header />
+                    <main className="body-content">
+                      <div className="body-content-boundary">
+                        <div className="body-content-boundary-inner">
+                          {children}
+                        </div>
                       </div>
-                    </div>
-                  </main>
-                  <Footer />
+                    </main>
+                    <Footer />
+                  </NoSsrComponent>
                 </TooltipProvider>
               </PageProvider>
               <Analytics />
