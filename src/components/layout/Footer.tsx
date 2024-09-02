@@ -8,7 +8,7 @@ export default function Footer() {
       {/* <span className="text-sm text-muted-foreground">
         © 2024 All rights reserved.
       </span> */}
-      <span className="ml-auto text-sm text-muted-foreground">
+      <span className="ml-auto text-sm text-muted-foreground mr-50" style={{ marginRight: "30px" }}>
         Made with ❤️ by&nbsp;
         <span className="text-white">
           Magma Devs
