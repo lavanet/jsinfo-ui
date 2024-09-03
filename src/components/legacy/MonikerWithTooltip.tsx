@@ -4,6 +4,7 @@ import React from 'react';
 import { ProviderMonikerFullInfo } from '@jsinfo/lib/types';
 import { IsMeaningfulText } from '@jsinfo/lib/formatting';
 import { Text } from "@radix-ui/themes";
+import ModernTooltip from '../modern/ModernTooltip';
 
 interface MonikerWithTooltipProps {
     provider: ProviderMonikerFullInfo;
@@ -19,9 +20,9 @@ const MonikerWithTooltip: React.FC<MonikerWithTooltipProps> = ({ provider }: Mon
 
         if (IsMeaningfulText(provider.moniker)) {
             return (
-                <span title={provider.monikerfull}>
+                <ModernTooltip title={provider.monikerfull}>
                     {provider.moniker}
-                </span>
+                </ModernTooltip>
             );
         } else {
             return "";

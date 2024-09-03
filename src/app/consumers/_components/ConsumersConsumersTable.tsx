@@ -10,7 +10,7 @@ import { FormatNumber } from '@jsinfo/lib/formatting';
 import { RenderInFullPageCard } from '@jsinfo/lib/utils';
 import { ErrorDisplay } from '@jsinfo/components/legacy/ErrorDisplay';
 import Link from "next/link";
-import LavaWithTooltip from "@jsinfo/components/legacy/LavaWithTooltip";
+import LavaWithTooltip from "@jsinfo/components/modern/LavaWithTooltip";
 
 const ConsumersConsumersTable: React.FC<{}> = () => {
     const { data, loading, error } = useApiFetch("consumerspageConsumers");

@@ -3,7 +3,7 @@
 import React, { ReactNode } from 'react';
 import { Card, CardHeader, CardContent, CardTitle } from '@jsinfo/components/ui/Card';
 import { FormatNumberWithString } from '@jsinfo/lib/formatting';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@jsinfo/components/modern/Tooltip';
+import ModernTooltip from '../modern/ModernTooltip';
 
 interface StatCardProps {
     title: string;
@@ -26,40 +26,26 @@ const StatCard: React.FC<StatCardProps> = ({ title, value, footer, icon, formatN
         formattedValue = value;
     }
 
-    const cardContent = (
-        <Card className={`w-full ${className}`} style={{ backgroundColor: 'var( --background-color)' }}>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                    {title}
-                </CardTitle>
-                {icon}
-            </CardHeader>
-            <CardContent className='flex justify-start'>
-                <div className="text-2xl font-bold" style={{ display: 'inline-block', textAlign: 'left', whiteSpace: 'nowrap' }}>{formattedValue}</div>
-                {footer && (
-                    <p className="text-xs text-muted-foreground">
-                        {footer}
-                    </p>
-                )}
-            </CardContent>
-        </Card>
+    return (
+        <ModernTooltip title={tooltip}>
+            <Card className={`w-full ${className}`} style={{ backgroundColor: 'var( --background-color)' }}>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">
+                        {title}
+                    </CardTitle>
+                    {icon}
+                </CardHeader>
+                <CardContent className='flex justify-start'>
+                    <div className="text-2xl font-bold" style={{ display: 'inline-block', textAlign: 'left', whiteSpace: 'nowrap' }}>{formattedValue}</div>
+                    {footer && (
+                        <p className="text-xs text-muted-foreground">
+                            {footer}
+                        </p>
+                    )}
+                </CardContent>
+            </Card>
+        </ModernTooltip>
     );
-
-    return tooltip ? (
-        <Tooltip>
-            <TooltipTrigger>
-                {cardContent}
-            </TooltipTrigger>
-            <TooltipContent className="last-update-badge-no-wrap">
-                {tooltip.split('\n').map((line, index, array) => (
-                    <React.Fragment key={index}>
-                        {line}
-                        {index < array.length - 1 && <br />}
-                    </React.Fragment>
-                ))}
-            </TooltipContent>
-        </Tooltip>
-    ) : cardContent;
 };
 
 export default StatCard;

@@ -5,7 +5,7 @@
 import Link from 'next/link'
 import { DataKeySortableTableInATabComponent } from "@jsinfo/components/legacy/DynamicSortTable";
 import TableCsvButton from "@jsinfo/components/legacy/TableCsvButton";
-import TimeTooltip from '@jsinfo/components/legacy/TimeTooltip';
+import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
 
 interface ProviderErrorsTabProps {
     addr: string;

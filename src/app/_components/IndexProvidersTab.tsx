@@ -4,9 +4,10 @@ import React, { useState } from "react";
 import { DataKeySortableTableComponent } from "@jsinfo/components/legacy/DynamicSortTable";
 import TableCsvButton from "@jsinfo/components/legacy/TableCsvButton";
 import MonikerWithTooltip from "@jsinfo/components/legacy/MonikerWithTooltip";
-import LavaWithTooltip from "@jsinfo/components/legacy/LavaWithTooltip";
+import LavaWithTooltip from "@jsinfo/components/modern/LavaWithTooltip";
 import TextCheckbox from "@jsinfo/components/legacy/TextCheckbox";
 import { Tabs } from "@radix-ui/themes";
+import ModernTooltip from "@jsinfo/components/modern/ModernTooltip";
 
 export default function IndexProviderTab() {
     const [dataKey, setDataKey] = useState("indexProvidersActive");
@@ -49,7 +50,7 @@ export default function IndexProviderTab() {
                         moniker: (data) => (<MonikerWithTooltip provider={data} />),
                         rewardSum: (data) => (<LavaWithTooltip amount={data.rewardSum} />),
                         totalStake: (data) => (<LavaWithTooltip amount={data.totalStake} />),
-                        totalServices: (data) => (<span title={`The total number of active chains serviced by the provider (excluding frozen services) / the total number of serviced chains for the provider`}>{data.totalServices}</span>)
+                        totalServices: (data) => (<ModernTooltip title={`The total number of active chains serviced by the provider (excluding frozen services) / the total number of serviced chains for the provider`}>{data.totalServices}</ModernTooltip>)
                     }}
                     csvButton={<TableCsvButton csvDownloadLink="indexProvidersCsv" />}
                 />
@@ -83,7 +84,7 @@ export default function IndexProviderTab() {
                     moniker: (data) => (<MonikerWithTooltip provider={data} />),
                     rewardSum: (data) => (<LavaWithTooltip amount={data.rewardSum} />),
                     totalStake: (data) => (<LavaWithTooltip amount={data.totalStake} />),
-                    totalServices: (data) => (<span title={`The total number of active chains serviced by the provider (excluding frozen services) / the total number of serviced chains for the provider`}>{data.totalServices}</span>)
+                    totalServices: (data) => (<ModernTooltip title={`The total number of active chains serviced by the provider (excluding frozen services) / the total number of serviced chains for the provider`}>{data.totalServices}</ModernTooltip>)
                 }}
                 csvButton={<TableCsvButton csvDownloadLink="indexProvidersActiveCsv" />}
             />

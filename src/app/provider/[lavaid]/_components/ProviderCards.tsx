@@ -5,7 +5,7 @@ import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { RenderInFullPageCard } from "@jsinfo/lib/utils";
 import { ErrorDisplay } from "@jsinfo/components/legacy/ErrorDisplay";
 import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
-import LavaWithTooltip from "@jsinfo/components/legacy/LavaWithTooltip";
+import LavaWithTooltip from "@jsinfo/components/modern/LavaWithTooltip";
 import { ArrowUpNarrowWide, CalendarHeart, CreditCard, FolderHeart, HeartHandshake, Landmark, MonitorCog } from "lucide-react";
 
 interface ProviderCardsProps {

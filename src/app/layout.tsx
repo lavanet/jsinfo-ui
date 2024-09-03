@@ -11,7 +11,7 @@ import { Inter as FontSans } from "next/font/google";
 import Header from "@jsinfo/components/layout/Header";
 import Footer from "@jsinfo/components/layout/Footer";
 import { cn } from "@jsinfo/lib/css"
-import { TooltipProvider } from "@jsinfo/components/modern/Tooltip";
+import { TooltipProvider } from "@jsinfo/components/radixui/Tooltip";
 import { NoSsrComponent } from "@jsinfo/components/helpers/NoSsrComponent";
 
 import '@radix-ui/themes/styles.css';

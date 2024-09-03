@@ -5,8 +5,9 @@
 import Link from 'next/link'
 import { DataKeySortableTableInATabComponent } from "@jsinfo/components/legacy/DynamicSortTable";
 import TableCsvButton from "@jsinfo/components/legacy/TableCsvButton";
-import TimeTooltip from '@jsinfo/components/legacy/TimeTooltip';
+import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
 import { GetExplorersGuruUrl } from '@jsinfo/lib/env';
+import ModernTooltip from '@jsinfo/components/modern/ModernTooltip';
 
 interface ProviderRewardsTabProps {
     addr: string;
@@ -65,13 +66,13 @@ const ProviderRewardsTab: React.FC<ProviderRewardsTabProps> = ({ addr }) => {
                 "relay_payments.pay": (payment) =>
                     `${payment.relay_payments.pay} ULAVA`,
                 "relay_payments.qosSync": (payment) =>
-                    <span title={`Sync: ${payment.relay_payments.qosSync}, Availability: ${payment.relay_payments.qosAvailability}, Latency: ${payment.relay_payments.qosLatency}`}>
+                    <ModernTooltip title={`Sync: ${payment.relay_payments.qosSync}, Availability: ${payment.relay_payments.qosAvailability}, Latency: ${payment.relay_payments.qosLatency}`}>
                         {payment.relay_payments.qosSync}, {payment.relay_payments.qosAvailability}, {payment.relay_payments.qosLatency}
-                    </span>,
+                    </ModernTooltip>,
                 "relay_payments.qosSyncExc": (payment) =>
-                    <span title={`SyncExc: ${payment.relay_payments.qosSyncExc}, AvailabilityExc: ${payment.relay_payments.qosAvailabilityExc}, LatencyExc: ${payment.relay_payments.qosLatencyExc}`}>
+                    <ModernTooltip title={`SyncExc: ${payment.relay_payments.qosSyncExc}, AvailabilityExc: ${payment.relay_payments.qosAvailabilityExc}, LatencyExc: ${payment.relay_payments.qosLatencyExc}`}>
                         {payment.relay_payments.qosSyncExc}, {payment.relay_payments.qosAvailabilityExc}, {payment.relay_payments.qosLatencyExc}
-                    </span>,
+                    </ModernTooltip>,
             }}
             csvButton={(
                 <TableCsvButton

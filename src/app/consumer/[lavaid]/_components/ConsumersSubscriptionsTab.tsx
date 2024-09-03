@@ -4,8 +4,8 @@
 
 import { FormatNumber, FormatNumberWithString, IsMeaningfulText } from '@jsinfo/lib/formatting';
 import { DataKeySortableTableInATabComponent } from "@jsinfo/components/legacy/DynamicSortTable";
-import LavaWithTooltip from '@jsinfo/components/legacy/LavaWithTooltip';
-import TimeTooltip from '@jsinfo/components/legacy/TimeTooltip';
+import LavaWithTooltip from '@jsinfo/components/modern/LavaWithTooltip';
+import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
 
 interface ConsumerSubscriptionsTabProps {
     addr: string;

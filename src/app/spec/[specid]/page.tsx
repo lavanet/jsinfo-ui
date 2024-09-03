@@ -1,11 +1,11 @@
 // src/app/spec/[specid]/page.tsx
 "use client";
 
-import { Flex, Card, Box } from "@radix-ui/themes";
+import { Card, Box } from "@radix-ui/themes";
 import { useEffect } from "react";
 import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { usePageContext } from "@jsinfo/context/PageContext";
-import StatCard from "@jsinfo/components/components/StatCard";
+import StatCard from "@jsinfo/components/sections/StatCard";
 import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
 import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
 import { RenderInFullPageCard } from '@jsinfo/lib/utils';
@@ -14,7 +14,7 @@ import { ErrorDisplay } from '@jsinfo/components/legacy/ErrorDisplay';
 import SpecEndpointHealthSummary from '@jsinfo/app/spec/[specid]/_components/SpecEndpointHealthSummary';
 import SpecStakesTable from '@jsinfo/app/spec/[specid]/_components/SpecStakesTable';
 import SpecRelaysTable from "./_components/SpecRelaysTable";
-import LavaWithTooltip from "@jsinfo/components/legacy/LavaWithTooltip";
+import LavaWithTooltip from "@jsinfo/components/modern/LavaWithTooltip";
 import { ArrowUpNarrowWide, CreditCard, DatabaseZap, MonitorCog, SquareActivity } from "lucide-react";
 
 export default function Spec({ params }: { params: { specid: string } }) {

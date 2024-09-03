@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ProviderMonikerFullInfo } from '@jsinfo/lib/types';
 import { IsMeaningfulText } from '@jsinfo/lib/formatting';
 import { Text } from "@radix-ui/themes";
+import ModernTooltip from '../modern/ModernTooltip';
 
 interface MonikerAndProviderLinkProps {
     provider: ProviderMonikerFullInfo;
@@ -20,11 +21,11 @@ const MonikerAndProviderLink: React.FC<MonikerAndProviderLinkProps> = ({ provide
 
         if (IsMeaningfulText(provider.moniker) && IsMeaningfulText(provider.provider)) {
             return (
-                <span title={provider.monikerfull || provider.moniker}>
+                <ModernTooltip title={provider.monikerfull || provider.moniker}>
                     <Link className='orangelinks' href={`/provider/${provider.provider}`}>
                         {provider.moniker}
                     </Link>
-                </span>
+                </ModernTooltip>
             );
         } else if (IsMeaningfulText(provider.provider)) {
             return (

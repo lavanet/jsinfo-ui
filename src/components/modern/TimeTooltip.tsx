@@ -1,6 +1,7 @@
-// src/components/TimeTooltip.tsx
+// src/components/modern/TimeTooltip.tsx
 
 import { FormatTimeDifference } from '../../lib/formatting';
+import ModernTooltip from './ModernTooltip';
 
 interface TimeTooltipProps {
     datetime: Date | string;
@@ -28,10 +29,11 @@ function TimeTooltip({ datetime }: TimeTooltipProps) {
     }
 
     return (
-        <span title={formatToISO(date, datetime)}>
+        <ModernTooltip title={formatToISO(date, datetime)}>
             {FormatTimeDifference(date)}
-        </span>
+        </ModernTooltip>
     );
+
 }
 
 export default TimeTooltip;

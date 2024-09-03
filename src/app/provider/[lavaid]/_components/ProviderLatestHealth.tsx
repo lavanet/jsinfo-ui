@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, Text, Box, Link } from "@radix-ui/themes";
 import LoadingIndicator from '@jsinfo/components/legacy/LoadingIndicator';
 import { ErrorDisplay } from '@jsinfo/components/legacy/ErrorDisplay';
-import TimeTooltip from '@jsinfo/components/legacy/TimeTooltip';
+import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
 import { useApiFetch } from '@jsinfo/hooks/useApiFetch';
 import { RenderInFullPageCard } from '@jsinfo/lib/utils';
 import StatusCall from '../../../../components/legacy/StatusCell';

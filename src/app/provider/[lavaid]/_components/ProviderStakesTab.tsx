@@ -4,7 +4,7 @@
 
 import { DataKeySortableTableInATabComponent } from "@jsinfo/components/legacy/DynamicSortTable";
 import TableCsvButton from "@jsinfo/components/legacy/TableCsvButton";
-import LavaWithTooltip from "@jsinfo/components/legacy/LavaWithTooltip";
+import LavaWithTooltip from "@jsinfo/components/modern/LavaWithTooltip";
 
 interface ProviderStakesTabProps {
     addr: string;

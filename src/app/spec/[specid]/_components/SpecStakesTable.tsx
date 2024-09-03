@@ -8,7 +8,7 @@ import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
 import { RenderInFullPageCard } from '@jsinfo/lib/utils';
 import { ErrorDisplay } from '@jsinfo/components/legacy/ErrorDisplay';
 import MonikerAndProviderLink from '@jsinfo/components/legacy/MonikerAndProviderLink';
-import LavaWithTooltip from "@jsinfo/components/legacy/LavaWithTooltip";
+import LavaWithTooltip from "@jsinfo/components/modern/LavaWithTooltip";
 
 interface SpecStakesTableProps {
     specid: string

@@ -1,7 +1,8 @@
-// src/components/LavaWithTooltip.tsx
+// src/components/modern/LavaWithTooltip.tsx
 
 import React from 'react';
 import { FormatNumber, FormatNumberWithString } from '@jsinfo/lib/formatting';
+import ModernTooltip from './ModernTooltip';
 
 interface LavaWithTooltipProps {
     amount: number | string;
@@ -52,9 +53,9 @@ const LavaWithTooltip: React.FC<LavaWithTooltipProps> = ({ amount }: LavaWithToo
 
     if (lavaValue) {
         return (
-            <span title={ulavaValue} style={{ whiteSpace: 'nowrap' }}>
-                {lavaValue}
-            </span>
+            <ModernTooltip title={ulavaValue}>
+                <span style={{ whiteSpace: 'nowrap' }}>{lavaValue}</span>
+            </ModernTooltip>
         );
     }
 

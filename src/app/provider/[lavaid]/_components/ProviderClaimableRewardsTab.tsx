@@ -5,8 +5,8 @@
 import Link from 'next/link'
 import { DataKeySortableTableInATabComponent } from "@jsinfo/components/legacy/DynamicSortTable";
 import TableCsvButton from "@jsinfo/components/legacy/TableCsvButton";
-import TimeTooltip from '@jsinfo/components/legacy/TimeTooltip';
-import LavaWithTooltip from '@jsinfo/components/legacy/LavaWithTooltip';
+import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
+import LavaWithTooltip from '@jsinfo/components/modern/LavaWithTooltip';
 
 interface ProviderClaimableRewardsTabProps {
     addr: string;

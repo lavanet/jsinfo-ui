@@ -3,7 +3,7 @@
 import React from 'react';
 import { useApiFetch } from '@jsinfo/hooks/useApiFetch';
 import { ErrorDisplay } from "@jsinfo/components/legacy/ErrorDisplay";
-import { FormatAsULava } from '@jsinfo/components/legacy/LavaWithTooltip';
+import { FormatAsULava } from '@jsinfo/components/modern/LavaWithTooltip';
 import LoaderImageForCards from '@jsinfo/components/legacy/LoaderImageForCards';
 import { FormatNumber, FormatNumberKMB } from '@jsinfo/lib/formatting';
 import StatCard from '@jsinfo/components/sections/StatCard';

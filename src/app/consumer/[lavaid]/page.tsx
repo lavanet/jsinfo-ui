@@ -58,7 +58,7 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
         </Flex>
       </Card>
 
-      <div style={{ marginTop: '30px' }}></div>
+      <div style={{ marginTop: '25px' }}></div>
       <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
         <StatCard
           title="Cu Sum"
@@ -82,7 +82,7 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
           icon={<CreditCard className="h-4 w-4 text-muted-foreground" />}
         />
       </div>
-      <div style={{ marginTop: '30px' }}></div>
+      <div style={{ marginTop: '25px' }}></div>
 
       <ConsumerChart addr={decodedLavaId} />
       <div className="box-margin-div"></div>

@@ -8,7 +8,7 @@ import { EventTypeToString } from "@jsinfo/lib/convertors";
 import { DataKeySortableTableInATabComponent } from "@jsinfo/components/legacy/DynamicSortTable";
 import { usePageContext } from "@jsinfo/context/PageContext";
 import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
-import TimeTooltip from '@jsinfo/components/legacy/TimeTooltip';
+import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
 import CsvButton from '@jsinfo/components/legacy/CsvButton';
 import MonikerAndProviderLink from '@jsinfo/components/legacy/MonikerAndProviderLink';
 import { GetExplorersGuruUrl } from '@jsinfo/lib/env';

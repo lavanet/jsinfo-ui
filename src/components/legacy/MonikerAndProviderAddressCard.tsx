@@ -6,6 +6,7 @@ import { Flex, Text, Card, Box } from "@radix-ui/themes";
 import { IsMeaningfulText } from '@jsinfo/lib/formatting';
 import ProviderMoniker from './ProviderMoniker';
 import { ProviderMonikerFullInfo } from '@jsinfo/lib/types';
+import ModernTooltip from '../modern/ModernTooltip';
 
 interface MonikerAndProviderAddressCardProps {
     provider: ProviderMonikerFullInfo;
@@ -23,11 +24,11 @@ const renderUserIcon = () => (
 );
 
 const renderMoniker = (moniker: string, monikerfull: string) => (
-    <Text as="div" weight="bold" style={{ marginLeft: '10px', whiteSpace: 'nowrap', fontSize: '16px' }}>
-        <span title={monikerfull}>
+    <ModernTooltip title={monikerfull}>
+        <Text as="div" weight="bold" style={{ marginLeft: '10px', whiteSpace: 'nowrap', fontSize: '16px' }}>
             <ProviderMoniker moniker={moniker} />
-        </span>
-    </Text>
+        </Text>
+    </ModernTooltip>
 );
 
 const renderProviderAddressInLineWithIcon = (provider: string) => (
