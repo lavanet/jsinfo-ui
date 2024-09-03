@@ -5,7 +5,7 @@ import { Flex, Card, Box } from "@radix-ui/themes";
 import { useEffect } from "react";
 import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { usePageContext } from "@jsinfo/context/PageContext";
-import TitledCard from "@jsinfo/components/legacy/TitledCard";
+import StatCard from "@jsinfo/components/components/StatCard";
 import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
 import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
 import { RenderInFullPageCard } from '@jsinfo/lib/utils';
@@ -15,6 +15,7 @@ import SpecEndpointHealthSummary from '@jsinfo/app/spec/[specid]/_components/Spe
 import SpecStakesTable from '@jsinfo/app/spec/[specid]/_components/SpecStakesTable';
 import SpecRelaysTable from "./_components/SpecRelaysTable";
 import LavaWithTooltip from "@jsinfo/components/legacy/LavaWithTooltip";
+import { ArrowUpNarrowWide, CreditCard, DatabaseZap, MonitorCog, SquareActivity } from "lucide-react";
 
 export default function Spec({ params }: { params: { specid: string } }) {
 
@@ -45,55 +46,60 @@ export default function Spec({ params }: { params: { specid: string } }) {
 
   return (
     <>
-      <div style={{ marginTop: 'var(--box-margin)', marginBottom: 'var(--box-margin)' }}>
-        <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-4">
-          <TitledCard
-            title="Spec"
-            value={data.specId}
-            className="col-span-1"
-          />
-          <TitledCard
-            title="Providers"
-            value={data.providerCount}
-            className="col-span-1"
-          />
-          <TitledCard
-            title="Total CU"
-            value={data.cuSum}
-            className="col-span-1"
-            formatNumber={true}
-            tooltip={`Total compute units for ${data.specId} by all providers`}
-          />
-          <TitledCard
-            title="Total Relays"
-            value={data.relaySum}
-            className="col-span-1"
-            formatNumber={true}
-            tooltip={`Total relays for ${data.specId} by all providers`}
-          />
-          <TitledCard
-            title="Total Rewards"
-            value={<LavaWithTooltip amount={data.rewardSum} />}
-            className="col-span-1 md:col-span-1"
-            formatNumber={false}
-            tooltip={`Total rewards for ${data.specId} by all providers`}
-          />
-          <TitledCard
-            title="Endpoint Status"
-            value={(<SpecEndpointHealthSummary healthy={(data?.endpointHealth?.healthy || 0)} unhealthy={(data?.endpointHealth?.unhealthy || 0)} />)}
-            className="col-span-1 md:col-span-1"
-            formatNumber={false}
-            tooltip={`Total rewards for ${data.specId} by all providers`}
-          />
-          <TitledCard
-            title="Cache hit/total (30 days)"
-            value={data.cacheHitRate ? `${data.cacheHitRate} %` : "0"}
-            className="col-span-1 md:col-span-1"
-            formatNumber={false}
-            tooltip={`Cache hit/total for ${data.specId} in the last 30 days`}
-          />
-        </Flex>
+      <div style={{ marginTop: '5px' }}></div>
+      <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
+        <StatCard
+          title="Spec"
+          value={data.specId}
+          className="col-span-1"
+        />
+        <StatCard
+          title="Providers"
+          value={data.providerCount}
+          className="col-span-1"
+        />
+        <StatCard
+          title="Total CU"
+          value={data.cuSum}
+          className="col-span-1"
+          formatNumber={true}
+          tooltip={`Total compute units for ${data.specId} by all providers`}
+          icon={<MonitorCog className="h-4 w-4 text-muted-foreground" />}
+        />
+        <StatCard
+          title="Total Relays"
+          value={data.relaySum}
+          className="col-span-1"
+          formatNumber={true}
+          tooltip={`Total relays for ${data.specId} by all providers`}
+          icon={<ArrowUpNarrowWide className="h-4 w-4 text-muted-foreground" />}
+        />
+        <StatCard
+          title="Total Rewards"
+          value={<LavaWithTooltip amount={data.rewardSum} />}
+          className="col-span-1 md:col-span-1"
+          formatNumber={false}
+          tooltip={`Total rewards for ${data.specId} by all providers`}
+          icon={<CreditCard className="h-4 w-4 text-muted-foreground" />}
+        />
+        <StatCard
+          title="Endpoint Status"
+          value={(<SpecEndpointHealthSummary healthy={(data?.endpointHealth?.healthy || 0)} unhealthy={(data?.endpointHealth?.unhealthy || 0)} />)}
+          className="col-span-1 md:col-span-1"
+          formatNumber={false}
+          tooltip={`Total rewards for ${data.specId} by all providers`}
+          icon={<SquareActivity className="h-4 w-4 text-muted-foreground" />}
+        />
+        <StatCard
+          title="Cache hit/total (30 days)"
+          value={data.cacheHitRate ? `${data.cacheHitRate} %` : "0"}
+          className="col-span-1 md:col-span-1"
+          formatNumber={false}
+          tooltip={`Cache hit/total for ${data.specId} in the last 30 days`}
+          icon={<DatabaseZap className="h-4 w-4 text-muted-foreground" />}
+        />
       </div>
+      <div style={{ marginTop: '30px' }}></div>
 
       <SpecChart specid={specId} />
       <div className="box-margin-div"></div>

@@ -63,7 +63,7 @@ export const IndexUniqueUsersAvgCard: React.FC = () => {
     )
 };
 
-export const Index30DayCUCard: React.FC = () => {
+export const Index30DayRelayCard: React.FC = () => {
     const { data, loading, error } = useApiFetch("index30DayCu");
     if (error) return ErrorDisplay({ message: error });
     if (loading) return (
@@ -185,7 +185,7 @@ export const IndexAllCards: React.FC = () => {
                 <IndexUniqueUsersCard />
                 <IndexUniqueUsersAvgCard />
                 <IndexTotalCUCard />
-                <Index30DayCUCard />
+                <Index30DayRelayCard />
                 <IndexStakeCard />
                 <IndexChacheHitCard />
             </div>

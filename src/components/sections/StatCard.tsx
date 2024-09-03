@@ -27,7 +27,7 @@ const StatCard: React.FC<StatCardProps> = ({ title, value, footer, icon, formatN
     }
 
     const cardContent = (
-        <Card className={`w-full ${className}`}>
+        <Card className={`w-full ${className}`} style={{ backgroundColor: 'var( --background-color)' }}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">
                     {title}

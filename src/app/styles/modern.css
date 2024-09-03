@@ -13,6 +13,8 @@
   background-color: var(--background-color);
   min-height: calc(100vh - 63.99px - 63.99px - 10px);
   padding-bottom: 50px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 @media (max-width: 600px) {

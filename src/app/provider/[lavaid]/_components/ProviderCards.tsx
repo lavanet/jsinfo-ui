@@ -1,12 +1,12 @@
 // src/app/provider/[lavaid]/_components/ProviderCards.tsx
 
-import { Flex } from "@radix-ui/themes";
-import TitledCard from "@jsinfo/components/legacy/TitledCard";
+import StatCard from "@jsinfo/components/sections/StatCard";
 import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { RenderInFullPageCard } from "@jsinfo/lib/utils";
 import { ErrorDisplay } from "@jsinfo/components/legacy/ErrorDisplay";
 import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
 import LavaWithTooltip from "@jsinfo/components/legacy/LavaWithTooltip";
+import { ArrowUpNarrowWide, CalendarHeart, CreditCard, FolderHeart, HeartHandshake, Landmark, MonitorCog } from "lucide-react";
 
 interface ProviderCardsProps {
     addr: string;
@@ -28,55 +28,65 @@ const ProviderCards: React.FC<ProviderCardsProps> = ({ addr }) => {
         return RenderInFullPageCard(<ErrorDisplay message="Provider data is incomplete or unavailable." />);
     }
 
-    return (
-        <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-4">
-            <TitledCard
+    return (<>
+        <div style={{ marginTop: '20px' }}></div>
+        <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
+            <StatCard
                 title="Total CU"
                 value={provider.cuSum}
                 className="col-span-1"
                 formatNumber={true}
                 tooltip="Total compute units for provider"
+                icon={<MonitorCog className="h-4 w-4 text-muted-foreground" />}
             />
-            <TitledCard
+            <StatCard
                 title="Total Relays"
                 value={provider.relaySum}
                 className="col-span-1"
                 formatNumber={true}
                 tooltip="Total relays for provider"
+                icon={<ArrowUpNarrowWide className="h-4 w-4 text-muted-foreground" />}
             />
-            <TitledCard
+            <StatCard
                 title="Total Rewards"
                 value={<LavaWithTooltip amount={provider.rewardSum} />}
                 className="col-span-2 md:col-span-1"
                 formatNumber={false}
                 tooltip="Total rewards for provider"
+                icon={<CreditCard className="h-4 w-4 text-muted-foreground" />}
             />
-            <TitledCard
+            <StatCard
                 title="Total Stake"
                 value={<LavaWithTooltip amount={provider.stakeSum} />}
                 className="col-span-2 md:col-span-1"
                 formatNumber={false}
                 tooltip="Total stake for all specs"
+                icon={<Landmark className="h-4 w-4 text-muted-foreground" />}
             />
-            <TitledCard
+            <StatCard
                 title="Total Claimed Rewards (All Time)"
                 value={<LavaWithTooltip amount={provider.claimedRewardsAllTime} />}
                 className="col-span-2 md:col-span-1"
                 formatNumber={false}
+                icon={<FolderHeart className="h-4 w-4 text-muted-foreground" />}
             />
-            <TitledCard
+            <StatCard
                 title="Total Claimed Rewards (30 days ago)"
                 value={<LavaWithTooltip amount={provider.claimedRewards30DaysAgo} />}
                 className="col-span-2 md:col-span-1"
                 formatNumber={false}
+                icon={<CalendarHeart className="h-4 w-4 text-muted-foreground" />}
             />
-            <TitledCard
+            <StatCard
                 title="Claimable Rewards"
                 value={<LavaWithTooltip amount={provider.claimableRewards} />}
                 className="col-span-2 md:col-span-1"
                 formatNumber={false}
+                icon={<HeartHandshake className="h-4 w-4 text-muted-foreground" />}
             />
-        </Flex>
+        </div>
+        <div style={{ marginTop: '25px' }}></div>
+    </>
     );
 };
 

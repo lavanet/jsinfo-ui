@@ -6,7 +6,6 @@ import { Flex, Text, Card, Box } from "@radix-ui/themes";
 import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { SortableTableInATabComponent } from "@jsinfo/components/legacy/StaticSortTable";
 import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
-import TitledCard from "@jsinfo/components/legacy/TitledCard";
 import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
 import { useEffect } from "react";
 import { usePageContext } from '@jsinfo/context/PageContext';
@@ -15,6 +14,8 @@ import { RenderInFullPageCard } from '@jsinfo/lib/utils';
 import ConsumerChart from '@jsinfo/components/charts/ConsumerChart';
 import ConsumerSubscriptionsTable from './_components/ConsumersSubscriptionsTab';
 import ConsumersEventsTab from './_components/ConsumersEventsTab';
+import StatCard from '@jsinfo/components/sections/StatCard';
+import { MonitorCog, ArrowUpNarrowWide, CreditCard } from 'lucide-react';
 
 export default function Consumer({ params }: { params: { lavaid: string } }) {
 
@@ -57,28 +58,31 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
         </Flex>
       </Card>
 
-      <div style={{ marginTop: 'var(--box-margin)', marginBottom: 'var(--box-margin)' }}>
-        <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-3">
-          <TitledCard
-            title="Cu Sum"
-            value={consumer.cuSum}
-            className="col-span-1"
-            formatNumber={true}
-          />
-          <TitledCard
-            title="Relay Sum"
-            value={consumer.relaySum}
-            className="col-span-1"
-            formatNumber={true}
-          />
-          <TitledCard
-            title="Pay Sum"
-            value={consumer.rewardSum}
-            className="col-span-2 md:col-span-1"
-            formatNumber={true}
-          />
-        </Flex>
+      <div style={{ marginTop: '30px' }}></div>
+      <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
+        <StatCard
+          title="Cu Sum"
+          value={consumer.cuSum}
+          className="col-span-1"
+          formatNumber={true}
+          icon={<MonitorCog className="h-4 w-4 text-muted-foreground" />}
+        />
+        <StatCard
+          title="Relay Sum"
+          value={consumer.relaySum}
+          className="col-span-1"
+          formatNumber={true}
+          icon={<ArrowUpNarrowWide className="h-4 w-4 text-muted-foreground" />}
+        />
+        <StatCard
+          title="Pay Sum"
+          value={consumer.rewardSum}
+          className="col-span-2 md:col-span-1"
+          formatNumber={true}
+          icon={<CreditCard className="h-4 w-4 text-muted-foreground" />}
+        />
       </div>
+      <div style={{ marginTop: '30px' }}></div>
 
       <ConsumerChart addr={decodedLavaId} />
       <div className="box-margin-div"></div>
