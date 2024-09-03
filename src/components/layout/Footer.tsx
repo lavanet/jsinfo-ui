@@ -10,9 +10,9 @@ export default function Footer() {
       </span> */}
       <span className="ml-auto text-sm text-muted-foreground mr-50" style={{ marginRight: "30px" }}>
         Made with ❤️ by&nbsp;
-        <span className="text-white">
+        <a href="https://github.com/lavanet/jsinfo" className='footer-link' target="_blank" rel="noopener noreferrer">
           Magma Devs
-        </span>
+        </a>
       </span>
     </footer>
   );
