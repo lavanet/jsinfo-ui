@@ -25,9 +25,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@jsinfo/components/radixui/Popover";
-import CustomCombobox from "./CustomCombobox";
+import CustomCombobox from "../../components/sections/CustomCombobox";
 import { cn } from "@jsinfo/lib/css"
-import UsageGraphSkeleton from "./UsageGraphSkeleton";
+import UsageGraphSkeleton from "../../components/sections/UsageGraphSkeleton";
 
 const fetcher = (url: string | URL | Request) => fetch(url).then((res) => res.json());
 

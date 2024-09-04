@@ -4,7 +4,7 @@
 import { useEffect } from "react";
 import { usePageContext } from "@jsinfo/context/PageContext";
 import React from "react";
-import IndexChart from "@jsinfo/components/charts/IndexChart";
+import { UsageGraph as IndexUsageGraph } from "./_components/IndexUsageGraph";
 import { IndexAllCards } from "./_components/IndexPageCards";
 import IndexProvidersTableBlock from "./_components/IndexProvidersTableBlock";
 import IndexChainsTableBlock from "./_components/IndexChainsTableBlock";
@@ -21,7 +21,7 @@ export default function Home() {
     <>
       <IndexAllCards />
 
-      <IndexChart />
+      <IndexUsageGraph />
       <div className="box-margin-div"></div>
       <div className="box-margin-div"></div>
       <div className="box-margin-div"></div>
