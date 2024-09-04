@@ -8,16 +8,21 @@ import ProviderMoniker from './ProviderMoniker';
 import { ProviderMonikerFullInfo } from '@jsinfo/lib/types';
 import ModernTooltip from '../modern/ModernTooltip';
 
+/*
+      <h1 className="text-3xl font-bold mb-4">{providerData?.moniker || 'Unknown Provider'}</h1>
+      <p className="text-muted-foreground mb-8">Address: {providerData?.provider || address}</p>
+*/
+
 interface MonikerAndProviderAddressCardProps {
     provider: ProviderMonikerFullInfo;
 }
 
 const renderUserIcon = () => (
-    <div style={{ margin: "-15px" }}>
+    <div style={{ margin: "-15px", marginBottom: "-2px", marginLeft: "-25px" }}>
         <Image
             src="/user-line.svg"
-            width={40}
-            height={40}
+            width={70}
+            height={70}
             alt="user"
         />
     </div>
@@ -25,22 +30,22 @@ const renderUserIcon = () => (
 
 const renderMoniker = (moniker: string, monikerfull: string) => (
     <ModernTooltip title={monikerfull}>
-        <Text as="div" weight="bold" style={{ marginLeft: '10px', whiteSpace: 'nowrap', fontSize: '16px' }}>
+        <h1 className="text-3xl font-bold mb-4">
             <ProviderMoniker moniker={moniker} />
-        </Text>
+        </h1>
     </ModernTooltip>
 );
 
 const renderProviderAddressInLineWithIcon = (provider: string) => (
-    <Text as="div" style={{ marginLeft: '10px', whiteSpace: 'nowrap', fontSize: '16px', color: 'white' }}>
+    <h1 className="text-3xl font-bold mb-4">
         {provider}
-    </Text>
+    </h1>
 );
 
 const renderProviderAddressOnNewLine = (provider: string) => (
-    <Text as="div" style={{ marginLeft: '20px', whiteSpace: 'nowrap', fontSize: '14px', marginTop: '4px' }}>
+    <p className="text-muted-foreground mb-8">Address:
         {provider}
-    </Text>
+    </p>
 );
 
 const renderError = () => (
@@ -83,13 +88,9 @@ const MonikerAndProviderAddressCard: React.FC<MonikerAndProviderAddressCardProps
     };
 
     return (
-        <Card>
-            <Flex gap="3" align="center">
-                <Box style={{ paddingLeft: '5px' }}>
-                    {renderProviderInfo()}
-                </Box>
-            </Flex>
-        </Card>
+        <div style={{ marginLeft: '23px' }}>
+            {renderProviderInfo()}
+        </div>
     );
 };
 

@@ -17,7 +17,7 @@ const ModernTooltip: React.FC<ModernTooltipProps> = ({ title, children }) => {
             <TooltipTrigger>
                 <span>{children}</span>
             </TooltipTrigger>
-            <TooltipContent className="text-no-wrap">
+            <TooltipContent className="modern-tool-tip-content">
                 {title.split('\n').map((line, index, array) => (
                     <React.Fragment key={index}>
                         {line}

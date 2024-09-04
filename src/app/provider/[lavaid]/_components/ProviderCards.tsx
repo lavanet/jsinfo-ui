@@ -64,6 +64,13 @@ const ProviderCards: React.FC<ProviderCardsProps> = ({ addr }) => {
                 icon={<Landmark className="h-4 w-4 text-muted-foreground" />}
             />
             <StatCard
+                title="Claimable Rewards"
+                value={<LavaWithTooltip amount={provider.claimableRewards} />}
+                className="col-span-2 md:col-span-1"
+                formatNumber={false}
+                icon={<HeartHandshake className="h-4 w-4 text-muted-foreground" />}
+            />
+            <StatCard
                 title="Total Claimed Rewards (All Time)"
                 value={<LavaWithTooltip amount={provider.claimedRewardsAllTime} />}
                 className="col-span-2 md:col-span-1"
@@ -71,18 +78,11 @@ const ProviderCards: React.FC<ProviderCardsProps> = ({ addr }) => {
                 icon={<FolderHeart className="h-4 w-4 text-muted-foreground" />}
             />
             <StatCard
-                title="Total Claimed Rewards (30 days ago)"
+                title="Claimed Rewards (Last 30 Days)"
                 value={<LavaWithTooltip amount={provider.claimedRewards30DaysAgo} />}
                 className="col-span-2 md:col-span-1"
                 formatNumber={false}
                 icon={<CalendarHeart className="h-4 w-4 text-muted-foreground" />}
-            />
-            <StatCard
-                title="Claimable Rewards"
-                value={<LavaWithTooltip amount={provider.claimableRewards} />}
-                className="col-span-2 md:col-span-1"
-                formatNumber={false}
-                icon={<HeartHandshake className="h-4 w-4 text-muted-foreground" />}
             />
         </div>
         <div style={{ marginTop: '25px' }}></div>

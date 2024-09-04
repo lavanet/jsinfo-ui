@@ -190,3 +190,15 @@
 .footer-link:hover {
   color: hsl(var(--muted-foreground)); /* Reversed hover color */
 }
+
+/* -------- modern tooltip ------------- */
+
+.modern-tool-tip-content {
+  position: relative;
+  z-index: 1000;
+  background-color: var(--background-color);
+  border: 1px solid;
+  padding: 5px;
+  border-radius: calc(var(--radius) - 2px);
+  border-color: hsl(var(--border));
+}

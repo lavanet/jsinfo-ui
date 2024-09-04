@@ -29,6 +29,7 @@ import ProviderBlockReportsTab from './_components/ProviderBlockReportsTab';
 import ProviderAccountInfoTab from './_components/ProviderAccountInfoTab';
 import ProviderClaimableRewardsTab from "./_components/ProviderClaimableRewardsTab";
 import ProviderCards from "./_components/ProviderCards";
+import BackToDashboardLink from "@jsinfo/components/modern/BackToDashboard";
 
 export default function Provider({ params }: { params: { lavaid: string } }) {
 
@@ -58,7 +59,10 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
 
   return (
     <>
+      <BackToDashboardLink />
+
       <MonikerAndProviderAddressCard provider={provider} />
+
       <ProviderCards addr={decodedLavaId} />
 
       <ProviderChart addr={decodedLavaId} />
