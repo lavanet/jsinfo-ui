@@ -7,7 +7,7 @@ import { SortableTableInATabComponent } from "@jsinfo/components/legacy/StaticSo
 import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
 import { RenderInFullPageCard } from '@jsinfo/lib/utils';
 import { ErrorDisplay } from '@jsinfo/components/legacy/ErrorDisplay';
-import MonikerAndProviderLink from '@jsinfo/components/legacy/MonikerAndProviderLink';
+import MonikerAndProviderLink from '@jsinfo/components/modern/MonikerAndProviderLink';
 import LavaWithTooltip from "@jsinfo/components/modern/LavaWithTooltip";
 
 interface SpecStakesTableProps {

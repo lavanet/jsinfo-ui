@@ -1,10 +1,10 @@
-// src/components/MonikerWithTooltip.tsx
+// src/components/modern/MonikerWithTooltip.tsx
 
 import React from 'react';
 import { ProviderMonikerFullInfo } from '@jsinfo/lib/types';
 import { IsMeaningfulText } from '@jsinfo/lib/formatting';
 import { Text } from "@radix-ui/themes";
-import ModernTooltip from '../modern/ModernTooltip';
+import ModernTooltip from './ModernTooltip';
 
 interface MonikerWithTooltipProps {
     provider: ProviderMonikerFullInfo;

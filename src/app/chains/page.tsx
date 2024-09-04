@@ -6,33 +6,24 @@ import { usePageContext } from "@jsinfo/context/PageContext";
 import React from "react";
 import { Card, Box } from "@radix-ui/themes";
 import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
-import IndexChart from "@jsinfo/components/charts/IndexChart";
-import { IndexAllCards } from "./_components/IndexPageCards";
-import IndexChainsTab from "./_components/IndexChainsTab";
-import IndexProvidersTab from "./_components/IndexProvidersTab";
+import { ChainsAllCards } from "./_components/ChainsPageCards";
+import ChainsChainsTab from "./_components/ChainsChainsTab";
 
 export default function Home() {
 
   const { setCurrentPage } = usePageContext();
 
   useEffect(() => {
-    setCurrentPage('home');
+    setCurrentPage('chains');
   }, [setCurrentPage]);
 
   return (
     <>
-      <IndexAllCards />
-
-      <IndexChart />
-      <div className="box-margin-div"></div>
+      <ChainsAllCards />
 
       <Card>
-        <JsinfoTabs defaultValue="providers"
+        <JsinfoTabs defaultValue="chains"
           tabs={[
-            {
-              value: "providers",
-              content: "Providers",
-            },
             {
               value: "chains",
               content: "Chains",
@@ -40,8 +31,7 @@ export default function Home() {
           ]}
         >
           <Box>
-            <IndexProvidersTab />
-            <IndexChainsTab />
+            <ChainsChainsTab />
           </Box>
         </JsinfoTabs>
       </Card>

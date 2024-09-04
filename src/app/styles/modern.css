@@ -1,5 +1,10 @@
 /* -------- documnet body ------------------- */
 
+.body-content {
+  background-color: var(--background-color);
+  width: 100vw;
+}
+
 .body-content-boundary {
   display: flex;
   flex-direction: column;
@@ -11,15 +16,20 @@
   margin-left: auto;
   margin-right: auto;
   background-color: var(--background-color);
-  min-height: calc(100vh - 63.99px - 63.99px - 10px);
-  padding-bottom: 50px;
+  min-height: calc(
+    100vh - 63.99px - 63.99px - 40px
+  ); /* top bar bottom bar and margins */
   padding-left: 20px;
   padding-right: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 @media (max-width: 600px) {
   .body-content-boundary {
-    min-height: calc(100vh / 0.8 - (63.99px) - (63.99px) - 10px);
+    min-height: calc(
+      100vh / 0.8 - (63.99px) - (63.99px) - 40px
+    ); /* top bar bottom bar and margins */
   }
 }
 

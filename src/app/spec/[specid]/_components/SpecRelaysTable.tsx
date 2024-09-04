@@ -11,7 +11,7 @@ import { FormatNumber } from '@jsinfo/lib/formatting';
 import StatusCall from '@jsinfo/components/legacy/StatusCell';
 import { ErrorDisplay } from '@jsinfo/components/legacy/ErrorDisplay';
 import SpecProviderEndpointHealthSummary from '@jsinfo/app/spec/[specid]/_components/SpecProviderEndpointHealthSummary';
-import MonikerAndProviderLink from '@jsinfo/components/legacy/MonikerAndProviderLink';
+import MonikerAndProviderLink from '@jsinfo/components/modern/MonikerAndProviderLink';
 
 interface SpecRelaysTableProps {
     specid: string

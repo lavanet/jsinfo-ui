@@ -1,11 +1,11 @@
-// src/components/MonikerAndProviderLink.tsx
+// src/components/modern/MonikerAndProviderLink.tsx
 
 import React from 'react';
 import Link from 'next/link';
 import { ProviderMonikerFullInfo } from '@jsinfo/lib/types';
 import { IsMeaningfulText } from '@jsinfo/lib/formatting';
 import { Text } from "@radix-ui/themes";
-import ModernTooltip from '../modern/ModernTooltip';
+import ModernTooltip from './ModernTooltip';
 
 interface MonikerAndProviderLinkProps {
     provider: ProviderMonikerFullInfo;

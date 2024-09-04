@@ -38,7 +38,7 @@ export function AddSpacesBeforeCapsAndCapitalize(text: string): string {
 }
 
 export function FormatNumberKMB(input: string | null): string {
-    if (input === null) return "0";
+    if (!input) return "0";
 
     let str = input.toString().replace(/,/g, "");
 

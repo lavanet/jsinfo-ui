@@ -6,8 +6,13 @@ import { Menu } from 'lucide-react';
 import { Button } from '@jsinfo/components/ui/Button';
 import { Sheet, SheetContent, SheetTrigger } from '@jsinfo/components/ui/Sheet';
 import LavaLogoLink from '../modern/LavaLogoLink';
+import { usePathname } from 'next/navigation';
 
 export default function MobileNavigation() {
+  const pathname = usePathname();
+
+  const isActive = (x: string) => pathname === x;
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -19,19 +24,22 @@ export default function MobileNavigation() {
       <SheetContent side="left" className='mobile-navbar'>
         <nav className="mobile-navbar-inner grid gap-6 text-lg font-medium">
           <LavaLogoLink />
-          <Link href="/" className="nav-link nav-link-selected">
-            Dashboard
+          <Link href="/" className={`nav-link ${isActive('/') ? 'nav-link-selected' : ''}`}>
+            Overview
           </Link>
-          <Link href="/pools" className="nav-link">
-            Pools
-          </Link>
-          <Link href="/providers" className="nav-link">
+          {/* <Link href="/pools" className={`nav-link ${isActive('/pools') ? 'nav-link-selected' : ''}`}>
+              Pools
+          </Link> */}
+          <Link href="/providers" className={`nav-link ${isActive('/providers') ? 'nav-link-selected' : ''}`}>
             Providers
           </Link>
-          <Link href="/chains" className="nav-link">
+          <Link href="/chains" className={`nav-link ${isActive('/chains') ? 'nav-link-selected' : ''}`}>
             Chains
           </Link>
-          <Link href="/consumers" className="nav-link">
+          <Link href="/events" className={`nav-link ${isActive('/events') ? 'nav-link-selected' : ''}`}>
+            Events
+          </Link>
+          <Link href="/consumers" className={`nav-link ${isActive('/consumers') ? 'nav-link-selected' : ''}`}>
             Consumers
           </Link>
         </nav>

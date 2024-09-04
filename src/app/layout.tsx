@@ -64,7 +64,6 @@ export default function RootLayout({
                 <TooltipProvider>
                   <NoSsrComponent>
                     <Header />
-                    <div style={{ marginTop: '20px' }}></div>
                     <main className="body-content">
                       <div className="body-content-boundary">
                         <div className="body-content-boundary-inner">

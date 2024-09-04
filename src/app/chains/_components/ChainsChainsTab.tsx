@@ -1,4 +1,4 @@
-// src/app/_components/IndexChainsTab.tsx
+// src/app/chains/_components/ChainsChainsTab.tsx
 "use client";
 
 import React from "react";
@@ -15,7 +15,7 @@ interface Item {
     [key: string]: any;
 }
 
-export default function IndexChainsTab() {
+export default function ChainsChainsTab() {
     const { data, loading, error } = useApiFetch("indexTopChains");
     if (error) return <ErrorDisplay message={error} />;
     if (loading) return (
@@ -32,13 +32,17 @@ export default function IndexChainsTab() {
 
     const transformedSpecData = transformSpecsData(data.allSpecs);
 
+    console.log("transformedSpecData", transformedSpecData);
+
     return (
         <SortableTableInATabComponent
             columns={[
                 { key: "chainId", name: "Spec" },
                 { key: "chainName", name: "Chain Name" },
                 { key: "relaySum", name: "Total Relays" },
+                { key: "cuSum", name: "Total Cus" },
             ]}
+            key="ChainsChainsTabs"
             data={transformedSpecData}
             defaultSortKey="relaySum|desc"
             tableAndTabName="chains"
@@ -46,6 +50,7 @@ export default function IndexChainsTab() {
             pkeyUrl="spec"
             rowFormatters={{
                 relaySum: (data) => FormatNumber(data.relaySum),
+                cuSum: (data) => FormatNumber(data.cuSum),
             }}
         />
     );

@@ -1,4 +1,5 @@
-// src/app/page.tsx
+// src/app/providers/page.tsx
+
 "use client";
 
 import { useEffect } from "react";
@@ -7,21 +8,20 @@ import React from "react";
 import { Card, Box } from "@radix-ui/themes";
 import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
 import IndexChart from "@jsinfo/components/charts/IndexChart";
-import { IndexAllCards } from "./_components/IndexPageCards";
-import IndexChainsTab from "./_components/IndexChainsTab";
-import IndexProvidersTab from "./_components/IndexProvidersTab";
+import { ProvidersAllCards } from "./_components/ProvidersPageCards";
+import ProvidersProvidersTab from "./_components/ProvidersProvidersTab";
 
 export default function Home() {
 
   const { setCurrentPage } = usePageContext();
 
   useEffect(() => {
-    setCurrentPage('home');
+    setCurrentPage('providers');
   }, [setCurrentPage]);
 
   return (
     <>
-      <IndexAllCards />
+      <ProvidersAllCards />
 
       <IndexChart />
       <div className="box-margin-div"></div>
@@ -33,15 +33,10 @@ export default function Home() {
               value: "providers",
               content: "Providers",
             },
-            {
-              value: "chains",
-              content: "Chains",
-            },
           ]}
         >
           <Box>
-            <IndexProvidersTab />
-            <IndexChainsTab />
+            <ProvidersProvidersTab />
           </Box>
         </JsinfoTabs>
       </Card>

@@ -10,7 +10,7 @@ import { usePageContext } from "@jsinfo/context/PageContext";
 import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
 import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
 import CsvButton from '@jsinfo/components/legacy/CsvButton';
-import MonikerAndProviderLink from '@jsinfo/components/legacy/MonikerAndProviderLink';
+import MonikerAndProviderLink from '@jsinfo/components/modern/MonikerAndProviderLink';
 import { GetExplorersGuruUrl } from '@jsinfo/lib/env';
 
 export default function Events() {
