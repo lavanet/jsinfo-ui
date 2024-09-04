@@ -17,14 +17,14 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@jsinfo/components/ui/Card";
-import { Button } from "@jsinfo/components/ui/Button";
-import { Calendar } from "@jsinfo/components/ui/Calendar";
+} from "@jsinfo/components/radixui/Card";
+import { Button } from "@jsinfo/components/radixui/Button";
+import { Calendar } from "@jsinfo/components/radixui/Calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@jsinfo/components/ui/Popover";
+} from "@jsinfo/components/radixui/Popover";
 import CustomCombobox from "./CustomCombobox";
 import { cn } from "@jsinfo/lib/css"
 import UsageGraphSkeleton from "./UsageGraphSkeleton";

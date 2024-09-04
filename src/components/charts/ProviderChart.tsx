@@ -13,7 +13,7 @@ import {
     ChartJsReactiveLineChartWithDatePicker
 } from "@jsinfo/components/legacy/ChartJsReactiveLineChart";
 import { ErrorDisplay } from "@jsinfo/components/legacy/ErrorDisplay";
-import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
+import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
 import TextToggle from "@jsinfo/components/legacy/TextToggle";
 import useApiDateFetch from "@jsinfo/hooks/useApiDateFetch";
 import { useState } from "react";

@@ -8,7 +8,7 @@ import { ConvertToChainName } from "@jsinfo/lib/convertors";
 import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { FormatNumber } from "@jsinfo/lib/formatting";
 import { ErrorDisplay } from "@jsinfo/components/legacy/ErrorDisplay";
-import LoaderImageForCards from "@jsinfo/components/legacy/LoaderImageForCards";
+import LoaderImageForCards from "@jsinfo/components/modern/LoaderImageForCards";
 
 interface Item {
     chainId: string;

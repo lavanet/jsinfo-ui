@@ -4,7 +4,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@jsinfo/components/ui/Table";
-import { Badge } from "@jsinfo/components/ui/Badge";
+import { Badge } from "@jsinfo/components/radixui/Badge";
 import {
   Pagination,
   PaginationContent,

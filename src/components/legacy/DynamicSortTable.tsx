@@ -6,7 +6,7 @@ import { useState, useEffect, useRef, ReactNode } from 'react';
 import { Table, Tabs } from '@radix-ui/themes';
 import React from 'react';
 import { PaginationState, useApiPaginationFetch } from '@jsinfo/hooks/useApiPaginationFetch';
-import LoadingIndicator from './LoadingIndicator';
+import LoadingIndicator from '../modern/LoadingIndicator';
 import { Column, RowFormatters, SortAndPaginationConfig } from '@jsinfo/lib/types';
 import { GetNestedProperty } from '@jsinfo/lib/utils';
 import { AddSpacesBeforeCapsAndCapitalize } from '@jsinfo/lib/formatting';

@@ -3,8 +3,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { Menu } from 'lucide-react';
-import { Button } from '@jsinfo/components/ui/Button';
-import { Sheet, SheetContent, SheetTrigger } from '@jsinfo/components/ui/Sheet';
+import { Button } from '@jsinfo/components/radixui/Button';
+import { Sheet, SheetContent, SheetTrigger } from '@jsinfo/components/radixui/Sheet';
 import LavaLogoLink from '../modern/LavaLogoLink';
 import { usePathname } from 'next/navigation';
 
@@ -25,20 +25,17 @@ export default function MobileNavigation() {
         <nav className="mobile-navbar-inner grid gap-6 text-lg font-medium">
           <LavaLogoLink />
           <Link href="/" className={`nav-link ${isActive('/') ? 'nav-link-selected' : ''}`}>
-            Overview
+            Dashboard
           </Link>
-          {/* <Link href="/pools" className={`nav-link ${isActive('/pools') ? 'nav-link-selected' : ''}`}>
-              Pools
-          </Link> */}
           <Link href="/providers" className={`nav-link ${isActive('/providers') ? 'nav-link-selected' : ''}`}>
             Providers
           </Link>
           <Link href="/chains" className={`nav-link ${isActive('/chains') ? 'nav-link-selected' : ''}`}>
             Chains
           </Link>
-          <Link href="/events" className={`nav-link ${isActive('/events') ? 'nav-link-selected' : ''}`}>
+          {/* <Link href="/events" className={`nav-link ${isActive('/events') ? 'nav-link-selected' : ''}`}>
             Events
-          </Link>
+          </Link> */}
           <Link href="/consumers" className={`nav-link ${isActive('/consumers') ? 'nav-link-selected' : ''}`}>
             Consumers
           </Link>

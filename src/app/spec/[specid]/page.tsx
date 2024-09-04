@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { usePageContext } from "@jsinfo/context/PageContext";
 import StatCard from "@jsinfo/components/sections/StatCard";
-import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
+import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
 import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
 import { RenderInFullPageCard } from '@jsinfo/lib/utils';
 import SpecChart from '@jsinfo/components/charts/SpecChart';

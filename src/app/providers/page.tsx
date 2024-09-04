@@ -25,6 +25,8 @@ export default function Home() {
 
       <IndexChart />
       <div className="box-margin-div"></div>
+      <div className="box-margin-div"></div>
+      <div className="box-margin-div"></div>
 
       <Card>
         <JsinfoTabs defaultValue="providers"

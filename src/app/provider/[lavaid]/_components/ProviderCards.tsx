@@ -4,7 +4,7 @@ import StatCard from "@jsinfo/components/sections/StatCard";
 import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { RenderInFullPageCard } from "@jsinfo/lib/utils";
 import { ErrorDisplay } from "@jsinfo/components/legacy/ErrorDisplay";
-import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
+import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
 import LavaWithTooltip from "@jsinfo/components/modern/LavaWithTooltip";
 import { ArrowUpNarrowWide, CalendarHeart, CreditCard, FolderHeart, HeartHandshake, Landmark, MonitorCog } from "lucide-react";
 

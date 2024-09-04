@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { DataKeySortableTableInATabComponent } from "@jsinfo/components/legacy/DynamicSortTable";
 import TableCsvButton from "@jsinfo/components/legacy/TableCsvButton";
 import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
-import StatusCall from '@jsinfo/components/legacy/StatusCell';
+import StatusCall from '@jsinfo/components/modern/StatusCell';
 
 interface ProviderHealthTabProps {
     addr: string;

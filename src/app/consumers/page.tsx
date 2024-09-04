@@ -6,7 +6,7 @@ import React from "react";
 import { useEffect } from "react";
 import { Card, Box } from "@radix-ui/themes";
 import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
-import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
+import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
 import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { usePageContext } from "@jsinfo/context/PageContext";
 import { RenderInFullPageCard } from "@jsinfo/lib/utils";

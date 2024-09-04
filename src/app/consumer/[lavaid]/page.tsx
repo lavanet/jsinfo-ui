@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { Flex, Text, Card, Box } from "@radix-ui/themes";
 import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { SortableTableInATabComponent } from "@jsinfo/components/legacy/StaticSortTable";
-import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
+import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
 import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
 import { useEffect } from "react";
 import { usePageContext } from '@jsinfo/context/PageContext';

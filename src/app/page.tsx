@@ -4,12 +4,10 @@
 import { useEffect } from "react";
 import { usePageContext } from "@jsinfo/context/PageContext";
 import React from "react";
-import { Card, Box } from "@radix-ui/themes";
-import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
 import IndexChart from "@jsinfo/components/charts/IndexChart";
 import { IndexAllCards } from "./_components/IndexPageCards";
-import IndexChainsTab from "./_components/IndexChainsTab";
-import IndexProvidersTab from "./_components/IndexProvidersTab";
+import IndexProvidersTableBlock from "./_components/IndexProvidersTableBlock";
+import IndexChainsTableBlock from "./_components/IndexChainsTableBlock";
 
 export default function Home() {
 
@@ -25,26 +23,13 @@ export default function Home() {
 
       <IndexChart />
       <div className="box-margin-div"></div>
+      <div className="box-margin-div"></div>
+      <div className="box-margin-div"></div>
 
-      <Card>
-        <JsinfoTabs defaultValue="providers"
-          tabs={[
-            {
-              value: "providers",
-              content: "Providers",
-            },
-            {
-              value: "chains",
-              content: "Chains",
-            },
-          ]}
-        >
-          <Box>
-            <IndexProvidersTab />
-            <IndexChainsTab />
-          </Box>
-        </JsinfoTabs>
-      </Card>
+      <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-4">
+        <IndexProvidersTableBlock />
+        <IndexChainsTableBlock />
+      </div>
     </>
   );
 }

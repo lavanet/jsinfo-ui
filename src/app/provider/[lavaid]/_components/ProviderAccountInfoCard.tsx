@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
-import LoadingIndicator from '@jsinfo/components/legacy/LoadingIndicator';
+import LoadingIndicator from '@jsinfo/components/modern/LoadingIndicator';
 import { ErrorDisplay } from '@jsinfo/components/legacy/ErrorDisplay';
 import ReactJson from 'react-json-view';
 import { AxiosDataLoader } from '@jsinfo/fetching/AxiosDataLoader';

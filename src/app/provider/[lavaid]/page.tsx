@@ -10,7 +10,7 @@ import { usePageContext } from "@jsinfo/context/PageContext";
 import { RenderInFullPageCard } from '@jsinfo/lib/utils';
 import { ErrorDisplay } from '@jsinfo/components/legacy/ErrorDisplay';
 
-import LoadingIndicator from "@jsinfo/components/legacy/LoadingIndicator";
+import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
 import MonikerAndProviderAddressCard from "@jsinfo/components/legacy/MonikerAndProviderAddressCard";
 import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
 

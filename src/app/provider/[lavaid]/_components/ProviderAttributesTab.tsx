@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { DataKeySortableTableInATabComponent } from "@jsinfo/components/legacy/DynamicSortTable";
 import TableCsvButton from "@jsinfo/components/legacy/TableCsvButton";
 import { GeoLocationToString, StatusToString } from '@jsinfo/lib/convertors';
-import StatusCall from '@jsinfo/components/legacy/StatusCell';
+import StatusCall from '@jsinfo/components/modern/StatusCell';
 
 interface ProviderEventsTabProps {
     addr: string;

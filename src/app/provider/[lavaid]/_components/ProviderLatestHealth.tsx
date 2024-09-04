@@ -2,12 +2,12 @@
 
 import React, { useEffect, useState } from 'react';
 import { Card, Text, Box, Link } from "@radix-ui/themes";
-import LoadingIndicator from '@jsinfo/components/legacy/LoadingIndicator';
+import LoadingIndicator from '@jsinfo/components/modern/LoadingIndicator';
 import { ErrorDisplay } from '@jsinfo/components/legacy/ErrorDisplay';
 import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
 import { useApiFetch } from '@jsinfo/hooks/useApiFetch';
 import { RenderInFullPageCard } from '@jsinfo/lib/utils';
-import StatusCall from '../../../../components/legacy/StatusCell';
+import StatusCall from '../../../../components/modern/StatusCell';
 import Image from 'next/image';
 import TextToggle from '../../../../components/legacy/TextToggle';
 
