@@ -15,7 +15,7 @@ const ModernTooltip: React.FC<ModernTooltipProps> = ({ title, children }) => {
     return (
         <Tooltip>
             <TooltipTrigger>
-                <span>{children}</span>
+                <span style={{ textAlign: 'left' }} >{children}</span>
             </TooltipTrigger>
             <TooltipContent className="modern-tool-tip-content">
                 {title.split('\n').map((line, index, array) => (

@@ -2,7 +2,7 @@
 
 .body-content {
   background-color: var(--background-color);
-  width: 100vw;
+  /* width: 100vw; */
 }
 
 .body-content-boundary {
@@ -31,9 +31,10 @@
       100vh / 0.8 - (63.99px) - (63.99px) - 40px
     ); /* top bar bottom bar and margins */
   }
-  .body-content {
-    width: calc(100vw / 0.8);
-  }
+  /* .body-content {
+    fucks up on iphone even the meta tag is set
+    width: calc(100vw / 0.8); 
+  } */
 }
 
 .body-content-boundary-inner {
