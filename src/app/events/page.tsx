@@ -12,6 +12,7 @@ import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
 import CsvButton from '@jsinfo/components/legacy/CsvButton';
 import MonikerAndProviderLink from '@jsinfo/components/modern/MonikerAndProviderLink';
 import { GetExplorersGuruUrl } from '@jsinfo/lib/env';
+import LegacyTheme from '@jsinfo/components/legacy/LegacyTheme';
 
 export default function Events() {
 
