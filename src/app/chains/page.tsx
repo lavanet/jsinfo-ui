@@ -8,6 +8,7 @@ import { Card, Box } from "@radix-ui/themes";
 import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
 import { ChainsAllCards } from "./_components/ChainsPageCards";
 import ChainsChainsTab from "./_components/ChainsChainsTab";
+import LegacyTheme from "@jsinfo/components/legacy/LegacyTheme";
 
 export default function Home() {
 
@@ -21,20 +22,22 @@ export default function Home() {
     <>
       <ChainsAllCards />
 
-      <Card>
-        <JsinfoTabs defaultValue="chains"
-          tabs={[
-            {
-              value: "chains",
-              content: "Chains",
-            },
-          ]}
-        >
-          <Box>
-            <ChainsChainsTab />
-          </Box>
-        </JsinfoTabs>
-      </Card>
+      <LegacyTheme>
+        <Card>
+          <JsinfoTabs defaultValue="chains"
+            tabs={[
+              {
+                value: "chains",
+                content: "Chains",
+              },
+            ]}
+          >
+            <Box>
+              <ChainsChainsTab />
+            </Box>
+          </JsinfoTabs>
+        </Card>
+      </LegacyTheme>
     </>
   );
 }

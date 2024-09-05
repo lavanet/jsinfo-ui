@@ -16,6 +16,7 @@ import ConsumerSubscriptionsTable from './_components/ConsumersSubscriptionsTab'
 import ConsumersEventsTab from './_components/ConsumersEventsTab';
 import StatCard from '@jsinfo/components/sections/StatCard';
 import { MonitorCog, ArrowUpNarrowWide, CreditCard } from 'lucide-react';
+import LegacyTheme from '@jsinfo/components/legacy/LegacyTheme';
 
 export default function Consumer({ params }: { params: { lavaid: string } }) {
 
@@ -84,55 +85,57 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
       </div>
       <div style={{ marginTop: '25px' }}></div>
 
-      <ConsumerChart addr={decodedLavaId} />
-      <div className="box-margin-div"></div>
+      <LegacyTheme>
+        <ConsumerChart addr={decodedLavaId} />
+        <div className="box-margin-div"></div>
 
-      <Card>
-        <JsinfoTabs defaultValue="subscriptions"
-          tabs={[
-            {
-              value: "subscriptions",
-              content: "Subscriptions",
-            },
-            {
-              value: "conflicts",
-              content: "Conflicts",
-            },
-            {
-              value: "events",
-              content: "Events",
-            },
-          ]}
-        >
-          <Box>
+        <Card>
+          <JsinfoTabs defaultValue="subscriptions"
+            tabs={[
+              {
+                value: "subscriptions",
+                content: "Subscriptions",
+              },
+              {
+                value: "conflicts",
+                content: "Conflicts",
+              },
+              {
+                value: "events",
+                content: "Events",
+              },
+            ]}
+          >
+            <Box>
 
-            <ConsumerSubscriptionsTable addr={decodedLavaId} />
+              <ConsumerSubscriptionsTable addr={decodedLavaId} />
 
-            <SortableTableInATabComponent
-              columns={[
-                { key: "specId", name: "Spec" },
-                { key: "requestBlock", name: "Block" },
-                { key: "apiInterface", name: "Interface" },
-                { key: "connectionType", name: "Connection Type" },
-                { key: "requestData", name: "Request Data" },
-                { key: "apiURL", name: "Api URL" },
-              ]}
-              data={consumer.conflicts}
-              defaultSortKey="requestBlock"
-              tableAndTabName="conflicts"
-              pkey="id"
-              pkeyUrl="none"
-              rowFormatters={{
-                specId: (data) => (
-                  <Link className='orangelinks' href={`/spec/${data.specId}`}>{data.specId}</Link>
-                ),
-              }}
-            />
-          </Box>
+              <SortableTableInATabComponent
+                columns={[
+                  { key: "specId", name: "Spec" },
+                  { key: "requestBlock", name: "Block" },
+                  { key: "apiInterface", name: "Interface" },
+                  { key: "connectionType", name: "Connection Type" },
+                  { key: "requestData", name: "Request Data" },
+                  { key: "apiURL", name: "Api URL" },
+                ]}
+                data={consumer.conflicts}
+                defaultSortKey="requestBlock"
+                tableAndTabName="conflicts"
+                pkey="id"
+                pkeyUrl="none"
+                rowFormatters={{
+                  specId: (data) => (
+                    <Link className='orangelinks' href={`/spec/${data.specId}`}>{data.specId}</Link>
+                  ),
+                }}
+              />
+            </Box>
 
-          <ConsumersEventsTab addr={decodedLavaId} />
-        </JsinfoTabs>
-      </Card>
+            <ConsumersEventsTab addr={decodedLavaId} />
+          </JsinfoTabs>
+        </Card>
+      </LegacyTheme>
     </>
   );
 }

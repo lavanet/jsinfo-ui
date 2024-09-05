@@ -28,6 +28,7 @@ import {
 import CustomCombobox from "../../components/sections/CustomCombobox";
 import { cn } from "@jsinfo/lib/css"
 import UsageGraphSkeleton from "../../components/sections/UsageGraphSkeleton";
+import useApiSwrFetch from "@jsinfo/hooks/useApiSwrFetch";
 
 const fetcher = (url: string | URL | Request) => fetch(url).then((res) => res.json());
 
@@ -57,19 +58,14 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
     qosLatencyAvg: true,
   });
 
-  const { data, error, isValidating } = useSWR(() => {
+
+  const { data, error, isLoading } = useApiSwrFetch(() => {
     if (dateRange?.from && dateRange?.to) {
       const fromDate = format(dateRange.from, "yyyy-MM-dd'Z'");
       const toDate = format(dateRange.to, "yyyy-MM-dd'Z'");
-      return props.providerId
-        ? `https://jsinfo.lavanet.xyz/providerCharts/${props.providerId}?f=${fromDate}&t=${toDate}`
-        : `https://jsinfo.lavanet.xyz/indexCharts?f=${fromDate}&t=${toDate}`;
+      return `indexChartsV2?f=${fromDate}&t=${toDate}`;
     }
     return null;
-  }, fetcher, {
-    refreshInterval: 5 * 60 * 1000,
-    revalidateOnFocus: false,
-    keepPreviousData: true
   });
 
   const [availableChains, setAvailableChains] = useState<string[]>([]);
@@ -459,7 +455,7 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
             <div>No data available for the selected date range</div>
           )}
         </div>
-        {isValidating && (
+        {isLoading && (
           <div className="text-center mt-2 text-sm text-muted-foreground">
             Updating data...
           </div>

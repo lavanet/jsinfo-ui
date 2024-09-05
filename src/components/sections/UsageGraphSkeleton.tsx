@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Skeleton } from "@jsinfo/components/ui/Skeleton";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@jsinfo/components/radixui/Card";
+import { Card, CardContent, CardHeader } from "@jsinfo/components/radixui/Card";
 
 const UsageGraphSkeleton = () => {
   return (

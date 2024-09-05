@@ -99,3 +99,9 @@
     visibility: hidden;
   }
 }
+
+/* --------- legacy theme reset background color -------------------- */
+
+.legacy-theme {
+  background-color: var(--background-color);
+}

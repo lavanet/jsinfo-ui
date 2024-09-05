@@ -12,6 +12,7 @@ import { usePageContext } from "@jsinfo/context/PageContext";
 import { RenderInFullPageCard } from "@jsinfo/lib/utils";
 import { ErrorDisplay } from "@jsinfo/components/legacy/ErrorDisplay";
 import ConsumersConsumersTable from './_components/ConsumersConsumersTable';
+import LegacyTheme from "@jsinfo/components/legacy/LegacyTheme";
 
 export default function Home() {
 
@@ -30,20 +31,22 @@ export default function Home() {
 
   return (
     <>
-      <Card>
-        <JsinfoTabs defaultValue="consumers"
-          tabs={[
-            {
-              value: "consumers",
-              content: "Consumers",
-            },
-          ]}
-        >
-          <Box>
-            <ConsumersConsumersTable />
-          </Box>
-        </JsinfoTabs>
-      </Card>
+      <LegacyTheme>
+        <Card>
+          <JsinfoTabs defaultValue="consumers"
+            tabs={[
+              {
+                value: "consumers",
+                content: "Consumers",
+              },
+            ]}
+          >
+            <Box>
+              <ConsumersConsumersTable />
+            </Box>
+          </JsinfoTabs>
+        </Card>
+      </LegacyTheme>
     </>
   );
 }

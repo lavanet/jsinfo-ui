@@ -13,6 +13,7 @@ import Footer from "@jsinfo/components/layout/Footer";
 import { cn } from "@jsinfo/lib/css"
 import { TooltipProvider } from "@jsinfo/components/radixui/Tooltip";
 import { NoSsrComponent } from "@jsinfo/components/helpers/NoSsrComponent";
+import { ThemeProvider as RadixUiThemeProvider } from "@jsinfo/components/radixui/ThemeProvider";
 
 import '@radix-ui/themes/styles.css';
 import "./styles/globals.css";
@@ -50,13 +51,12 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <Theme
-          appearance="dark"
-          accentColor="tomato"
-          grayColor="slate"
-          panelBackground="solid"
-          radius="full"
+
+        <RadixUiThemeProvider
+          attribute="class"
+          defaultTheme="dark"
         >
+
           <Container>
             <SpeedInsights />
             <div className="flex min-h-screen mx-auto flex-col">
@@ -78,7 +78,9 @@ export default function RootLayout({
               <Analytics />
             </div>
           </Container>
-        </Theme>
+
+        </RadixUiThemeProvider>
+
       </body>
     </html>
   );
