@@ -4,7 +4,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@jsinfo/components/ui/Table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@jsinfo/components/shadcn/Table";
 import {
   Pagination,
   PaginationContent,
@@ -13,7 +13,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@jsinfo/components/ui/Pagination";
+} from "@jsinfo/components/shadcn/Pagination";
 
 const ProvidersTable = () => {
   const [providers, setProviders] = useState<any[]>([]);

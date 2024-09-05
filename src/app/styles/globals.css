@@ -197,12 +197,13 @@ iframe {
   text-decoration-style: solid !important;
   text-decoration-thickness: min(2px, max(1px, 0.05em)) !important;
   text-underline-offset: calc(0.025em + 2px) !important;
-  text-decoration-color: var(--interactive-element-selected-color) !important;
+  text-decoration-color: var(--interactive-element-line-color) !important;
   color: var(--interactive-element-line-color) !important;
 }
 
 .orangelinks:hover {
   text-decoration-line: underline !important;
+  cursor: pointer !important;
 }
 
 .rt-Button {

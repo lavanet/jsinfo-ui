@@ -11,9 +11,7 @@ const LegacyTheme: React.FC<React.PropsWithChildren<LegacyThemeProps>> = ({ chil
             panelBackground="solid"
             radius="full"
         >
-            <div className="legacy-theme">
-                {children}
-            </div>
+            {children}
         </Theme>
     );
 };

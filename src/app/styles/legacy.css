@@ -102,6 +102,6 @@
 
 /* --------- legacy theme reset background color -------------------- */
 
-.legacy-theme {
+[data-is-root-theme="true"] {
   background-color: var(--background-color);
 }

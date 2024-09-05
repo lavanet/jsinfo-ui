@@ -26,7 +26,7 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
 
   if (!lavaIdPattern.test(decodedLavaId)) {
     const error = 'Invalid lavaId format';
-    return RenderInFullPageCard(<ErrorDisplay message={error} />);
+    return <ErrorDisplay message={error} />;
   }
 
   const { data, loading, error } = useApiFetch('consumer/' + decodedLavaId);
@@ -39,8 +39,8 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
     }
   }, [loading, error, decodedLavaId, setCurrentPage]);
 
-  if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
-  if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${decodedLavaId} consumer page`} greyText={`${decodedLavaId} consumer`} />);
+  if (error) return <ErrorDisplay message={error} />;
+  if (loading) return <LoadingIndicator loadingText={`Loading ${decodedLavaId} consumer page`} greyText={`${decodedLavaId} consumer`} />;
 
   const consumer = data;
 

@@ -3,7 +3,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@jsinfo/components/ui/Table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@jsinfo/components/shadcn/Table";
 import {
   Pagination,
   PaginationContent,
@@ -12,7 +12,8 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@jsinfo/components/ui/Pagination";
+} from "@jsinfo/components/shadcn/Pagination";
+import Link from 'next/link';
 
 const ChainsTable = () => {
   const [chains, setChains] = useState<any[]>([]);
@@ -88,7 +89,7 @@ const ChainsTable = () => {
         <TableBody>
           {paginatedChains.map((chain, index) => (
             <TableRow key={index}>
-              <TableCell>{chain.chainId}</TableCell>
+              <TableCell><Link className='orangelinks' href={`/spec/${chain.chainId}`}>{chain.chainId}</Link></TableCell>
               <TableCell>{Number(chain.relaySum).toLocaleString()}</TableCell>
             </TableRow>
           ))}

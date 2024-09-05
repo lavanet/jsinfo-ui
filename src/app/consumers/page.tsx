@@ -13,6 +13,7 @@ import { RenderInFullPageCard } from "@jsinfo/lib/utils";
 import { ErrorDisplay } from "@jsinfo/components/legacy/ErrorDisplay";
 import ConsumersConsumersTable from './_components/ConsumersConsumersTable';
 import LegacyTheme from "@jsinfo/components/legacy/LegacyTheme";
+import { CardDescription, CardTitle } from "@jsinfo/components/radixui/Card";
 
 export default function Home() {
 
@@ -26,26 +27,20 @@ export default function Home() {
     }
   }, [loading, error, setCurrentPage]);
 
-  if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
-  if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText="Loading Consumers page" greyText="Consumers" />);
+  if (error) return <ErrorDisplay message={error} />;
+  if (loading) return <LoadingIndicator loadingText="Loading Consumers page" greyText="Consumers" />;
 
   return (
     <>
+      {/* <div className="grid gap-2">
+        <CardTitle>Consumers</CardTitle>
+        <CardDescription>
+          Lava consumer information
+        </CardDescription>
+      </div>
+      <br /> */}
       <LegacyTheme>
-        <Card>
-          <JsinfoTabs defaultValue="consumers"
-            tabs={[
-              {
-                value: "consumers",
-                content: "Consumers",
-              },
-            ]}
-          >
-            <Box>
-              <ConsumersConsumersTable />
-            </Box>
-          </JsinfoTabs>
-        </Card>
+        <ConsumersConsumersTable />
       </LegacyTheme>
     </>
   );

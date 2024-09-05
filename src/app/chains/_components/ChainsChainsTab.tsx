@@ -3,7 +3,7 @@
 
 import React from "react";
 import { Tabs } from "@radix-ui/themes";
-import { SortableTableInATabComponent } from "@jsinfo/components/legacy/StaticSortTable";
+import { SortableTableComponent } from "@jsinfo/components/legacy/StaticSortTable";
 import { ConvertToChainName } from "@jsinfo/lib/convertors";
 import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { FormatNumber } from "@jsinfo/lib/formatting";
@@ -19,7 +19,7 @@ export default function ChainsChainsTab() {
     const { data, loading, error } = useApiFetch("indexTopChains");
     if (error) return <ErrorDisplay message={error} />;
     if (loading) return (
-        <Tabs.Content value="chains"><LoaderImageForCards /></Tabs.Content>
+        <LoaderImageForCards />
     );
 
     function transformSpecsData(data: Item[]) {
@@ -32,10 +32,8 @@ export default function ChainsChainsTab() {
 
     const transformedSpecData = transformSpecsData(data.allSpecs);
 
-    console.log("transformedSpecData", transformedSpecData);
-
     return (
-        <SortableTableInATabComponent
+        <SortableTableComponent
             columns={[
                 { key: "chainId", name: "Spec" },
                 { key: "chainName", name: "Chain Name" },

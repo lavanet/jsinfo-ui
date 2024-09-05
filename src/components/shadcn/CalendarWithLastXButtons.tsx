@@ -90,7 +90,7 @@ const CalendarWithLastXButtons: React.FC<CalendarWithLastXButtonsProps> = ({ onS
           <button
             key={index}
             className={cn(buttonVariants({ variant: "outline" }), "w-40 text-left p-1")}
-            style={{ zoom: 0.7 }}
+            style={{ zoom: 0.7, justifyContent: 'left', paddingLeft: '10px' }}
             onClick={() => handleRangeClick(range)}
           >
             {range.label}
@@ -100,7 +100,7 @@ const CalendarWithLastXButtons: React.FC<CalendarWithLastXButtonsProps> = ({ onS
 
       <DayPicker
         mode={"range"}
-        defaultMonth={selected?.from}
+        defaultMonth={selected?.to}
         numberOfMonths={2}
         disabled={disabledDays}
         toDate={new Date()}

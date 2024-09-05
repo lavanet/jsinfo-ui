@@ -202,3 +202,16 @@
   border-radius: calc(var(--radius) - 2px);
   border-color: hsl(var(--border));
 }
+
+/* -------- adjust table headers -------- */
+
+.rt-TableColumnHeaderCell {
+  color: hsl(var(--muted-foreground));
+  font-weight: normal;
+}
+
+/* -------- old cards color -------- */
+
+.rt-BaseCard {
+  background-color: var(--background-color);
+}

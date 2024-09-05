@@ -167,7 +167,7 @@ const SortableTableRow: React.FC<SortableTableRowProps> = (props: SortableTableR
   if (!key) return null;
 
   return (
-    <Table.Row key={`${tableRowKey}_row`}>
+    <Table.Row key={`${tableRowKey}_row`} className='transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted'>
       {props.firstColumn &&
         <SortableTableRowCell key={`${tableRowKey}_row_1`} columnName={props.firstColumn} tableRowKey={tableRowKey} rowData={props.rowData} rowFormatters={props.rowFormatters ?? null} pkey={props.pkey} pkeyUrl={props.pkeyUrl} />}
       {props.columns.some(column => column.key === props.pkey) &&
