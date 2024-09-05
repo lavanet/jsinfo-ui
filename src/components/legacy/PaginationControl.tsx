@@ -1,37 +1,48 @@
-// src/components/PaginationControl.tsx
-"use client"
+// src/components/legacy/PaginationControl.tsx
 
-import React, { useState, useEffect } from 'react';
-import { SortAndPaginationConfig } from '@jsinfo/lib/types';
-import { PaginationState } from '@jsinfo/hooks/useApiPaginationFetch';
+"use client";
+
+import React, { useState, useEffect } from "react";
+import {
+    Pagination,
+    PaginationContent,
+    PaginationEllipsis,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
+} from "@jsinfo/components/shadcn/Pagination";
+import { SortAndPaginationConfig } from "@jsinfo/lib/types";
+import { PaginationState } from "@jsinfo/hooks/useApiPaginationFetch";
 
 interface PaginationControlProps {
     paginationState: PaginationState;
     setPage: (page: number) => void;
 }
 
-const PaginationControl: React.FC<PaginationControlProps> = ({ paginationState, setPage }: PaginationControlProps) => {
+const PaginationControl: React.FC<PaginationControlProps> = ({ paginationState, setPage }) => {
     if (!paginationState || !(paginationState instanceof PaginationState)) {
         const typeStr = Object.prototype.toString.call(paginationState);
         const objStr = JSON.stringify(paginationState, null, 2).slice(0, 1000);
         throw new Error(`paginationState must be an instance of PaginationState, got ${typeStr}, object: ${objStr}`);
     }
 
-    if (typeof setPage !== 'function') {
+    if (typeof setPage !== "function") {
         throw new Error("setPage must be a function");
     }
 
-    const [sortAndPaginationConfig, setSortAndPaginationConfig] = useState<SortAndPaginationConfig>(paginationState.GetSortAndPaginationConfig());
-    if (!sortAndPaginationConfig || !sortAndPaginationConfig.totalItemCount || !sortAndPaginationConfig.itemCountPerPage) return null;
-    paginationState.RegisterUpdateCallback(setSortAndPaginationConfig);
-
+    const [sortAndPaginationConfig, setSortAndPaginationConfig] = useState<SortAndPaginationConfig>(
+        paginationState.GetSortAndPaginationConfig()
+    );
     const [totalPages, setTotalPages] = useState(0);
     const [pageNumbers, setPageNumbers] = useState<number[]>([]);
-    const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth <= 768 : 0);
+    const [isMobile, setIsMobile] = useState(typeof window !== "undefined" ? window.innerWidth <= 768 : false);
+
+    paginationState.RegisterUpdateCallback(setSortAndPaginationConfig);
 
     useEffect(() => {
         if (!sortAndPaginationConfig || !sortAndPaginationConfig.totalItemCount || !sortAndPaginationConfig.itemCountPerPage) return;
-        const newTotalPages = Math.ceil(sortAndPaginationConfig.totalItemCount / sortAndPaginationConfig.itemCountPerPage) || 3;
+        const newTotalPages = Math.ceil(sortAndPaginationConfig.totalItemCount / sortAndPaginationConfig.itemCountPerPage);
         setTotalPages(newTotalPages);
 
         const newPageNumbers: number[] = [];
@@ -54,10 +65,10 @@ const PaginationControl: React.FC<PaginationControlProps> = ({ paginationState, 
             setIsMobile(window.innerWidth <= 768);
         };
 
-        window.addEventListener('resize', handleResize);
+        window.addEventListener("resize", handleResize);
 
         return () => {
-            window.removeEventListener('resize', handleResize);
+            window.removeEventListener("resize", handleResize);
         };
     }, []);
 
@@ -65,19 +76,67 @@ const PaginationControl: React.FC<PaginationControlProps> = ({ paginationState, 
         setPage(page);
     };
 
+    const renderPaginationItems = () => {
+        const ellipsisThreshold = 2;
+
+        return pageNumbers.map((number: number) => {
+            if (number === 1 || number === totalPages || (number >= sortAndPaginationConfig.page - ellipsisThreshold && number <= sortAndPaginationConfig.page + ellipsisThreshold)) {
+                return (
+                    <PaginationItem key={number}>
+                        <PaginationLink
+                            href="#"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                handleSetPage(number);
+                            }}
+                            isActive={number === sortAndPaginationConfig.page}
+                        >
+                            {number}
+                        </PaginationLink>
+                    </PaginationItem>
+                );
+            } else if (
+                (number === sortAndPaginationConfig.page - ellipsisThreshold - 1 && number > 1) ||
+                (number === sortAndPaginationConfig.page + ellipsisThreshold + 1 && number < totalPages)
+            ) {
+                return (
+                    <PaginationItem key={number}>
+                        <PaginationEllipsis />
+                    </PaginationItem>
+                );
+            }
+        });
+    };
+
     return (
-        <div className="paginationcontrol">
-            <button className="active nowrap" onClick={() => handleSetPage(1)} disabled={sortAndPaginationConfig.page === 1}>|&lt;</button>
-            <button className="active" onClick={() => handleSetPage(Math.max(1, sortAndPaginationConfig.page - 1))} disabled={sortAndPaginationConfig.page === 1}>&lt;</button>
-            {pageNumbers.map((number: number) =>
-                number === sortAndPaginationConfig.page
-                    ? <span key={number} className="active" style={{ textDecoration: "underline", textUnderlineOffset: "3px" }}>{number}</span>
-                    : <button key={number} onClick={() => handleSetPage(number)}>{number}</button>
-            )}
-            <button className="active" onClick={() => handleSetPage(Math.min(totalPages, sortAndPaginationConfig.page + 1))} disabled={sortAndPaginationConfig.page === totalPages}>&gt;</button>
-            <button className="active nowrap" onClick={() => handleSetPage(totalPages)} disabled={sortAndPaginationConfig.page === totalPages}>&gt;|</button>
-        </div>
+        <Pagination className="mt-4">
+            <PaginationContent>
+                {sortAndPaginationConfig.page > 1 && (
+                    <PaginationItem>
+                        <PaginationPrevious
+                            href="#"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                handleSetPage(Math.max(1, sortAndPaginationConfig.page - 1));
+                            }}
+                        />
+                    </PaginationItem>
+                )}
+                {renderPaginationItems()}
+                {sortAndPaginationConfig.page < totalPages && (
+                    <PaginationItem>
+                        <PaginationNext
+                            href="#"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                handleSetPage(Math.min(totalPages, sortAndPaginationConfig.page + 1));
+                            }}
+                        />
+                    </PaginationItem>
+                )}
+            </PaginationContent>
+        </Pagination>
     );
-}
+};
 
 export default PaginationControl;

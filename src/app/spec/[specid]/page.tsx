@@ -10,7 +10,7 @@ import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
 import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
 import { RenderInFullPageCard } from '@jsinfo/lib/utils';
 import SpecChart from '@jsinfo/components/charts/SpecChart';
-import { ErrorDisplay } from '@jsinfo/components/legacy/ErrorDisplay';
+import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
 import SpecEndpointHealthSummary from '@jsinfo/app/spec/[specid]/_components/SpecEndpointHealthSummary';
 import SpecStakesTable from '@jsinfo/app/spec/[specid]/_components/SpecStakesTable';
 import SpecRelaysTable from "./_components/SpecRelaysTable";

@@ -10,7 +10,7 @@ import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
 import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { usePageContext } from "@jsinfo/context/PageContext";
 import { RenderInFullPageCard } from "@jsinfo/lib/utils";
-import { ErrorDisplay } from "@jsinfo/components/legacy/ErrorDisplay";
+import { ErrorDisplay } from "@jsinfo/components/modern/ErrorDisplay";
 import ConsumersConsumersTable from './_components/ConsumersConsumersTable';
 import LegacyTheme from "@jsinfo/components/legacy/LegacyTheme";
 import { CardDescription, CardTitle } from "@jsinfo/components/radixui/Card";

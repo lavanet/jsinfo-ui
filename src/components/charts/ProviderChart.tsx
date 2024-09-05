@@ -12,7 +12,7 @@ import {
     ChartJsSpecIdToDatasetMap,
     ChartJsReactiveLineChartWithDatePicker
 } from "@jsinfo/components/legacy/ChartJsReactiveLineChart";
-import { ErrorDisplay } from "@jsinfo/components/legacy/ErrorDisplay";
+import { ErrorDisplay } from "@jsinfo/components/modern/ErrorDisplay";
 import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
 import TextToggle from "@jsinfo/components/legacy/TextToggle";
 import useApiDateFetch from "@jsinfo/hooks/useApiDateFetch";

@@ -31,6 +31,9 @@
       100vh / 0.8 - (63.99px) - (63.99px) - 40px
     ); /* top bar bottom bar and margins */
   }
+  .body-content {
+    width: calc(100vw / 0.8);
+  }
 }
 
 .body-content-boundary-inner {
@@ -61,6 +64,7 @@
 .top-header {
   background-color: var(--navbar-background-color);
 }
+
 /* -------- footer -------------------------- */
 
 .footer {

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useApiFetch } from '@jsinfo/hooks/useApiFetch';
-import { ErrorDisplay } from "@jsinfo/components/legacy/ErrorDisplay";
+import { ErrorDisplay } from "@jsinfo/components/modern/ErrorDisplay";
 import { FormatAsULava } from '@jsinfo/components/modern/LavaWithTooltip';
 import LoaderImageForCards from '@jsinfo/components/modern/LoaderImageForCards';
 import { FormatNumber, FormatNumberKMB } from '@jsinfo/lib/formatting';

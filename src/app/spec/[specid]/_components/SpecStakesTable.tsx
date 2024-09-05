@@ -6,7 +6,7 @@ import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { SortableTableInATabComponent } from "@jsinfo/components/legacy/StaticSortTable";
 import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
 import { RenderInFullPageCard } from '@jsinfo/lib/utils';
-import { ErrorDisplay } from '@jsinfo/components/legacy/ErrorDisplay';
+import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
 import MonikerAndProviderLink from '@jsinfo/components/modern/MonikerAndProviderLink';
 import LavaWithTooltip from "@jsinfo/components/modern/LavaWithTooltip";
 

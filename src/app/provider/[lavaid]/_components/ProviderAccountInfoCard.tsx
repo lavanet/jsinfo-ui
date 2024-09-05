@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
 import LoadingIndicator from '@jsinfo/components/modern/LoadingIndicator';
-import { ErrorDisplay } from '@jsinfo/components/legacy/ErrorDisplay';
+import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
 import ReactJson from 'react-json-view';
 import { AxiosDataLoader } from '@jsinfo/fetching/AxiosDataLoader';
 import Image from 'next/image';

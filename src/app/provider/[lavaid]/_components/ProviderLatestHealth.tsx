@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Text, Box, Link } from "@radix-ui/themes";
 import LoadingIndicator from '@jsinfo/components/modern/LoadingIndicator';
-import { ErrorDisplay } from '@jsinfo/components/legacy/ErrorDisplay';
+import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
 import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
 import { useApiFetch } from '@jsinfo/hooks/useApiFetch';
 import { RenderInFullPageCard } from '@jsinfo/lib/utils';

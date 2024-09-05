@@ -9,7 +9,7 @@ import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
 import { RenderInFullPageCard } from '@jsinfo/lib/utils';
 import { FormatNumber } from '@jsinfo/lib/formatting';
 import StatusCall from '@jsinfo/components/modern/StatusCell';
-import { ErrorDisplay } from '@jsinfo/components/legacy/ErrorDisplay';
+import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
 import SpecProviderEndpointHealthSummary from '@jsinfo/app/spec/[specid]/_components/SpecProviderEndpointHealthSummary';
 import MonikerAndProviderLink from '@jsinfo/components/modern/MonikerAndProviderLink';
 

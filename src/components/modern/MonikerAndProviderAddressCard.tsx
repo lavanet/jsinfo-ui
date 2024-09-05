@@ -2,11 +2,11 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { Flex, Text, Card, Box } from "@radix-ui/themes";
+import { Text } from "@radix-ui/themes";
 import { IsMeaningfulText } from '@jsinfo/lib/formatting';
-import ProviderMoniker from './ProviderMoniker';
+import ProviderMoniker from '../legacy/ProviderMoniker';
 import { ProviderMonikerFullInfo } from '@jsinfo/lib/types';
-import ModernTooltip from '../modern/ModernTooltip';
+import ModernTooltip from './ModernTooltip';
 
 /*
       <h1 className="text-3xl font-bold mb-4">{providerData?.moniker || 'Unknown Provider'}</h1>

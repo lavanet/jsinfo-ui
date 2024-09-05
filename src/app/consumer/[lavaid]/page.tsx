@@ -9,7 +9,7 @@ import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
 import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
 import { useEffect } from "react";
 import { usePageContext } from '@jsinfo/context/PageContext';
-import { ErrorDisplay } from '@jsinfo/components/legacy/ErrorDisplay';
+import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
 import { RenderInFullPageCard } from '@jsinfo/lib/utils';
 import ConsumerChart from '@jsinfo/components/charts/ConsumerChart';
 import ConsumerSubscriptionsTable from './_components/ConsumersSubscriptionsTab';

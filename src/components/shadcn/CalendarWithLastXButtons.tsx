@@ -100,7 +100,7 @@ const CalendarWithLastXButtons: React.FC<CalendarWithLastXButtonsProps> = ({ onS
 
       <DayPicker
         mode={"range"}
-        defaultMonth={selected?.to}
+        defaultMonth={subMonths(new Date(), 1)}
         numberOfMonths={2}
         disabled={disabledDays}
         toDate={new Date()}

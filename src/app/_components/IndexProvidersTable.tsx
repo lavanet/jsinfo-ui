@@ -1,82 +1,55 @@
 // src/app/_components/IndexProvidersTable.tsx
 
 "use client";
-
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@jsinfo/components/shadcn/Table";
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@jsinfo/components/shadcn/Pagination";
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@jsinfo/components/shadcn/Table";
+import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
+import useApiSwrFetch from "@jsinfo/hooks/useApiSwrFetch";
+import { AxiosApiGet } from "@jsinfo/fetching/axios";
+import PaginationControl from "@jsinfo/components/modern/Pagination";
 
 const ProvidersTable = () => {
-  const [providers, setProviders] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  useEffect(() => {
-    fetchProviders();
-  }, [currentPage]);
-
-  const fetchProviders = async () => {
+  const fetchProvidersCount = async () => {
     try {
-      const response = await fetch(`https://jsinfo.lavanet.xyz/indexProviders?pagination=totalStake,d,${currentPage},20`);
-      const data = await response.json();
-      setProviders(data.data);
-
-      const countResponse = await fetch('https://jsinfo.lavanet.xyz/item-count/indexProviders');
-      const countData = await countResponse.json();
+      const countData = (await AxiosApiGet("item-count/indexProvidersActive")).data;
       setTotalPages(Math.ceil(countData.itemCount / 20));
     } catch (error) {
-      console.error('Error fetching providers:', error);
+      console.error("Error fetching providers:", error);
     }
   };
 
-  const renderPaginationItems = () => {
-    let items = [];
-    const maxVisiblePages = 5;
-    const ellipsisThreshold = 2;
+  useEffect(() => {
+    fetchProvidersCount();
+  }, [currentPage]);
 
-    for (let i = 1; i <= totalPages; i++) {
-      if (
-        i === 1 ||
-        i === totalPages ||
-        (i >= currentPage - ellipsisThreshold && i <= currentPage + ellipsisThreshold)
-      ) {
-        items.push(
-          <PaginationItem key={i}>
-            <PaginationLink
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                setCurrentPage(i);
-              }}
-              isActive={currentPage === i}
-            >
-              {i}
-            </PaginationLink>
-          </PaginationItem>
-        );
-      } else if (
-        (i === currentPage - ellipsisThreshold - 1 && i > 1) ||
-        (i === currentPage + ellipsisThreshold + 1 && i < totalPages)
-      ) {
-        items.push(
-          <PaginationItem key={i}>
-            <PaginationEllipsis />
-          </PaginationItem>
-        );
-      }
-    }
+  const { data, error, isLoading } = useApiSwrFetch(
+    `indexProvidersActive?pagination=totalStake,d,${currentPage},20`
+  );
 
-    return items;
-  };
+  if (error) {
+    return <div>Error loading data</div>;
+  }
+
+  if (!data)
+    return (
+      <LoadingIndicator
+        loadingText={`Loading providers data`}
+        greyText={`providers`}
+      />
+    );
+
+  const providers = data?.data ?? [];
 
   return (
     <>
@@ -89,9 +62,9 @@ const ProvidersTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {providers.map((provider: any, index) => (
+          {providers.map((provider: any, index: number) => (
             <TableRow key={index}>
-              <Link className='orangelinks' href={`/provider/${provider.provider}`}>
+              <Link className="orangelinks" href={`/provider/${provider.provider}`}>
                 <TableCell>{provider.moniker}</TableCell>
               </Link>
               <TableCell>{provider.totalServices}</TableCell>
@@ -100,29 +73,11 @@ const ProvidersTable = () => {
           ))}
         </TableBody>
       </Table>
-      <Pagination className="mt-4">
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                setCurrentPage((prev) => Math.max(prev - 1, 1));
-              }}
-            />
-          </PaginationItem>
-          {renderPaginationItems()}
-          <PaginationItem>
-            <PaginationNext
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                setCurrentPage((prev) => Math.min(prev + 1, totalPages));
-              }}
-            />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+      <PaginationControl
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+      />
     </>
   );
 };

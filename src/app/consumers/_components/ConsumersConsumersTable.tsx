@@ -4,19 +4,18 @@
 
 import { Box } from "@radix-ui/themes";
 import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
-import { SortableTableComponent, SortableTableInATabComponent } from "@jsinfo/components/legacy/StaticSortTable";
+import { SortableTableComponent } from "@jsinfo/components/legacy/StaticSortTable";
 import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
 import { FormatNumber } from '@jsinfo/lib/formatting';
-import { RenderInFullPageCard } from '@jsinfo/lib/utils';
-import { ErrorDisplay } from '@jsinfo/components/legacy/ErrorDisplay';
+import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
 import Link from "next/link";
 import LavaWithTooltip from "@jsinfo/components/modern/LavaWithTooltip";
 
 const ConsumersConsumersTable: React.FC<{}> = () => {
     const { data, loading, error } = useApiFetch("consumerspageConsumers");
 
-    if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
-    if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading consumers table data`} greyText={`consumers table`} />);
+    if (error) return <ErrorDisplay message={error} />;
+    if (loading) return <LoadingIndicator loadingText={`Loading consumers table data`} greyText={`consumers table`} />;
 
     return (
         <Box>

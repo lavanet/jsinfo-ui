@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useApiFetch } from '@jsinfo/hooks/useApiFetch';
-import { ErrorDisplay } from "@jsinfo/components/legacy/ErrorDisplay";
+import { ErrorDisplay } from "@jsinfo/components/modern/ErrorDisplay";
 import LoaderImageForCards from '@jsinfo/components/modern/LoaderImageForCards';
 import StatCard from '@jsinfo/components/sections/StatCard';
 import { Link, Blocks } from 'lucide-react';

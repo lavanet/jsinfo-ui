@@ -2,13 +2,12 @@
 "use client";
 
 import React from "react";
-import { Tabs } from "@radix-ui/themes";
 import { SortableTableComponent } from "@jsinfo/components/legacy/StaticSortTable";
 import { ConvertToChainName } from "@jsinfo/lib/convertors";
 import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { FormatNumber } from "@jsinfo/lib/formatting";
-import { ErrorDisplay } from "@jsinfo/components/legacy/ErrorDisplay";
-import LoaderImageForCards from "@jsinfo/components/modern/LoaderImageForCards";
+import { ErrorDisplay } from "@jsinfo/components/modern/ErrorDisplay";
+import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
 
 interface Item {
     chainId: string;
@@ -19,7 +18,7 @@ export default function ChainsChainsTab() {
     const { data, loading, error } = useApiFetch("indexTopChains");
     if (error) return <ErrorDisplay message={error} />;
     if (loading) return (
-        <LoaderImageForCards />
+        <LoadingIndicator loadingText={`Loading chains table`} greyText={`chains`} />
     );
 
     function transformSpecsData(data: Item[]) {

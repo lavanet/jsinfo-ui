@@ -10,9 +10,9 @@ import LoadingIndicator from '../modern/LoadingIndicator';
 import { Column, RowFormatters, SortAndPaginationConfig } from '@jsinfo/lib/types';
 import { GetNestedProperty } from '@jsinfo/lib/utils';
 import { AddSpacesBeforeCapsAndCapitalize } from '@jsinfo/lib/formatting';
-import { ErrorBoundary } from '@jsinfo/components/legacy/ErrorBoundary';
+import { ErrorBoundary } from '@jsinfo/components/modern/ErrorBoundary';
 import PaginationControl from './PaginationControl';
-import { ErrorDisplay } from './ErrorDisplay';
+import { ErrorDisplay } from '../modern/ErrorDisplay';
 
 const JSINFO_QUERY_DEFAULT_ITEMS_PER_PAGE = 20
 

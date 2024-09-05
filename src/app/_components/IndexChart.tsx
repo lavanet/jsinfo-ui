@@ -11,7 +11,7 @@ import {
     ChartJsLineChartDataset,
     ChartJsSpecIdToDatasetMap,
 } from "@jsinfo/components/legacy/ChartJsReactiveLineChart";
-import { ErrorDisplay } from "@jsinfo/components/legacy/ErrorDisplay";
+import { ErrorDisplay } from "@jsinfo/components/modern/ErrorDisplay";
 import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
 import ChartJsWithRadioToggle from "@jsinfo/components/legacy/ChartJsWithRadioToggle";
 import useApiDateFetch from "@jsinfo/hooks/useApiDateFetch";
