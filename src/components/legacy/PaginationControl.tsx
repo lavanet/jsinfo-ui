@@ -36,7 +36,6 @@ const PaginationControl: React.FC<PaginationControlProps> = ({ paginationState, 
     );
     const [totalPages, setTotalPages] = useState(0);
     const [pageNumbers, setPageNumbers] = useState<number[]>([]);
-    const [isMobile, setIsMobile] = useState(typeof window !== "undefined" ? window.innerWidth <= 768 : false);
 
     paginationState.RegisterUpdateCallback(setSortAndPaginationConfig);
 
@@ -47,30 +46,10 @@ const PaginationControl: React.FC<PaginationControlProps> = ({ paginationState, 
 
         const newPageNumbers: number[] = [];
         for (let i = 1; i <= newTotalPages; i++) {
-            if (isMobile) {
-                if (i >= sortAndPaginationConfig.page - 1 && i <= sortAndPaginationConfig.page + 1) {
-                    newPageNumbers.push(i);
-                }
-            } else {
-                if (i <= 3 || i > newTotalPages - 3 || (i >= sortAndPaginationConfig.page - 1 && i <= sortAndPaginationConfig.page + 1)) {
-                    newPageNumbers.push(i);
-                }
-            }
+            newPageNumbers.push(i);
         }
         setPageNumbers(newPageNumbers);
-    }, [sortAndPaginationConfig, isMobile]);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth <= 768);
-        };
-
-        window.addEventListener("resize", handleResize);
-
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
+    }, [sortAndPaginationConfig]);
 
     const handleSetPage = (page: number) => {
         setPage(page);
@@ -81,6 +60,7 @@ const PaginationControl: React.FC<PaginationControlProps> = ({ paginationState, 
 
         return pageNumbers.map((number: number) => {
             if (number === 1 || number === totalPages || (number >= sortAndPaginationConfig.page - ellipsisThreshold && number <= sortAndPaginationConfig.page + ellipsisThreshold)) {
+                console.log("rendering number", number);
                 return (
                     <PaginationItem key={number}>
                         <PaginationLink

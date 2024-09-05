@@ -2,7 +2,7 @@
 "use client";
 
 import Link from 'next/link'
-import { Flex, Text, Card, Box } from "@radix-ui/themes";
+import { Card, Box } from "@radix-ui/themes";
 import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { SortableTableInATabComponent } from "@jsinfo/components/legacy/StaticSortTable";
 import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
@@ -10,14 +10,13 @@ import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
 import { useEffect } from "react";
 import { usePageContext } from '@jsinfo/context/PageContext';
 import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
-import { RenderInFullPageCard } from '@jsinfo/lib/utils';
 import ConsumerChart from '@jsinfo/components/charts/ConsumerChart';
 import ConsumerSubscriptionsTable from './_components/ConsumersSubscriptionsTab';
 import ConsumersEventsTab from './_components/ConsumersEventsTab';
 import StatCard from '@jsinfo/components/sections/StatCard';
 import { MonitorCog, ArrowUpNarrowWide, CreditCard } from 'lucide-react';
 import LegacyTheme from '@jsinfo/components/legacy/LegacyTheme';
-import BackToDashboardLink from '@jsinfo/components/modern/BackToDashboard';
+import BackToConsumersLink from './_components/BackToConsumers';
 
 export default function Consumer({ params }: { params: { lavaid: string } }) {
 
@@ -47,7 +46,7 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
 
   return (
     <>
-      <BackToDashboardLink />
+      <BackToConsumersLink />
 
       <h1 className="text-3xl font-bold mb-4">{consumer.addr}</h1>
 
