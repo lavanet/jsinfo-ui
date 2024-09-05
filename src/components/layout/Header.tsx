@@ -4,7 +4,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Search } from 'lucide-react';
-import { Input } from '@jsinfo/components/shadcn/Input';
+import { Input } from '@jsinfo/components/ui2/Input';
 import Navigation from './Navigation';
 import MobileNavigation from './MobileNavigation';
 import LastUpdateBadge from '../modern/LastUpdateBadge';

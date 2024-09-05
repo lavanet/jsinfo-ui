@@ -3,8 +3,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowUpRight } from "lucide-react";
-import { Button } from "@jsinfo/components/radixui/Button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@jsinfo/components/radixui/Card";
+import { Button } from "@jsinfo/components/ui/Button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@jsinfo/components/ui/Card";
 import IndexChainsTable from "@jsinfo/app/_components/IndexChainsTable";
 
 export default function IndexChainsTableBlock() {

@@ -3,8 +3,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { Menu } from 'lucide-react';
-import { Button } from '@jsinfo/components/radixui/Button';
-import { Sheet, SheetContent, SheetTrigger } from '@jsinfo/components/radixui/Sheet';
+import { Button } from '@jsinfo/components/ui/Button';
+import { Sheet, SheetContent, SheetTrigger } from '@jsinfo/components/ui/Sheet';
 import LavaLogoLink from '../modern/LavaLogoLink';
 import { usePathname } from 'next/navigation';
 

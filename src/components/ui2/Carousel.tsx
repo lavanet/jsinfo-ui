@@ -9,7 +9,7 @@ import useEmblaCarousel, {
 } from "embla-carousel-react"
 
 import { cn } from "@jsinfo/lib/css"
-import { Button } from "@jsinfo/components/radixui/Button"
+import { Button } from "@jsinfo/components/ui/Button"
 
 type CarouselApi = UseEmblaCarouselType[1]
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>

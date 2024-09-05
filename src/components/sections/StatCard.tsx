@@ -1,7 +1,7 @@
 // src/components/sections/StatCard.tsx
 
 import React, { ReactNode } from 'react';
-import { Card, CardHeader, CardContent, CardTitle } from '@jsinfo/components/radixui/Card';
+import { Card, CardHeader, CardContent, CardTitle } from '@jsinfo/components/ui/Card';
 import { FormatNumberWithString } from '@jsinfo/lib/formatting';
 import ModernTooltip from '../modern/ModernTooltip';
 

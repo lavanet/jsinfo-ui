@@ -1,7 +1,7 @@
 // src/components/modern/LastUpdateBadge.tsx
 
 import React from 'react';
-import { Badge } from '@jsinfo/components/radixui/Badge';
+import { Badge } from '@jsinfo/components/ui/Badge';
 import { useApiFetch } from '@jsinfo/hooks/useApiFetch';
 import ModernTooltip from './ModernTooltip';
 

@@ -17,19 +17,19 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@jsinfo/components/radixui/Card";
-import { Button } from "@jsinfo/components/radixui/Button";
-import { Calendar } from "@jsinfo/components/shadcn/Calendar";
+} from "@jsinfo/components/ui/Card";
+import { Button } from "@jsinfo/components/ui/Button";
+import { Calendar } from "@jsinfo/components/ui2/Calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@jsinfo/components/radixui/Popover";
+} from "@jsinfo/components/ui/Popover";
 import CustomCombobox from "../../components/sections/CustomCombobox";
 import { cn } from "@jsinfo/lib/css"
 import UsageGraphSkeleton from "../../components/sections/UsageGraphSkeleton";
 import useApiSwrFetch from "@jsinfo/hooks/useApiSwrFetch";
-import { CalendarWithLastXButtons } from "@jsinfo/components/shadcn/CalendarWithLastXButtons";
+import { CalendarWithLastXButtons } from "@jsinfo/components/ui2/CalendarWithLastXButtons";
 
 const fetcher = (url: string | URL | Request) => fetch(url).then((res) => res.json());
 
@@ -58,7 +58,6 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
     qosAvailabilityAvg: true,
     qosLatencyAvg: true,
   });
-
 
   const { data, error, isLoading } = useApiSwrFetch(() => {
     if (dateRange?.from && dateRange?.to) {

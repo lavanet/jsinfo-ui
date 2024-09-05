@@ -7,7 +7,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import { DayPicker, DateRange } from "react-day-picker"
 
 import { cn } from "@jsinfo/lib/css"
-import { buttonVariants } from "@jsinfo/components/radixui/Button"
+import { buttonVariants } from "@jsinfo/components/ui/Button"
 
 import { subDays, startOfWeek, startOfMonth, startOfYear, subMonths, subWeeks } from 'date-fns';
 

@@ -1,15 +1,15 @@
 // src/components/sections/CustomCombobox.tsx
 
 import React, { useState } from "react";
-import { Button } from "@jsinfo/components/radixui/Button";
+import { Button } from "@jsinfo/components/ui/Button";
 import { ChevronsUpDown } from "lucide-react";
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
-} from "@jsinfo/components/radixui/Popover";
-import { Checkbox } from "@jsinfo/components/radixui/Checkbox";
-import { Input } from "@jsinfo/components/shadcn/Input";
+} from "@jsinfo/components/ui/Popover";
+import { Checkbox } from "@jsinfo/components/ui/Checkbox";
+import { Input } from "@jsinfo/components/ui2/Input";
 
 const CustomCombobox = ({ availableChains = [], selectedChains = [], onSelectionChange }: { availableChains: string[], selectedChains: string[], onSelectionChange: (updatedSelection: string[]) => void }) => {
     const [open, setOpen] = useState(false);

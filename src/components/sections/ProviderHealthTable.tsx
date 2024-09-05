@@ -3,8 +3,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@jsinfo/components/shadcn/Table";
-import { Badge } from "@jsinfo/components/radixui/Badge";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@jsinfo/components/ui2/Table";
+import { Badge } from "@jsinfo/components/ui/Badge";
 import {
   Pagination,
   PaginationContent,
@@ -13,7 +13,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@jsinfo/components/shadcn/Pagination";
+} from "@jsinfo/components/ui2/Pagination";
 
 interface HealthData {
   id: string;

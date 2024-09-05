@@ -5,8 +5,8 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@jsinfo/components/radixui/Card";
-import { Button } from "@jsinfo/components/radixui/Button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@jsinfo/components/ui/Card";
+import { Button } from "@jsinfo/components/ui/Button";
 import { UsageGraph } from "@jsinfo/app/_components/IndexUsageGraph";
 import { ProviderHealthTable } from "@jsinfo/components/sections/ProviderHealthTable";
 
