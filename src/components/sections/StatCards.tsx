@@ -1,7 +1,7 @@
 // src/components/sections/StatCards.tsx
 
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@jsinfo/components/ui/Card";
+import { Card, CardContent, CardHeader, CardTitle } from "@jsinfo/components/shadcn/ui/Card";
 import { DollarSign, Users, CreditCard, Activity } from "lucide-react";
 
 export default function StatCards() {

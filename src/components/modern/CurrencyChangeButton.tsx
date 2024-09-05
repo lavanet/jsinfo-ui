@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect, FC } from 'react';
 import { DollarSign } from 'lucide-react';
-import { Toggle } from '@jsinfo/components/ui/Toggle';
+import { Toggle } from '@jsinfo/components/shadcn/ui/Toggle';
 import { GetInfoNetwork } from '@jsinfo/lib/env';
 
 const CurrencyChangeButton: FC = () => {

@@ -11,7 +11,7 @@ import {
     PaginationLink,
     PaginationNext,
     PaginationPrevious,
-} from "@jsinfo/components/ui2/Pagination";
+} from "@jsinfo/components/shadcn/ui2/Pagination";
 import { SortAndPaginationConfig } from "@jsinfo/lib/types";
 import { PaginationState } from "@jsinfo/hooks/useApiPaginationFetch";
 

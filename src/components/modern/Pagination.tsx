@@ -9,7 +9,7 @@ import {
     PaginationLink,
     PaginationNext,
     PaginationPrevious,
-} from "@jsinfo/components/ui2/Pagination";
+} from "@jsinfo/components/shadcn/ui2/Pagination";
 
 interface PaginationControlProps {
     currentPage: number;

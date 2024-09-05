@@ -10,9 +10,9 @@ import { Inter as FontSans } from "next/font/google";
 import Header from "@jsinfo/components/layout/Header";
 import Footer from "@jsinfo/components/layout/Footer";
 import { cn } from "@jsinfo/lib/css"
-import { TooltipProvider } from "@jsinfo/components/ui/Tooltip";
+import { TooltipProvider } from "@jsinfo/components/shadcn/ui/Tooltip";
 import { NoSsrComponent } from "@jsinfo/components/helpers/NoSsrComponent";
-import { ThemeProvider as ShadcnThemeProvider } from "@jsinfo/components/ui2/ThemeProvider";
+import { ThemeProvider as ShadcnThemeProvider } from "@jsinfo/components/shadcn/ui2/ThemeProvider";
 
 import '@radix-ui/themes/styles.css';
 import "./styles/globals.css";

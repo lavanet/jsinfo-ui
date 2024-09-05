@@ -17,19 +17,19 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@jsinfo/components/ui/Card";
-import { Button } from "@jsinfo/components/ui/Button";
-import { Calendar } from "@jsinfo/components/ui2/Calendar";
+} from "@jsinfo/components/shadcn/ui/Card";
+import { Button } from "@jsinfo/components/shadcn/ui/Button";
+import { Calendar } from "@jsinfo/components/shadcn/ui2/Calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@jsinfo/components/ui/Popover";
+} from "@jsinfo/components/shadcn/ui/Popover";
 import CustomCombobox from "../../components/sections/CustomCombobox";
 import { cn } from "@jsinfo/lib/css"
 import UsageGraphSkeleton from "../../components/sections/UsageGraphSkeleton";
 import useApiSwrFetch from "@jsinfo/hooks/useApiSwrFetch";
-import { CalendarWithLastXButtons } from "@jsinfo/components/ui2/CalendarWithLastXButtons";
+import { CalendarWithLastXButtons } from "@jsinfo/components/shadcn/ui2/CalendarWithLastXButtons";
 
 const fetcher = (url: string | URL | Request) => fetch(url).then((res) => res.json());
 

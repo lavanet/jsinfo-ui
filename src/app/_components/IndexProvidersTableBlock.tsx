@@ -3,8 +3,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowUpRight } from "lucide-react";
-import { Button } from "@jsinfo/components/ui/Button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@jsinfo/components/ui/Card";
+import { Button } from "@jsinfo/components/shadcn/ui/Button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@jsinfo/components/shadcn/ui/Card";
 import IndexProvidersTable from "./IndexProvidersTable";
 
 export default function IndexProvidersTableBlock() {

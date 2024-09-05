@@ -1,8 +1,8 @@
 // src/components/sections/UsageGraphSkeleton.tsx
 
 import React from "react";
-import { Skeleton } from "@jsinfo/components/ui2/Skeleton";
-import { Card, CardContent, CardHeader } from "@jsinfo/components/ui/Card";
+import { Skeleton } from "@jsinfo/components/shadcn/ui2/Skeleton";
+import { Card, CardContent, CardHeader } from "@jsinfo/components/shadcn/ui/Card";
 
 const UsageGraphSkeleton = () => {
   return (

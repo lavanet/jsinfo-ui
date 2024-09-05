@@ -10,7 +10,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@jsinfo/components/ui2/Table";
+} from "@jsinfo/components/shadcn/ui2/Table";
 import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
 import useApiSwrFetch from "@jsinfo/hooks/useApiSwrFetch";
 import { AxiosApiGet } from "@jsinfo/fetching/axios";
