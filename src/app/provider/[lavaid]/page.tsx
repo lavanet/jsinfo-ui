@@ -31,6 +31,7 @@ import ProviderClaimableRewardsTab from "./_components/ProviderClaimableRewardsT
 import ProviderCards from "./_components/ProviderCards";
 import BackToDashboardLink from "@jsinfo/components/modern/BackToDashboard";
 import LegacyTheme from "@jsinfo/components/legacy/LegacyTheme";
+import ProviderPage from "@jsinfo/components/sections/ProviderPage";
 
 export default function Provider({ params }: { params: { lavaid: string } }) {
 
@@ -65,6 +66,8 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
       <MonikerAndProviderAddressCard provider={provider} />
 
       <ProviderCards addr={decodedLavaId} />
+
+      <ProviderPage address={decodedLavaId} />
 
       <LegacyTheme>
 

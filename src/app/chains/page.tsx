@@ -7,8 +7,6 @@ import React from "react";
 import { ChainsAllCards } from "./_components/ChainsPageCards";
 import ChainsChainsTab from "./_components/ChainsChainsTab";
 import LegacyTheme from "@jsinfo/components/legacy/LegacyTheme";
-import { CardTitle } from "react-bootstrap";
-import { CardDescription } from "@jsinfo/components/radixui/Card";
 
 export default function Home() {
 
