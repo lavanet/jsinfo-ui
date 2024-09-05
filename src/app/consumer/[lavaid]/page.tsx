@@ -17,6 +17,7 @@ import ConsumersEventsTab from './_components/ConsumersEventsTab';
 import StatCard from '@jsinfo/components/sections/StatCard';
 import { MonitorCog, ArrowUpNarrowWide, CreditCard } from 'lucide-react';
 import LegacyTheme from '@jsinfo/components/legacy/LegacyTheme';
+import BackToDashboardLink from '@jsinfo/components/modern/BackToDashboard';
 
 export default function Consumer({ params }: { params: { lavaid: string } }) {
 
@@ -46,18 +47,9 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
 
   return (
     <>
-      <Card>
-        <Flex gap="3" align="center">
-          <Box style={{ paddingLeft: "5px" }}>
-            <Text as="div" size="2" color="gray">
-              Consumer
-            </Text>
-            <Text as="div" size="2" weight="bold">
-              {consumer.addr}
-            </Text>
-          </Box>
-        </Flex>
-      </Card>
+      <BackToDashboardLink />
+
+      <h1 className="text-3xl font-bold mb-4">{consumer.addr}</h1>
 
       <div style={{ marginTop: '25px' }}></div>
       <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3">

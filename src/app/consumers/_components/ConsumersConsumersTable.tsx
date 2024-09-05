@@ -15,7 +15,7 @@ const ConsumersConsumersTable: React.FC<{}> = () => {
     const { data, loading, error } = useApiFetch("consumerspageConsumers");
 
     if (error) return <ErrorDisplay message={error} />;
-    if (loading) return <LoadingIndicator loadingText={`Loading consumers table data`} greyText={`consumers table`} />;
+    if (loading) return <LoadingIndicator loadingText={`Loading consumers page`} greyText={`consumers`} />;
 
     return (
         <Box>
