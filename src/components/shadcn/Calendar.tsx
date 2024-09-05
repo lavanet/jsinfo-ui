@@ -1,15 +1,27 @@
-// src/components/ui/Calendar.tsx
+// src/components/shadcn/Calendar.tsx
 
 "use client"
 
 import * as React from "react"
-import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 import { DayPicker } from "react-day-picker"
 
 import { cn } from "@jsinfo/lib/css"
 import { buttonVariants } from "@jsinfo/components/radixui/Button"
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>
+
+/*
+  <Calendar
+    mode="range"
+    defaultMonth={tempDateRange?.from}
+    selected={tempDateRange}
+    onSelect={handleDateRangeSelect}
+    numberOfMonths={2}
+    disabled={disabledDays}
+    toDate={new Date()}
+  />
+*/
 
 function Calendar({
   className,
@@ -63,8 +75,8 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        // IconPrevious: ({ ...props }) => <ChevronLeftIcon className="h-4 w-4" />,
-        // IconRight: ({ ...props }) => <ChevronRightIcon className="h-4 w-4" />,
+        IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4" />,
+        IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4" />,
       }}
       {...props}
     />

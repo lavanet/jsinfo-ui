@@ -1,4 +1,4 @@
-// src/components/ui/ThemeProvider.tsx
+// src/components/shadcn/ThemeProvider.tsx
 
 "use client"
 

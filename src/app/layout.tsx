@@ -4,7 +4,6 @@ import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import { Container } from "@radix-ui/themes";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Theme } from "@radix-ui/themes";
 import { PageProvider } from "@jsinfo/components/legacy/PageProvider";
 import { GetPageTitle } from "@jsinfo/lib/env";
 import { Inter as FontSans } from "next/font/google";
@@ -13,7 +12,7 @@ import Footer from "@jsinfo/components/layout/Footer";
 import { cn } from "@jsinfo/lib/css"
 import { TooltipProvider } from "@jsinfo/components/radixui/Tooltip";
 import { NoSsrComponent } from "@jsinfo/components/helpers/NoSsrComponent";
-import { ThemeProvider as RadixUiThemeProvider } from "@jsinfo/components/radixui/ThemeProvider";
+import { ThemeProvider as ShadcnThemeProvider } from "@jsinfo/components/shadcn/ThemeProvider";
 
 import '@radix-ui/themes/styles.css';
 import "./styles/globals.css";
@@ -52,7 +51,7 @@ export default function RootLayout({
         )}
       >
 
-        <RadixUiThemeProvider
+        <ShadcnThemeProvider
           attribute="class"
           defaultTheme="dark"
         >
@@ -79,7 +78,7 @@ export default function RootLayout({
             </div>
           </Container>
 
-        </RadixUiThemeProvider>
+        </ShadcnThemeProvider>
 
       </body>
     </html>

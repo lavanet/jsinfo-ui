@@ -19,7 +19,7 @@ import {
   CardTitle,
 } from "@jsinfo/components/radixui/Card";
 import { Button } from "@jsinfo/components/radixui/Button";
-import { Calendar } from "@jsinfo/components/radixui/Calendar";
+import { Calendar } from "@jsinfo/components/shadcn/Calendar";
 import {
   Popover,
   PopoverContent,
@@ -29,6 +29,7 @@ import CustomCombobox from "../../components/sections/CustomCombobox";
 import { cn } from "@jsinfo/lib/css"
 import UsageGraphSkeleton from "../../components/sections/UsageGraphSkeleton";
 import useApiSwrFetch from "@jsinfo/hooks/useApiSwrFetch";
+import { CalendarWithLastXButtons } from "@jsinfo/components/shadcn/CalendarWithLastXButtons";
 
 const fetcher = (url: string | URL | Request) => fetch(url).then((res) => res.json());
 
@@ -305,15 +306,10 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
                 )}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
-              <Calendar
-                mode="range"
-                defaultMonth={tempDateRange?.from}
+            <PopoverContent className="w-auto p-0" align="end" side="bottom">
+              <CalendarWithLastXButtons
                 selected={tempDateRange}
                 onSelect={handleDateRangeSelect}
-                numberOfMonths={2}
-                disabled={disabledDays}
-                toDate={new Date()}
               />
               <div className="flex justify-end gap-2 p-3">
                 <Button

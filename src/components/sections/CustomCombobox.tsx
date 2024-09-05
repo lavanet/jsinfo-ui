@@ -9,7 +9,7 @@ import {
     PopoverTrigger,
 } from "@jsinfo/components/radixui/Popover";
 import { Checkbox } from "@jsinfo/components/radixui/Checkbox";
-import { Input } from "@jsinfo/components/radixui/Input";
+import { Input } from "@jsinfo/components/shadcn/Input";
 
 const CustomCombobox = ({ availableChains = [], selectedChains = [], onSelectionChange }: { availableChains: string[], selectedChains: string[], onSelectionChange: (updatedSelection: string[]) => void }) => {
     const [open, setOpen] = useState(false);
