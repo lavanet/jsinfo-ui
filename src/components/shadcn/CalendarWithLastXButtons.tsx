@@ -3,7 +3,6 @@
 "use client"
 
 import * as React from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
 import { DayPicker, DateRange } from "react-day-picker"
 
 import { cn } from "@jsinfo/lib/css"

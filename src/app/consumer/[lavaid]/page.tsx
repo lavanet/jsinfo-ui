@@ -48,7 +48,9 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
     <>
       <BackToConsumersLink />
 
-      <h1 className="text-3xl font-bold mb-4">{consumer.addr}</h1>
+      <div style={{ marginLeft: '23px' }}>
+        <h1 className="text-3xl font-bold mb-4">{consumer.addr}</h1>
+      </div>
 
       <div style={{ marginTop: '25px' }}></div>
       <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3">

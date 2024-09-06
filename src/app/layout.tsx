@@ -12,7 +12,7 @@ import Footer from "@jsinfo/components/layout/Footer";
 import { cn } from "@jsinfo/lib/css"
 import { TooltipProvider } from "@jsinfo/components/shadcn/ui/Tooltip";
 import { NoSsrComponent } from "@jsinfo/components/helpers/NoSsrComponent";
-import { ThemeProvider as ShadcnThemeProvider } from "@jsinfo/components/shadcn/ui2/ThemeProvider";
+import { ThemeProvider as ShadcnThemeProvider } from "@jsinfo/components/shadcn/ThemeProvider";
 
 import '@radix-ui/themes/styles.css';
 import "./styles/globals.css";
@@ -29,6 +29,10 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   colorScheme: "dark",
+  // width: '120',
+  initialScale: 0.6,
+  // maximumScale: 1.4,
+  userScalable: true,
 }
 
 const fontSans = FontSans({

@@ -19,7 +19,6 @@ import {
   CardTitle,
 } from "@jsinfo/components/shadcn/ui/Card";
 import { Button } from "@jsinfo/components/shadcn/ui/Button";
-import { Calendar } from "@jsinfo/components/shadcn/ui2/Calendar";
 import {
   Popover,
   PopoverContent,
@@ -29,7 +28,7 @@ import CustomCombobox from "../../components/sections/CustomCombobox";
 import { cn } from "@jsinfo/lib/css"
 import UsageGraphSkeleton from "../../components/sections/UsageGraphSkeleton";
 import useApiSwrFetch from "@jsinfo/hooks/useApiSwrFetch";
-import { CalendarWithLastXButtons } from "@jsinfo/components/shadcn/ui2/CalendarWithLastXButtons";
+import { CalendarWithLastXButtons } from "@jsinfo/components/shadcn/CalendarWithLastXButtons";
 
 const fetcher = (url: string | URL | Request) => fetch(url).then((res) => res.json());
 

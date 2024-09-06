@@ -45,7 +45,6 @@ export default function IndexChart() {
 
     let uvfetchData: UniqueVisitorsData[] = uvfetch.data.data;
 
-    console.log("uvfetchData", uvfetchData)
     if (!Array.isArray(uvfetchData) || uvfetchData.length === 0) {
         return RenderInFullPageCard(<ErrorDisplay message={"No data for chart loaded"} />);
     }

@@ -18,7 +18,7 @@ interface MonikerAndProviderAddressCardProps {
 }
 
 const renderUserIcon = () => (
-    <div style={{ margin: "-15px", marginBottom: "-2px", marginLeft: "-25px" }}>
+    <div style={{ margin: "-15px", marginBottom: "-5px", marginLeft: "-25px" }}>
         <Image
             src="/user-line.svg"
             width={70}

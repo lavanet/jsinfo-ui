@@ -55,7 +55,7 @@ const JsinfoTabs: React.FC<JsinfoTabsProps> = ({ tabs, defaultValue, children })
 
     return (
         <Tabs.Root defaultValue={activeTab} onValueChange={setActiveTab}>
-            <Tabs.List style={{ overflow: "hidden" }}>
+            <Tabs.List>
                 {tabs.map((tab) => (
                     <Tabs.Trigger
                         key={tab.value}
