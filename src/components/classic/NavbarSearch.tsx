@@ -16,7 +16,6 @@ export function NavbarSearch() {
         moniker: string;
     }
 
-
     let items: Item[] = [];
     const { data, loading, error } = useApiFetch("autoCompleteLinksHandler");
 

@@ -32,6 +32,8 @@ import ProviderCards from "./_components/ProviderCards";
 import LegacyTheme from "@jsinfo/components/classic/LegacyTheme";
 import ProviderPage from "@jsinfo/components/sections/ProviderPage";
 import BackToProvidersLink from "./_components/BackToProviders";
+import { CardContent, CardDescription, CardHeader, CardTitle } from "@jsinfo/components/shadcn/ui/Card";
+import ProviderHealthTable from "@jsinfo/components/sections/ProviderHealthTable";
 
 export default function Provider({ params }: { params: { lavaid: string } }) {
 
@@ -70,75 +72,92 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
       <ProviderChart providerId={decodedLavaId} />
       <div style={{ marginBottom: '20px' }}></div>
 
-      <LegacyTheme>
+      <CardHeader>
+        <CardTitle>Provider Latest Health</CardTitle>
+        <CardDescription>Recent health status for provider services</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <ProviderHealthTable providerId={decodedLavaId} />
+      </CardContent>
 
-        <div className="box-margin-div"></div>
+      <div className="box-margin-div"></div>
 
-        <ProviderLatestHealthCards lavaId={decodedLavaId} />
-        <div className="box-margin-div"></div>
+      <CardHeader>
+        <CardTitle>Full Provider Details</CardTitle>
+        <CardDescription>Comprehensive information about the provider's performance and metrics</CardDescription>
+      </CardHeader>
 
-        {/* <Card> */}
-        <JsinfoTabs defaultValue="health"
-          tabs={[
-            {
-              value: "health",
-              content: "Health",
-            },
-            {
-              value: "errors",
-              content: "Errors",
-            },
-            {
-              value: "attributes",
-              content: "Attributes",
-            },
-            {
-              value: "stakes",
-              content: "Stakes",
-            },
-            {
-              value: "events",
-              content: "Events",
-            },
-            {
-              value: "rewards",
-              content: "Rewards",
-            },
-            {
-              value: "reports",
-              content: "Reports",
-            },
-            {
-              value: "blockReports",
-              content: "Block Reports",
-            },
-            {
-              value: "claimableProviderRewards",
-              content: "Claimable Provider Rewards",
-            },
-            {
-              value: "accountInfo",
-              content: "Account Info",
-            },
-          ]}
-        >
-          <Box>
+      <CardContent>
 
-            <ProviderHealthTab addr={decodedLavaId} />
-            <ProviderErrorsTab addr={decodedLavaId} />
-            <ProviderEventsTab addr={decodedLavaId} />
-            <ProviderAttributesTab addr={decodedLavaId} />
-            <ProviderStakesTab addr={decodedLavaId} />
-            <ProviderRewardsTab addr={decodedLavaId} />
-            <ProviderReportsTab addr={decodedLavaId} />
-            <ProviderBlockReportsTab addr={decodedLavaId} />
-            <ProviderClaimableRewardsTab addr={decodedLavaId} />
-            <ProviderAccountInfoTab addr={decodedLavaId} />
+        <LegacyTheme>
 
-          </Box>
-        </JsinfoTabs>
-        {/* </Card> */}
-      </LegacyTheme>
+          {/* <ProviderLatestHealthCards lavaId={decodedLavaId} /> */}
+          <div className="box-margin-div"></div>
+
+          {/* <Card> */}
+          <JsinfoTabs defaultValue="health"
+            tabs={[
+              {
+                value: "health",
+                content: "Health History",
+              },
+              {
+                value: "errors",
+                content: "Errors",
+              },
+              {
+                value: "attributes",
+                content: "Attributes",
+              },
+              {
+                value: "stakes",
+                content: "Stakes",
+              },
+              {
+                value: "events",
+                content: "Events",
+              },
+              {
+                value: "rewards",
+                content: "Rewards",
+              },
+              {
+                value: "reports",
+                content: "Reports",
+              },
+              {
+                value: "blockReports",
+                content: "Block Reports",
+              },
+              {
+                value: "claimableProviderRewards",
+                content: "Claimable Provider Rewards",
+              },
+              {
+                value: "accountInfo",
+                content: "Account Info",
+              },
+            ]}
+          >
+            <Box>
+
+              <ProviderHealthTab addr={decodedLavaId} />
+              <ProviderErrorsTab addr={decodedLavaId} />
+              <ProviderEventsTab addr={decodedLavaId} />
+              <ProviderAttributesTab addr={decodedLavaId} />
+              <ProviderStakesTab addr={decodedLavaId} />
+              <ProviderRewardsTab addr={decodedLavaId} />
+              <ProviderReportsTab addr={decodedLavaId} />
+              <ProviderBlockReportsTab addr={decodedLavaId} />
+              <ProviderClaimableRewardsTab addr={decodedLavaId} />
+              <ProviderAccountInfoTab addr={decodedLavaId} />
+
+            </Box>
+          </JsinfoTabs>
+          {/* </Card> */}
+        </LegacyTheme>
+
+      </CardContent>
     </>
   );
 }

@@ -17,7 +17,7 @@ export default function useApiSwrFetch<T = any>(url: string | (() => string | nu
     const { data, error, isLoading } = useSWR<T>(url, axiosFetcher, {
         refreshInterval: 5 * 60 * 1000,
         revalidateOnFocus: false,
-        keepPreviousData: true
+        keepPreviousData: true,
     });
     return { data, error, isLoading };
 }
