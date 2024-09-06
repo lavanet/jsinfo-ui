@@ -163,7 +163,7 @@ export default function Events() {
                 rowFormatters={{
                   provider: (payment) => (<MonikerAndProviderLink provider={payment} />),
                   specId: (payment) => (
-                    <Link className='orangelinks' href={`/spec/${payment.specId}`}>
+                    <Link className='orangelinks' href={`/chain/${payment.specId}`}>
                       {payment.specId}
                     </Link>
                   ),

@@ -119,7 +119,7 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
                 pkeyUrl="none"
                 rowFormatters={{
                   specId: (data) => (
-                    <Link className='orangelinks' href={`/spec/${data.specId}`}>{data.specId}</Link>
+                    <Link className='orangelinks' href={`/chain/${data.specId}`}>{data.specId}</Link>
                   ),
                 }}
               />

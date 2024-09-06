@@ -44,7 +44,7 @@ export default function ChainsChainsTab() {
             defaultSortKey="relaySum|desc"
             tableAndTabName="chains"
             pkey="chainId"
-            pkeyUrl="spec"
+            pkeyUrl="chain"
             rowFormatters={{
                 relaySum: (data) => FormatNumber(data.relaySum),
                 cuSum: (data) => FormatNumber(data.cuSum),

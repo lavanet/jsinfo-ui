@@ -38,7 +38,7 @@ const ProviderRewardsTab: React.FC<ProviderRewardsTabProps> = ({ addr }) => {
             pkeyUrl="none"
             rowFormatters={{
                 "relay_payments.specId": (payment) => (
-                    <Link className='orangelinks' href={`/spec/${payment.relay_payments.specId}`}>
+                    <Link className='orangelinks' href={`/chain/${payment.relay_payments.specId}`}>
                         {payment.relay_payments.specId}
                     </Link>
                 ),

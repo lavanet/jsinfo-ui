@@ -32,7 +32,7 @@ const ProviderHealthTab: React.FC<ProviderHealthTabProps> = ({ addr }) => {
             rowFormatters={{
                 timestamp: (data) => (<TimeTooltip datetime={data.timestamp} />),
                 spec: (data) => (
-                    <Link className='orangelinks' href={`/spec/${data.spec}`}>{data.spec}</Link>
+                    <Link className='orangelinks' href={`/chain/${data.spec}`}>{data.spec}</Link>
                 ),
                 status: (data) => <StatusCall status={data.status} />,
             }}

@@ -111,7 +111,7 @@ const renderCard = (specStatusAndInterfaces: SpecStatusAndInterfaces, spec: stri
                         alt="chain"
                         style={{ display: 'inline-block', verticalAlign: 'middle', paddingBottom: '1px', marginRight: '5px' }}
                     />
-                    <Link className='orangelinks' key={hckey(`${spec}_link`)} href={`/spec/${spec}`} style={{ fontWeight: 'bold', marginRight: '5px', textDecoration: 'none' }} onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}>
+                    <Link className='orangelinks' key={hckey(`${spec}_link`)} href={`/chain/${spec}`} style={{ fontWeight: 'bold', marginRight: '5px', textDecoration: 'none' }} onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}>
                         {spec}
                     </Link>
                 </div>

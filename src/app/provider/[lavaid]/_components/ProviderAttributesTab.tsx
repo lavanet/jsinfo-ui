@@ -29,7 +29,7 @@ const ProviderEventsTab: React.FC<ProviderEventsTabProps> = ({ addr }) => {
             pkeyUrl="spec"
             rowFormatters={{
                 specId: (data) => (
-                    <Link className='orangelinks' href={`/spec/${data.specId}`}>{data.specId}</Link>
+                    <Link className='orangelinks' href={`/chain/${data.specId}`}>{data.specId}</Link>
                 ),
                 status: (data) => <StatusCall status={StatusToString(data.status)} />,
                 geolocation: (data) => GeoLocationToString(data.geolocation),

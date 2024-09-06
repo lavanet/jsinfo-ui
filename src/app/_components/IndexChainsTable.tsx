@@ -37,7 +37,7 @@ const ChainsTable = () => {
           {paginatedChains.map((chain: any, index: number) => (
             <TableRow key={index}>
               <TableCell>
-                <Link className="orangelinks" href={`/spec/${chain.chainId}`}>
+                <Link className="orangelinks" href={`/chain/${chain.chainId}`}>
                   {chain.chainId}
                 </Link>
               </TableCell>

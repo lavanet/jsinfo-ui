@@ -46,7 +46,7 @@ const ProviderBlockReportsTab: React.FC<ProviderBlockReportsTabProps> = ({ addr 
                 ),
                 timestamp: (data) => (<TimeTooltip datetime={data.timestamp} />),
                 chainId: (stake) => (
-                    <Link className='orangelinks' href={`/spec/${stake.chainId}`}>{stake.chainId}</Link>
+                    <Link className='orangelinks' href={`/chain/${stake.chainId}`}>{stake.chainId}</Link>
                 ),
                 chainBlockHeight: (data) => FormatNumberWithString(data.chainBlockHeight),
             }}
