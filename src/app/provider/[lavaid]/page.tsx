@@ -30,7 +30,6 @@ import ProviderAccountInfoTab from './_components/ProviderAccountInfoTab';
 import ProviderClaimableRewardsTab from "./_components/ProviderClaimableRewardsTab";
 import ProviderCards from "./_components/ProviderCards";
 import LegacyTheme from "@jsinfo/components/classic/LegacyTheme";
-import ProviderPage from "@jsinfo/components/sections/ProviderPage";
 import BackToProvidersLink from "./_components/BackToProviders";
 import { CardContent, CardDescription, CardHeader, CardTitle } from "@jsinfo/components/shadcn/ui/Card";
 import ProviderHealthTable from "@jsinfo/components/sections/ProviderHealthTable";

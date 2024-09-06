@@ -8,7 +8,7 @@ import { ArrowLeft } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@jsinfo/components/shadcn/ui/Card";
 import { Button } from "@jsinfo/components/shadcn/ui/Button";
 import { UsageGraph } from "@jsinfo/app/_components/IndexChart";
-import { ProviderHealthTable } from "@jsinfo/components/sections/ProviderHealthTable";
+// import { ProviderHealthTable } from "@jsinfo/components/sections/ProviderHealthTable";
 
 interface ProviderData {
   moniker?: string;
@@ -113,7 +113,7 @@ const ProviderPage = ({ address }: { address: string }) => {
           <CardDescription>Recent health status for provider services</CardDescription>
         </CardHeader>
         <CardContent>
-          <ProviderHealthTable providerId={providerData?.provider} />
+          {/* <ProviderHealthTable providerId={providerData?.provider} /> */}
         </CardContent>
       </Card>
     </div>
