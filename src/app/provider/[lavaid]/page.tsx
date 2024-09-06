@@ -78,67 +78,67 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
         <ProviderLatestHealthCards lavaId={decodedLavaId} />
         <div className="box-margin-div"></div>
 
-        <Card>
-          <JsinfoTabs defaultValue="health"
-            tabs={[
-              {
-                value: "health",
-                content: "Health",
-              },
-              {
-                value: "errors",
-                content: "Errors",
-              },
-              {
-                value: "attributes",
-                content: "Attributes",
-              },
-              {
-                value: "stakes",
-                content: "Stakes",
-              },
-              {
-                value: "events",
-                content: "Events",
-              },
-              {
-                value: "rewards",
-                content: "Rewards",
-              },
-              {
-                value: "reports",
-                content: "Reports",
-              },
-              {
-                value: "blockReports",
-                content: "Block Reports",
-              },
-              {
-                value: "claimableProviderRewards",
-                content: "Claimable Provider Rewards",
-              },
-              {
-                value: "accountInfo",
-                content: "Account Info",
-              },
-            ]}
-          >
-            <Box>
+        {/* <Card> */}
+        <JsinfoTabs defaultValue="health"
+          tabs={[
+            {
+              value: "health",
+              content: "Health",
+            },
+            {
+              value: "errors",
+              content: "Errors",
+            },
+            {
+              value: "attributes",
+              content: "Attributes",
+            },
+            {
+              value: "stakes",
+              content: "Stakes",
+            },
+            {
+              value: "events",
+              content: "Events",
+            },
+            {
+              value: "rewards",
+              content: "Rewards",
+            },
+            {
+              value: "reports",
+              content: "Reports",
+            },
+            {
+              value: "blockReports",
+              content: "Block Reports",
+            },
+            {
+              value: "claimableProviderRewards",
+              content: "Claimable Provider Rewards",
+            },
+            {
+              value: "accountInfo",
+              content: "Account Info",
+            },
+          ]}
+        >
+          <Box>
 
-              <ProviderHealthTab addr={decodedLavaId} />
-              <ProviderErrorsTab addr={decodedLavaId} />
-              <ProviderEventsTab addr={decodedLavaId} />
-              <ProviderAttributesTab addr={decodedLavaId} />
-              <ProviderStakesTab addr={decodedLavaId} />
-              <ProviderRewardsTab addr={decodedLavaId} />
-              <ProviderReportsTab addr={decodedLavaId} />
-              <ProviderBlockReportsTab addr={decodedLavaId} />
-              <ProviderClaimableRewardsTab addr={decodedLavaId} />
-              <ProviderAccountInfoTab addr={decodedLavaId} />
+            <ProviderHealthTab addr={decodedLavaId} />
+            <ProviderErrorsTab addr={decodedLavaId} />
+            <ProviderEventsTab addr={decodedLavaId} />
+            <ProviderAttributesTab addr={decodedLavaId} />
+            <ProviderStakesTab addr={decodedLavaId} />
+            <ProviderRewardsTab addr={decodedLavaId} />
+            <ProviderReportsTab addr={decodedLavaId} />
+            <ProviderBlockReportsTab addr={decodedLavaId} />
+            <ProviderClaimableRewardsTab addr={decodedLavaId} />
+            <ProviderAccountInfoTab addr={decodedLavaId} />
 
-            </Box>
-          </JsinfoTabs>
-        </Card>
+          </Box>
+        </JsinfoTabs>
+        {/* </Card> */}
       </LegacyTheme>
     </>
   );

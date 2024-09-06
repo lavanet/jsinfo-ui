@@ -181,7 +181,7 @@ export const IndexChacheHitCard: React.FC = () => {
 export const IndexAllCards: React.FC = () => {
     return (
         <>
-            <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
+            <div className="grid gap-4 grid-cols-2 md:gap-8 lg:grid-cols-3">
                 <IndexUniqueUsersCard />
                 <IndexUniqueUsersAvgCard />
                 <IndexTotalRelaysCard />

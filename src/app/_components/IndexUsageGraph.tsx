@@ -3,7 +3,6 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from "react";
-import useSWR from 'swr';
 import { format, addDays } from "date-fns";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { DateRange } from "react-day-picker";
@@ -29,8 +28,6 @@ import { cn } from "@jsinfo/lib/css"
 import UsageGraphSkeleton from "../../components/sections/UsageGraphSkeleton";
 import useApiSwrFetch from "@jsinfo/hooks/useApiSwrFetch";
 import { CalendarWithLastXButtons } from "@jsinfo/components/shadcn/CalendarWithLastXButtons";
-
-const fetcher = (url: string | URL | Request) => fetch(url).then((res) => res.json());
 
 interface UsageGraphProps {
   providerId?: string | null;
@@ -184,8 +181,6 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
     setTempDateRange(dateRange);
     setIsCalendarOpen(false);
   };
-
-  const disabledDays = { after: new Date() };
 
   const getQoSColor = (score: number) => {
     if (score >= 0.99) return '#00ff00';

@@ -43,8 +43,8 @@ const renderProviderAddressInLineWithIcon = (provider: string) => (
 );
 
 const renderProviderAddressOnNewLine = (provider: string) => (
-    <p className="text-muted-foreground mb-8">Address:
-        {provider}
+    <p className="text-muted-foreground mb-8">
+        Address:&nbsp;{provider}
     </p>
 );
 
