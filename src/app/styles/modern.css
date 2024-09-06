@@ -1,8 +1,46 @@
 /* -------- documnet body ------------------- */
 
+html,
+body {
+  overflow-x: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .body-content {
   background-color: var(--background-color);
   width: 100vw;
+  padding-left: 5px;
+  padding-right: 5px;
+  box-sizing: border-box;
+}
+
+@supports (-ms-overflow-style: none) {
+  /* Edge/IE */
+  .body-content {
+    padding-right: 20px;
+  }
+}
+
+@-moz-document url-prefix() {
+  /* Firefox */
+  .body-content {
+    padding-right: 8px;
+  }
+}
+
+.windows-adjustment {
+  padding-right: 20px;
+}
+
+.windows-adjustment-header {
+  padding-right: 40px;
+}
+
+@media (min-width: 920px) and (max-width: 1020px) {
+  .windows-adjustment-header {
+    padding-right: 60px;
+  }
 }
 
 .body-content-boundary {

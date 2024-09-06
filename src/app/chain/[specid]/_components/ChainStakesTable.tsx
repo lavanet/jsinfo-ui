@@ -5,7 +5,6 @@ import { Box } from "@radix-ui/themes";
 import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { SortableTableInATabComponent } from "@jsinfo/components/classic/StaticSortTable";
 import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
-import { RenderInFullPageCard } from '@jsinfo/lib/utils';
 import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
 import MonikerAndProviderLink from '@jsinfo/components/modern/MonikerAndProviderLink';
 import LavaWithTooltip from "@jsinfo/components/modern/LavaWithTooltip";
@@ -17,8 +16,8 @@ interface SpecStakesTableProps {
 const SpecStakesTable: React.FC<SpecStakesTableProps> = ({ specid }) => {
     const { data, loading, error } = useApiFetch("specStakes/" + specid);
 
-    if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
-    if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${specid} stake data`} greyText={`${specid} stake`} />);
+    if (error) return <ErrorDisplay message={error} />;
+    if (loading) return <LoadingIndicator loadingText={`Loading ${specid} stake data`} greyText={`${specid} stake`} />;
 
     return (
         <Box>

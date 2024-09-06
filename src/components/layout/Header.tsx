@@ -28,6 +28,20 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const isWindows = navigator.platform.indexOf('Win') > -1;
+    if (isWindows) {
+      const bodyContent = document.querySelector('.body-content');
+      if (bodyContent) {
+        bodyContent.classList.add('windows-adjustment');
+      }
+      const topHeader = document.querySelector('.top-header');
+      if (topHeader) {
+        topHeader.classList.add('windows-adjustment-header');
+      }
+    }
+  }, []);
+
   return (
     <header className="top-header sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 header-fade" style={{ opacity }}>
       <MobileNavigation />

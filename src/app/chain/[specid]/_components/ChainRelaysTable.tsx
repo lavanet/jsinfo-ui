@@ -6,11 +6,10 @@ import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { SortableTableInATabComponent } from "@jsinfo/components/classic/StaticSortTable";
 import { StatusToString, GeoLocationToString } from "@jsinfo/lib/convertors";
 import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
-import { RenderInFullPageCard } from '@jsinfo/lib/utils';
 import { FormatNumber } from '@jsinfo/lib/formatting';
 import StatusCall from '@jsinfo/components/modern/StatusCell';
 import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
-import SpecProviderEndpointHealthSummary from '@jsinfo/app/chain/[specid]/_components/SpecProviderEndpointHealthSummary';
+import SpecProviderEndpointHealthSummary from '@jsinfo/app/chain/[specid]/_components/ChainProviderEndpointHealthSummary';
 import MonikerAndProviderLink from '@jsinfo/components/modern/MonikerAndProviderLink';
 
 interface SpecRelaysTableProps {
@@ -20,8 +19,8 @@ interface SpecRelaysTableProps {
 const SpecRelaysTable: React.FC<SpecRelaysTableProps> = ({ specid }) => {
     const { data, loading, error } = useApiFetch("specStakes/" + specid);
 
-    if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
-    if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${specid} stake data`} greyText={`${specid} stake`} />);
+    if (error) return <ErrorDisplay message={error} />;
+    if (loading) return <LoadingIndicator loadingText={`Loading ${specid} stake data`} greyText={`${specid} stake`} />;
 
     return (
         <Box>

@@ -81,53 +81,54 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
       <LegacyTheme>
         <ConsumerChart addr={decodedLavaId} />
         <div className="box-margin-div"></div>
+        <div className="box-margin-div"></div>
 
-        <Card>
-          <JsinfoTabs defaultValue="subscriptions"
-            tabs={[
-              {
-                value: "subscriptions",
-                content: "Subscriptions",
-              },
-              {
-                value: "conflicts",
-                content: "Conflicts",
-              },
-              {
-                value: "events",
-                content: "Events",
-              },
-            ]}
-          >
-            <Box>
+        {/* <Card> */}
+        <JsinfoTabs defaultValue="subscriptions"
+          tabs={[
+            {
+              value: "subscriptions",
+              content: "Subscriptions",
+            },
+            {
+              value: "conflicts",
+              content: "Conflicts",
+            },
+            {
+              value: "events",
+              content: "Events",
+            },
+          ]}
+        >
+          <Box>
 
-              <ConsumerSubscriptionsTable addr={decodedLavaId} />
+            <ConsumerSubscriptionsTable addr={decodedLavaId} />
 
-              <SortableTableInATabComponent
-                columns={[
-                  { key: "specId", name: "Spec" },
-                  { key: "requestBlock", name: "Block" },
-                  { key: "apiInterface", name: "Interface" },
-                  { key: "connectionType", name: "Connection Type" },
-                  { key: "requestData", name: "Request Data" },
-                  { key: "apiURL", name: "Api URL" },
-                ]}
-                data={consumer.conflicts}
-                defaultSortKey="requestBlock"
-                tableAndTabName="conflicts"
-                pkey="id"
-                pkeyUrl="none"
-                rowFormatters={{
-                  specId: (data) => (
-                    <Link className='orangelinks' href={`/chain/${data.specId}`}>{data.specId}</Link>
-                  ),
-                }}
-              />
-            </Box>
+            <SortableTableInATabComponent
+              columns={[
+                { key: "specId", name: "Spec" },
+                { key: "requestBlock", name: "Block" },
+                { key: "apiInterface", name: "Interface" },
+                { key: "connectionType", name: "Connection Type" },
+                { key: "requestData", name: "Request Data" },
+                { key: "apiURL", name: "Api URL" },
+              ]}
+              data={consumer.conflicts}
+              defaultSortKey="requestBlock"
+              tableAndTabName="conflicts"
+              pkey="id"
+              pkeyUrl="none"
+              rowFormatters={{
+                specId: (data) => (
+                  <Link className='orangelinks' href={`/chain/${data.specId}`}>{data.specId}</Link>
+                ),
+              }}
+            />
+          </Box>
 
-            <ConsumersEventsTab addr={decodedLavaId} />
-          </JsinfoTabs>
-        </Card>
+          <ConsumersEventsTab addr={decodedLavaId} />
+        </JsinfoTabs>
+        {/* </Card> */}
       </LegacyTheme>
     </>
   );
