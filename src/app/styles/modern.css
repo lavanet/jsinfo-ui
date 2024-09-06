@@ -238,3 +238,46 @@
 .rt-BaseCard {
   background-color: var(--background-color);
 }
+
+/* -------- charts ------------------ */
+
+.rechars-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  padding-bottom: 1rem;
+}
+
+.rechars-container-title {
+  width: 100%;
+}
+
+.rechars-container-title > *:first-child {
+  margin-bottom: 0.25rem;
+}
+
+.rechars-container-controls {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 0.5rem;
+}
+
+@media (min-width: 1000px) {
+  .rechars-container {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.5rem;
+  }
+
+  .rechars-container-title {
+    width: auto;
+  }
+
+  .rechars-container-controls {
+    width: auto;
+    margin-left: auto;
+  }
+}

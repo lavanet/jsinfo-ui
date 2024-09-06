@@ -1,304 +1,456 @@
-// src/components/charts/IndexChart.tsx
+// src/components/sections/UsageGraph.tsx
 
-import { RenderInFullPageCard } from "@jsinfo/lib/utils";
-import { ConvertJsInfoServerFormatedDateToJsDateObject } from "@jsinfo/lib/dateutils";
+"use client";
+
+import React, { useState, useMemo, useEffect } from "react";
+import { format, addDays } from "date-fns";
+import { CalendarIcon } from "@radix-ui/react-icons";
+import { DateRange } from "react-day-picker";
 import {
-    CHARTJS_COLORS,
-    ChartjsSetLastDotHighInChartData,
-    ChartjsSetLastPointToLineInChartOptions,
-    ChartJsLineChartOptions,
-    ChartJsLineChartData,
-    ChartJsLineChartDataset,
-    ChartJsSpecIdToDatasetMap,
-} from "@jsinfo/components/legacy/ChartJsReactiveLineChart";
-import { ErrorDisplay } from "@jsinfo/components/modern/ErrorDisplay";
-import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
-import ChartJsWithRadioToggle from "@jsinfo/components/legacy/ChartJsWithRadioToggle";
-import useApiDateFetch from "@jsinfo/hooks/useApiDateFetch";
+  Area, Line, ComposedChart, CartesianGrid, XAxis, YAxis, Tooltip, Brush,
+  Legend, ResponsiveContainer, AreaChart
+} from "recharts";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@jsinfo/components/shadcn/ui/Card";
+import { Button } from "@jsinfo/components/shadcn/ui/Button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@jsinfo/components/shadcn/ui/Popover";
+import CustomCombobox from "../../components/sections/CustomCombobox";
+import { cn } from "@jsinfo/lib/css"
+import UsageGraphSkeleton from "../../components/sections/UsageGraphSkeleton";
+import useApiSwrFetch from "@jsinfo/hooks/useApiSwrFetch";
+import { CalendarWithLastXButtons } from "@jsinfo/components/shadcn/CalendarWithLastXButtons";
 
-import { useState } from "react";
-import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
-
-type CuRelayItem = {
-    chainId: string;
-    cuSum: number;
-    relaySum: number;
-};
-
-type IndexChartResponse = {
-    date: string;
-    qos: number;
-    uniqueVisitors: number;
-    data: CuRelayItem[];
-};
-
-export default function IndexChart() {
-    const [isRelayOrCuSelected, setIsRelayOrCuSelected] = useState(false);
-    const [isUniqueVisitorsSelected, setIsUniqueVisitorsSelected] = useState(true);
-
-    const { data, loading, error, dates, setDates } = useApiDateFetch("indexChartsV2");
-    const uvfetch = useApiFetch("indexUniqueVisitorsChart");
-
-    if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
-    if (uvfetch.error) return RenderInFullPageCard(<ErrorDisplay message={uvfetch.error} />);
-    if (uvfetch.loading) return null;
-
-    let uvfetchData: UniqueVisitorsData[] = uvfetch.data.data;
-
-    if (!Array.isArray(uvfetchData) || uvfetchData.length === 0) {
-        return RenderInFullPageCard(<ErrorDisplay message={"No data for chart loaded"} />);
-    }
-
-    const chartChangeRadio = (value: any) => {
-        if (value == 'By CU') {
-            setIsUniqueVisitorsSelected(false);
-            setIsRelayOrCuSelected(false);
-            return;
-        }
-        if (value == 'By Relays') {
-            setIsUniqueVisitorsSelected(false);
-            setIsRelayOrCuSelected(true);
-            return;
-        }
-        // if (value == 'Unique users')
-        setIsUniqueVisitorsSelected(true);
-        return;
-    };
-
-    if (isUniqueVisitorsSelected) {
-        const uvfetchdata = uvfetchData.sort((a: UniqueVisitorsData, b: UniqueVisitorsData) => {
-            const dateA = ConvertJsInfoServerFormatedDateToJsDateObject(a.date);
-            const dateB = ConvertJsInfoServerFormatedDateToJsDateObject(b.date);
-            return dateA.getTime() - dateB.getTime();
-        });
-        return UniqueVisitorsChart(uvfetchdata, chartChangeRadio);
-    }
-
-    if (!Array.isArray(data.data) || data.data.length === 0) {
-        return RenderInFullPageCard(<ErrorDisplay message={"No data for chart loaded"} />);
-    }
-
-    let rawChartData: IndexChartResponse[] = data.data;
-
-    rawChartData = rawChartData.sort((a: IndexChartResponse, b: IndexChartResponse) => {
-        const dateA = ConvertJsInfoServerFormatedDateToJsDateObject(a.date);
-        const dateB = ConvertJsInfoServerFormatedDateToJsDateObject(b.date);
-        return dateA.getTime() - dateB.getTime();
-    });
-
-    if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading chart data`} greyText={`chart`} />);
-
-    const chartData: ChartJsLineChartData = {
-        datasets: [],
-    };
-
-    const chartOptions: ChartJsLineChartOptions = ChartjsSetLastPointToLineInChartOptions({
-        interaction: {
-            mode: "index",
-            intersect: false,
-        },
-        stacked: true,
-        plugins: {
-            legend: {
-                display: true
-            }
-        },
-        scales: {
-            y: {
-                type: "linear",
-                display: true,
-                position: "left",
-                stacked: true,
-            },
-            y1: {
-                type: "linear",
-                display: true,
-                position: "right",
-                min: 0,
-                max: 1.01,
-
-                // grid line settings
-                grid: {
-                    drawOnChartArea: false, // only want the grid lines for one axis to show up
-                },
-            },
-            y2: {
-                type: "linear",
-                display: false, // hide this axis
-                stacked: false, // not stacked
-            },
-            x: {
-                ticks: {
-                    autoSkip: false,
-                    maxTicksLimit: 200, // bigger then 6 * 30 - we store date up to 6 month ago
-                    callback: (t, i) => {
-                        // If there are less than 15 items, return the date for all
-                        if (rawChartData.length < 15) {
-                            return rawChartData[i]["date"];
-                        }
-
-                        // Otherwise, use the existing logic
-                        return i % 5 && i != 0 && i + 1 != rawChartData.length
-                            ? ""
-                            : rawChartData[i]["date"];
-                    }
-                },
-            },
-        },
-    });
-
-    const specIdToDatasetMap: ChartJsSpecIdToDatasetMap = {};
-    let i = 0;
-
-    let qosData: ChartJsLineChartDataset = {
-        label: "QoS Score",
-        data: [],
-        fill: false,
-        borderColor: "#AAFF00",
-        backgroundColor: "#AAFF00",
-        yAxisID: "y",
-        borderDash: [30, 1],
-    };
-
-    rawChartData.forEach((indexChartResponse: IndexChartResponse) => {
-        for (const cuRelayItem of indexChartResponse.data) {
-            if (!cuRelayItem.chainId) continue
-            if (specIdToDatasetMap[cuRelayItem.chainId] == undefined) {
-                specIdToDatasetMap[cuRelayItem.chainId] = {
-                    label: !isRelayOrCuSelected ? cuRelayItem.chainId + " Relays" : cuRelayItem.chainId + " CUs",
-                    data: [],
-                    fill: false,
-                    borderColor: CHARTJS_COLORS[i],
-                    backgroundColor: CHARTJS_COLORS[i],
-                    yAxisID: cuRelayItem.chainId === "All Chains" ? "y2" : "y",
-                    borderDash: cuRelayItem.chainId === "All Chains" ? [15, 1] : undefined,
-                };
-                i++;
-                if (i > CHARTJS_COLORS.length - 1) {
-                    i = 0;
-                }
-            }
-            specIdToDatasetMap[cuRelayItem.chainId].data.push({
-                x: indexChartResponse.date,
-                y: !isRelayOrCuSelected ? cuRelayItem.relaySum : cuRelayItem.cuSum,
-            });
-        }
-
-        qosData.data.push({
-            x: indexChartResponse.date,
-            y: indexChartResponse.qos,
-        });
-    });
-
-    chartData.datasets.push(qosData);
-
-    for (const [key, value] of Object.entries(specIdToDatasetMap)) {
-        chartData.datasets.push(value);
-    }
-
-    ChartjsSetLastDotHighInChartData(chartData);
-
-    return (
-        <ChartJsWithRadioToggle
-            data={chartData}
-            options={chartOptions}
-            title="QoS Score, Relays/CUs for Top 10 Chains"
-            onDateChange={setDates}
-            datePickerValue={dates}
-            rangeOptions={['Unique users', 'By Relays', 'By CU']}
-            rangeOnChange={chartChangeRadio}
-            chartKey={"RelayCuChart"}
-        />
-    );
+interface UsageGraphProps {
+  providerId?: string | null;
 }
 
-interface UniqueVisitorsData {
-    date: string;
-    uniqueVisitors: number | null;
-}
+type VisibleLinesType = {
+  [key: string]: boolean;
+  qos: boolean;
+  qosSyncAvg: boolean;
+  qosAvailabilityAvg: boolean;
+  qosLatencyAvg: boolean;
+};
 
-export function UniqueVisitorsChart(
-    rawChartData: UniqueVisitorsData[],
-    rangeOnChange: (value: any) => void
-) {
-    const chartData: ChartJsLineChartData = {
-        datasets: [],
-    };
+export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
+  const [dateRange, setDateRange] = useState<DateRange | undefined>({
+    from: addDays(new Date(), -90),
+    to: new Date(),
+  });
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const [tempDateRange, setTempDateRange] = useState<DateRange | undefined>(dateRange);
+  const [visibleLines, setVisibleLines] = useState<VisibleLinesType>({
+    qos: true,
+    qosSyncAvg: true,
+    qosAvailabilityAvg: true,
+    qosLatencyAvg: true,
+  });
 
-    const chartOptions: ChartJsLineChartOptions = ChartjsSetLastPointToLineInChartOptions({
-        interaction: {
-            mode: "index",
-            intersect: false,
-        },
-        plugins: {
-            legend: {
-                display: false
-            }
-        },
-        stacked: false,
-        scales: {
-            yuv: {
-                type: "linear",
-                display: true,
-                position: "left",
-                stacked: true,
-            },
-            xuv: {
-                ticks: {
-                    autoSkip: false,
-                    maxTicksLimit: 200, // bigger then 6 * 30 - we store date up to 6 month ago
-                    callback: (t, i) => {
-                        if (!rawChartData[i]) return undefined;
+  const { data, error, isLoading } = useApiSwrFetch(() => {
+    if (dateRange?.from && dateRange?.to) {
+      const fromDate = format(dateRange.from, "yyyy-MM-dd'Z'");
+      const toDate = format(dateRange.to, "yyyy-MM-dd'Z'");
+      return `indexChartsV2?f=${fromDate}&t=${toDate}`;
+    }
+    return null;
+  });
 
-                        // If there are less than 15 items, return the date for all
-                        if (rawChartData.length < 15) {
-                            return rawChartData[i]["date"];
-                        }
+  const [availableChains, setAvailableChains] = useState<string[]>([]);
+  const [selectedChains, setSelectedChains] = useState<string[]>([]);
 
-                        // Otherwise, use the existing logic
-                        return i % 2 && i != 0 && i + 1 != rawChartData.length
-                            ? ""
-                            : rawChartData[i]["date"];
-                    }
-                },
-            },
-        },
+  const qosColors: { [key: string]: { start: string; end: string } } = {
+    qos: { start: "#00ff00", end: "#ff0000" },
+    qosSyncAvg: { start: "#00ffff", end: "#0000ff" },
+    qosAvailabilityAvg: { start: "#00ff00", end: "#ff0000" },
+    qosLatencyAvg: { start: "#ff00ff", end: "#800080" },
+  };
+
+  const { chartData, chartConfig } = useMemo(() => {
+    if (!data || !data.data) {
+      return { chartData: [], chartConfig: {} };
+    }
+
+    const sortedData = [...data.data].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+
+    const allChains = new Set<string>()
+    sortedData.forEach((day) => {
+      if (Array.isArray(day.data)) {
+        day.data.forEach((chain: { specId: string | undefined; chainId: string | undefined; }) => {
+          if (chain.specId && chain.specId !== "All Chains") {
+            allChains.add(chain.specId)
+          } else if (chain.chainId && chain.chainId !== "All Specs") {
+            allChains.add(chain.chainId)
+          }
+        })
+      }
+    })
+
+    setAvailableChains(Array.from(allChains));
+
+    const chartData = sortedData.map((day) => {
+      const dayData: { [key: string]: any } = {
+        date: day.date,
+        qos: day.qos,
+        qosSyncAvg: day.qosSyncAvg,
+        qosAvailabilityAvg: day.qosAvailabilityAvg,
+        qosLatencyAvg: day.qosLatencyAvg,
+        totalRelays: 0,
+      }
+      if (Array.isArray(day.data)) {
+        day.data.forEach((chain: { specId: string | undefined; chainId: string | undefined; relaySum: number | undefined; relays: number | undefined; }) => {
+          if (chain.specId && chain.specId !== "All Specs") {
+            dayData[chain.specId] = chain.relays || 0
+            dayData.totalRelays += chain.relays || 0
+          } else if (chain.chainId && chain.chainId !== "All Specs") {
+            dayData[chain.chainId] = chain.relaySum || 0
+            dayData.totalRelays += chain.relaySum || 0
+          }
+        })
+      }
+      return dayData
+    })
+
+    const chartConfig: { [key: string]: { label: string; color: string } } = props.providerId
+      ? {
+        qosSyncAvg: { label: "QoS Sync Score", color: qosColors.qosSyncAvg.start },
+        qosAvailabilityAvg: { label: "QoS Availability Score", color: qosColors.qosAvailabilityAvg.start },
+        qosLatencyAvg: { label: "QoS Latency Score", color: qosColors.qosLatencyAvg.start },
+      }
+      : {
+        qos: { label: "QoS Score", color: qosColors.qos.start },
+      };
+
+    const colors = [
+      "hsl(var(--chart-1))",
+      "hsl(var(--chart-2))",
+      "hsl(var(--chart-3))",
+      "hsl(var(--chart-4))",
+      "hsl(var(--chart-5))",
+    ];
+
+    Array.from(allChains).forEach((chain, index) => {
+      chartConfig[chain] = {
+        label: chain,
+        color: colors[index % colors.length],
+      }
     });
 
-    let uniqueVisitorData: ChartJsLineChartDataset = {
-        label: "Unique users",
-        data: [],
-        fill: false,
-        borderColor: "#F1DF10",
-        backgroundColor: "#F1DF10",
-        yAxisID: "yuv",
-        xAxisID: "xuv",
-        borderDash: [30, 1],
-    };
+    return { chartData, chartConfig }
+  }, [data, selectedChains, props.providerId]);
 
-    rawChartData.forEach((indexChartResponse: UniqueVisitorsData) => {
-        if (indexChartResponse.uniqueVisitors) {
-            uniqueVisitorData.data.push({
-                x: indexChartResponse.date,
-                y: indexChartResponse.uniqueVisitors,
-            });
-        }
+
+  const toggleLineVisibility = (dataKey: string) => {
+    setVisibleLines((prev: VisibleLinesType) => ({ ...prev, [dataKey]: !prev[dataKey] }));
+  };
+
+  useEffect(() => {
+    if (availableChains.length > 0 && selectedChains.length === 0) {
+      setSelectedChains(availableChains.slice(0, 5));
+    }
+  }, [availableChains, selectedChains]);
+
+  useEffect(() => {
+    Object.entries(chartConfig).forEach(([key, value]) => {
+      document.documentElement.style.setProperty(`--${key}-color`, value.color);
     });
+  }, [chartConfig]);
 
-    chartData.datasets.push(uniqueVisitorData);
+  const handleSelectionChange = (newSelection: React.SetStateAction<string[]>) => {
+    setSelectedChains(newSelection);
+  };
 
-    ChartjsSetLastDotHighInChartData(chartData);
+  const handleDateRangeSelect = (range: DateRange | undefined) => {
+    setTempDateRange(range);
+  };
 
+  const handleCalendarClose = () => {
+    setDateRange(tempDateRange);
+    setIsCalendarOpen(false);
+  };
+
+  const handleCalendarCancel = () => {
+    setTempDateRange(dateRange);
+    setIsCalendarOpen(false);
+  };
+
+  const getQoSColor = (score: number) => {
+    if (score >= 0.99) return '#00ff00';
+    if (score >= 0.97) return '#ffff00';
+    return '#ff0000';
+  };
+
+  const CustomTooltip = ({ active, payload, label }: { active: boolean, payload: any[], label: string }) => {
+    if (active && payload && payload.length) {
+      const qosScore = payload.find(p => p.dataKey === 'qos')?.value;
+
+      return (
+        <Card className="p-2">
+          <CardHeader className="p-2">
+            <CardTitle className="text-sm">{new Date(label).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</CardTitle>
+          </CardHeader>
+          <CardContent className="p-2">
+            {props.providerId ? (
+              <>
+                <p className="text-sm">QoS Sync Score: {payload.find(p => p.dataKey === 'qosSyncAvg')?.value?.toFixed(4)}</p>
+                <p className="text-sm">QoS Availability Score: {payload.find(p => p.dataKey === 'qosAvailabilityAvg')?.value?.toFixed(4)}</p>
+                <p className="text-sm">QoS Latency Score: {payload.find(p => p.dataKey === 'qosLatencyAvg')?.value?.toFixed(4)}</p>
+              </>
+            ) : (
+              <p className="font-semibold text-sm">
+                <span className="inline-block w-3 h-3 rounded-full mr-2" style={{ backgroundColor: getQoSColor(qosScore) }}></span>
+                QoS Score: {qosScore?.toFixed(4)}
+              </p>
+
+            )}
+            {selectedChains.map((chain) => (
+              <p key={chain} className="text-sm">
+                <span className="inline-block w-3 h-3 rounded-full mr-2" style={{ backgroundColor: chartConfig[chain]?.color }}></span>
+                {chain}: <span className="font-mono">{payload.find(p => p.dataKey === chain)?.value?.toLocaleString().padStart(10)}</span>
+              </p>
+            ))}
+            <p className="font-semibold text-sm mt-2">
+              Total Relays: <span className="font-mono">{payload.find(p => p.dataKey === selectedChains[0])?.payload?.totalRelays?.toLocaleString().padStart(10)}</span>
+            </p>
+          </CardContent>
+        </Card >
+      )
+    }
+    return null
+  }
+
+  const renderLegend = (props: any) => {
+    const { payload } = props;
     return (
-        <ChartJsWithRadioToggle
-            data={chartData}
-            options={chartOptions}
-            title="Unique users (30 days)"
-            noDatePicker={true}
-            rangeOptions={['Unique users', 'By Relays', 'By CU']}
-            rangeOnChange={rangeOnChange}
-            chartKey={"UniqueUsersChart"}
-        />
+      <div className="flex flex-wrap justify-center gap-4 text-sm">
+        {payload.map((entry: { color: any; value: any; dataKey: string }, index: any) => {
+          const isQoSMetric = entry.dataKey.startsWith('qos');
+          return (
+            <div
+              key={`item-${index}`}
+              className={`flex items-center ${isQoSMetric ? 'cursor-pointer' : ''}`}
+              onClick={() => isQoSMetric && toggleLineVisibility(entry.dataKey)}
+            >
+              <span
+                className="inline-block w-3 h-3 rounded-full mr-2"
+                style={{
+                  backgroundColor: qosColors[entry.dataKey]?.start || entry.color,
+                  opacity: isQoSMetric && !visibleLines[entry.dataKey] ? 0.3 : 1
+                }}
+              ></span>
+              <span style={{ opacity: isQoSMetric && !visibleLines[entry.dataKey] ? 0.3 : 1 }}>
+                {entry.value}
+              </span>
+            </div>
+          );
+        })}
+      </div>
     );
+  };
+
+  if (error) return <div>Failed to load data</div>;
+  if (!data) return <UsageGraphSkeleton />;
+
+  return (
+    <Card>
+      <CardHeader className="rechars-container">
+        <div className="rechars-container-title">
+          <CardTitle>{props.providerId ? 'Provider QoS Scores and Relays' : 'QoS Score and Selected Chains'}</CardTitle>
+          <CardDescription>
+            {props.providerId ? 'Showing QoS scores and relay counts for the selected provider' : 'Showing QoS score and relay counts for selected chains'}
+          </CardDescription>
+        </div>
+        <div className="rechars-container-controls">
+          <CustomCombobox
+            availableChains={availableChains || []}
+            selectedChains={selectedChains || []}
+            onSelectionChange={handleSelectionChange}
+          />
+          <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                id="date"
+                variant={"outline"}
+                className={cn(
+                  "w-[300px] justify-start text-left font-normal",
+                  !dateRange && "text-muted-foreground"
+                )}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {dateRange?.from ? (
+                  dateRange.to ? (
+                    <>
+                      {format(dateRange.from, "LLL dd, y")} -{" "}
+                      {format(dateRange.to, "LLL dd, y")}
+                    </>
+                  ) : (
+                    format(dateRange.from, "LLL dd, y")
+                  )
+                ) : (
+                  <span>Pick a date range</span>
+                )}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="end" side="bottom">
+              <CalendarWithLastXButtons
+                selected={tempDateRange}
+                onSelect={handleDateRangeSelect}
+              />
+              <div className="flex justify-end gap-2 p-3">
+                <Button
+                  variant="outline"
+                  onClick={handleCalendarCancel}
+                >
+                  Cancel
+                </Button>
+                <Button onClick={handleCalendarClose}>
+                  Apply
+                </Button>
+              </div>
+            </PopoverContent>
+          </Popover>
+        </div>
+      </CardHeader>
+      <CardContent>
+        <div className="h-[350px] w-full">
+          {error ? (
+            <div>Error loading data</div>
+          ) : chartData.length > 0 ? (
+            <ResponsiveContainer width="100%" height="100%">
+              <ComposedChart data={chartData} margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+                <defs>
+                  {Object.entries(qosColors).map(([key, { start, end }]) => (
+                    <linearGradient key={key} id={`${key}Gradient`} x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor={start} stopOpacity={0.8} />
+                      <stop offset="95%" stopColor={end} stopOpacity={0.8} />
+                    </linearGradient>
+                  ))}
+                  {Object.entries(chartConfig).map(([key, value]) => (
+                    <linearGradient key={key} id={`fill${key}`} x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor={`var(--${key}-color)`} stopOpacity={0.8} />
+                      <stop offset="95%" stopColor={`var(--${key}-color)`} stopOpacity={0.1} />
+                    </linearGradient>
+                  ))}
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                <XAxis
+                  dataKey="date"
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={8}
+                  minTickGap={32}
+                  tickFormatter={(value) => {
+                    const date = new Date(value)
+                    return date.toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                    })
+                  }}
+                  className="text-muted-foreground text-xs"
+                />
+                <YAxis yAxisId="left" orientation="left" tick={true} className="text-muted-foreground text-xs" />
+                <YAxis yAxisId="right" orientation="right" tick={true} domain={[0, 1]} className="text-muted-foreground text-xs" />
+                <Tooltip content={<CustomTooltip active={false} payload={[]} label={""} />} />
+                <Legend content={renderLegend} />
+                {props.providerId ? (
+                  <>
+                    <Line
+                      yAxisId="right"
+                      type="monotone"
+                      dataKey="qosSyncAvg"
+                      name="QoS Sync Score"
+                      stroke="url(#qosSyncAvgGradient)"
+                      strokeWidth={2}
+                      dot={false}
+                      hide={!visibleLines.qosSyncAvg}
+                    />
+                    <Line
+                      yAxisId="right"
+                      type="monotone"
+                      dataKey="qosAvailabilityAvg"
+                      name="QoS Availability Score"
+                      stroke="url(#qosAvailabilityAvgGradient)"
+                      strokeWidth={2}
+                      dot={false}
+                      hide={!visibleLines.qosAvailabilityAvg}
+                    />
+                    <Line
+                      yAxisId="right"
+                      type="monotone"
+                      dataKey="qosLatencyAvg"
+                      name="QoS Latency Score"
+                      stroke="url(#qosLatencyAvgGradient)"
+                      strokeWidth={2}
+                      dot={false}
+                      hide={!visibleLines.qosLatencyAvg}
+                    />
+                  </>
+                ) : (
+                  <Line
+                    yAxisId="right"
+                    type="monotone"
+                    dataKey="qos"
+                    name="QoS Score"
+                    stroke="url(#qosGradient)"
+                    strokeWidth={2}
+                    dot={false}
+                    hide={!visibleLines.qos}
+                  />
+                )}
+
+                {selectedChains.map((chain) => (
+                  <Area
+                    key={chain}
+                    yAxisId="left"
+                    type="monotone"
+                    dataKey={chain}
+                    stroke={`var(--${chain}-color)`}
+                    fill={`url(#fill${chain})`}
+                    stackId="1"
+                  />
+                ))}
+                <Brush
+                  dataKey="date"
+                  height={30}
+                  stroke="hsl(var(--muted-foreground) / 0.3)"
+                  tickFormatter={(value) => {
+                    const date = new Date(value)
+                    return date.toLocaleDateString("en-US", { month: "short", day: "numeric" })
+                  }}
+                  fill="hsl(var(--background))"
+                  travellerWidth={10}
+                >
+                  <AreaChart>
+                    <Area
+                      type="monotone"
+                      dataKey="totalRelays"
+                      stroke="hsl(var(--muted-foreground))"
+                      fill="hsl(var(--muted))"
+                      fillOpacity={0.4}
+                    />
+                  </AreaChart>
+                </Brush>
+              </ComposedChart>
+            </ResponsiveContainer>
+          ) : (
+            <div>No data available for the selected date range</div>
+          )}
+        </div>
+        {isLoading && (
+          <div className="text-center mt-2 text-sm text-muted-foreground">
+            Updating data...
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
 }
 

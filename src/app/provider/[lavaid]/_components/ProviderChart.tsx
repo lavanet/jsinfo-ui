@@ -1,4 +1,4 @@
-// src/components/sections/UsageGraph.tsx
+// src/app/provider/[lavaid]/_components/ProviderChart.tsx
 
 "use client";
 
@@ -23,14 +23,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@jsinfo/components/shadcn/ui/Popover";
-import CustomCombobox from "../../components/sections/CustomCombobox";
+import CustomCombobox from "@jsinfo/components/sections/CustomCombobox";
 import { cn } from "@jsinfo/lib/css"
-import UsageGraphSkeleton from "../../components/sections/UsageGraphSkeleton";
+import UsageGraphSkeleton from "@jsinfo/components/sections/UsageGraphSkeleton";
 import useApiSwrFetch from "@jsinfo/hooks/useApiSwrFetch";
 import { CalendarWithLastXButtons } from "@jsinfo/components/shadcn/CalendarWithLastXButtons";
 
 interface UsageGraphProps {
-  providerId?: string | null;
+  providerId: string;
 }
 
 type VisibleLinesType = {
@@ -41,7 +41,7 @@ type VisibleLinesType = {
   qosLatencyAvg: boolean;
 };
 
-export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
+const ProviderChart: React.FC<UsageGraphProps> = ({ providerId }) => {
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
     from: addDays(new Date(), -90),
     to: new Date(),
@@ -59,7 +59,7 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
     if (dateRange?.from && dateRange?.to) {
       const fromDate = format(dateRange.from, "yyyy-MM-dd'Z'");
       const toDate = format(dateRange.to, "yyyy-MM-dd'Z'");
-      return `indexChartsV2?f=${fromDate}&t=${toDate}`;
+      return `providerCharts/${providerId}?f=${fromDate}&t=${toDate}`;
     }
     return null;
   });
@@ -119,15 +119,11 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
       return dayData
     })
 
-    const chartConfig: { [key: string]: { label: string; color: string } } = props.providerId
-      ? {
-        qosSyncAvg: { label: "QoS Sync Score", color: qosColors.qosSyncAvg.start },
-        qosAvailabilityAvg: { label: "QoS Availability Score", color: qosColors.qosAvailabilityAvg.start },
-        qosLatencyAvg: { label: "QoS Latency Score", color: qosColors.qosLatencyAvg.start },
-      }
-      : {
-        qos: { label: "QoS Score", color: qosColors.qos.start },
-      };
+    const chartConfig: { [key: string]: { label: string; color: string } } = {
+      qosSyncAvg: { label: "QoS Sync Score", color: qosColors.qosSyncAvg.start },
+      qosAvailabilityAvg: { label: "QoS Availability Score", color: qosColors.qosAvailabilityAvg.start },
+      qosLatencyAvg: { label: "QoS Latency Score", color: qosColors.qosLatencyAvg.start },
+    }
 
     const colors = [
       "hsl(var(--chart-1))",
@@ -145,7 +141,7 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
     });
 
     return { chartData, chartConfig }
-  }, [data, selectedChains, props.providerId]);
+  }, [data, selectedChains, providerId]);
 
 
   const toggleLineVisibility = (dataKey: string) => {
@@ -198,19 +194,11 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
             <CardTitle className="text-sm">{new Date(label).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</CardTitle>
           </CardHeader>
           <CardContent className="p-2">
-            {props.providerId ? (
-              <>
-                <p className="text-sm">QoS Sync Score: {payload.find(p => p.dataKey === 'qosSyncAvg')?.value?.toFixed(4)}</p>
-                <p className="text-sm">QoS Availability Score: {payload.find(p => p.dataKey === 'qosAvailabilityAvg')?.value?.toFixed(4)}</p>
-                <p className="text-sm">QoS Latency Score: {payload.find(p => p.dataKey === 'qosLatencyAvg')?.value?.toFixed(4)}</p>
-              </>
-            ) : (
-              <p className="font-semibold text-sm">
-                <span className="inline-block w-3 h-3 rounded-full mr-2" style={{ backgroundColor: getQoSColor(qosScore) }}></span>
-                QoS Score: {qosScore?.toFixed(4)}
-              </p>
 
-            )}
+            <p className="text-sm">QoS Sync Score: {payload.find(p => p.dataKey === 'qosSyncAvg')?.value?.toFixed(4)}</p>
+            <p className="text-sm">QoS Availability Score: {payload.find(p => p.dataKey === 'qosAvailabilityAvg')?.value?.toFixed(4)}</p>
+            <p className="text-sm">QoS Latency Score: {payload.find(p => p.dataKey === 'qosLatencyAvg')?.value?.toFixed(4)}</p>
+
             {selectedChains.map((chain) => (
               <p key={chain} className="text-sm">
                 <span className="inline-block w-3 h-3 rounded-full mr-2" style={{ backgroundColor: chartConfig[chain]?.color }}></span>
@@ -221,7 +209,7 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
               Total Relays: <span className="font-mono">{payload.find(p => p.dataKey === selectedChains[0])?.payload?.totalRelays?.toLocaleString().padStart(10)}</span>
             </p>
           </CardContent>
-        </Card>
+        </Card >
       )
     }
     return null
@@ -261,14 +249,14 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
 
   return (
     <Card>
-      <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center gap-2 space-y-0 pb-4 sm:pb-2">
-        <div className="space-y-1">
-          <CardTitle>{props.providerId ? 'Provider QoS Scores and Relays' : 'QoS Score and Selected Chains'}</CardTitle>
+      <CardHeader className="rechars-container">
+        <div className="rechars-container-title">
+          <CardTitle>{'Provider QoS Scores and Relays'}</CardTitle>
           <CardDescription>
-            {props.providerId ? 'Showing QoS scores and relay counts for the selected provider' : 'Showing QoS score and relay counts for selected chains'}
+            {'Showing QoS scores and relay counts for the selected provider'}
           </CardDescription>
         </div>
-        <div className="flex flex-col sm:flex-row gap-2 sm:ml-auto">
+        <div className="rechars-container-controls">
           <CustomCombobox
             availableChains={availableChains || []}
             selectedChains={selectedChains || []}
@@ -320,10 +308,12 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
         </div>
       </CardHeader>
       <CardContent>
-        <div className="h-[350px] w-full">
-          {error ? (
+        {error ? (
+          <div className="h-[350px] w-full">
             <div>Error loading data</div>
-          ) : chartData.length > 0 ? (
+          </div>
+        ) : chartData.length > 0 ? (
+          <div className="h-[350px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <ComposedChart data={chartData} margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
                 <defs>
@@ -360,51 +350,38 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
                 <YAxis yAxisId="right" orientation="right" tick={true} domain={[0, 1]} className="text-muted-foreground text-xs" />
                 <Tooltip content={<CustomTooltip active={false} payload={[]} label={""} />} />
                 <Legend content={renderLegend} />
-                {props.providerId ? (
-                  <>
-                    <Line
-                      yAxisId="right"
-                      type="monotone"
-                      dataKey="qosSyncAvg"
-                      name="QoS Sync Score"
-                      stroke="url(#qosSyncAvgGradient)"
-                      strokeWidth={2}
-                      dot={false}
-                      hide={!visibleLines.qosSyncAvg}
-                    />
-                    <Line
-                      yAxisId="right"
-                      type="monotone"
-                      dataKey="qosAvailabilityAvg"
-                      name="QoS Availability Score"
-                      stroke="url(#qosAvailabilityAvgGradient)"
-                      strokeWidth={2}
-                      dot={false}
-                      hide={!visibleLines.qosAvailabilityAvg}
-                    />
-                    <Line
-                      yAxisId="right"
-                      type="monotone"
-                      dataKey="qosLatencyAvg"
-                      name="QoS Latency Score"
-                      stroke="url(#qosLatencyAvgGradient)"
-                      strokeWidth={2}
-                      dot={false}
-                      hide={!visibleLines.qosLatencyAvg}
-                    />
-                  </>
-                ) : (
-                  <Line
-                    yAxisId="right"
-                    type="monotone"
-                    dataKey="qos"
-                    name="QoS Score"
-                    stroke="url(#qosGradient)"
-                    strokeWidth={2}
-                    dot={false}
-                    hide={!visibleLines.qos}
-                  />
-                )}
+
+                <Line
+                  yAxisId="right"
+                  type="monotone"
+                  dataKey="qosSyncAvg"
+                  name="QoS Sync Score"
+                  stroke="url(#qosSyncAvgGradient)"
+                  strokeWidth={2}
+                  dot={false}
+                  hide={!visibleLines.qosSyncAvg}
+                />
+                <Line
+                  yAxisId="right"
+                  type="monotone"
+                  dataKey="qosAvailabilityAvg"
+                  name="QoS Availability Score"
+                  stroke="url(#qosAvailabilityAvgGradient)"
+                  strokeWidth={2}
+                  dot={false}
+                  hide={!visibleLines.qosAvailabilityAvg}
+                />
+                <Line
+                  yAxisId="right"
+                  type="monotone"
+                  dataKey="qosLatencyAvg"
+                  name="QoS Latency Score"
+                  stroke="url(#qosLatencyAvgGradient)"
+                  strokeWidth={2}
+                  dot={false}
+                  hide={!visibleLines.qosLatencyAvg}
+                />
+
 
                 {selectedChains.map((chain) => (
                   <Area
@@ -440,10 +417,13 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
                 </Brush>
               </ComposedChart>
             </ResponsiveContainer>
-          ) : (
-            <div>No data available for the selected date range</div>
-          )}
-        </div>
+          </div>
+        ) : (
+          <div className="h-[150px] w-full">
+            <br />
+            <div>No chart data is available for this provider or of the selected date range</div>
+          </div>
+        )}
         {isLoading && (
           <div className="text-center mt-2 text-sm text-muted-foreground">
             Updating data...
@@ -454,3 +434,4 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
   );
 }
 
+export default ProviderChart;

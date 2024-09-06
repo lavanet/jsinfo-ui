@@ -14,7 +14,7 @@ import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
 import MonikerAndProviderAddressCard from "@jsinfo/components/modern/MonikerAndProviderAddressCard";
 import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
 
-import ProviderChart from '@jsinfo/components/charts/ProviderChart';
+import ProviderChart from '@jsinfo/app/provider/[lavaid]/_components/ProviderChart';
 
 import ProviderLatestHealthCards from '@jsinfo/app/provider/[lavaid]/_components/ProviderLatestHealth';
 
@@ -41,7 +41,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
 
   if (!lavaIdPattern.test(decodedLavaId)) {
     const error = 'Invalid lavaId format';
-    return RenderInFullPageCard(<ErrorDisplay message={error} />);
+    return <ErrorDisplay message={error} />;
   }
 
   const { data, loading, error } = useApiFetch("provider/" + decodedLavaId);
@@ -54,8 +54,8 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
     }
   }, [loading, error, decodedLavaId, setCurrentPage]);
 
-  if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
-  if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${decodedLavaId} provider page`} greyText={`${decodedLavaId} provider`} />);
+  if (error) return <ErrorDisplay message={error} />;
+  if (loading) return <LoadingIndicator loadingText={`Loading ${decodedLavaId} provider page`} greyText={`${decodedLavaId} provider`} />;
 
   const provider = data;
 
@@ -67,13 +67,12 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
 
       <ProviderCards addr={decodedLavaId} />
 
-      <ProviderPage address={decodedLavaId} />
+      <ProviderChart providerId={decodedLavaId} />
+      <div style={{ marginBottom: '20px' }}></div>
 
       <LegacyTheme>
 
-        <ProviderChart addr={decodedLavaId} />
         <div className="box-margin-div"></div>
-
 
         <ProviderLatestHealthCards lavaId={decodedLavaId} />
         <div className="box-margin-div"></div>

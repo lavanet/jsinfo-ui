@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@jsinfo/components/shadcn/ui/Card";
 import { Button } from "@jsinfo/components/shadcn/ui/Button";
-import { UsageGraph } from "@jsinfo/app/_components/IndexUsageGraph";
+import { UsageGraph } from "@jsinfo/app/_components/IndexChart";
 import { ProviderHealthTable } from "@jsinfo/components/sections/ProviderHealthTable";
 
 interface ProviderData {

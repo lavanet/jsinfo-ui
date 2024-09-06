@@ -4,7 +4,7 @@
 import { useEffect } from "react";
 import { usePageContext } from "@jsinfo/context/PageContext";
 import React from "react";
-import { UsageGraph as IndexUsageGraph } from "./_components/IndexUsageGraph";
+import { UsageGraph as IndexUsageGraph } from "./_components/IndexChart";
 import { IndexAllCards } from "./_components/IndexPageCards";
 import IndexProvidersTableBlock from "./_components/IndexProvidersTableBlock";
 import IndexChainsTableBlock from "./_components/IndexChainsTableBlock";
