@@ -3,7 +3,7 @@
 "use client";
 
 import { FormatNumber, FormatNumberWithString, IsMeaningfulText } from '@jsinfo/lib/formatting';
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/legacy/DynamicSortTable";
+import { DataKeySortableTableInATabComponent } from "@jsinfo/components/classic/DynamicSortTable";
 import LavaWithTooltip from '@jsinfo/components/modern/LavaWithTooltip';
 import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
 

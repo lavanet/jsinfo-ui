@@ -5,7 +5,7 @@ import React, { useRef, useEffect, RefObject } from 'react';
 import { Box, Card } from '@radix-ui/themes';
 import { Line } from 'react-chartjs-2';
 import Image from 'next/image';
-import RangeDatePicker from "@jsinfo/components/legacy/RangeDatePicker";
+import RangeDatePicker from "@jsinfo/components/classic/RangeDatePicker";
 
 import {
   Chart as ChartJS,

@@ -5,14 +5,14 @@ import Link from 'next/link';
 import { useEffect } from "react";
 import { Card, Box } from "@radix-ui/themes";
 import { EventTypeToString } from "@jsinfo/lib/convertors";
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/legacy/DynamicSortTable";
+import { DataKeySortableTableInATabComponent } from "@jsinfo/components/classic/DynamicSortTable";
 import { usePageContext } from "@jsinfo/context/PageContext";
-import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
+import JsinfoTabs from "@jsinfo/components/classic/JsinfoTabs";
 import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
-import CsvButton from '@jsinfo/components/legacy/CsvButton';
+import CsvButton from '@jsinfo/components/classic/CsvButton';
 import MonikerAndProviderLink from '@jsinfo/components/modern/MonikerAndProviderLink';
 import { GetExplorersGuruUrl } from '@jsinfo/lib/env';
-import LegacyTheme from '@jsinfo/components/legacy/LegacyTheme';
+import LegacyTheme from '@jsinfo/components/classic/LegacyTheme';
 
 export default function Events() {
 

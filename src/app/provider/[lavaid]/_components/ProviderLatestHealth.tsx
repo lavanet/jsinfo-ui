@@ -9,7 +9,7 @@ import { useApiFetch } from '@jsinfo/hooks/useApiFetch';
 import { RenderInFullPageCard } from '@jsinfo/lib/utils';
 import StatusCall from '../../../../components/modern/StatusCell';
 import Image from 'next/image';
-import TextToggle from '../../../../components/legacy/TextToggle';
+import TextToggle from '../../../../components/classic/TextToggle';
 
 interface InterfaceStatus {
     status: string;

@@ -7,15 +7,15 @@ import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { usePageContext } from "@jsinfo/context/PageContext";
 import StatCard from "@jsinfo/components/sections/StatCard";
 import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
-import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
-import { RenderInFullPageCard } from '@jsinfo/lib/utils';
-import SpecChart from '@jsinfo/components/charts/SpecChart';
+import JsinfoTabs from "@jsinfo/components/classic/JsinfoTabs";
+import SpecChart from '@jsinfo/app/spec/[specid]/_components/SpecChart';
 import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
 import SpecEndpointHealthSummary from '@jsinfo/app/spec/[specid]/_components/SpecEndpointHealthSummary';
 import SpecStakesTable from '@jsinfo/app/spec/[specid]/_components/SpecStakesTable';
 import SpecRelaysTable from "./_components/SpecRelaysTable";
 import LavaWithTooltip from "@jsinfo/components/modern/LavaWithTooltip";
 import { ArrowUpNarrowWide, CreditCard, DatabaseZap, MonitorCog, SquareActivity } from "lucide-react";
+import LegacyTheme from "@jsinfo/components/classic/LegacyTheme";
 
 export default function Spec({ params }: { params: { specid: string } }) {
 
@@ -25,7 +25,7 @@ export default function Spec({ params }: { params: { specid: string } }) {
 
   if (!specIdPattern.test(decodedSpecId)) {
     const error = 'Invalid spec format';
-    return RenderInFullPageCard(<ErrorDisplay message={error} />);
+    return <ErrorDisplay message={error} />;
   }
 
   const { data, loading, error } = useApiFetch("spec/" + decodedSpecId);
@@ -40,9 +40,8 @@ export default function Spec({ params }: { params: { specid: string } }) {
 
   const specId = decodedSpecId;
 
-  if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
-  if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${specId} spec page`} greyText={`${specId} spec`} />);
-
+  if (error) return <ErrorDisplay message={error} />;
+  if (loading) return <LoadingIndicator loadingText={`Loading ${specId} spec page`} greyText={`${specId} spec`} />;
 
   return (
     <>
@@ -101,19 +100,19 @@ export default function Spec({ params }: { params: { specid: string } }) {
       </div>
       <div style={{ marginTop: '30px' }}></div>
 
-      <SpecChart specid={specId} />
+      <SpecChart spec={specId} />
       <div className="box-margin-div"></div>
 
-      <Card>
+      <LegacyTheme>
         <JsinfoTabs defaultValue="relays"
           tabs={[
             {
               value: "relays",
-              content: "Relays",
+              content: "Provider Relays",
             },
             {
               value: "stakes",
-              content: "Stakes",
+              content: "Provider Stakes",
             },
           ]}
         >
@@ -124,7 +123,7 @@ export default function Spec({ params }: { params: { specid: string } }) {
             <SpecStakesTable specid={specId} />
           </Box>
         </JsinfoTabs>
-      </Card>
+      </LegacyTheme>
     </>
   );
 }

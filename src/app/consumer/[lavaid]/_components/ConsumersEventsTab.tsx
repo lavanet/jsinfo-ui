@@ -3,7 +3,7 @@
 "use client";
 
 import Link from 'next/link'
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/legacy/DynamicSortTable";
+import { DataKeySortableTableInATabComponent } from "@jsinfo/components/classic/DynamicSortTable";
 import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
 import { EventTypeToString } from '@jsinfo/lib/convertors';
 import { GetExplorersGuruUrl } from '@jsinfo/lib/env';

@@ -4,18 +4,18 @@
 import Link from 'next/link'
 import { Card, Box } from "@radix-ui/themes";
 import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
-import { SortableTableInATabComponent } from "@jsinfo/components/legacy/StaticSortTable";
+import { SortableTableInATabComponent } from "@jsinfo/components/classic/StaticSortTable";
 import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
-import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
+import JsinfoTabs from "@jsinfo/components/classic/JsinfoTabs";
 import { useEffect } from "react";
 import { usePageContext } from '@jsinfo/context/PageContext';
 import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
-import ConsumerChart from '@jsinfo/components/charts/ConsumerChart';
+import ConsumerChart from '@jsinfo/app/consumer/[lavaid]/_components/ConsumerOldChart';
 import ConsumerSubscriptionsTable from './_components/ConsumersSubscriptionsTab';
 import ConsumersEventsTab from './_components/ConsumersEventsTab';
 import StatCard from '@jsinfo/components/sections/StatCard';
 import { MonitorCog, ArrowUpNarrowWide, CreditCard } from 'lucide-react';
-import LegacyTheme from '@jsinfo/components/legacy/LegacyTheme';
+import LegacyTheme from '@jsinfo/components/classic/LegacyTheme';
 import BackToConsumersLink from './_components/BackToConsumers';
 
 export default function Consumer({ params }: { params: { lavaid: string } }) {

@@ -11,10 +11,10 @@ import {
     ChartJsLineChartDataset,
     ChartJsSpecIdToDatasetMap,
     ChartJsReactiveLineChartWithDatePicker
-} from "@jsinfo/components/legacy/ChartJsReactiveLineChart";
+} from "@jsinfo/components/classic/ChartJsReactiveLineChart";
 import { ErrorDisplay } from "@jsinfo/components/modern/ErrorDisplay";
 import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
-import TextToggle from "@jsinfo/components/legacy/TextToggle";
+import TextToggle from "@jsinfo/components/classic/TextToggle";
 import useApiDateFetch from "@jsinfo/hooks/useApiDateFetch";
 import { useState } from "react";
 

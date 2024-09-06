@@ -4,7 +4,7 @@ import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import { Container } from "@radix-ui/themes";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { PageProvider } from "@jsinfo/components/legacy/PageProvider";
+import { PageProvider } from "@jsinfo/components/classic/PageProvider";
 import { GetPageTitle } from "@jsinfo/lib/env";
 import { Inter as FontSans } from "next/font/google";
 import Header from "@jsinfo/components/layout/Header";

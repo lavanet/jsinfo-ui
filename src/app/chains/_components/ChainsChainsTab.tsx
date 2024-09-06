@@ -2,7 +2,7 @@
 "use client";
 
 import React from "react";
-import { SortableTableComponent } from "@jsinfo/components/legacy/StaticSortTable";
+import { SortableTableComponent } from "@jsinfo/components/classic/StaticSortTable";
 import { ConvertToChainName } from "@jsinfo/lib/convertors";
 import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { FormatNumber } from "@jsinfo/lib/formatting";

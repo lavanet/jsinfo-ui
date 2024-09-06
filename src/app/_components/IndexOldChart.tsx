@@ -10,10 +10,10 @@ import {
     ChartJsLineChartData,
     ChartJsLineChartDataset,
     ChartJsSpecIdToDatasetMap,
-} from "@jsinfo/components/legacy/ChartJsReactiveLineChart";
+} from "@jsinfo/components/classic/ChartJsReactiveLineChart";
 import { ErrorDisplay } from "@jsinfo/components/modern/ErrorDisplay";
 import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
-import ChartJsWithRadioToggle from "@jsinfo/components/legacy/ChartJsWithRadioToggle";
+import ChartJsWithRadioToggle from "@jsinfo/components/classic/ChartJsWithRadioToggle";
 import useApiDateFetch from "@jsinfo/hooks/useApiDateFetch";
 
 import { useState } from "react";

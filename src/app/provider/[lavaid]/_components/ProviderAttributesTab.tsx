@@ -3,8 +3,8 @@
 "use client";
 
 import Link from 'next/link'
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/legacy/DynamicSortTable";
-import TableCsvButton from "@jsinfo/components/legacy/TableCsvButton";
+import { DataKeySortableTableInATabComponent } from "@jsinfo/components/classic/DynamicSortTable";
+import TableCsvButton from "@jsinfo/components/classic/TableCsvButton";
 import { GeoLocationToString, StatusToString } from '@jsinfo/lib/convertors';
 import StatusCall from '@jsinfo/components/modern/StatusCell';
 

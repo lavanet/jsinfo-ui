@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Text } from "@radix-ui/themes";
 import { IsMeaningfulText } from '@jsinfo/lib/formatting';
-import ProviderMoniker from '../legacy/ProviderMoniker';
+import ProviderMoniker from '../classic/ProviderMoniker';
 import { ProviderMonikerFullInfo } from '@jsinfo/lib/types';
 import ModernTooltip from './ModernTooltip';
 
@@ -18,7 +18,7 @@ interface MonikerAndProviderAddressCardProps {
 }
 
 const renderUserIcon = () => (
-    <div style={{ margin: "-15px", marginBottom: "-5px", marginLeft: "-25px" }}>
+    <div style={{ margin: "-15px", marginBottom: "-1px", marginLeft: "-25px" }}>
         <Image
             src="/user-line.svg"
             width={70}
@@ -43,7 +43,7 @@ const renderProviderAddressInLineWithIcon = (provider: string) => (
 );
 
 const renderProviderAddressOnNewLine = (provider: string) => (
-    <p className="text-muted-foreground mb-8">
+    <p className="text-muted-foreground mb-8" style={{ marginTop: '-7px' }}>
         Address:&nbsp;{provider}
     </p>
 );

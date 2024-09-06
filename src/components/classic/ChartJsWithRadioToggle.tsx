@@ -6,7 +6,7 @@ import React, { useRef, useEffect, RefObject, useState } from 'react';
 import { Box, Card } from '@radix-ui/themes';
 import { Line } from 'react-chartjs-2';
 import Image from 'next/image';
-import RangeDatePicker from "@jsinfo/components/legacy/RangeDatePicker";
+import RangeDatePicker from "@jsinfo/components/classic/RangeDatePicker";
 import { ChartJsLineChartData, ChartJsLineChartOptions } from './ChartJsReactiveLineChart';
 import { CachedFetchDateRange } from '@jsinfo/lib/types';
 import RadioToggle from './RadioToggle';

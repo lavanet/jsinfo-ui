@@ -3,7 +3,7 @@
 
 import { Box } from "@radix-ui/themes";
 import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
-import { SortableTableInATabComponent } from "@jsinfo/components/legacy/StaticSortTable";
+import { SortableTableInATabComponent } from "@jsinfo/components/classic/StaticSortTable";
 import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
 import { RenderInFullPageCard } from '@jsinfo/lib/utils';
 import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';

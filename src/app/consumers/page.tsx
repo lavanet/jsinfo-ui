@@ -6,7 +6,7 @@ import React from "react";
 import { useEffect } from "react";
 import { usePageContext } from "@jsinfo/context/PageContext";
 import ConsumersConsumersTable from './_components/ConsumersConsumersTable';
-import LegacyTheme from "@jsinfo/components/legacy/LegacyTheme";
+import LegacyTheme from "@jsinfo/components/classic/LegacyTheme";
 
 export default function Home() {
 

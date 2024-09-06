@@ -4,7 +4,7 @@
 
 import { Box } from "@radix-ui/themes";
 import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
-import { SortableTableComponent } from "@jsinfo/components/legacy/StaticSortTable";
+import { SortableTableComponent } from "@jsinfo/components/classic/StaticSortTable";
 import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
 import { FormatNumber } from '@jsinfo/lib/formatting';
 import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';

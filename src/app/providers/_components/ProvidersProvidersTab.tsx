@@ -1,11 +1,11 @@
 // src/app/providers/_components/ProvidersProvidersTab.tsx
 
 import React, { useState } from "react";
-import { DataKeySortableTableComponent } from "@jsinfo/components/legacy/DynamicSortTable";
-import TableCsvButton from "@jsinfo/components/legacy/TableCsvButton";
+import { DataKeySortableTableComponent } from "@jsinfo/components/classic/DynamicSortTable";
+import TableCsvButton from "@jsinfo/components/classic/TableCsvButton";
 import MonikerWithTooltip from "@jsinfo/components/modern/MonikerWithTooltip";
 import LavaWithTooltip from "@jsinfo/components/modern/LavaWithTooltip";
-import TextCheckbox from "@jsinfo/components/legacy/TextCheckbox";
+import TextCheckbox from "@jsinfo/components/classic/TextCheckbox";
 import { Tabs } from "@radix-ui/themes";
 import ModernTooltip from "@jsinfo/components/modern/ModernTooltip";
 

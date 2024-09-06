@@ -93,9 +93,12 @@ const ProviderCards: React.FC<ProviderCardsProps> = ({ addr }) => {
 
 const ProviderCardsMargined: React.FC<ProviderCardsProps> = ({ addr }) => {
     return (
-        < div style={{ marginTop: 'var(--box-margin)', marginBottom: 'var(--box-margin)' }}>
+        <div style={{
+            marginTop: '-12px',
+            marginBottom: 'var(--box-margin)'
+        }}>
             <ProviderCards addr={addr} />
-        </div>
+        </div >
     )
 };
 

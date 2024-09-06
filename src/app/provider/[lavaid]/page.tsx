@@ -12,7 +12,7 @@ import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
 
 import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
 import MonikerAndProviderAddressCard from "@jsinfo/components/modern/MonikerAndProviderAddressCard";
-import JsinfoTabs from "@jsinfo/components/legacy/JsinfoTabs";
+import JsinfoTabs from "@jsinfo/components/classic/JsinfoTabs";
 
 import ProviderChart from '@jsinfo/app/provider/[lavaid]/_components/ProviderChart';
 
@@ -29,7 +29,7 @@ import ProviderBlockReportsTab from './_components/ProviderBlockReportsTab';
 import ProviderAccountInfoTab from './_components/ProviderAccountInfoTab';
 import ProviderClaimableRewardsTab from "./_components/ProviderClaimableRewardsTab";
 import ProviderCards from "./_components/ProviderCards";
-import LegacyTheme from "@jsinfo/components/legacy/LegacyTheme";
+import LegacyTheme from "@jsinfo/components/classic/LegacyTheme";
 import ProviderPage from "@jsinfo/components/sections/ProviderPage";
 import BackToProvidersLink from "./_components/BackToProviders";
 

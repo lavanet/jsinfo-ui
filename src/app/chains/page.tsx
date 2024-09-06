@@ -6,7 +6,7 @@ import { usePageContext } from "@jsinfo/context/PageContext";
 import React from "react";
 import { ChainsAllCards } from "./_components/ChainsPageCards";
 import ChainsChainsTab from "./_components/ChainsChainsTab";
-import LegacyTheme from "@jsinfo/components/legacy/LegacyTheme";
+import LegacyTheme from "@jsinfo/components/classic/LegacyTheme";
 
 export default function Home() {
 
