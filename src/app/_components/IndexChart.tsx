@@ -23,11 +23,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@jsinfo/components/shadcn/ui/Popover";
-import CustomCombobox from "../../components/sections/CustomCombobox";
+import CustomCombobox from "@jsinfo/components/sections/CustomCombobox";
 import { cn } from "@jsinfo/lib/css"
-import UsageGraphSkeleton from "../../components/sections/UsageGraphSkeleton";
+import UsageGraphSkeleton from "@jsinfo/components/sections/UsageGraphSkeleton";
 import useApiSwrFetch from "@jsinfo/hooks/useApiSwrFetch";
 import { CalendarWithLastXButtons } from "@jsinfo/components/shadcn/CalendarWithLastXButtons";
+
+import { CHART_COLORS } from "@jsinfo/lib/consts";
+import { removeSpacesForCss } from "@jsinfo/lib/utils";
 
 interface UsageGraphProps {
   providerId?: string | null;
@@ -85,9 +88,7 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
     sortedData.forEach((day) => {
       if (Array.isArray(day.data)) {
         day.data.forEach((chain: { specId: string | undefined; chainId: string | undefined; }) => {
-          if (chain.specId && chain.specId !== "All Chains") {
-            allChains.add(chain.specId)
-          } else if (chain.chainId && chain.chainId !== "All Specs") {
+          if (chain.chainId) {
             allChains.add(chain.chainId)
           }
         })
@@ -107,10 +108,7 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
       }
       if (Array.isArray(day.data)) {
         day.data.forEach((chain: { specId: string | undefined; chainId: string | undefined; relaySum: number | undefined; relays: number | undefined; }) => {
-          if (chain.specId && chain.specId !== "All Specs") {
-            dayData[chain.specId] = chain.relays || 0
-            dayData.totalRelays += chain.relays || 0
-          } else if (chain.chainId && chain.chainId !== "All Specs") {
+          if (chain.chainId) {
             dayData[chain.chainId] = chain.relaySum || 0
             dayData.totalRelays += chain.relaySum || 0
           }
@@ -119,28 +117,14 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
       return dayData
     })
 
-    const chartConfig: { [key: string]: { label: string; color: string } } = props.providerId
-      ? {
-        qosSyncAvg: { label: "QoS Sync Score", color: qosColors.qosSyncAvg.start },
-        qosAvailabilityAvg: { label: "QoS Availability Score", color: qosColors.qosAvailabilityAvg.start },
-        qosLatencyAvg: { label: "QoS Latency Score", color: qosColors.qosLatencyAvg.start },
-      }
-      : {
-        qos: { label: "QoS Score", color: qosColors.qos.start },
-      };
-
-    const colors = [
-      "hsl(var(--chart-1))",
-      "hsl(var(--chart-2))",
-      "hsl(var(--chart-3))",
-      "hsl(var(--chart-4))",
-      "hsl(var(--chart-5))",
-    ];
+    const chartConfig: { [key: string]: { label: string; color: string } } = {
+      qos: { label: "QoS Score", color: qosColors.qos.start },
+    };
 
     Array.from(allChains).forEach((chain, index) => {
       chartConfig[chain] = {
         label: chain,
-        color: colors[index % colors.length],
+        color: CHART_COLORS[index % CHART_COLORS.length],
       }
     });
 
@@ -160,7 +144,8 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
 
   useEffect(() => {
     Object.entries(chartConfig).forEach(([key, value]) => {
-      document.documentElement.style.setProperty(`--${key}-color`, value.color);
+      let key2 = removeSpacesForCss(key);
+      document.documentElement.style.setProperty(`--${key2}-color`, value.color);
     });
   }, [chartConfig]);
 
@@ -333,12 +318,15 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
                       <stop offset="95%" stopColor={end} stopOpacity={0.8} />
                     </linearGradient>
                   ))}
-                  {Object.entries(chartConfig).map(([key, value]) => (
-                    <linearGradient key={key} id={`fill${key}`} x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor={`var(--${key}-color)`} stopOpacity={0.8} />
-                      <stop offset="95%" stopColor={`var(--${key}-color)`} stopOpacity={0.1} />
-                    </linearGradient>
-                  ))}
+                  {Object.entries(chartConfig).map(([key, value]) => {
+                    const key2 = removeSpacesForCss(key);
+                    return (
+                      <linearGradient key={key2} id={`fill${key2}`} x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor={`var(--${key2}-color)`} stopOpacity={0.8} />
+                        <stop offset="95%" stopColor={`var(--${key2}-color)`} stopOpacity={0.1} />
+                      </linearGradient>
+                    );
+                  })}
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
                 <XAxis
@@ -360,63 +348,33 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
                 <YAxis yAxisId="right" orientation="right" tick={true} domain={[0, 1]} className="text-muted-foreground text-xs" />
                 <Tooltip content={<CustomTooltip active={false} payload={[]} label={""} />} />
                 <Legend content={renderLegend} />
-                {props.providerId ? (
-                  <>
-                    <Line
-                      yAxisId="right"
-                      type="monotone"
-                      dataKey="qosSyncAvg"
-                      name="QoS Sync Score"
-                      stroke="url(#qosSyncAvgGradient)"
-                      strokeWidth={2}
-                      dot={false}
-                      hide={!visibleLines.qosSyncAvg}
-                    />
-                    <Line
-                      yAxisId="right"
-                      type="monotone"
-                      dataKey="qosAvailabilityAvg"
-                      name="QoS Availability Score"
-                      stroke="url(#qosAvailabilityAvgGradient)"
-                      strokeWidth={2}
-                      dot={false}
-                      hide={!visibleLines.qosAvailabilityAvg}
-                    />
-                    <Line
-                      yAxisId="right"
-                      type="monotone"
-                      dataKey="qosLatencyAvg"
-                      name="QoS Latency Score"
-                      stroke="url(#qosLatencyAvgGradient)"
-                      strokeWidth={2}
-                      dot={false}
-                      hide={!visibleLines.qosLatencyAvg}
-                    />
-                  </>
-                ) : (
-                  <Line
-                    yAxisId="right"
-                    type="monotone"
-                    dataKey="qos"
-                    name="QoS Score"
-                    stroke="url(#qosGradient)"
-                    strokeWidth={2}
-                    dot={false}
-                    hide={!visibleLines.qos}
-                  />
-                )}
 
-                {selectedChains.map((chain) => (
-                  <Area
-                    key={chain}
-                    yAxisId="left"
-                    type="monotone"
-                    dataKey={chain}
-                    stroke={`var(--${chain}-color)`}
-                    fill={`url(#fill${chain})`}
-                    stackId="1"
-                  />
-                ))}
+                <Line
+                  yAxisId="right"
+                  type="monotone"
+                  dataKey="qos"
+                  name="QoS Score"
+                  stroke="url(#qosGradient)"
+                  strokeWidth={2}
+                  dot={false}
+                  hide={!visibleLines.qos}
+                />
+
+                {selectedChains.map((chain) => {
+                  const chain2 = removeSpacesForCss(chain);
+                  return (
+                    <Area
+                      key={chain2}
+                      yAxisId="left"
+                      type="monotone"
+                      dataKey={chain}
+                      stroke={`var(--${chain2}-color)`}
+                      fill={`url(#fill${chain2})`}
+                      stackId="1"
+                    />
+                  );
+                })}
+
                 <Brush
                   dataKey="date"
                   height={30}

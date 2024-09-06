@@ -37,3 +37,6 @@ export function RenderInFullPageCard(message: string | React.ReactNode) {
 }
 
 
+export function removeSpacesForCss(input: string): string {
+  return input.replace(/\s+/g, '').toLowerCase();
+}

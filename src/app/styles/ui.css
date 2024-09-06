@@ -54,11 +54,16 @@
     --border: 0 0% 14.9%;
     --input: 0 0% 14.9%;
     --ring: 0 72.2% 50.6%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --chart-1: 0 100% 65%; /* Bright Red */
+    --chart-2: 120 100% 60%; /* Bright Green */
+    --chart-3: 240 100% 70%; /* Bright Blue */
+    --chart-4: 60 100% 65%; /* Bright Yellow */
+    --chart-5: 300 100% 65%; /* Bright Magenta */
+    --chart-6: 180 100% 60%; /* Bright Cyan */
+    --chart-7: 30 100% 65%; /* Bright Orange */
+    --chart-8: 270 100% 70%; /* Bright Purple */
+    --chart-9: 150 100% 60%; /* Bright Spring Green */
+    --chart-10: 330 100% 65%; /* Bright Pink */
   }
 }
 

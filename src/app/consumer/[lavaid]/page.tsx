@@ -10,7 +10,7 @@ import JsinfoTabs from "@jsinfo/components/classic/JsinfoTabs";
 import { useEffect } from "react";
 import { usePageContext } from '@jsinfo/context/PageContext';
 import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
-import ConsumerChart from '@jsinfo/app/consumer/[lavaid]/_components/ConsumerOldChart';
+import ConsumerChart from '@jsinfo/app/consumer/[lavaid]/_components/ConsumerChart';
 import ConsumerSubscriptionsTable from './_components/ConsumersSubscriptionsTab';
 import ConsumersEventsTab from './_components/ConsumersEventsTab';
 import StatCard from '@jsinfo/components/sections/StatCard';
@@ -78,8 +78,10 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
       </div>
       <div style={{ marginTop: '25px' }}></div>
 
+      <ConsumerChart consumerId={decodedLavaId} />
+
       <LegacyTheme>
-        <ConsumerChart addr={decodedLavaId} />
+        {/* <ConsumerChart addr={decodedLavaId} /> */}
         <div className="box-margin-div"></div>
         <div className="box-margin-div"></div>
 

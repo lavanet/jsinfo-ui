@@ -319,3 +319,7 @@ body {
     margin-left: auto;
   }
 }
+
+.recharts-legend-wrapper {
+  bottom: 0px !important;
+}

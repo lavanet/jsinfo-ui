@@ -1,4 +1,4 @@
-// src/app/chain/[specid]/_components/SpecChart.tsx
+// src/app/provider/[lavaid]/_components/ConsumerChart.tsx
 
 "use client";
 
@@ -28,11 +28,11 @@ import { cn } from "@jsinfo/lib/css"
 import UsageGraphSkeleton from "@jsinfo/components/sections/UsageGraphSkeleton";
 import useApiSwrFetch from "@jsinfo/hooks/useApiSwrFetch";
 import { CalendarWithLastXButtons } from "@jsinfo/components/shadcn/CalendarWithLastXButtons";
-
 import { CHART_COLORS } from "@jsinfo/lib/consts";
 import { removeSpacesForCss } from "@jsinfo/lib/utils";
+
 interface UsageGraphProps {
-  spec: string;
+  consumerId: string;
 }
 
 type VisibleLinesType = {
@@ -43,7 +43,7 @@ type VisibleLinesType = {
   qosLatencyAvg: boolean;
 };
 
-const SpecChart: React.FC<UsageGraphProps> = ({ spec }) => {
+const ConsumerChart: React.FC<UsageGraphProps> = ({ consumerId }) => {
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
     from: addDays(new Date(), -90),
     to: new Date(),
@@ -61,12 +61,12 @@ const SpecChart: React.FC<UsageGraphProps> = ({ spec }) => {
     if (dateRange?.from && dateRange?.to) {
       const fromDate = format(dateRange.from, "yyyy-MM-dd'Z'");
       const toDate = format(dateRange.to, "yyyy-MM-dd'Z'");
-      return `specCharts/${spec}?f=${fromDate}&t=${toDate}`;
+      return `consumerCharts/${consumerId}?f=${fromDate}&t=${toDate}`;
     }
     return null;
   });
 
-  const [availableChains, setAvailableProviders] = useState<string[]>([]);
+  const [availableChains, setAvailableChains] = useState<string[]>([]);
   const [selectedChains, setSelectedChains] = useState<string[]>([]);
 
   const qosColors: { [key: string]: { start: string; end: string } } = {
@@ -83,18 +83,18 @@ const SpecChart: React.FC<UsageGraphProps> = ({ spec }) => {
 
     const sortedData = [...data.data].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
 
-    const allProviders = new Set<string>()
+    const allChains = new Set<string>()
     sortedData.forEach((day) => {
       if (Array.isArray(day.data)) {
-        day.data.forEach((chain: { provider: string | undefined; chainId: string | undefined; }) => {
-          if (chain.provider) {
-            allProviders.add(chain.provider)
+        day.data.forEach((chain: { specId: string | undefined; chainId: string | undefined; }) => {
+          if (chain.specId) {
+            allChains.add(chain.specId)
           }
         })
       }
     })
 
-    setAvailableProviders(Array.from(allProviders));
+    setAvailableChains(Array.from(allChains));
 
     const chartData = sortedData.map((day) => {
       const dayData: { [key: string]: any } = {
@@ -106,9 +106,9 @@ const SpecChart: React.FC<UsageGraphProps> = ({ spec }) => {
         totalRelays: 0,
       }
       if (Array.isArray(day.data)) {
-        day.data.forEach((chain: { provider: string | undefined; chainId: string | undefined; relaySum: number | undefined; relays: number | undefined; }) => {
-          if (chain.provider) {
-            dayData[chain.provider] = chain.relays || 0
+        day.data.forEach((chain: { specId: string | undefined; chainId: string | undefined; relaySum: number | undefined; relays: number | undefined; }) => {
+          if (chain.specId) {
+            dayData[chain.specId] = chain.relays || 0
             dayData.totalRelays += chain.relays || 0
           }
         })
@@ -122,7 +122,7 @@ const SpecChart: React.FC<UsageGraphProps> = ({ spec }) => {
       qosLatencyAvg: { label: "QoS Latency Score", color: qosColors.qosLatencyAvg.start },
     }
 
-    Array.from(allProviders).forEach((chain, index) => {
+    Array.from(allChains).forEach((chain, index) => {
       chartConfig[chain] = {
         label: chain,
         color: CHART_COLORS[index % CHART_COLORS.length],
@@ -130,7 +130,7 @@ const SpecChart: React.FC<UsageGraphProps> = ({ spec }) => {
     });
 
     return { chartData, chartConfig }
-  }, [data, selectedChains, spec]);
+  }, [data, selectedChains, consumerId]);
 
 
   const toggleLineVisibility = (dataKey: string) => {
@@ -234,9 +234,9 @@ const SpecChart: React.FC<UsageGraphProps> = ({ spec }) => {
     <Card>
       <CardHeader className="rechars-container">
         <div className="rechars-container-title">
-          <CardTitle>Chain QoS Scores and Relays</CardTitle>
+          <CardTitle>Consumer QoS Scores and Relays</CardTitle>
           <CardDescription>
-            Showing QoS scores and relay counts for the selected chain
+            Showing QoS scores and relay counts for the selected consumer
           </CardDescription>
         </div>
         <div className="rechars-container-controls">
@@ -411,7 +411,7 @@ const SpecChart: React.FC<UsageGraphProps> = ({ spec }) => {
         ) : (
           <div className="h-[150px] w-full">
             <br />
-            <div>No chart data for the selected date range</div>
+            <div>No chart data is available for this consumer or in the selected date range</div>
           </div>
         )}
         {isLoading && (
@@ -424,4 +424,4 @@ const SpecChart: React.FC<UsageGraphProps> = ({ spec }) => {
   );
 }
 
-export default SpecChart;
+export default ConsumerChart;

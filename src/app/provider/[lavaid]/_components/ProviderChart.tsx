@@ -28,6 +28,8 @@ import { cn } from "@jsinfo/lib/css"
 import UsageGraphSkeleton from "@jsinfo/components/sections/UsageGraphSkeleton";
 import useApiSwrFetch from "@jsinfo/hooks/useApiSwrFetch";
 import { CalendarWithLastXButtons } from "@jsinfo/components/shadcn/CalendarWithLastXButtons";
+import { CHART_COLORS } from "@jsinfo/lib/consts";
+import { removeSpacesForCss } from "@jsinfo/lib/utils";
 
 interface UsageGraphProps {
   providerId: string;
@@ -85,10 +87,8 @@ const ProviderChart: React.FC<UsageGraphProps> = ({ providerId }) => {
     sortedData.forEach((day) => {
       if (Array.isArray(day.data)) {
         day.data.forEach((chain: { specId: string | undefined; chainId: string | undefined; }) => {
-          if (chain.specId && chain.specId !== "All Chains") {
+          if (chain.specId) {
             allChains.add(chain.specId)
-          } else if (chain.chainId && chain.chainId !== "All Specs") {
-            allChains.add(chain.chainId)
           }
         })
       }
@@ -107,12 +107,9 @@ const ProviderChart: React.FC<UsageGraphProps> = ({ providerId }) => {
       }
       if (Array.isArray(day.data)) {
         day.data.forEach((chain: { specId: string | undefined; chainId: string | undefined; relaySum: number | undefined; relays: number | undefined; }) => {
-          if (chain.specId && chain.specId !== "All Specs") {
+          if (chain.specId) {
             dayData[chain.specId] = chain.relays || 0
             dayData.totalRelays += chain.relays || 0
-          } else if (chain.chainId && chain.chainId !== "All Specs") {
-            dayData[chain.chainId] = chain.relaySum || 0
-            dayData.totalRelays += chain.relaySum || 0
           }
         })
       }
@@ -125,18 +122,10 @@ const ProviderChart: React.FC<UsageGraphProps> = ({ providerId }) => {
       qosLatencyAvg: { label: "QoS Latency Score", color: qosColors.qosLatencyAvg.start },
     }
 
-    const colors = [
-      "hsl(var(--chart-1))",
-      "hsl(var(--chart-2))",
-      "hsl(var(--chart-3))",
-      "hsl(var(--chart-4))",
-      "hsl(var(--chart-5))",
-    ];
-
     Array.from(allChains).forEach((chain, index) => {
       chartConfig[chain] = {
         label: chain,
-        color: colors[index % colors.length],
+        color: CHART_COLORS[index % CHART_COLORS.length],
       }
     });
 
@@ -156,7 +145,8 @@ const ProviderChart: React.FC<UsageGraphProps> = ({ providerId }) => {
 
   useEffect(() => {
     Object.entries(chartConfig).forEach(([key, value]) => {
-      document.documentElement.style.setProperty(`--${key}-color`, value.color);
+      let key2 = removeSpacesForCss(key);
+      document.documentElement.style.setProperty(`--${key2}-color`, value.color);
     });
   }, [chartConfig]);
 
@@ -178,15 +168,8 @@ const ProviderChart: React.FC<UsageGraphProps> = ({ providerId }) => {
     setIsCalendarOpen(false);
   };
 
-  const getQoSColor = (score: number) => {
-    if (score >= 0.99) return '#00ff00';
-    if (score >= 0.97) return '#ffff00';
-    return '#ff0000';
-  };
-
   const CustomTooltip = ({ active, payload, label }: { active: boolean, payload: any[], label: string }) => {
     if (active && payload && payload.length) {
-      const qosScore = payload.find(p => p.dataKey === 'qos')?.value;
 
       return (
         <Card className="p-2">
@@ -251,9 +234,9 @@ const ProviderChart: React.FC<UsageGraphProps> = ({ providerId }) => {
     <Card>
       <CardHeader className="rechars-container">
         <div className="rechars-container-title">
-          <CardTitle>{'Provider QoS Scores and Relays'}</CardTitle>
+          <CardTitle>Provider QoS Scores and Relays</CardTitle>
           <CardDescription>
-            {'Showing QoS scores and relay counts for the selected provider'}
+            Showing QoS scores and relay counts for the selected provider
           </CardDescription>
         </div>
         <div className="rechars-container-controls">
@@ -323,12 +306,15 @@ const ProviderChart: React.FC<UsageGraphProps> = ({ providerId }) => {
                       <stop offset="95%" stopColor={end} stopOpacity={0.8} />
                     </linearGradient>
                   ))}
-                  {Object.entries(chartConfig).map(([key, value]) => (
-                    <linearGradient key={key} id={`fill${key}`} x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor={`var(--${key}-color)`} stopOpacity={0.8} />
-                      <stop offset="95%" stopColor={`var(--${key}-color)`} stopOpacity={0.1} />
-                    </linearGradient>
-                  ))}
+                  {Object.entries(chartConfig).map(([key, value]) => {
+                    const key2 = removeSpacesForCss(key);
+                    return (
+                      <linearGradient key={key2} id={`fill${key2}`} x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor={`var(--${key2}-color)`} stopOpacity={0.8} />
+                        <stop offset="95%" stopColor={`var(--${key2}-color)`} stopOpacity={0.1} />
+                      </linearGradient>
+                    );
+                  })}
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
                 <XAxis
@@ -383,17 +369,21 @@ const ProviderChart: React.FC<UsageGraphProps> = ({ providerId }) => {
                 />
 
 
-                {selectedChains.map((chain) => (
-                  <Area
-                    key={chain}
-                    yAxisId="left"
-                    type="monotone"
-                    dataKey={chain}
-                    stroke={`var(--${chain}-color)`}
-                    fill={`url(#fill${chain})`}
-                    stackId="1"
-                  />
-                ))}
+                {selectedChains.map((chain) => {
+                  const chain2 = removeSpacesForCss(chain);
+                  return (
+                    <Area
+                      key={chain2}
+                      yAxisId="left"
+                      type="monotone"
+                      dataKey={chain}
+                      stroke={`var(--${chain2}-color)`}
+                      fill={`url(#fill${chain2})`}
+                      stackId="1"
+                    />
+                  );
+                })}
+
                 <Brush
                   dataKey="date"
                   height={30}
@@ -421,7 +411,7 @@ const ProviderChart: React.FC<UsageGraphProps> = ({ providerId }) => {
         ) : (
           <div className="h-[150px] w-full">
             <br />
-            <div>No chart data is available for this provider or of the selected date range</div>
+            <div>No chart data is available for this provider or in the selected date range</div>
           </div>
         )}
         {isLoading && (
