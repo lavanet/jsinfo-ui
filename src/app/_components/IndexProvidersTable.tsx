@@ -12,7 +12,7 @@ import {
   TableRow,
 } from "@jsinfo/components/shadcn/ui2/Table";
 import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
-import useApiSwrFetch from "@jsinfo/hooks/useApiSwrFetch";
+import { useApiSwrFetch } from "@jsinfo/hooks/useApiSwrFetch";
 import { AxiosApiGet } from "@jsinfo/fetching/axios";
 import PaginationControl from "@jsinfo/components/modern/Pagination";
 

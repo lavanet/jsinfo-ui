@@ -4,7 +4,7 @@
 import React, { useState } from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@jsinfo/components/shadcn/ui2/Table";
 import Link from "next/link";
-import useApiSwrFetch from "@jsinfo/hooks/useApiSwrFetch";
+import { useApiSwrFetch } from "@jsinfo/hooks/useApiSwrFetch";
 import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
 import PaginationControl from "@jsinfo/components/modern/Pagination";
 

@@ -13,11 +13,33 @@ const axiosFetcher = async (url: string) => {
     return response.data;
 };
 
-export default function useApiSwrFetch<T = any>(url: string | (() => string | null)) {
+export function useApiSwrFetch<T = any>(url: string | (() => string | null)) {
     const { data, error, isLoading } = useSWR<T>(url, axiosFetcher, {
         refreshInterval: 5 * 60 * 1000,
         revalidateOnFocus: false,
         keepPreviousData: true,
     });
+    return { data, error, isLoading };
+}
+
+export function useApiSwrFetchWithDeps<T = any>(
+    urlOrFunction: string | (() => string | null),
+    dependencies: any[] = []
+) {
+    const { data, error, isLoading } = useSWR<T>(
+        () => {
+            if (typeof urlOrFunction === 'function') {
+                const result = urlOrFunction();
+                return result ? [result, ...dependencies] : null;
+            }
+            return [urlOrFunction, ...dependencies];
+        },
+        ([url]) => axiosFetcher(url),
+        {
+            refreshInterval: 5 * 60 * 1000,
+            revalidateOnFocus: false,
+            keepPreviousData: true,
+        }
+    );
     return { data, error, isLoading };
 }

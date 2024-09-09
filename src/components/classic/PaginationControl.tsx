@@ -60,7 +60,7 @@ const PaginationControl: React.FC<PaginationControlProps> = ({ paginationState, 
 
         return pageNumbers.map((number: number) => {
             if (number === 1 || number === totalPages || (number >= sortAndPaginationConfig.page - ellipsisThreshold && number <= sortAndPaginationConfig.page + ellipsisThreshold)) {
-                console.log("rendering number", number);
+                // console.log("rendering number", number);
                 return (
                     <PaginationItem key={number}>
                         <PaginationLink

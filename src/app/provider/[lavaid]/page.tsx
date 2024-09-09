@@ -3,20 +3,16 @@
 
 import { useEffect } from "react";
 
-import { Card, Box } from "@radix-ui/themes";
-import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
+import { Box } from "@radix-ui/themes";
 import { usePageContext } from "@jsinfo/context/PageContext";
 
-import { RenderInFullPageCard } from '@jsinfo/lib/utils';
 import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
 
-import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
-import MonikerAndProviderAddressCard from "@jsinfo/components/modern/MonikerAndProviderAddressCard";
+import { MonikerAndProviderAddressCardWithFetch } from "@jsinfo/components/modern/MonikerAndProviderAddressCard";
 import JsinfoTabs from "@jsinfo/components/classic/JsinfoTabs";
 
 import ProviderChart from '@jsinfo/app/provider/[lavaid]/_components/ProviderChart';
 
-import ProviderLatestHealthCards from '@jsinfo/app/provider/[lavaid]/_components/ProviderLatestHealth';
 
 import ProviderHealthTab from './_components/ProviderHealthTab';
 import ProviderErrorsTab from './_components/ProviderErrorsTab';
@@ -45,26 +41,17 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
     return <ErrorDisplay message={error} />;
   }
 
-  const { data, loading, error } = useApiFetch("provider/" + decodedLavaId);
-
   const { setCurrentPage } = usePageContext();
 
   useEffect(() => {
-    if (!loading && !error) {
-      setCurrentPage('provider/' + decodedLavaId);
-    }
-  }, [loading, error, decodedLavaId, setCurrentPage]);
-
-  if (error) return <ErrorDisplay message={error} />;
-  if (loading) return <LoadingIndicator loadingText={`Loading ${decodedLavaId} provider page`} greyText={`${decodedLavaId} provider`} />;
-
-  const provider = data;
+    setCurrentPage('provider/' + decodedLavaId);
+  }, [decodedLavaId, setCurrentPage]);
 
   return (
     <>
       <BackToProvidersLink />
 
-      <MonikerAndProviderAddressCard provider={provider} />
+      <MonikerAndProviderAddressCardWithFetch lavaId={decodedLavaId} />
 
       <ProviderCards addr={decodedLavaId} />
 

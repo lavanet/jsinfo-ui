@@ -26,7 +26,7 @@ import {
 import CustomCombobox from "@jsinfo/components/sections/CustomCombobox";
 import { cn } from "@jsinfo/lib/css"
 import UsageGraphSkeleton from "@jsinfo/components/sections/UsageGraphSkeleton";
-import useApiSwrFetch from "@jsinfo/hooks/useApiSwrFetch";
+import { useApiSwrFetch } from "@jsinfo/hooks/useApiSwrFetch";
 import { CalendarWithLastXButtons } from "@jsinfo/components/shadcn/CalendarWithLastXButtons";
 
 import { CHART_COLORS } from "@jsinfo/lib/consts";

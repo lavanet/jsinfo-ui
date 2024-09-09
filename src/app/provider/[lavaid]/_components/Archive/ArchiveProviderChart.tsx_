@@ -1,4 +1,4 @@
-// src/app/provider/[lavaid]/_components/ConsumerChart.tsx
+// src/app/provider/[lavaid]/_components/ProviderChart.tsx
 
 "use client";
 
@@ -32,7 +32,7 @@ import { CHART_COLORS } from "@jsinfo/lib/consts";
 import { removeSpacesForCss } from "@jsinfo/lib/utils";
 
 interface UsageGraphProps {
-  consumerId: string;
+  providerId: string;
 }
 
 type VisibleLinesType = {
@@ -43,7 +43,7 @@ type VisibleLinesType = {
   qosLatencyAvg: boolean;
 };
 
-const ConsumerChart: React.FC<UsageGraphProps> = ({ consumerId }) => {
+const ProviderChart: React.FC<UsageGraphProps> = ({ providerId }) => {
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
     from: addDays(new Date(), -90),
     to: new Date(),
@@ -61,7 +61,7 @@ const ConsumerChart: React.FC<UsageGraphProps> = ({ consumerId }) => {
     if (dateRange?.from && dateRange?.to) {
       const fromDate = format(dateRange.from, "yyyy-MM-dd'Z'");
       const toDate = format(dateRange.to, "yyyy-MM-dd'Z'");
-      return `consumerCharts/${consumerId}?f=${fromDate}&t=${toDate}`;
+      return `providerCharts/${providerId}?f=${fromDate}&t=${toDate}`;
     }
     return null;
   });
@@ -130,7 +130,7 @@ const ConsumerChart: React.FC<UsageGraphProps> = ({ consumerId }) => {
     });
 
     return { chartData, chartConfig }
-  }, [data, selectedChains, consumerId]);
+  }, [data, selectedChains, providerId]);
 
 
   const toggleLineVisibility = (dataKey: string) => {
@@ -230,13 +230,34 @@ const ConsumerChart: React.FC<UsageGraphProps> = ({ consumerId }) => {
   if (error) return <div>Failed to load data</div>;
   if (!data) return <UsageGraphSkeleton />;
 
+  const [selectedFramework, setSelectedFramework] = useState("");
+
+  const options = [
+    { value: "next.js", label: "Next.js" },
+    { value: "sveltekit", label: "SvelteKit" },
+    { value: "nuxt.js", label: "Nuxt.js" },
+    { value: "remix", label: "Remix" },
+    { value: "astro", label: "Astro" },
+  ];
+
+  <div className="p-4">
+    <h1 className="text-2xl mb-4">Combobox Example</h1>
+    <DropDownRadioOptions
+      options={options}
+      value={selectedFramework}
+      setValue={setSelectedFramework}
+      placeholder="Select a framework..."
+    />
+    <p className="mt-4">Selected framework: {selectedFramework}</p>
+  </div>
+
   return (
     <Card>
       <CardHeader className="rechars-container">
         <div className="rechars-container-title">
-          <CardTitle>Consumer QoS Scores and Relays</CardTitle>
+          <CardTitle>Provider QoS Scores and Relays</CardTitle>
           <CardDescription>
-            Showing QoS scores and relay counts for the selected consumer
+            Showing QoS scores and relay counts for the selected provider
           </CardDescription>
         </div>
         <div className="rechars-container-controls">
@@ -411,7 +432,7 @@ const ConsumerChart: React.FC<UsageGraphProps> = ({ consumerId }) => {
         ) : (
           <div className="h-[150px] w-full">
             <br />
-            <div>No chart data is available for this consumer or in the selected date range</div>
+            <div>No chart data is available for this provider or in the selected date range</div>
           </div>
         )}
         {isLoading && (
@@ -424,4 +445,4 @@ const ConsumerChart: React.FC<UsageGraphProps> = ({ consumerId }) => {
   );
 }
 
-export default ConsumerChart;
+export default ProviderChart;

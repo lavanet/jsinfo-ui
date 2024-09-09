@@ -7,6 +7,9 @@ import { IsMeaningfulText } from '@jsinfo/lib/formatting';
 import ProviderMoniker from '../classic/ProviderMoniker';
 import { ProviderMonikerFullInfo } from '@jsinfo/lib/types';
 import ModernTooltip from './ModernTooltip';
+import { useApiFetch } from '@jsinfo/hooks/useApiFetch';
+import { ErrorDisplay } from './ErrorDisplay';
+import LoadingIndicator from './LoadingIndicator';
 
 /*
       <h1 className="text-3xl font-bold mb-4">{providerData?.moniker || 'Unknown Provider'}</h1>
@@ -54,7 +57,7 @@ const renderError = () => (
     </Text>
 );
 
-const MonikerAndProviderAddressCard: React.FC<MonikerAndProviderAddressCardProps> = ({ provider }: MonikerAndProviderAddressCardProps) => {
+export const MonikerAndProviderAddressCard: React.FC<MonikerAndProviderAddressCardProps> = ({ provider }: MonikerAndProviderAddressCardProps) => {
     const renderProviderInfo = () => {
         try {
             if (!provider || typeof provider !== 'object') {
@@ -94,4 +97,12 @@ const MonikerAndProviderAddressCard: React.FC<MonikerAndProviderAddressCardProps
     );
 };
 
-export default MonikerAndProviderAddressCard;
+export const MonikerAndProviderAddressCardWithFetch = ({ lavaId }: { lavaId: string }) => {
+    const { data: provider, loading, error } = useApiFetch("provider/" + lavaId);
+
+    if (error) return <ErrorDisplay message={error} />;
+    if (loading) return <LoadingIndicator loadingText={`Loading ${lavaId} provider data`} greyText={`${lavaId} provider`} />;
+
+    return <MonikerAndProviderAddressCard provider={provider} />;
+};
+
