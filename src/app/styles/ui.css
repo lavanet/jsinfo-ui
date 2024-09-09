@@ -1,8 +1,8 @@
 @tailwind base;
 
 :root {
-  --background-color: #100c0c;
-  --navbar-background-color: #151212e1;
+  --background-color: hsl(0 0% 3.9%); /* hsl(var(--card)); */
+  --navbar-background-color: #110e0ee1;
 }
 
 @layer base {

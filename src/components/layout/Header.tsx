@@ -3,13 +3,12 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { Search } from 'lucide-react';
-import { Input } from '@jsinfo/components/shadcn/ui2/Input';
 import Navigation from './Navigation';
 import MobileNavigation from './MobileNavigation';
 import LastUpdateBadge from '../modern/LastUpdateBadge';
 import CurrencyChangeButton from '../modern/CurrencyChangeButton';
 import LavaLogoLink from '../modern/LavaLogoLink';
+import SearchForm from './SearchBar';
 
 export default function Header() {
   const [opacity, setOpacity] = useState(1);
@@ -49,16 +48,7 @@ export default function Header() {
       <Navigation />
       <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
         <LastUpdateBadge />
-        <form className="ml-auto flex-1 sm:flex-initial">
-          <div className="top-header-search-input-container relative">
-            <Search className="top-header-search-input absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="search"
-              placeholder="Search ..."
-              className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
-            />
-          </div>
-        </form>
+        <SearchForm />
         <CurrencyChangeButton />
       </div>
     </header>

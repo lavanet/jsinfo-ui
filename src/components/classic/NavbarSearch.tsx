@@ -76,70 +76,12 @@ export function NavbarSearch() {
     const [isFocused, setIsFocused] = useState(false);
     const [preventChange, setPreventChange] = useState(false);
 
-    const [windowWidth, setWindowWidth] = useState(
-        typeof window !== 'undefined' ? window.innerWidth : 1024
-    );
 
     const hoverTimeout = useRef<NodeJS.Timeout | null>(null);
     const focusTimeout = useRef<NodeJS.Timeout | null>(null);
 
-    useEffect(() => {
-        const handleResize = () => setWindowWidth(window.innerWidth);
-        window.addEventListener('resize', handleResize);
-
-        // Cleanup the event listener on component unmount
-        return () => {
-            window.removeEventListener('resize', handleResize);
-            if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
-            if (focusTimeout.current) clearTimeout(focusTimeout.current);
-        };
-    }, []);
 
     const searchRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        document.querySelector('button');
-
-        const navbarButtons = document.getElementById('NavBarButtons');
-        if (navbarButtons) {
-            if ((isHovered || isFocused) && windowWidth <= 650) {
-                navbarButtons.style.opacity = '0';
-                navbarButtons.style.visibility = 'hidden';
-            } else {
-                navbarButtons.style.opacity = '1';
-                navbarButtons.style.visibility = 'visible';
-            }
-        }
-
-        let width = "800px"
-        if (windowWidth <= 600) {
-            width = (windowWidth / 0.8 - 35) + "px";
-        } else if (windowWidth <= 650) {
-            width = (windowWidth - 35) + "px";
-        } else if (windowWidth <= 1000) {
-            const eventsbtn = document.querySelector('#eventsbtn')
-            if (!eventsbtn) return;
-            width = (windowWidth - eventsbtn.getBoundingClientRect().right - 30) + "px";
-        }
-
-        if (searchRef.current) {
-            if (isHovered || isFocused) {
-                searchRef.current.style.width = width
-                searchRef.current.style.maxWidth = ''
-            } else {
-                if (windowWidth <= 650) {
-                    searchRef.current.style.width = '150px'
-                    searchRef.current.style.maxWidth = '150px'
-                } else {
-                    searchRef.current.style.width = '300px'
-                    searchRef.current.style.maxWidth = ''
-                }
-            }
-        }
-        if (!preventChange) if (!(isFocused || isHovered)) {
-            deFocus()
-        }
-    }, [windowWidth, isHovered, isFocused]);
 
     function deFocus() {
         if (typeof document === 'undefined') return;
@@ -151,9 +93,6 @@ export function NavbarSearch() {
         document.body.focus();
         setIsHovered(false);
         setIsFocused(false);
-        if (searchRef.current) {
-            searchRef.current.style.width = '300px';
-        }
     }
 
     useEffect(() => {
