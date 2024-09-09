@@ -138,7 +138,7 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
 
   useEffect(() => {
     if (availableChains.length > 0 && selectedChains.length === 0) {
-      setSelectedChains(availableChains.slice(0, 5));
+      setSelectedChains(["All Chains"]);
     }
   }, [availableChains, selectedChains]);
 
