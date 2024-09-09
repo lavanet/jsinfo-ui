@@ -182,8 +182,8 @@ export const IndexAllCards: React.FC = () => {
     return (
         <>
             <div className="grid gap-4 grid-cols-2 md:gap-8 lg:grid-cols-3">
-                <IndexUniqueUsersCard />
-                <IndexUniqueUsersAvgCard />
+                {/* <IndexUniqueUsersCard />
+                <IndexUniqueUsersAvgCard /> */}
                 <IndexTotalRelaysCard />
                 <Index30DayRelayCard />
                 <IndexStakeCard />
