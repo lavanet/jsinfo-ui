@@ -23,7 +23,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@jsinfo/components/shadcn/ui/Popover";
-import CustomCombobox from "@jsinfo/components/sections/CustomCombobox";
 import { cn } from "@jsinfo/lib/css"
 import UsageGraphSkeleton from "@jsinfo/components/sections/UsageGraphSkeleton";
 import { useApiSwrFetchWithDeps } from "@jsinfo/hooks/useApiSwrFetch";
@@ -32,7 +31,7 @@ import { CHART_COLORS } from "@jsinfo/lib/consts";
 import { removeSpacesForCss } from "@jsinfo/lib/utils";
 import DropDownRadioOptions from "@jsinfo/components/shadcn/DropDownRadioOptions";
 
-interface UsageGraphProps {
+interface ProviderChartProps {
   providerId: string;
 }
 
@@ -61,7 +60,7 @@ interface ProviderChartV2Data {
   chartData: ChartDataItem[];
 }
 
-const ProviderChart: React.FC<UsageGraphProps> = ({ providerId }) => {
+const ProviderChart: React.FC<ProviderChartProps> = ({ providerId }) => {
   const [selectedChain, setSelectedChain] = useState("all");
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
     from: addDays(new Date(), -90),
@@ -74,6 +73,8 @@ const ProviderChart: React.FC<UsageGraphProps> = ({ providerId }) => {
     qosSyncAvg: true,
     qosAvailabilityAvg: true,
     qosLatencyAvg: true,
+    relays: true,
+    cus: true,
   });
 
   const { data, error, isLoading } = useApiSwrFetchWithDeps<ProviderChartV2Data>(() => {
@@ -176,21 +177,24 @@ const ProviderChart: React.FC<UsageGraphProps> = ({ providerId }) => {
       <div className="flex flex-wrap justify-center gap-4 text-sm">
         {payload.map((entry: { color: any; value: any; dataKey: string }, index: any) => {
           const isQoSMetric = entry.dataKey.startsWith('qos');
+          const displayName = entry.dataKey === 'cus' ? 'CUs' :
+            entry.dataKey === 'relays' ? 'Relays' :
+              entry.value;
           return (
             <div
               key={`item-${index}`}
-              className={`flex items-center ${isQoSMetric ? 'cursor-pointer' : ''}`}
-              onClick={() => isQoSMetric && toggleLineVisibility(entry.dataKey)}
+              className="flex items-center cursor-pointer"
+              onClick={() => toggleLineVisibility(entry.dataKey)}
             >
               <span
                 className="inline-block w-3 h-3 rounded-full mr-2"
                 style={{
-                  backgroundColor: qosColors[entry.dataKey]?.start || entry.color,
-                  opacity: isQoSMetric && !visibleLines[entry.dataKey] ? 0.3 : 1
+                  backgroundColor: isQoSMetric ? qosColors[entry.dataKey]?.start : entry.color,
+                  opacity: visibleLines[entry.dataKey] ? 1 : 0.3
                 }}
               ></span>
-              <span style={{ opacity: isQoSMetric && !visibleLines[entry.dataKey] ? 0.3 : 1 }}>
-                {entry.value}
+              <span style={{ opacity: visibleLines[entry.dataKey] ? 1 : 0.3 }}>
+                {displayName}
               </span>
             </div>
           );
@@ -350,17 +354,21 @@ const ProviderChart: React.FC<UsageGraphProps> = ({ providerId }) => {
                   yAxisId="left"
                   type="monotone"
                   dataKey="relays"
+                  name="Relays"
                   stroke={`var(--${removeSpacesForCss('relays')}-color)`}
                   fill={`url(#fill${removeSpacesForCss('relays')})`}
                   stackId="1"
+                  hide={!visibleLines.relays}
                 />
                 <Area
                   yAxisId="left"
                   type="monotone"
                   dataKey="cus"
+                  name="CUs"
                   stroke={`var(--${removeSpacesForCss('cus')}-color)`}
                   fill={`url(#fill${removeSpacesForCss('cus')})`}
                   stackId="1"
+                  hide={!visibleLines.cus}
                 />
 
                 <Brush

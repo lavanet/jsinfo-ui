@@ -29,6 +29,7 @@ interface ComboboxDemoProps {
     value: string;
     setValue: (value: string) => void;
     placeholder?: string;
+    className?: string; // Add this line
 }
 
 export const ComboboxDemo: React.FC<ComboboxDemoProps> = ({
@@ -36,6 +37,7 @@ export const ComboboxDemo: React.FC<ComboboxDemoProps> = ({
     value,
     setValue,
     placeholder = "Select an option...",
+    className, // Add this line
 }) => {
     const [open, setOpen] = React.useState(false)
 
@@ -46,7 +48,7 @@ export const ComboboxDemo: React.FC<ComboboxDemoProps> = ({
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className="w-[200px] justify-between text-white"
+                    className={cn("w-[200px] justify-between text-white", className)}
                     style={{ borderColor: "hsl(var(--input))" }}
                 >
                     {value
@@ -55,7 +57,7 @@ export const ComboboxDemo: React.FC<ComboboxDemoProps> = ({
                     <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-[200px] p-0 bg-background">
+            <PopoverContent className={cn("w-[200px] p-0 bg-background", className)}>
                 <Command>
                     <CommandInput placeholder="Search options..." className="h-9" />
                     <CommandList>

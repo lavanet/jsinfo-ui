@@ -1,4 +1,4 @@
-// src/app/chain/[specid]/_components/SpecChart.tsx
+// src/app/chain/[specid]/_components/ChainChart.tsx
 
 "use client";
 
@@ -23,125 +23,81 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@jsinfo/components/shadcn/ui/Popover";
-import CustomCombobox from "@jsinfo/components/sections/CustomCombobox";
 import { cn } from "@jsinfo/lib/css"
 import UsageGraphSkeleton from "@jsinfo/components/sections/UsageGraphSkeleton";
-import { useApiSwrFetch } from "@jsinfo/hooks/useApiSwrFetch";
+import { useApiSwrFetchWithDeps } from "@jsinfo/hooks/useApiSwrFetch";
 import { CalendarWithLastXButtons } from "@jsinfo/components/shadcn/CalendarWithLastXButtons";
-
 import { CHART_COLORS } from "@jsinfo/lib/consts";
 import { removeSpacesForCss } from "@jsinfo/lib/utils";
-interface UsageGraphProps {
+import DropDownRadioOptions from "@jsinfo/components/shadcn/DropDownRadioOptions";
+
+interface ChainChartProps {
   spec: string;
+  addr?: string;
 }
 
-type VisibleLinesType = {
-  [key: string]: boolean;
-  qos: boolean;
-  qosSyncAvg: boolean;
-  qosAvailabilityAvg: boolean;
-  qosLatencyAvg: boolean;
-};
+interface ChartDataItem {
+  date: string;
+  qosSyncAvg: number;
+  qosAvailabilityAvg: number;
+  qosLatencyAvg: number;
+  cus: number;
+  relays: number;
+}
 
-const SpecChart: React.FC<UsageGraphProps> = ({ spec }) => {
+interface ChainChartV2Data {
+  spec: string;
+  selectedProvider: string;
+  allAvailableProviders: { [provider: string]: string };
+  chartData: ChartDataItem[];
+}
+
+const ChainChart: React.FC<ChainChartProps> = ({ spec, addr }) => {
+  const [selectedProvider, setSelectedProvider] = useState(addr || "all");
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
     from: addDays(new Date(), -90),
     to: new Date(),
   });
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [tempDateRange, setTempDateRange] = useState<DateRange | undefined>(dateRange);
-  const [visibleLines, setVisibleLines] = useState<VisibleLinesType>({
-    qos: true,
+  const [visibleLines, setVisibleLines] = useState({
     qosSyncAvg: true,
     qosAvailabilityAvg: true,
     qosLatencyAvg: true,
+    relays: true,
+    cus: true,
   });
 
-  const { data, error, isLoading } = useApiSwrFetch(() => {
+  const { data, error, isLoading } = useApiSwrFetchWithDeps<ChainChartV2Data>(() => {
     if (dateRange?.from && dateRange?.to) {
       const fromDate = format(dateRange.from, "yyyy-MM-dd'Z'");
       const toDate = format(dateRange.to, "yyyy-MM-dd'Z'");
-      return `specCharts/${spec}?f=${fromDate}&t=${toDate}`;
+      return `specChartsV2/${spec}/${selectedProvider}?f=${fromDate}&t=${toDate}`;
     }
     return null;
-  });
-
-  const [availableChains, setAvailableProviders] = useState<string[]>([]);
-  const [selectedChains, setSelectedChains] = useState<string[]>([]);
+  }, [dateRange, selectedProvider, spec]);
 
   const qosColors: { [key: string]: { start: string; end: string } } = {
-    qos: { start: "#00ff00", end: "#ff0000" },
     qosSyncAvg: { start: "#00ffff", end: "#0000ff" },
     qosAvailabilityAvg: { start: "#00ff00", end: "#ff0000" },
     qosLatencyAvg: { start: "#ff00ff", end: "#800080" },
   };
 
   const { chartData, chartConfig } = useMemo(() => {
-    if (!data || !data.data) {
+    if (!data) {
       return { chartData: [], chartConfig: {} };
     }
-
-    const sortedData = [...data.data].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-
-    const allProviders = new Set<string>()
-    sortedData.forEach((day) => {
-      if (Array.isArray(day.data)) {
-        day.data.forEach((chain: { provider: string | undefined; chainId: string | undefined; }) => {
-          if (chain.provider) {
-            allProviders.add(chain.provider)
-          }
-        })
-      }
-    })
-
-    setAvailableProviders(Array.from(allProviders));
-
-    const chartData = sortedData.map((day) => {
-      const dayData: { [key: string]: any } = {
-        date: day.date,
-        qos: day.qos,
-        qosSyncAvg: day.qosSyncAvg,
-        qosAvailabilityAvg: day.qosAvailabilityAvg,
-        qosLatencyAvg: day.qosLatencyAvg,
-        totalRelays: 0,
-      }
-      if (Array.isArray(day.data)) {
-        day.data.forEach((chain: { provider: string | undefined; chainId: string | undefined; relaySum: number | undefined; relays: number | undefined; }) => {
-          if (chain.provider) {
-            dayData[chain.provider] = chain.relays || 0
-            dayData.totalRelays += chain.relays || 0
-          }
-        })
-      }
-      return dayData
-    })
 
     const chartConfig: { [key: string]: { label: string; color: string } } = {
       qosSyncAvg: { label: "QoS Sync Score", color: qosColors.qosSyncAvg.start },
       qosAvailabilityAvg: { label: "QoS Availability Score", color: qosColors.qosAvailabilityAvg.start },
       qosLatencyAvg: { label: "QoS Latency Score", color: qosColors.qosLatencyAvg.start },
-    }
+      relays: { label: "Relays", color: CHART_COLORS[0] },
+      cus: { label: "CUs", color: CHART_COLORS[1] },
+    };
 
-    Array.from(allProviders).forEach((chain, index) => {
-      chartConfig[chain] = {
-        label: chain,
-        color: CHART_COLORS[index % CHART_COLORS.length],
-      }
-    });
-
-    return { chartData, chartConfig }
-  }, [data, selectedChains, spec]);
-
-
-  const toggleLineVisibility = (dataKey: string) => {
-    setVisibleLines((prev: VisibleLinesType) => ({ ...prev, [dataKey]: !prev[dataKey] }));
-  };
-
-  useEffect(() => {
-    if (availableChains.length > 0 && selectedChains.length === 0) {
-      setSelectedChains(availableChains.slice(0, 5));
-    }
-  }, [availableChains, selectedChains]);
+    return { chartData: data.chartData, chartConfig };
+  }, [data]);
 
   useEffect(() => {
     Object.entries(chartConfig).forEach(([key, value]) => {
@@ -150,8 +106,8 @@ const SpecChart: React.FC<UsageGraphProps> = ({ spec }) => {
     });
   }, [chartConfig]);
 
-  const handleSelectionChange = (newSelection: React.SetStateAction<string[]>) => {
-    setSelectedChains(newSelection);
+  const toggleLineVisibility = (dataKey: string) => {
+    setVisibleLines(prev => ({ ...prev, [dataKey]: !prev[dataKey] }));
   };
 
   const handleDateRangeSelect = (range: DateRange | undefined) => {
@@ -170,55 +126,56 @@ const SpecChart: React.FC<UsageGraphProps> = ({ spec }) => {
 
   const CustomTooltip = ({ active, payload, label }: { active: boolean, payload: any[], label: string }) => {
     if (active && payload && payload.length) {
-
       return (
         <Card className="p-2">
           <CardHeader className="p-2">
             <CardTitle className="text-sm">{new Date(label).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</CardTitle>
           </CardHeader>
           <CardContent className="p-2">
-
             <p className="text-sm">QoS Sync Score: {payload.find(p => p.dataKey === 'qosSyncAvg')?.value?.toFixed(4)}</p>
             <p className="text-sm">QoS Availability Score: {payload.find(p => p.dataKey === 'qosAvailabilityAvg')?.value?.toFixed(4)}</p>
             <p className="text-sm">QoS Latency Score: {payload.find(p => p.dataKey === 'qosLatencyAvg')?.value?.toFixed(4)}</p>
-
-            {selectedChains.map((chain) => (
-              <p key={chain} className="text-sm">
-                <span className="inline-block w-3 h-3 rounded-full mr-2" style={{ backgroundColor: chartConfig[chain]?.color }}></span>
-                {chain}: <span className="font-mono">{payload.find(p => p.dataKey === chain)?.value?.toLocaleString().padStart(10)}</span>
-              </p>
-            ))}
-            <p className="font-semibold text-sm mt-2">
-              Total Relays: <span className="font-mono">{payload.find(p => p.dataKey === selectedChains[0])?.payload?.totalRelays?.toLocaleString().padStart(10)}</span>
+            <p className="text-sm">
+              <span className="inline-block w-3 h-3 rounded-full mr-2" style={{ backgroundColor: chartConfig.relays?.color }}></span>
+              Relays: <span className="font-mono">{payload.find(p => p.dataKey === 'relays')?.value?.toLocaleString().padStart(10)}</span>
+            </p>
+            <p className="text-sm">
+              <span className="inline-block w-3 h-3 rounded-full mr-2" style={{ backgroundColor: chartConfig.cus?.color }}></span>
+              CUs: <span className="font-mono">{payload.find(p => p.dataKey === 'cus')?.value?.toLocaleString().padStart(10)}</span>
             </p>
           </CardContent>
-        </Card >
-      )
+        </Card>
+      );
     }
-    return null
-  }
+    return null;
+  };
+
+  type VisibleLineKeys = keyof typeof visibleLines;
 
   const renderLegend = (props: any) => {
     const { payload } = props;
     return (
       <div className="flex flex-wrap justify-center gap-4 text-sm">
-        {payload.map((entry: { color: any; value: any; dataKey: string }, index: any) => {
+        {payload.map((entry: { color: any; value: any; dataKey: VisibleLineKeys }, index: any) => {
           const isQoSMetric = entry.dataKey.startsWith('qos');
+          const displayName = entry.dataKey === 'cus' ? 'CUs' :
+            entry.dataKey === 'relays' ? 'Relays' :
+              entry.value;
           return (
             <div
               key={`item-${index}`}
-              className={`flex items-center ${isQoSMetric ? 'cursor-pointer' : ''}`}
-              onClick={() => isQoSMetric && toggleLineVisibility(entry.dataKey)}
+              className="flex items-center cursor-pointer"
+              onClick={() => toggleLineVisibility(entry.dataKey)}
             >
               <span
                 className="inline-block w-3 h-3 rounded-full mr-2"
                 style={{
-                  backgroundColor: qosColors[entry.dataKey]?.start || entry.color,
-                  opacity: isQoSMetric && !visibleLines[entry.dataKey] ? 0.3 : 1
+                  backgroundColor: isQoSMetric ? qosColors[entry.dataKey]?.start : entry.color,
+                  opacity: visibleLines[entry.dataKey] ? 1 : 0.3
                 }}
               ></span>
-              <span style={{ opacity: isQoSMetric && !visibleLines[entry.dataKey] ? 0.3 : 1 }}>
-                {entry.value}
+              <span style={{ opacity: visibleLines[entry.dataKey] ? 1 : 0.3 }}>
+                {displayName}
               </span>
             </div>
           );
@@ -227,6 +184,14 @@ const SpecChart: React.FC<UsageGraphProps> = ({ spec }) => {
     );
   };
 
+  const options = useMemo(() => {
+    if (!data) return [];
+    return Object.entries(data.allAvailableProviders).map(([provider, moniker]) => ({
+      value: provider,
+      label: moniker
+    }));
+  }, [data]);
+
   if (error) return <div>Failed to load data</div>;
   if (!data) return <UsageGraphSkeleton />;
 
@@ -234,16 +199,18 @@ const SpecChart: React.FC<UsageGraphProps> = ({ spec }) => {
     <Card>
       <CardHeader className="rechars-container">
         <div className="rechars-container-title">
-          <CardTitle>Chain QoS Scores and Relays</CardTitle>
+          <CardTitle>Chain QoS Scores and Usage</CardTitle>
           <CardDescription>
-            Showing QoS scores and relay counts for the selected chain
+            Showing QoS scores, relays, and CUs for {spec}
           </CardDescription>
         </div>
         <div className="rechars-container-controls">
-          <CustomCombobox
-            availableChains={availableChains || []}
-            selectedChains={selectedChains || []}
-            onSelectionChange={handleSelectionChange}
+          <DropDownRadioOptions
+            options={options}
+            value={selectedProvider}
+            setValue={setSelectedProvider}
+            placeholder="All Providers"
+            className="w-[300px]"
           />
           <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
             <PopoverTrigger asChild>
@@ -276,10 +243,7 @@ const SpecChart: React.FC<UsageGraphProps> = ({ spec }) => {
                 onSelect={handleDateRangeSelect}
               />
               <div className="flex justify-end gap-2 p-3">
-                <Button
-                  variant="outline"
-                  onClick={handleCalendarCancel}
-                >
+                <Button variant="outline" onClick={handleCalendarCancel}>
                   Cancel
                 </Button>
                 <Button onClick={handleCalendarClose}>
@@ -368,22 +332,26 @@ const SpecChart: React.FC<UsageGraphProps> = ({ spec }) => {
                   hide={!visibleLines.qosLatencyAvg}
                 />
 
-
-                {selectedChains.map((chain) => {
-                  const chain2 = removeSpacesForCss(chain);
-                  return (
-                    <Area
-                      key={chain2}
-                      yAxisId="left"
-                      type="monotone"
-                      dataKey={chain}
-                      stroke={`var(--${chain2}-color)`}
-                      fill={`url(#fill${chain2})`}
-                      stackId="1"
-                    />
-                  );
-                })}
-
+                <Area
+                  yAxisId="left"
+                  type="monotone"
+                  dataKey="relays"
+                  name="Relays"
+                  stroke={`var(--${removeSpacesForCss('relays')}-color)`}
+                  fill={`url(#fill${removeSpacesForCss('relays')})`}
+                  stackId="1"
+                  hide={!visibleLines.relays}
+                />
+                <Area
+                  yAxisId="left"
+                  type="monotone"
+                  dataKey="cus"
+                  name="CUs"
+                  stroke={`var(--${removeSpacesForCss('cus')}-color)`}
+                  fill={`url(#fill${removeSpacesForCss('cus')})`}
+                  stackId="1"
+                  hide={!visibleLines.cus}
+                />
                 <Brush
                   dataKey="date"
                   height={30}
@@ -398,7 +366,7 @@ const SpecChart: React.FC<UsageGraphProps> = ({ spec }) => {
                   <AreaChart>
                     <Area
                       type="monotone"
-                      dataKey="totalRelays"
+                      dataKey="relays"
                       stroke="hsl(var(--muted-foreground))"
                       fill="hsl(var(--muted))"
                       fillOpacity={0.4}
@@ -409,9 +377,8 @@ const SpecChart: React.FC<UsageGraphProps> = ({ spec }) => {
             </ResponsiveContainer>
           </div>
         ) : (
-          <div className="h-[150px] w-full">
-            <br />
-            <div>No chart data for the selected date range</div>
+          <div className="h-[350px] w-full">
+            <div>No data available</div>
           </div>
         )}
         {isLoading && (
@@ -422,6 +389,6 @@ const SpecChart: React.FC<UsageGraphProps> = ({ spec }) => {
       </CardContent>
     </Card>
   );
-}
+};
 
-export default SpecChart;
+export default ChainChart;
