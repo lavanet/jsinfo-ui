@@ -23,11 +23,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@jsinfo/components/shadcn/ui/Popover";
-import CustomCombobox from "@jsinfo/components/sections/CustomCombobox";
+import CustomCombobox from "./IndexChartCustomCombobox";
 import { cn } from "@jsinfo/lib/css"
 import UsageGraphSkeleton from "@jsinfo/components/sections/UsageGraphSkeleton";
 import { useApiSwrFetch } from "@jsinfo/hooks/useApiSwrFetch";
 import { CalendarWithLastXButtons } from "@jsinfo/components/shadcn/CalendarWithLastXButtons";
+import { Checkbox } from "@jsinfo/components/shadcn/ui/Checkbox";
 
 import { CHART_COLORS } from "@jsinfo/lib/consts";
 import { removeSpacesForCss } from "@jsinfo/lib/utils";
@@ -57,6 +58,7 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
     qosAvailabilityAvg: true,
     qosLatencyAvg: true,
   });
+  const [showAllChains, setShowAllChains] = useState(true);
 
   const { data, error, isLoading } = useApiSwrFetch(() => {
     if (dateRange?.from && dateRange?.to) {
@@ -68,7 +70,7 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
   });
 
   const [availableChains, setAvailableChains] = useState<string[]>([]);
-  const [selectedChains, setSelectedChains] = useState<string[]>([]);
+  const [selectedChains, setSelectedChains] = useState<string[]>(["All Chains"]);
 
   const qosColors: { [key: string]: { start: string; end: string } } = {
     qos: { start: "#00ff00", end: "#ff0000" },
@@ -95,7 +97,7 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
       }
     })
 
-    setAvailableChains(Array.from(allChains));
+    setAvailableChains(Array.from(allChains).filter(chain => chain !== "All Chains"));
 
     const chartData = sortedData.map((day) => {
       const dayData: { [key: string]: any } = {
@@ -135,12 +137,6 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
   const toggleLineVisibility = (dataKey: string) => {
     setVisibleLines((prev: VisibleLinesType) => ({ ...prev, [dataKey]: !prev[dataKey] }));
   };
-
-  useEffect(() => {
-    if (availableChains.length > 0 && selectedChains.length === 0) {
-      setSelectedChains(["All Chains"]);
-    }
-  }, [availableChains, selectedChains]);
 
   useEffect(() => {
     Object.entries(chartConfig).forEach(([key, value]) => {
@@ -228,10 +224,10 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
                 className="inline-block w-3 h-3 rounded-full mr-2"
                 style={{
                   backgroundColor: qosColors[entry.dataKey]?.start || entry.color,
-                  opacity: isQoSMetric && !visibleLines[entry.dataKey] ? 0.3 : 1
+                  opacity: isQoSMetric && !visibleLines[entry.dataKey as keyof VisibleLinesType] ? 0.3 : 1
                 }}
               ></span>
-              <span style={{ opacity: isQoSMetric && !visibleLines[entry.dataKey] ? 0.3 : 1 }}>
+              <span style={{ opacity: isQoSMetric && !visibleLines[entry.dataKey as keyof VisibleLinesType] ? 0.3 : 1 }}>
                 {entry.value}
               </span>
             </div>
@@ -241,6 +237,20 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
     );
   };
 
+  const handleAllChainsChange = (checked: boolean) => {
+    console.log('handleAllChainsChange called with:', checked);
+    setShowAllChains(checked);
+    setSelectedChains(prevSelected => {
+      let newSelected;
+      if (checked) {
+        newSelected = prevSelected.includes("All Chains") ? prevSelected : [...prevSelected, "All Chains"];
+      } else {
+        newSelected = prevSelected.filter(chain => chain !== "All Chains");
+      }
+      return newSelected;
+    });
+  };
+
   if (error) return <div>Failed to load data</div>;
   if (!data) return <UsageGraphSkeleton />;
 
@@ -248,12 +258,22 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
     <Card>
       <CardHeader className="rechars-container">
         <div className="rechars-container-title">
-          <CardTitle>{props.providerId ? 'Provider QoS Scores and Relays' : 'QoS Score and Selected Chains'}</CardTitle>
+          <CardTitle>QoS Score and Selected Chains</CardTitle>
           <CardDescription>
-            {props.providerId ? 'Showing QoS scores and relay counts for the selected provider' : 'Showing QoS score and relay counts for selected chains'}
+            Showing QoS score and relay counts for selected chains
           </CardDescription>
         </div>
-        <div className="rechars-container-controls">
+        <div className="rechars-container-controls flex items-center space-x-4">
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="allChains"
+              checked={showAllChains}
+              onCheckedChange={handleAllChainsChange}
+            />
+            <label htmlFor="allChains" className="text-sm font-medium">
+              All Chains
+            </label>
+          </div>
           <CustomCombobox
             availableChains={availableChains || []}
             selectedChains={selectedChains || []}

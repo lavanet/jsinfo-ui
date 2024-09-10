@@ -106,7 +106,9 @@ const ChainChart: React.FC<ChainChartProps> = ({ spec, addr }) => {
     });
   }, [chartConfig]);
 
-  const toggleLineVisibility = (dataKey: string) => {
+  type VisibleLineKey = keyof typeof visibleLines;
+
+  const toggleLineVisibility = (dataKey: VisibleLineKey) => {
     setVisibleLines(prev => ({ ...prev, [dataKey]: !prev[dataKey] }));
   };
 
