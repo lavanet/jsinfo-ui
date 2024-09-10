@@ -310,7 +310,9 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
             <div>Error loading data</div>
           ) : chartData.length > 0 ? (
             <ResponsiveContainer width="100%" height="100%">
-              <ComposedChart data={chartData} margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+              <ComposedChart
+                data={chartData.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())}
+                margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
                 <defs>
                   {Object.entries(qosColors).map(([key, { start, end }]) => (
                     <linearGradient key={key} id={`${key}Gradient`} x1="0" y1="0" x2="0" y2="1">
