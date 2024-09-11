@@ -2,9 +2,9 @@
 
 "use client";
 
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
-import TableCsvButton from "@jsinfo/components/TableCsvButton";
-import LavaWithTooltip from "@jsinfo/components/LavaWithTooltip";
+import { DataKeySortableTableInATabComponent } from "@jsinfo/components/classic/DynamicSortTable";
+import TableCsvButton from "@jsinfo/components/classic/TableCsvButton";
+import LavaWithTooltip from "@jsinfo/components/modern/LavaWithTooltip";
 
 interface ProviderStakesTabProps {
     addr: string;

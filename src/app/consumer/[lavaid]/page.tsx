@@ -2,19 +2,21 @@
 "use client";
 
 import Link from 'next/link'
-import { Flex, Text, Card, Box } from "@radix-ui/themes";
-import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
-import { SortableTableInATabComponent } from "@jsinfo/components/StaticSortTable";
-import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
-import TitledCard from "@jsinfo/components/TitledCard";
-import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
+import { Card, Box } from "@radix-ui/themes";
+import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
+import { SortableTableInATabComponent } from "@jsinfo/components/classic/StaticSortTable";
+import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
+import JsinfoTabs from "@jsinfo/components/classic/JsinfoTabs";
 import { useEffect } from "react";
 import { usePageContext } from '@jsinfo/context/PageContext';
-import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
-import { RenderInFullPageCard } from '@jsinfo/common/utils';
-import ConsumerChart from '@jsinfo/charts/consumerChart';
+import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
+import ConsumerChart from '@jsinfo/app/consumer/[lavaid]/_components/ConsumerChart';
 import ConsumerSubscriptionsTable from './_components/ConsumersSubscriptionsTab';
 import ConsumersEventsTab from './_components/ConsumersEventsTab';
+import StatCard from '@jsinfo/components/sections/StatCard';
+import { MonitorCog, ArrowUpNarrowWide, CreditCard } from 'lucide-react';
+import ClassicTheme from '@jsinfo/components/classic/ClassicTheme';
+import BackToConsumersLink from './_components/BackToConsumers';
 
 export default function Consumer({ params }: { params: { lavaid: string } }) {
 
@@ -24,12 +26,10 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
 
   if (!lavaIdPattern.test(decodedLavaId)) {
     const error = 'Invalid lavaId format';
-    return RenderInFullPageCard(<ErrorDisplay message={error} />);
+    return <ErrorDisplay message={error} />;
   }
 
-  const { data, loading, error } = useApiDataFetch({
-    dataKey: 'consumer/' + decodedLavaId
-  });
+  const { data, loading, error } = useApiFetch('consumer/' + decodedLavaId);
 
   const { setCurrentPage } = usePageContext();
 
@@ -39,53 +39,51 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
     }
   }, [loading, error, decodedLavaId, setCurrentPage]);
 
-  if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
-  if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${decodedLavaId} consumer page`} greyText={`${decodedLavaId} consumer`} />);
+  if (error) return <ErrorDisplay message={error} />;
+  if (loading) return <LoadingIndicator loadingText={`Loading ${decodedLavaId} consumer page`} greyText={`${decodedLavaId} consumer`} />;
 
   const consumer = data;
 
   return (
     <>
-      <Card>
-        <Flex gap="3" align="center">
-          <Box style={{ paddingLeft: "5px" }}>
-            <Text as="div" size="2" color="gray">
-              Consumer
-            </Text>
-            <Text as="div" size="2" weight="bold">
-              {consumer.addr}
-            </Text>
-          </Box>
-        </Flex>
-      </Card>
+      <BackToConsumersLink />
 
-      <div style={{ marginTop: 'var(--box-margin)', marginBottom: 'var(--box-margin)' }}>
-        <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-3">
-          <TitledCard
-            title="Cu Sum"
-            value={consumer.cuSum}
-            className="col-span-1"
-            formatNumber={true}
-          />
-          <TitledCard
-            title="Relay Sum"
-            value={consumer.relaySum}
-            className="col-span-1"
-            formatNumber={true}
-          />
-          <TitledCard
-            title="Pay Sum"
-            value={consumer.rewardSum}
-            className="col-span-2 md:col-span-1"
-            formatNumber={true}
-          />
-        </Flex>
+      <div style={{ marginLeft: '23px' }}>
+        <h1 className="text-3xl font-bold mb-4">{consumer.addr}</h1>
       </div>
 
-      <ConsumerChart addr={decodedLavaId} />
-      <div className="box-margin-div"></div>
+      <div style={{ marginTop: '25px' }}></div>
+      <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
+        <StatCard
+          title="Cu Sum"
+          value={consumer.cuSum}
+          className="col-span-1"
+          formatNumber={true}
+          icon={<MonitorCog className="h-4 w-4 text-muted-foreground" />}
+        />
+        <StatCard
+          title="Relay Sum"
+          value={consumer.relaySum}
+          className="col-span-1"
+          formatNumber={true}
+          icon={<ArrowUpNarrowWide className="h-4 w-4 text-muted-foreground" />}
+        />
+        <StatCard
+          title="Pay Sum"
+          value={consumer.rewardSum}
+          className="col-span-2 md:col-span-1"
+          formatNumber={true}
+          icon={<CreditCard className="h-4 w-4 text-muted-foreground" />}
+        />
+      </div>
+      <div style={{ marginTop: '25px' }}></div>
 
-      <Card>
+      {/* <ConsumerChart consumerId={decodedLavaId} /> */}
+
+      <ClassicTheme>
+        <div className="box-margin-div"></div>
+        <div className="box-margin-div"></div>
+
         <JsinfoTabs defaultValue="subscriptions"
           tabs={[
             {
@@ -122,7 +120,7 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
               pkeyUrl="none"
               rowFormatters={{
                 specId: (data) => (
-                  <Link href={`/spec/${data.specId}`}>{data.specId}</Link>
+                  <Link className='orangelinks' href={`/chain/${data.specId}`}>{data.specId}</Link>
                 ),
               }}
             />
@@ -130,7 +128,7 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
 
           <ConsumersEventsTab addr={decodedLavaId} />
         </JsinfoTabs>
-      </Card>
+      </ClassicTheme>
     </>
   );
 }

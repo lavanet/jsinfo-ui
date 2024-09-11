@@ -3,10 +3,10 @@
 "use client";
 
 import Link from 'next/link'
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
-import TableCsvButton from "@jsinfo/components/TableCsvButton";
-import { GeoLocationToString, StatusToString } from '@jsinfo/common/convertors';
-import StatusCall from '@jsinfo/components/StatusCell';
+import { DataKeySortableTableInATabComponent } from "@jsinfo/components/classic/DynamicSortTable";
+import TableCsvButton from "@jsinfo/components/classic/TableCsvButton";
+import { GeoLocationToString, StatusToString } from '@jsinfo/lib/convertors';
+import StatusCall from '@jsinfo/components/modern/StatusCell';
 
 interface ProviderEventsTabProps {
     addr: string;
@@ -29,7 +29,7 @@ const ProviderEventsTab: React.FC<ProviderEventsTabProps> = ({ addr }) => {
             pkeyUrl="spec"
             rowFormatters={{
                 specId: (data) => (
-                    <Link href={`/spec/${data.specId}`}>{data.specId}</Link>
+                    <Link className='orangelinks' href={`/chain/${data.specId}`}>{data.specId}</Link>
                 ),
                 status: (data) => <StatusCall status={StatusToString(data.status)} />,
                 geolocation: (data) => GeoLocationToString(data.geolocation),

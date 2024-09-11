@@ -3,9 +3,9 @@
 "use client";
 
 import Link from 'next/link'
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
-import TableCsvButton from "@jsinfo/components/TableCsvButton";
-import TimeTooltip from '@jsinfo/components/TimeTooltip';
+import { DataKeySortableTableInATabComponent } from "@jsinfo/components/classic/DynamicSortTable";
+import TableCsvButton from "@jsinfo/components/classic/TableCsvButton";
+import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
 
 interface ProviderErrorsTabProps {
     addr: string;
@@ -36,7 +36,7 @@ const ProviderErrorsTab: React.FC<ProviderErrorsTabProps> = ({ addr }) => {
             rowFormatters={{
                 date: (data) => (<TimeTooltip datetime={data.date} />),
                 spec: (data) => (
-                    <Link href={`/spec/${data.spec}`}>{data.spec}</Link>
+                    <Link className='orangelinks' href={`/chain/${data.spec}`}>{data.spec}</Link>
                 ),
                 error: (data) => {
                     return (

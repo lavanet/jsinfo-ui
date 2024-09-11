@@ -3,11 +3,11 @@
 "use client";
 
 import Link from 'next/link'
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
-import TableCsvButton from "@jsinfo/components/TableCsvButton";
-import TimeTooltip from '@jsinfo/components/TimeTooltip';
-import { FormatNumberWithString } from '@jsinfo/common/utils';
-import { GetExplorersGuruUrl } from '@jsinfo/common/env';
+import { DataKeySortableTableInATabComponent } from "@jsinfo/components/classic/DynamicSortTable";
+import TableCsvButton from "@jsinfo/components/classic/TableCsvButton";
+import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
+import { FormatNumberWithString } from '@jsinfo/lib/formatting';
+import { GetExplorersGuruUrl } from '@jsinfo/lib/env';
 
 interface ProviderBlockReportsTabProps {
     addr: string;
@@ -34,7 +34,7 @@ const ProviderBlockReportsTab: React.FC<ProviderBlockReportsTabProps> = ({ addr 
             pkeyUrl="none"
             rowFormatters={{
                 "blockId": (data) => (
-                    <Link
+                    <Link className='orangelinks'
                         href={
                             data.tx
                                 ? `${GetExplorersGuruUrl()}/transaction/${data.tx}`
@@ -46,7 +46,7 @@ const ProviderBlockReportsTab: React.FC<ProviderBlockReportsTabProps> = ({ addr 
                 ),
                 timestamp: (data) => (<TimeTooltip datetime={data.timestamp} />),
                 chainId: (stake) => (
-                    <Link href={`/spec/${stake.chainId}`}>{stake.chainId}</Link>
+                    <Link className='orangelinks' href={`/chain/${stake.chainId}`}>{stake.chainId}</Link>
                 ),
                 chainBlockHeight: (data) => FormatNumberWithString(data.chainBlockHeight),
             }}

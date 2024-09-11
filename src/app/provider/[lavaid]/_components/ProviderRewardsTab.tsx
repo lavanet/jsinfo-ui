@@ -3,10 +3,11 @@
 "use client";
 
 import Link from 'next/link'
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
-import TableCsvButton from "@jsinfo/components/TableCsvButton";
-import TimeTooltip from '@jsinfo/components/TimeTooltip';
-import { GetExplorersGuruUrl } from '@jsinfo/common/env';
+import { DataKeySortableTableInATabComponent } from "@jsinfo/components/classic/DynamicSortTable";
+import TableCsvButton from "@jsinfo/components/classic/TableCsvButton";
+import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
+import { GetExplorersGuruUrl } from '@jsinfo/lib/env';
+import ModernTooltip from '@jsinfo/components/modern/ModernTooltip';
 
 interface ProviderRewardsTabProps {
     addr: string;
@@ -37,12 +38,12 @@ const ProviderRewardsTab: React.FC<ProviderRewardsTabProps> = ({ addr }) => {
             pkeyUrl="none"
             rowFormatters={{
                 "relay_payments.specId": (payment) => (
-                    <Link href={`/spec/${payment.relay_payments.specId}`}>
+                    <Link className='orangelinks' href={`/chain/${payment.relay_payments.specId}`}>
                         {payment.relay_payments.specId}
                     </Link>
                 ),
                 "relay_payments.blockId": (payment) => (
-                    <Link
+                    <Link className='orangelinks'
                         href={
                             payment.relay_payments.tx
                                 ? `${GetExplorersGuruUrl()}/transaction/${payment.relay_payments.tx}`
@@ -55,7 +56,7 @@ const ProviderRewardsTab: React.FC<ProviderRewardsTabProps> = ({ addr }) => {
                 "blocks.datetime": (payment) =>
                     (<TimeTooltip datetime={payment.blocks.datetime} />),
                 "relay_payments.consumer": (payment) => (
-                    <Link href={`/consumer/${payment.relay_payments.consumer}`}>
+                    <Link className='orangelinks' href={`/consumer/${payment.relay_payments.consumer}`}>
                         {payment.relay_payments.consumer}
                     </Link>
                 ),
@@ -65,13 +66,13 @@ const ProviderRewardsTab: React.FC<ProviderRewardsTabProps> = ({ addr }) => {
                 "relay_payments.pay": (payment) =>
                     `${payment.relay_payments.pay} ULAVA`,
                 "relay_payments.qosSync": (payment) =>
-                    <span title={`Sync: ${payment.relay_payments.qosSync}, Availability: ${payment.relay_payments.qosAvailability}, Latency: ${payment.relay_payments.qosLatency}`}>
+                    <ModernTooltip title={`Sync: ${payment.relay_payments.qosSync}, Availability: ${payment.relay_payments.qosAvailability}, Latency: ${payment.relay_payments.qosLatency}`}>
                         {payment.relay_payments.qosSync}, {payment.relay_payments.qosAvailability}, {payment.relay_payments.qosLatency}
-                    </span>,
+                    </ModernTooltip>,
                 "relay_payments.qosSyncExc": (payment) =>
-                    <span title={`SyncExc: ${payment.relay_payments.qosSyncExc}, AvailabilityExc: ${payment.relay_payments.qosAvailabilityExc}, LatencyExc: ${payment.relay_payments.qosLatencyExc}`}>
+                    <ModernTooltip title={`SyncExc: ${payment.relay_payments.qosSyncExc}, AvailabilityExc: ${payment.relay_payments.qosAvailabilityExc}, LatencyExc: ${payment.relay_payments.qosLatencyExc}`}>
                         {payment.relay_payments.qosSyncExc}, {payment.relay_payments.qosAvailabilityExc}, {payment.relay_payments.qosLatencyExc}
-                    </span>,
+                    </ModernTooltip>,
             }}
             csvButton={(
                 <TableCsvButton

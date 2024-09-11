@@ -1,0 +1,327 @@
+/* -------- documnet body ------------------- */
+
+html,
+body {
+  overflow-x: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.body-content {
+  background-color: var(--background-color);
+  width: 100vw;
+  padding-left: 5px;
+  padding-right: 5px;
+  box-sizing: border-box;
+}
+
+@supports (-ms-overflow-style: none) {
+  /* Edge/IE */
+  .body-content {
+    padding-right: 20px;
+  }
+}
+
+@-moz-document url-prefix() {
+  /* Firefox */
+  .body-content {
+    padding-right: 8px;
+  }
+}
+
+.windows-adjustment {
+  padding-right: 20px;
+}
+
+.windows-adjustment-header {
+  padding-right: 40px;
+}
+
+@media (min-width: 920px) and (max-width: 1020px) {
+  .windows-adjustment-header {
+    padding-right: 60px;
+  }
+}
+
+.body-content-boundary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 5px;
+  margin: 0 auto;
+  max-width: 1536px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: var(--background-color);
+  min-height: calc(
+    100vh - 63.99px - 63.99px - 40px
+  ); /* top bar bottom bar and margins */
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 600px) {
+  .body-content-boundary {
+    min-height: calc(
+      100vh / 0.8 - (63.99px) - (63.99px) - 40px
+    ); /* top bar bottom bar and margins */
+  }
+  .body-content {
+    width: calc(100vw / 0.8);
+  }
+}
+
+.body-content-boundary-inner {
+  width: 100%;
+  height: 100%;
+  align-items: flex-start;
+  justify-content: flex-start;
+  background-color: var(--background-color);
+}
+
+/* -------- top navbar styles -------- */
+
+.topbar-nav {
+  display: flex;
+  height: 63.99px;
+}
+
+@media (max-width: 900px) {
+  .topbar-nav {
+    display: none;
+  }
+}
+
+.header-fade {
+  transition: opacity 0.5s ease-in-out;
+}
+
+.top-header {
+  background-color: var(--navbar-background-color);
+  width: 100vw;
+}
+
+@media (max-width: 600px) {
+  .top-header {
+    width: calc(100vw / 0.8);
+  }
+}
+
+/* @media (max-width: 1000px) {
+  .top-header-search-input {
+    width: 20px;
+  }
+} */
+
+.top-header-search-input-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  overflow: hidden;
+}
+/* -------- footer -------------------------- */
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 4rem;
+  box-sizing: border-box;
+  border-top: 1px solid;
+  background-color: var(--navbar-background-color);
+  border-color: hsl(var(--border));
+  padding-left: 1rem;
+  padding-right: 1rem;
+  width: 100%;
+  height: 63.99px;
+}
+
+/* -------- last update badge styles -------- */
+
+.last-update-badge-content {
+  background-color: var(--background-color);
+  margin-left: 9px;
+}
+
+.last-update-badge-update-text,
+.last-update-badge-time-text {
+  display: inline;
+  margin-right: 4px; /* Adjust spacing as needed */
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .last-update-badge-update-text,
+  .last-update-badge-time-text {
+    display: block;
+    margin-right: 0;
+    white-space: nowrap;
+  }
+
+  .last-update-badge-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    scale: 0.95;
+    margin-left: 0px;
+  }
+}
+
+.text-no-wrap {
+  white-space: nowrap;
+}
+
+/* -------- logo image styles -------- */
+
+.lava-logo-image {
+  max-width: fit-content;
+  margin-bottom: 3px;
+  margin-right: 10px;
+  min-width: fit-content;
+}
+
+@media (max-width: 900px) {
+  .lava-logo-image {
+    margin-bottom: 3px;
+    margin-right: 0;
+  }
+}
+
+/* -------- mobile nav bar ----------- */
+
+.mobile-navbar-button {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .mobile-navbar-button {
+    display: flex;
+  }
+}
+
+.mobile-navbar {
+  background-color: var(--navbar-background-color);
+  width: fit-content;
+  border-right: 1px solid hsl(0, 0%, 14.9%);
+}
+
+.mobile-navbar > button {
+  color: white;
+}
+
+.mobile-navbar-inner > a > img {
+  margin-right: 45px;
+  margin-top: -8px;
+}
+
+/* -------- nav links ---------------- */
+
+.nav-link {
+  color: hsl(var(--muted-foreground));
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 0.15s;
+  text-decoration: inherit;
+}
+
+.nav-link:hover {
+  color: #fafafa;
+}
+
+.nav-link-selected {
+  color: #fafafa;
+}
+
+/* -------- footer link ---------------- */
+
+.footer-link {
+  color: #fafafa; /* Reversed color */
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 0.15s;
+  text-decoration: inherit;
+}
+
+.footer-link:hover {
+  color: hsl(var(--muted-foreground)); /* Reversed hover color */
+}
+
+/* -------- modern tooltip ------------- */
+
+.modern-tool-tip-content {
+  position: relative;
+  z-index: 1000;
+  background-color: var(--background-color);
+  border: 1px solid;
+  padding: 5px;
+  border-radius: calc(var(--radius) - 2px);
+  border-color: hsl(var(--border));
+}
+
+/* -------- adjust table headers -------- */
+
+.rt-TableColumnHeaderCell {
+  color: hsl(var(--muted-foreground));
+  font-weight: normal;
+}
+
+/* -------- old cards color -------- */
+
+.rt-BaseCard {
+  background-color: var(--background-color);
+}
+
+/* -------- charts ------------------ */
+
+.rechars-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  padding-bottom: 1rem;
+}
+
+.rechars-container-title {
+  width: 100%;
+}
+
+.rechars-container-title > *:first-child {
+  margin-bottom: 0.25rem;
+}
+
+.rechars-container-controls {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 0.5rem;
+}
+
+@media (min-width: 1000px) {
+  .rechars-container {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.5rem;
+  }
+
+  .rechars-container-title {
+    width: auto;
+  }
+
+  .rechars-container-controls {
+    width: auto;
+    margin-left: auto;
+  }
+}
+
+.recharts-legend-wrapper {
+  bottom: 0px !important;
+  position: unset !important;
+  margin-top: -20px;
+}

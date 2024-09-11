@@ -1,23 +1,26 @@
 // src/app/layout.tsx
 
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { Container } from "@radix-ui/themes";
-import { Navbar } from "@jsinfo/components/Navbar";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Theme } from "@radix-ui/themes";
-import { PageProvider } from "@jsinfo/components/PageProvider";
-
-import { GetPageTitle } from "@jsinfo/common/env";
+import { PageProvider } from "@jsinfo/components/classic/PageProvider";
+import { GetPageTitle } from "@jsinfo/lib/env";
+import { Inter as FontSans } from "next/font/google";
+import Header from "@jsinfo/components/layout/Header";
+import Footer from "@jsinfo/components/layout/Footer";
+import { cn } from "@jsinfo/lib/css"
+import { TooltipProvider } from "@jsinfo/components/shadcn/ui/Tooltip";
+import { NoSsrComponent } from "@jsinfo/components/helpers/NoSsrComponent";
+import { ThemeProvider as ShadcnThemeProvider } from "@jsinfo/components/shadcn/ThemeProvider";
 
 import '@radix-ui/themes/styles.css';
 import "./styles/globals.css";
-import "./styles/paginationcontrol.css";
 import "./styles/accountinfocard.css";
 import "./styles/rsuite.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import "./styles/ui.css";
+import "./styles/modern.css";
+import "./styles/legacy.css";
 
 export const metadata: Metadata = {
   title: GetPageTitle(),
@@ -26,36 +29,60 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   colorScheme: "dark",
+  // width: '120',
+  initialScale: 0.6,
+  // maximumScale: 1.4,
+  userScalable: true,
 }
+
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+})
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-        <Theme
-          appearance="dark"
-          accentColor="tomato"
-          grayColor="slate"
-          panelBackground="solid"
-          radius="full"
-          scaling="90%"
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable
+        )}
+      >
+
+        <ShadcnThemeProvider
+          attribute="class"
+          defaultTheme="dark"
         >
+
           <Container>
             <SpeedInsights />
-            <div className="body-div">
+            <div className="flex min-h-screen mx-auto flex-col">
               <PageProvider>
-                <Navbar />
-                <main>{children}</main>
+                <TooltipProvider>
+                  <NoSsrComponent>
+                    <Header />
+                    <main className="body-content">
+                      <div className="body-content-boundary">
+                        <div className="body-content-boundary-inner">
+                          {children}
+                        </div>
+                      </div>
+                    </main>
+                    <Footer />
+                  </NoSsrComponent>
+                </TooltipProvider>
               </PageProvider>
               <Analytics />
             </div>
           </Container>
-        </Theme>
+
+        </ShadcnThemeProvider>
+
       </body>
     </html>
   );

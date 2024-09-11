@@ -3,21 +3,11 @@
 
 import { useEffect } from "react";
 import { usePageContext } from "@jsinfo/context/PageContext";
-import dynamic from 'next/dynamic';
-import { IndexPageComponent } from "./_components/indexPageComponent";
 import React from "react";
-
-const NoSsr = (props: { children: any }) => (
-  <React.Fragment>{props.children}</React.Fragment>
-)
-
-function loadNoSsrDynamically() {
-  return dynamic(() => Promise.resolve(NoSsr), {
-    ssr: false,
-  });
-}
-
-const NoSsrComponent = loadNoSsrDynamically();
+import { IndexChart } from "./_components/IndexChart";
+import { IndexAllCards } from "./_components/IndexPageCards";
+import IndexProvidersTableBlock from "./_components/IndexProvidersTableBlock";
+import IndexChainsTableBlock from "./_components/IndexChainsTableBlock";
 
 export default function Home() {
 
@@ -27,5 +17,19 @@ export default function Home() {
     setCurrentPage('home');
   }, [setCurrentPage]);
 
-  return <NoSsrComponent><IndexPageComponent /></NoSsrComponent>
+  return (
+    <>
+      <IndexAllCards />
+
+      <IndexChart />
+      <div className="box-margin-div"></div>
+      <div className="box-margin-div"></div>
+      <div className="box-margin-div"></div>
+
+      <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-4">
+        <IndexProvidersTableBlock />
+        <IndexChainsTableBlock />
+      </div>
+    </>
+  );
 }

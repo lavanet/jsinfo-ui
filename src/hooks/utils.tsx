@@ -1,6 +1,13 @@
 // src/hooks/utils.tsx
 
 export function ValidateDataKey(dataKey: string) {
+    if (typeof dataKey !== 'string' || !dataKey) {
+        console.error(`Invalid arguments: dataKey=${dataKey}`, dataKey);
+        throw new Error(`Invalid dataKey: ${dataKey}. The dataKey must be a non-empty string.`);
+    }
+
+    dataKey = dataKey.replace("item-count/", "");
+
     const parts = dataKey.split('/');
     // Test the first part (or the whole dataKey if there's no slash)
     if (!parts[0] || parts[0] === "undefined" || parts[0] === "null" || parts[0] === "" || !/^[A-Za-z0-9.]+$/.test(parts[0])) {

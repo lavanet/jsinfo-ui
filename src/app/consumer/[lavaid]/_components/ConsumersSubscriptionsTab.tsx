@@ -2,10 +2,10 @@
 
 "use client";
 
-import { FormatNumber, FormatNumberWithString, IsMeaningfulText } from '@jsinfo/common/utils';
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
-import LavaWithTooltip from '@jsinfo/components/LavaWithTooltip';
-import TimeTooltip from '@jsinfo/components/TimeTooltip';
+import { FormatNumber, FormatNumberWithString, IsMeaningfulText } from '@jsinfo/lib/formatting';
+import { DataKeySortableTableInATabComponent } from "@jsinfo/components/classic/DynamicSortTable";
+import LavaWithTooltip from '@jsinfo/components/modern/LavaWithTooltip';
+import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
 
 interface ConsumerSubscriptionsTabProps {
     addr: string;

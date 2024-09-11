@@ -1,11 +1,11 @@
 "use client"
 
 import React, { useEffect, useState } from 'react';
-import TimeTooltip from '@jsinfo/components/TimeTooltip';
-import LoadingIndicator from '@jsinfo/components/LoadingIndicator';
-import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
+import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
+import LoadingIndicator from '@jsinfo/components/modern/LoadingIndicator';
+import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
 import ReactJson from 'react-json-view';
-import { AxiosDataLoader } from '@jsinfo/hooks/AxiosDataLoader';
+import { AxiosDataLoader } from '@jsinfo/fetching/AxiosDataLoader';
 import Image from 'next/image';
 
 const ErrorComponent: React.FC<{ message: string }> = ({ message }) => {

@@ -1,0 +1,46 @@
+/* -------- Search bar styles -------- */
+
+.searchBarElement {
+  display: block;
+  text-align: left;
+  font-size: 1.3em;
+  color: "#fff";
+  z-index: 10000000;
+}
+
+/* -------- Global vars but used to hide datepicker overlay -------- */
+
+.hide-animation {
+  animation: hide 0.1s forwards;
+}
+
+@keyframes hide {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* --------- legacy theme reset background color -------------------- */
+
+[data-is-root-theme="true"] {
+  background-color: var(--background-color);
+}
+
+/* --------- fixes after swithcing to the new ui -------------------- */
+
+.rt-ScrollAreaRoot {
+  position: unset !important;
+}
+
+.recharts-wrapper {
+  position: unset !important;
+}
+
+.top-search-bar > div > div > div > ul > li.selected {
+  background-color: #262626;
+}
+
+.searchBarElement {
+  font-size: 12px;
+}
