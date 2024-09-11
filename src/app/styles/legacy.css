@@ -84,7 +84,7 @@
   display: block;
   text-align: left;
   font-size: 1.3em;
-  color: var(--interactive-element-color);
+  color: "#fff";
 }
 
 /* -------- Global vars but used to hide datepicker overlay -------- */

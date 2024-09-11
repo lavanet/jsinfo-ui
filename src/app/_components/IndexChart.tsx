@@ -134,7 +134,7 @@ export function IndexChart(props: IndexChartProps = { providerId: null }) {
   }, [data, selectedChains, props.providerId]);
 
 
-  const toggleLineVisibility = (dataKey: keyof typeof visibleLines) => {
+  const toggleLineVisibility = (dataKey: string) => {
     setVisibleLines((prev: VisibleLinesType) => ({ ...prev, [dataKey]: !prev[dataKey] }));
   };
 
