@@ -78,7 +78,7 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
       </div>
       <div style={{ marginTop: '25px' }}></div>
 
-      {/* <ConsumerChart consumerId={decodedLavaId} /> */}
+      {/* <ConsumerChart consumerId={decodedLa vaId} /> */}
 
       <ClassicTheme>
         <div className="box-margin-div"></div>
