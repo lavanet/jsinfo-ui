@@ -64,7 +64,7 @@ export default function SearchBar() {
 
     const insertSearchIcon = () => {
         if (searchRef.current) {
-            const input = searchRef.current.querySelector('.top-search-bar > div > div > div > input');
+            const input = searchRef.current.querySelector('.top-search-bar > div > div > div > input') as HTMLInputElement;
             if (input && !input.previousElementSibling?.classList.contains('custom-search-icon')) {
                 const iconContainer = document.createElement('div');
                 iconContainer.className = 'custom-search-icon';
@@ -76,13 +76,23 @@ export default function SearchBar() {
                 ReactDOM.render(<CustomSearchIcon />, iconContainer);
                 input.parentNode?.insertBefore(iconContainer, input);
 
-                // Add event listeners to hide/show icon
-                input.addEventListener('focus', () => {
-                    iconContainer.style.display = 'none';
-                });
-                input.addEventListener('blur', () => {
-                    iconContainer.style.display = 'block';
-                });
+                const originalPlaceholder = input.placeholder;
+
+                const updateIconAndPlaceholder = () => {
+                    if (input.value) {
+                        iconContainer.style.display = 'none';
+                    } else {
+                        iconContainer.style.display = document.activeElement === input ? 'none' : 'block';
+                    }
+                    input.placeholder = document.activeElement === input ? '' : originalPlaceholder;
+                };
+
+                input.addEventListener('focus', updateIconAndPlaceholder);
+                input.addEventListener('blur', updateIconAndPlaceholder);
+                input.addEventListener('input', updateIconAndPlaceholder);
+
+                // Initial update
+                updateIconAndPlaceholder();
             }
         }
     };
@@ -91,10 +101,11 @@ export default function SearchBar() {
         insertSearchIcon();
         // Clean up event listeners on component unmount
         return () => {
-            const input = searchRef.current?.querySelector('.top-search-bar > div > div > div > input');
+            const input = searchRef.current?.querySelector('.top-search-bar > div > div > div > input') as HTMLInputElement;
             if (input) {
                 input.removeEventListener('focus', () => { });
                 input.removeEventListener('blur', () => { });
+                input.removeEventListener('input', () => { });
             }
         };
     }, []);
@@ -127,6 +138,7 @@ export default function SearchBar() {
                     placeholder="     Search ..."
                     showIcon={false}
                     inputDebounce={300}
+                    fuseOptions={{ keys: ['name', 'moniker'] }}
                 // className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
                 />
             </div>
