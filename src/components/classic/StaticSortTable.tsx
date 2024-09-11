@@ -330,13 +330,11 @@ const SortableTableContent: React.FC<SortableTableProps> = (props: SortableTable
     if (props.tableData.length > 3 && columnLengthPercentagesRef.current === null) {
       let maxColumnLengths: { [key: string]: number } = {};
 
-      // TODO: better logic for this
       for (const row of props.tableData) {
         for (let columnIndex = 0; columnIndex < props.columns.length; columnIndex++) {
           const column = props.columns[columnIndex];
           let columnValue = row[column.key] + "";
           const lowerCaseKey = column.key.toLowerCase();
-          // console.log("dasd", props.tableAndTabName, lowerCaseKey, lowerCaseKey.includes("spec"))
           if (!columnValue) continue;
 
           if (lowerCaseKey.includes("date") || lowerCaseKey.includes("time")) {
