@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import { Search } from 'lucide-react';
 import { useApiFetch } from '@jsinfo/hooks/useApiFetch';
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
+import ReactDOM from 'react-dom';
 
 interface Item {
     id: string;
@@ -19,6 +20,10 @@ interface Item {
     type: string;
     link: string;
     moniker: string;
+}
+
+function CustomSearchIcon() {
+    return <Search className="absolute h-4 w-4 text-gray" />;
 }
 
 export default function SearchBar() {
@@ -57,10 +62,36 @@ export default function SearchBar() {
         </>
     );
 
+    const replaceSearchIcon = () => {
+        if (searchRef.current) {
+            const searchWrapper = searchRef.current.querySelector('.wrapper');
+            const originalIcon = searchWrapper?.querySelector('.search-icon');
+            const existingCustomIcon = searchWrapper?.querySelector('.custom-search-icon');
+
+            if (searchWrapper && originalIcon && !existingCustomIcon) {
+                const customIconContainer = document.createElement('div');
+                customIconContainer.className = 'custom-search-icon';
+                customIconContainer.style.position = 'absolute';
+                customIconContainer.style.left = '10px';
+                customIconContainer.style.top = '50%';
+                customIconContainer.style.transform = 'translateY(-50%)';
+                customIconContainer.style.zIndex = '1';
+
+                ReactDOM.render(<CustomSearchIcon />, customIconContainer);
+
+                (originalIcon as HTMLElement).style.display = 'none';
+                searchWrapper.appendChild(customIconContainer);
+            }
+        }
+    };
+
+    useEffect(() => {
+        replaceSearchIcon();
+    }, []); // Move this line inside the useEffect
+
     return (
         <div className="ml-auto flex-1 sm:flex-initial w-full max-w-xs">
             <div ref={searchRef} className="relative top-search-bar">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray" />
                 <ReactSearchAutocomplete
                     items={items}
                     onSelect={handleOnSelect}
@@ -84,7 +115,7 @@ export default function SearchBar() {
                     }}
                     inputSearchString=""
                     placeholder="Search ..."
-                    showIcon={false}
+                    showIcon={true}
                     inputDebounce={300}
                 // className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
                 />
