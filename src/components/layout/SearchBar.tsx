@@ -2,6 +2,11 @@
 
 "use client";
 
+/*
+this is the css that fucks me up:
+position: relative; --radix-scroll-area-corner-width: 0px; --radix-scroll-area-corner-height: 0px;
+*/
+
 import React, { useRef, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search } from 'lucide-react';
@@ -18,7 +23,7 @@ interface Item {
 
 export default function SearchBar() {
     const [items, setItems] = useState<Item[]>([]);
-    const { data, loading, error } = useApiFetch("autoCompleteLinksHandler");
+    const { data, loading, error } = useApiFetch("autoCompleteLinksV2Handler");
     const router = useRouter();
     const searchRef = useRef<HTMLDivElement>(null);
 
@@ -41,7 +46,8 @@ export default function SearchBar() {
     const formatResult = (item: Item) => (
         <>
             <span className="searchBarElement">
-                {item.type.charAt(0).toUpperCase() + item.type.slice(1)}: {item.name}
+                {item.type.charAt(0).toUpperCase() + item.type.slice(1)}:{' '}
+                {item.name.length > 20 ? item.name.slice(0, 30) + ' ...' : item.name}
             </span>
             {item.moniker && (
                 <span className="searchBarElement">
@@ -53,7 +59,7 @@ export default function SearchBar() {
 
     return (
         <div className="ml-auto flex-1 sm:flex-initial w-full max-w-xs">
-            <div ref={searchRef} className="relative">
+            <div ref={searchRef} className="relative top-search-bar">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray" />
                 <ReactSearchAutocomplete
                     items={items}
@@ -73,7 +79,7 @@ export default function SearchBar() {
                         lineColor: "#4a5568",
                         placeholderColor: "#a0aec0",
                         clearIconMargin: "3px 8px 0 0",
-                        zIndex: 2,
+                        zIndex: 999999999,
                         searchIconMargin: "0 0 0 16px",
                     }}
                     inputSearchString=""

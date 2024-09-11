@@ -10,6 +10,9 @@ const LegacyTheme: React.FC<React.PropsWithChildren<LegacyThemeProps>> = ({ chil
             grayColor="slate"
             panelBackground="solid"
             radius="full"
+            style={{
+                position: "unset",
+            }}
         >
             {children}
         </Theme>

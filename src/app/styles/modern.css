@@ -322,4 +322,6 @@ body {
 
 .recharts-legend-wrapper {
   bottom: 0px !important;
+  position: unset !important;
+  margin-top: -20px;
 }

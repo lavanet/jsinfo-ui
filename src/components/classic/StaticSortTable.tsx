@@ -390,13 +390,13 @@ const SortableTableContent: React.FC<SortableTableProps> = (props: SortableTable
 
   return (
     <Table.Root>
-      <SortableTableHeader
+      < SortableTableHeader
         tableAndTabName={props.tableAndTabName} columns={props.columns}
         requestSort={props.requestSort} sortConfig={props.sortConfig}
         columnLengthPercentages={columnLengthPercentagesRef.current}
         csvButton={props.csvButton} />
       <SortableTableBody {...props} />
-    </Table.Root>
+    </Table.Root >
   );
 }
 
