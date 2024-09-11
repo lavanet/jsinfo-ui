@@ -1,4 +1,4 @@
-// src/components/sections/UsageGraph.tsx
+// src/components/sections/IndexChart.tsx
 
 "use client";
 
@@ -25,7 +25,7 @@ import {
 } from "@jsinfo/components/shadcn/ui/Popover";
 import CustomCombobox from "./IndexChartCustomCombobox";
 import { cn } from "@jsinfo/lib/css"
-import UsageGraphSkeleton from "@jsinfo/components/sections/UsageGraphSkeleton";
+import IndexChartSkeleton from "./IndexChartSkeleton";
 import { useApiSwrFetch } from "@jsinfo/hooks/useApiSwrFetch";
 import { CalendarWithLastXButtons } from "@jsinfo/components/shadcn/CalendarWithLastXButtons";
 import { Checkbox } from "@jsinfo/components/shadcn/ui/Checkbox";
@@ -33,7 +33,7 @@ import { Checkbox } from "@jsinfo/components/shadcn/ui/Checkbox";
 import { CHART_COLORS } from "@jsinfo/lib/consts";
 import { removeSpacesForCss } from "@jsinfo/lib/utils";
 
-interface UsageGraphProps {
+interface IndexChartProps {
   providerId?: string | null;
 }
 
@@ -45,7 +45,7 @@ type VisibleLinesType = {
   qosLatencyAvg: boolean;
 };
 
-export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
+export function IndexChart(props: IndexChartProps = { providerId: null }) {
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
     from: addDays(new Date(), -90),
     to: new Date(),
@@ -64,7 +64,7 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
     if (dateRange?.from && dateRange?.to) {
       const fromDate = format(dateRange.from, "yyyy-MM-dd'Z'");
       const toDate = format(dateRange.to, "yyyy-MM-dd'Z'");
-      return `indexChartsV2?f=${fromDate}&t=${toDate}`;
+      return `indexChartsV3?f=${fromDate}&t=${toDate}`;
     }
     return null;
   });
@@ -134,7 +134,7 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
   }, [data, selectedChains, props.providerId]);
 
 
-  const toggleLineVisibility = (dataKey: string) => {
+  const toggleLineVisibility = (dataKey: keyof typeof visibleLines) => {
     setVisibleLines((prev: VisibleLinesType) => ({ ...prev, [dataKey]: !prev[dataKey] }));
   };
 
@@ -252,7 +252,7 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
   };
 
   if (error) return <div>Failed to load data</div>;
-  if (!data) return <UsageGraphSkeleton />;
+  if (!data) return <IndexChartSkeleton />;
 
   return (
     <Card>
@@ -264,64 +264,67 @@ export function UsageGraph(props: UsageGraphProps = { providerId: null }) {
           </CardDescription>
         </div>
         <div className="rechars-container-controls flex items-center space-x-4">
-          <div className="flex items-center space-x-2">
-            <Checkbox
-              id="allChains"
-              checked={showAllChains}
-              onCheckedChange={handleAllChainsChange}
-            />
-            <label htmlFor="allChains" className="text-sm font-medium">
-              All Chains
-            </label>
-          </div>
-          <CustomCombobox
-            availableChains={availableChains || []}
-            selectedChains={selectedChains || []}
-            onSelectionChange={handleSelectionChange}
-          />
-          <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
-            <PopoverTrigger asChild>
-              <Button
-                id="date"
-                variant={"outline"}
-                className={cn(
-                  "w-[300px] justify-start text-left font-normal",
-                  !dateRange && "text-muted-foreground"
-                )}
-              >
-                <CalendarIcon className="mr-2 h-4 w-4" />
-                {dateRange?.from ? (
-                  dateRange.to ? (
-                    <>
-                      {format(dateRange.from, "LLL dd, y")} -{" "}
-                      {format(dateRange.to, "LLL dd, y")}
-                    </>
-                  ) : (
-                    format(dateRange.from, "LLL dd, y")
-                  )
-                ) : (
-                  <span>Pick a date range</span>
-                )}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="end" side="bottom">
-              <CalendarWithLastXButtons
-                selected={tempDateRange}
-                onSelect={handleDateRangeSelect}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="allChains"
+                checked={showAllChains}
+                onCheckedChange={handleAllChainsChange}
               />
-              <div className="flex justify-end gap-2 p-3">
+              <label htmlFor="allChains" className="text-sm font-medium whitespace-nowrap">
+                All Chains
+              </label>
+            </div>
+            <CustomCombobox
+              availableChains={availableChains || []}
+              selectedChains={selectedChains || []}
+              onSelectionChange={handleSelectionChange}
+            />
+
+            <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
+              <PopoverTrigger asChild>
                 <Button
-                  variant="outline"
-                  onClick={handleCalendarCancel}
+                  id="date"
+                  variant={"outline"}
+                  className={cn(
+                    "w-[300px] justify-start text-left font-normal",
+                    !dateRange && "text-muted-foreground"
+                  )}
                 >
-                  Cancel
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {dateRange?.from ? (
+                    dateRange.to ? (
+                      <>
+                        {format(dateRange.from, "LLL dd, y")} -{" "}
+                        {format(dateRange.to, "LLL dd, y")}
+                      </>
+                    ) : (
+                      format(dateRange.from, "LLL dd, y")
+                    )
+                  ) : (
+                    <span>Pick a date range</span>
+                  )}
                 </Button>
-                <Button onClick={handleCalendarClose}>
-                  Apply
-                </Button>
-              </div>
-            </PopoverContent>
-          </Popover>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="end" side="bottom">
+                <CalendarWithLastXButtons
+                  selected={tempDateRange}
+                  onSelect={handleDateRangeSelect}
+                />
+                <div className="flex justify-end gap-2 p-3">
+                  <Button
+                    variant="outline"
+                    onClick={handleCalendarCancel}
+                  >
+                    Cancel
+                  </Button>
+                  <Button onClick={handleCalendarClose}>
+                    Apply
+                  </Button>
+                </div>
+              </PopoverContent>
+            </Popover>
+          </div>
         </div>
       </CardHeader>
       <CardContent>
