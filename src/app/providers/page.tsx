@@ -9,7 +9,7 @@ import { Box } from "@radix-ui/themes";
 import JsinfoTabs from "@jsinfo/components/classic/JsinfoTabs";
 import { ProvidersAllCards } from "./_components/ProvidersPageCards";
 import ProvidersProvidersTab from "./_components/ProvidersProvidersTab";
-import LegacyTheme from "@jsinfo/components/classic/LegacyTheme";
+import ClassicTheme from "@jsinfo/components/classic/ClassicTheme";
 
 export default function Home() {
 
@@ -23,7 +23,7 @@ export default function Home() {
     <>
       <ProvidersAllCards />
 
-      <LegacyTheme>
+      <ClassicTheme>
         <JsinfoTabs defaultValue="providers"
           tabs={[
             {
@@ -36,7 +36,7 @@ export default function Home() {
             <ProvidersProvidersTab />
           </Box>
         </JsinfoTabs>
-      </LegacyTheme>
+      </ClassicTheme>
     </>
   );
 }

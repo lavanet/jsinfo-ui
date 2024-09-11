@@ -1,8 +1,10 @@
+// src/components/classic/ClassicTheme.tsx
+
 import { Theme } from "@radix-ui/themes";
 
-interface LegacyThemeProps { }
+interface ClassicThemeProps { }
 
-const LegacyTheme: React.FC<React.PropsWithChildren<LegacyThemeProps>> = ({ children }) => {
+const ClassicTheme: React.FC<React.PropsWithChildren<ClassicThemeProps>> = ({ children }) => {
     return (
         <Theme
             appearance="dark"
@@ -12,6 +14,8 @@ const LegacyTheme: React.FC<React.PropsWithChildren<LegacyThemeProps>> = ({ chil
             radius="full"
             style={{
                 position: "unset",
+                minHeight: "unset",
+                zIndex: "unset",
             }}
         >
             {children}
@@ -19,4 +23,4 @@ const LegacyTheme: React.FC<React.PropsWithChildren<LegacyThemeProps>> = ({ chil
     );
 };
 
-export default LegacyTheme;
+export default ClassicTheme;

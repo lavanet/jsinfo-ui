@@ -15,7 +15,7 @@ import SpecStakesTable from '@jsinfo/app/chain/[specid]/_components/ChainStakesT
 import SpecRelaysTable from "./_components/ChainRelaysTable";
 import LavaWithTooltip from "@jsinfo/components/modern/LavaWithTooltip";
 import { ArrowUpNarrowWide, CreditCard, DatabaseZap, MonitorCog, SquareActivity } from "lucide-react";
-import LegacyTheme from "@jsinfo/components/classic/LegacyTheme";
+import ClassicTheme from "@jsinfo/components/classic/ClassicTheme";
 import BackToSpecsLink from "./_components/BackToChains";
 import ChainsCards from "./_components/ChainCards";
 
@@ -48,7 +48,7 @@ export default function Spec({ params }: { params: { specid: string } }) {
       <div className="box-margin-div"></div>
       <div style={{ marginTop: '5px' }}></div>
 
-      <LegacyTheme>
+      <ClassicTheme>
         <JsinfoTabs defaultValue="relays"
           tabs={[
             {
@@ -68,7 +68,7 @@ export default function Spec({ params }: { params: { specid: string } }) {
             <SpecStakesTable specid={specId} />
           </Box>
         </JsinfoTabs>
-      </LegacyTheme>
+      </ClassicTheme>
     </>
   );
 }

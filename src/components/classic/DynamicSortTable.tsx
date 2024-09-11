@@ -1,4 +1,4 @@
-// src/components/SortTable.tsx
+// src/components/classic/DynamicSortTable.tsx
 "use client";
 
 import Link from 'next/link'
@@ -366,6 +366,8 @@ type DataKeySortableTableComponentProps = {
   firstColumn?: string;
   csvButton?: ReactNode | null;
   tableDescription?: string | null | ReactNode;
+  NoAutoScrollWhenDataIsLoaded?: boolean;
+  NoAutoScrollOnceContentIsLoaded?: boolean;
 };
 
 export const DataKeySortableTableComponent: React.FC<DataKeySortableTableComponentProps> = (props: DataKeySortableTableComponentProps) => {
@@ -417,6 +419,37 @@ export const DataKeySortableTableComponent: React.FC<DataKeySortableTableCompone
   const loadingRef = useRef(loading);
 
   loadingRef.current = loading;
+
+  const tableRef = useRef<HTMLDivElement>(null);
+  const [shouldScroll, setShouldScroll] = useState(false);
+  const [contentLoaded, setContentLoaded] = useState(false);
+
+  useEffect(() => {
+    if (!loading && data && !props.NoAutoScrollWhenDataIsLoaded && !contentLoaded) {
+      setShouldScroll(true);
+    }
+    if (!loading && data) {
+      setContentLoaded(true);
+    }
+  }, [loading, data, props.NoAutoScrollWhenDataIsLoaded, contentLoaded]);
+
+  useEffect(() => {
+    if (shouldScroll && tableRef.current && !props.NoAutoScrollWhenDataIsLoaded && (!props.NoAutoScrollOnceContentIsLoaded || !contentLoaded)) {
+      setTimeout(() => {
+        const tableBottom = tableRef.current?.getBoundingClientRect().bottom;
+        const viewportHeight = window.innerHeight;
+
+        if (tableBottom && tableBottom > viewportHeight) {
+          const scrollAmount = tableBottom - viewportHeight;
+          window.scrollBy({
+            top: scrollAmount,
+            behavior: 'smooth'
+          });
+        }
+        setShouldScroll(false);
+      }, 100); // Small delay to ensure rendering is complete
+    }
+  }, [shouldScroll, props.NoAutoScrollWhenDataIsLoaded, props.NoAutoScrollOnceContentIsLoaded, contentLoaded]);
 
   useEffect(() => {
     if (error) {
@@ -488,7 +521,11 @@ export const DataKeySortableTableComponent: React.FC<DataKeySortableTableCompone
     );
   }, [loading, error, data, sortAndPaginationConfig]);
 
-  return componentData;
+  return (
+    <div ref={tableRef}>
+      {componentData}
+    </div>
+  );
 }
 
 type DataKeySortableTableInATabComponentProps = {
@@ -502,6 +539,8 @@ type DataKeySortableTableInATabComponentProps = {
   firstColumn?: string;
   csvButton?: ReactNode | null;
   tableDescription?: string | null | ReactNode;
+  NoAutoScrollWhenDataIsLoaded?: boolean;
+  NoAutoScrollOnceContentIsLoaded?: boolean;
 };
 
 export const DataKeySortableTableInATabComponent: React.FC<DataKeySortableTableInATabComponentProps> = (props: DataKeySortableTableInATabComponentProps) => {
@@ -518,6 +557,8 @@ export const DataKeySortableTableInATabComponent: React.FC<DataKeySortableTableI
         firstColumn={props.firstColumn}
         csvButton={props.csvButton}
         tableDescription={props.tableDescription}
+        NoAutoScrollWhenDataIsLoaded={props.NoAutoScrollWhenDataIsLoaded}
+        NoAutoScrollOnceContentIsLoaded={props.NoAutoScrollOnceContentIsLoaded}
       />
     </Tabs.Content>
   );

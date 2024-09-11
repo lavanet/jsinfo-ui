@@ -23,7 +23,7 @@ import ProviderBlockReportsTab from './_components/ProviderBlockReportsTab';
 import ProviderAccountInfoTab from './_components/ProviderAccountInfoTab';
 import ProviderClaimableRewardsTab from "./_components/ProviderClaimableRewardsTab";
 import ProviderCards from "./_components/ProviderCards";
-import LegacyTheme from "@jsinfo/components/classic/LegacyTheme";
+import ClassicTheme from "@jsinfo/components/classic/ClassicTheme";
 import BackToProvidersLink from "./_components/BackToProviders";
 import { CardDescription, CardHeader, CardTitle } from "@jsinfo/components/shadcn/ui/Card";
 import ProviderHealthTable from "@jsinfo/app/provider/[lavaid]/_components/ProviderLatestHealthTable";
@@ -65,7 +65,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
         <CardDescription>Comprehensive information about the provider's performance and metrics</CardDescription>
       </CardHeader>
 
-      <LegacyTheme>
+      <ClassicTheme>
 
         <div className="box-margin-div"></div>
 
@@ -128,7 +128,7 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
 
           </Box>
         </JsinfoTabs>
-      </LegacyTheme>
+      </ClassicTheme>
 
     </>
   );

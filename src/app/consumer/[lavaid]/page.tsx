@@ -15,7 +15,7 @@ import ConsumerSubscriptionsTable from './_components/ConsumersSubscriptionsTab'
 import ConsumersEventsTab from './_components/ConsumersEventsTab';
 import StatCard from '@jsinfo/components/sections/StatCard';
 import { MonitorCog, ArrowUpNarrowWide, CreditCard } from 'lucide-react';
-import LegacyTheme from '@jsinfo/components/classic/LegacyTheme';
+import ClassicTheme from '@jsinfo/components/classic/ClassicTheme';
 import BackToConsumersLink from './_components/BackToConsumers';
 
 export default function Consumer({ params }: { params: { lavaid: string } }) {
@@ -80,12 +80,10 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
 
       <ConsumerChart consumerId={decodedLavaId} />
 
-      <LegacyTheme>
-        {/* <ConsumerChart addr={decodedLavaId} /> */}
+      <ClassicTheme>
         <div className="box-margin-div"></div>
         <div className="box-margin-div"></div>
 
-        {/* <Card> */}
         <JsinfoTabs defaultValue="subscriptions"
           tabs={[
             {
@@ -130,8 +128,7 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
 
           <ConsumersEventsTab addr={decodedLavaId} />
         </JsinfoTabs>
-        {/* </Card> */}
-      </LegacyTheme>
+      </ClassicTheme>
     </>
   );
 }

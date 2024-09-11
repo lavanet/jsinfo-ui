@@ -12,7 +12,7 @@ import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
 import CsvButton from '@jsinfo/components/classic/CsvButton';
 import MonikerAndProviderLink from '@jsinfo/components/modern/MonikerAndProviderLink';
 import { GetExplorersGuruUrl } from '@jsinfo/lib/env';
-import LegacyTheme from '@jsinfo/components/classic/LegacyTheme';
+import ClassicTheme from '@jsinfo/components/classic/ClassicTheme';
 
 export default function Events() {
 
@@ -24,7 +24,7 @@ export default function Events() {
 
   return (
     <>
-      <LegacyTheme>
+      <ClassicTheme>
         <Card>
           <JsinfoTabs defaultValue="events"
             tabs={[
@@ -141,6 +141,7 @@ export default function Events() {
                     );
                   },
                 }}
+                NoAutoScrollOnceContentIsLoaded={true}
               />
 
               <DataKeySortableTableInATabComponent
@@ -230,7 +231,7 @@ export default function Events() {
             </Box>
           </JsinfoTabs>
         </Card>
-      </LegacyTheme>
+      </ClassicTheme>
     </>
   );
 }

@@ -86,6 +86,7 @@ export default function ProvidersProviderTab() {
                     totalServices: (data) => (<ModernTooltip title={`The total number of active chains serviced by the provider (excluding frozen services) / the total number of serviced chains for the provider`}>{data.totalServices}</ModernTooltip>)
                 }}
                 csvButton={<TableCsvButton csvDownloadLink="indexProvidersActiveCsv" />}
+                NoAutoScrollOnceContentIsLoaded={true}
             />
         </Tabs.Content>
     );
