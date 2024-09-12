@@ -110,12 +110,6 @@ body {
   }
 }
 
-/* @media (max-width: 1000px) {
-  .top-header-search-input {
-    width: 20px;
-  }
-} */
-
 .top-header-search-input-container {
   display: flex;
   justify-content: flex-end;
@@ -264,13 +258,6 @@ body {
   border-color: hsl(var(--border));
 }
 
-/* -------- adjust table headers -------- */
-
-.rt-TableColumnHeaderCell {
-  color: hsl(var(--muted-foreground));
-  font-weight: normal;
-}
-
 /* -------- old cards color -------- */
 
 .rt-BaseCard {
@@ -324,4 +311,41 @@ body {
   bottom: 0px !important;
   position: unset !important;
   margin-top: -20px;
+  width: unset !important;
+  height: unset !important;
+}
+
+@media (max-width: 1000px) {
+  .many-legend-chart > div > div > div > div > div > .recharts-legend-wrapper {
+    margin-top: -25px;
+    zoom: 0.8;
+  }
+}
+
+@media (max-width: 500px) {
+  .many-legend-chart > div > div > div > div > div > .recharts-legend-wrapper {
+    margin-top: -30px;
+    zoom: 0.8;
+  }
+}
+
+@media (max-width: 480px) {
+  .many-legend-chart > div > div > div > div > div > .recharts-legend-wrapper {
+    margin-top: -50px;
+    zoom: 0.8;
+  }
+}
+
+@media (max-width: 280px) {
+  .many-legend-chart > div > div > div > div > div > .recharts-legend-wrapper {
+    margin-top: -100px;
+    zoom: 0.8;
+  }
+}
+
+@media (max-width: 200px) {
+  .many-legend-chart > div > div > div > div > div > .recharts-legend-wrapper {
+    margin-top: -140px;
+    zoom: 0.8;
+  }
 }

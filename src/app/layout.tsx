@@ -20,11 +20,11 @@ import "./styles/accountinfocard.css";
 import "./styles/rsuite.css";
 import "./styles/ui.css";
 import "./styles/modern.css";
-import "./styles/legacy.css";
+import "./styles/classic.css";
 
 export const metadata: Metadata = {
   title: GetPageTitle(),
-  description: "Lava Blockchain Insights Hub",
+  description: "Lava Network Info Hub",
 };
 
 export const viewport: Viewport = {
