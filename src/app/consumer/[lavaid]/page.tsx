@@ -11,8 +11,8 @@ import { useEffect } from "react";
 import { usePageContext } from '@jsinfo/context/PageContext';
 import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
 import ConsumerChart from '@jsinfo/app/consumer/[lavaid]/_components/ConsumerChart';
-import ConsumerSubscriptionsTable from './_components/ConsumersSubscriptionsTab';
-import ConsumersEventsTab from './_components/ConsumersEventsTab';
+import ConsumerSubscriptionsTable from './_components/ConsumerSubscriptionsTab';
+import ConsumerEventsTab from './_components/ConsumerEventsTab';
 import StatCard from '@jsinfo/components/sections/StatCard';
 import { MonitorCog, ArrowUpNarrowWide, CreditCard } from 'lucide-react';
 import BackToConsumersLink from './_components/BackToConsumers';
@@ -124,7 +124,7 @@ export default function Consumer({ params }: { params: { lavaid: string } }) {
           />
         </Box>
 
-        <ConsumersEventsTab addr={decodedLavaId} />
+        <ConsumerEventsTab addr={decodedLavaId} />
       </JsinfoTabs>
     </>
   );
