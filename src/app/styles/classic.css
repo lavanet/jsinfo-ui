@@ -1,0 +1,131 @@
+/* -------- Search bar styles -------- */
+
+.searchBarElement {
+  display: block;
+  text-align: left;
+  font-size: 1.3em;
+  color: "#fff";
+  z-index: 10000000;
+}
+
+/* -------- Global vars but used to hide datepicker overlay -------- */
+
+.hide-animation {
+  animation: hide 0.1s forwards;
+}
+
+@keyframes hide {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* --------- legacy theme reset background color -------------------- */
+
+[data-is-root-theme="true"] {
+  background-color: var(--background-color);
+}
+
+/* --------- fixes after swithcing to the new ui -------------------- */
+
+.rt-ScrollAreaRoot {
+  position: unset !important;
+}
+
+.recharts-wrapper {
+  position: unset !important;
+}
+
+.top-search-bar > div > div > div > ul > li.selected {
+  background-color: #262626;
+}
+
+.searchBarElement {
+  font-size: 12px;
+}
+
+/* -------- table fix ups -------- */
+
+.rt-TableCell .rt-TableColumnHeaderCell {
+  width: 5%;
+  color: hsl(var(--muted-foreground));
+  border: 0 solid #e5e7eb;
+  border-color: hsl(var(--border));
+}
+
+.rt-TableColumnHeaderCell {
+  color: hsl(var(--muted-foreground));
+  font-weight: normal !important;
+}
+
+.rt-TableCell {
+  background-color: var(--table-row-background-color);
+  box-shadow: var(--table-row-box-shadow);
+  box-sizing: border-box;
+  vertical-align: inherit;
+  padding: var(--table-cell-padding);
+  height: var(--table-cell-min-height);
+}
+
+th.rt-TableCell {
+  display: table-cell;
+  vertical-align: inherit;
+  text-align: -internal-center;
+  unicode-bidi: isolate;
+}
+
+.rt-TableRoot {
+  --table-border-radius: calc(8px * 1 * 1.5);
+  --table-cell-padding: calc(12px * 1);
+  --table-cell-min-height: calc(44px * var(--scaling));
+}
+
+.rt-BaseTabListTriggerInner,
+.rt-BaseTabListTriggerInnerHidden {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: calc(4px * 1 * 1.5);
+}
+
+.rt-BaseTabListTrigger,
+.rt-TabNavLink .rt-BaseTabListTriggerInner {
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  word-spacing: 0em;
+}
+
+.rt-BaseTabListTrigger {
+  color: color(display-p3 0.933 0.933 0.933);
+  transition: transform 0.3s ease-in-out;
+  transform: scale(1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  user-select: none;
+  box-sizing: border-box;
+  height: calc(40px * 1);
+  padding-left: calc(8px * 1);
+  padding-right: calc(8px * 1);
+}
+
+.rt-TabsRoot {
+  box-sizing: border-box;
+  border: 0 solid #e5e7eb;
+  border-color: hsl(var(--border));
+}
+
+.rt-TableCell {
+  background-color: transparent;
+  box-shadow: inset 0 -1px color(display-p3 1 1 1/0.134);
+  box-sizing: border-box;
+  vertical-align: inherit;
+  padding: calc(12px * 1);
+  height: calc(44px * 1);
+}

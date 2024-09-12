@@ -1,4 +1,4 @@
-// src/app/consumer/[lavaid]/_components/ConsumersEventsTab.tsx
+// src/app/consumer/[lavaid]/_components/ConsumerEventsTab.tsx
 
 "use client";
 
@@ -8,11 +8,11 @@ import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
 import { EventTypeToString } from '@jsinfo/lib/convertors';
 import { GetExplorersGuruUrl } from '@jsinfo/lib/env';
 
-interface ConsumersEventsTabProps {
+interface ConsumerEventsTabProps {
     addr: string;
 }
 
-const ConsumersEventsTab: React.FC<ConsumersEventsTabProps> = ({ addr }) => {
+const ConsumerEventsTab: React.FC<ConsumerEventsTabProps> = ({ addr }) => {
     return (
         <DataKeySortableTableInATabComponent
             columns={[
@@ -101,4 +101,4 @@ const ConsumersEventsTab: React.FC<ConsumersEventsTabProps> = ({ addr }) => {
     );
 };
 
-export default ConsumersEventsTab;
+export default ConsumerEventsTab;
