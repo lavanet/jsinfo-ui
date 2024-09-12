@@ -17,6 +17,8 @@ import StatCard from '@jsinfo/components/sections/StatCard';
 import { MonitorCog, ArrowUpNarrowWide, CreditCard } from 'lucide-react';
 import BackToConsumersLink from './_components/BackToConsumers';
 
+// comment 
+
 export default function Consumer({ params }: { params: { lavaid: string } }) {
 
   let decodedLavaId = decodeURIComponent(params.lavaid);
