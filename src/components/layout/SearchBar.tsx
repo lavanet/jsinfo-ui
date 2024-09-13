@@ -180,12 +180,6 @@ export default function SearchBar() {
                     showIcon={false}
                     inputDebounce={300}
                     fuseOptions={{ keys: ['name', 'moniker'] }}
-                // onSearch={(string, results) => {
-                //     toggleChartPositionRelativeOverride(true);
-                // }}
-                // onHover={(result) => {
-                //     toggleChartPositionRelativeOverride(true);
-                // }}
                 />
             </div>
         </div>
