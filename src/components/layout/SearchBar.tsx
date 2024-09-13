@@ -31,24 +31,18 @@ export default function SearchBar() {
     const { data, loading, error } = useApiFetch("autoCompleteLinksV2Handler");
     const router = useRouter();
     const searchRef = useRef<HTMLDivElement>(null);
+    const [isHovered, setIsHovered] = useState(false);
 
     function toggleChartPositionRelativeOverride(isOpen: boolean) {
-        console.log(`toggleChartPositionRelativeOverride called with isOpen: ${isOpen}`);
 
-        const legendWrapper = document.querySelector('.recharts-legend-wrapper');
-        console.log('Legend wrapper element:', legendWrapper);
+        const legendWrapper = document.querySelector('.recharts-wrapper');
 
-        if (legendWrapper) {
-            if (isOpen) {
-                console.log('Adding search-open class');
-                legendWrapper.classList.add('search-open');
-            } else {
-                console.log('Removing search-open class');
-                legendWrapper.classList.remove('search-open');
-            }
-            console.log('Updated legend wrapper classes:', legendWrapper.classList.toString());
+        if (!legendWrapper) return;
+
+        if (isOpen) {
+            legendWrapper.classList.add('search-open');
         } else {
-            console.warn('Legend wrapper element not found');
+            legendWrapper.classList.remove('search-open');
         }
     }
 
@@ -132,32 +126,34 @@ export default function SearchBar() {
     }, []);
 
     useEffect(() => {
-        const searchContainer = searchRef.current?.querySelector('.wrapper');
-
-        const handleMouseEnter = () => {
-            toggleChartPositionRelativeOverride(true);
+        const checkSearchBarVisibility = () => {
+            const searchBarElement = document.querySelector('.searchBarElement');
+            const isVisible = !!searchBarElement;
+            toggleChartPositionRelativeOverride(isVisible);
         };
 
-        const handleMouseLeave = () => {
-            toggleChartPositionRelativeOverride(false);
-        };
+        // Initial check
+        checkSearchBarVisibility();
 
-        if (searchContainer) {
-            searchContainer.addEventListener('mouseenter', handleMouseEnter);
-            searchContainer.addEventListener('mouseleave', handleMouseLeave);
-        }
+        // Set up MutationObserver
+        const observer = new MutationObserver(checkSearchBarVisibility);
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true,
+        });
 
+        // Clean up
         return () => {
-            if (searchContainer) {
-                searchContainer.removeEventListener('mouseenter', handleMouseEnter);
-                searchContainer.removeEventListener('mouseleave', handleMouseLeave);
-            }
+            observer.disconnect();
         };
     }, []);
 
     return (
         <div className="ml-auto flex-1 sm:flex-initial w-full max-w-xs">
-            <div ref={searchRef} className="relative top-search-bar">
+            <div
+                ref={searchRef}
+                className="relative top-search-bar"
+            >
                 <ReactSearchAutocomplete
                     items={items}
                     onSelect={handleOnSelect}
@@ -184,7 +180,12 @@ export default function SearchBar() {
                     showIcon={false}
                     inputDebounce={300}
                     fuseOptions={{ keys: ['name', 'moniker'] }}
-                // className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
+                // onSearch={(string, results) => {
+                //     toggleChartPositionRelativeOverride(true);
+                // }}
+                // onHover={(result) => {
+                //     toggleChartPositionRelativeOverride(true);
+                // }}
                 />
             </div>
         </div>

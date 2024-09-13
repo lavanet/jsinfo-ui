@@ -311,11 +311,12 @@ body {
   }
 }
 
-.search-open .recharts-legend-wrapper {
+.search-open {
   position: unset !important;
 }
 
 .recharts-legend-wrapper {
+  position: unset !important;
   bottom: 0px !important;
   margin-top: -20px;
   width: unset !important;
