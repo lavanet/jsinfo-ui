@@ -33,10 +33,6 @@
   position: unset !important;
 }
 
-.recharts-wrapper {
-  position: unset !important;
-}
-
 .top-search-bar > div > div > div > ul > li.selected {
   background-color: #262626;
 }

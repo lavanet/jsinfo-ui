@@ -32,6 +32,26 @@ export default function SearchBar() {
     const router = useRouter();
     const searchRef = useRef<HTMLDivElement>(null);
 
+    function toggleChartPositionRelativeOverride(isOpen: boolean) {
+        console.log(`toggleChartPositionRelativeOverride called with isOpen: ${isOpen}`);
+
+        const legendWrapper = document.querySelector('.recharts-legend-wrapper');
+        console.log('Legend wrapper element:', legendWrapper);
+
+        if (legendWrapper) {
+            if (isOpen) {
+                console.log('Adding search-open class');
+                legendWrapper.classList.add('search-open');
+            } else {
+                console.log('Removing search-open class');
+                legendWrapper.classList.remove('search-open');
+            }
+            console.log('Updated legend wrapper classes:', legendWrapper.classList.toString());
+        } else {
+            console.warn('Legend wrapper element not found');
+        }
+    }
+
     useEffect(() => {
         if (!error && !loading && data?.data) {
             const processedItems = data.data.map((item: Item, index: number) => ({
@@ -46,6 +66,7 @@ export default function SearchBar() {
         if (item && item.link) {
             router.push(item.link);
         }
+        toggleChartPositionRelativeOverride(true);
     };
 
     const formatResult = (item: Item) => (
@@ -106,6 +127,30 @@ export default function SearchBar() {
                 input.removeEventListener('focus', () => { });
                 input.removeEventListener('blur', () => { });
                 input.removeEventListener('input', () => { });
+            }
+        };
+    }, []);
+
+    useEffect(() => {
+        const searchContainer = searchRef.current?.querySelector('.wrapper');
+
+        const handleMouseEnter = () => {
+            toggleChartPositionRelativeOverride(true);
+        };
+
+        const handleMouseLeave = () => {
+            toggleChartPositionRelativeOverride(false);
+        };
+
+        if (searchContainer) {
+            searchContainer.addEventListener('mouseenter', handleMouseEnter);
+            searchContainer.addEventListener('mouseleave', handleMouseLeave);
+        }
+
+        return () => {
+            if (searchContainer) {
+                searchContainer.removeEventListener('mouseenter', handleMouseEnter);
+                searchContainer.removeEventListener('mouseleave', handleMouseLeave);
             }
         };
     }, []);
