@@ -98,10 +98,10 @@ export const MonikerAndProviderAddressCard: React.FC<MonikerAndProviderAddressCa
 };
 
 export const MonikerAndProviderAddressCardWithFetch = ({ lavaId }: { lavaId: string }) => {
-    const { data: provider, loading, error } = useApiFetch("provider/" + lavaId);
+    const { data: provider, loading, error } = useApiFetch("providerV2/" + lavaId);
 
     if (error) return <ErrorDisplay message={error} />;
-    if (loading) return <LoadingIndicator loadingText={`Loading ${lavaId} provider data`} greyText={`${lavaId} provider`} />;
+    if (loading) return <LoadingIndicator loadingText={`Loading ${lavaId} provider details`} greyText={`${lavaId} provider`} />;
 
     return <MonikerAndProviderAddressCard provider={provider} />;
 };

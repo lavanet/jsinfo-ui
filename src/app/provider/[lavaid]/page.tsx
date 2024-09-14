@@ -48,15 +48,19 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
     <>
       <BackToProvidersLink />
 
+      <div style={{ marginBottom: '5px' }}></div>
+
       <MonikerAndProviderAddressCardWithFetch lavaId={decodedLavaId} />
 
       <ProviderCards addr={decodedLavaId} />
+
+      <div style={{ marginBottom: '30px' }}></div>
 
       <div className="many-legend-chart">
         <ProviderChart providerId={decodedLavaId} />
       </div>
 
-      <div style={{ marginBottom: '20px' }}></div>
+      <div style={{ marginBottom: '30px' }}></div>
 
       <ProviderHealthTable providerId={decodedLavaId} />
 
