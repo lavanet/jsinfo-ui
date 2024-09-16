@@ -7,12 +7,12 @@ import JsinfoTabs from "@jsinfo/components/classic/JsinfoTabs";
 import { useEffect } from "react";
 import { usePageContext } from '@jsinfo/context/PageContext';
 import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
-import ConsumerChart from '@jsinfo/app/consumer/[lavaid]/_components/ConsumerChart';
+// import ConsumerChart from '@jsinfo/app/consumer/[lavaid]/_components/ConsumerChart';
 import ConsumerSubscriptionsTable from './_components/ConsumerSubscriptionsTab';
 import ConsumerEventsTab from './_components/ConsumerEventsTab';
 import BackToConsumersLink from './_components/BackToConsumers';
 import ConsumerCards from './_components/ConsumerCards';
-import ConsumerConflictsTable from './_components/consumerConflictsTab';
+import ConsumerConflictsTable from './_components/ConsumerConflictsTab';
 
 export default function Consumer({ params }: { params: { lavaid: string } }) {
 

@@ -6,7 +6,6 @@ import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
 import StatCard from '@jsinfo/components/sections/StatCard';
 import { MonitorCog, ArrowUpNarrowWide, CreditCard, Users, Activity, Database, SquareActivity } from 'lucide-react';
-import LavaWithTooltip from "@jsinfo/components/modern/LavaWithTooltip";
 import LoaderImageForCards from "@jsinfo/components/modern/LoaderImageForCards";
 import ChainProviderHealthSummary from './ChainEndpointHealthSummary';
 
