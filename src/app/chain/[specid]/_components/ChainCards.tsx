@@ -60,14 +60,14 @@ const SpecCuRelayRewardsCard: React.FC<SpecCardsProps> = ({ specId }) => {
                 tooltip={`Total relays for ${specId} by all providers`}
                 icon={<ArrowUpNarrowWide className="h-4 w-4 text-muted-foreground" />}
             />
-            <StatCard
+            {/* <StatCard
                 title="Total Rewards"
                 value={<LavaWithTooltip amount={data.rewardSum} />}
                 className="col-span-1"
                 formatNumber={false}
                 tooltip={`Total rewards for ${specId} by all providers`}
                 icon={<CreditCard className="h-4 w-4 text-muted-foreground" />}
-            />
+            /> */}
         </>
     );
 };
@@ -151,7 +151,7 @@ const SpecCacheHitRateCard: React.FC<SpecCardsProps> = ({ specId }) => {
 
 const SpecCards: React.FC<SpecCardsProps> = ({ specId }) => {
     return (
-        <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
+        <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
             <SpecCuRelayRewardsCard specId={specId} />
             <SpecProviderCountCard specId={specId} />
             <SpecEndpointHealthCard specId={specId} />
