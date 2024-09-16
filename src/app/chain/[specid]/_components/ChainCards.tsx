@@ -32,13 +32,13 @@ const SpecCuRelayRewardsCard: React.FC<SpecCardsProps> = ({ specId }) => {
                 formatNumber={false}
                 icon={<ArrowUpNarrowWide className="h-4 w-4 text-muted-foreground" />}
             />
-            <StatCard
+            {/* <StatCard
                 title="Total Rewards"
                 value={<LoaderImageForCards />}
                 className="col-span-1"
                 formatNumber={false}
                 icon={<CreditCard className="h-4 w-4 text-muted-foreground" />}
-            />
+            /> */}
         </>
     );
     return (
