@@ -33,6 +33,11 @@ export default function Spec({ params }: { params: { specid: string } }) {
   return (
     <>
       <BackToSpecsLink />
+
+      <div style={{ marginLeft: '23px' }}>
+        <h1 className="text-3xl font-bold mb-4">{decodedSpecId}</h1>
+      </div>
+
       <div style={{ marginTop: '5px' }}></div>
       <ChainsCards specId={specId} />
       <div style={{ marginTop: '30px' }}></div>

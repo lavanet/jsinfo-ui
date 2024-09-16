@@ -1,15 +1,13 @@
-// src/components/SpecProviderHealthSummary.tsx
+// src/app/chain/[specid]/_components/ChainEndpointHealthSummary.tsx
 
 import React, { CSSProperties } from 'react';
-interface SpecProviderHealthSummaryProps {
+interface ChainProviderHealthSummaryProps {
     healthy: number;
     unhealthy: number;
     style?: CSSProperties;
 }
 
-const SpecProviderHealthSummary: React.FC<SpecProviderHealthSummaryProps> = ({ healthy, unhealthy, style }) => {
-
-    const any_true = healthy > 0 || unhealthy > 0;
+const ChainProviderHealthSummary: React.FC<ChainProviderHealthSummaryProps> = ({ healthy, unhealthy, style }) => {
 
     return (
         <span style={{ whiteSpace: 'nowrap', ...style }}>
@@ -42,4 +40,4 @@ const SpecProviderHealthSummary: React.FC<SpecProviderHealthSummaryProps> = ({ h
     );
 };
 
-export default SpecProviderHealthSummary;
+export default ChainProviderHealthSummary;

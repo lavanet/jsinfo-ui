@@ -1,4 +1,4 @@
-// src/app/consumer/[lavaid]/_components/consumerConflictsTab.tsx
+// src/app/consumer/[lavaid]/_components/ConsumerConflictsTab.tsx
 
 import React from 'react';
 import Link from 'next/link';
