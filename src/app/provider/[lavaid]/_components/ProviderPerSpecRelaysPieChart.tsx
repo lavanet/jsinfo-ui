@@ -77,6 +77,8 @@ export function ProviderPerSpecRelaysPieChart({ lavaId }: { lavaId: string }) {
                         arcLabel: (item) => `${item.value.toFixed(1)}%`,
                         arcLabelMinAngle: 45,
                         data: pieData,
+                        highlightScope: { fade: 'global', highlight: 'item' },
+                        faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
                         valueFormatter,
                     },
                 ]}
