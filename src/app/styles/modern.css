@@ -362,3 +362,64 @@ body {
     zoom: 0.8;
   }
 }
+
+/* -------- provider cards grid -------- */
+
+.provider-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 1600px) {
+  .provider-cards-grid {
+    margin-left: -18px;
+  }
+}
+
+@media (max-width: 760px) {
+  .provider-pie-chart-grid {
+    margin-bottom: -30px;
+  }
+}
+
+@media (min-width: 1500px) and (max-width: 1600px) {
+  .provider-cards-grid {
+    margin-left: -10px;
+  }
+}
+
+@media (max-width: 760px) {
+  .provider-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 760px) and (max-width: 999px) {
+  .provider-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 1000px) and (max-width: 1279px) {
+  .provider-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .provider-cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+}
+
+/* Make the third child span 2 columns on medium screens */
+@media (min-width: 760px) and (max-width: 999px) {
+  .provider-cards-grid > *:nth-child(3) {
+    grid-column: span 1;
+  }
+}

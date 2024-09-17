@@ -26,6 +26,7 @@ import ProviderCards from "./_components/ProviderCards";
 import BackToProvidersLink from "./_components/BackToProviders";
 import { CardDescription, CardHeader, CardTitle } from "@jsinfo/components/shadcn/ui/Card";
 import ProviderHealthTable from "@jsinfo/app/provider/[lavaid]/_components/ProviderLatestHealthTable";
+import { ProviderPerSpecRelaysPieChart } from "./_components/ProviderPerSpecRelaysPieChart";
 
 export default function Provider({ params }: { params: { lavaid: string } }) {
 
@@ -52,11 +53,19 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
 
       <MonikerAndProviderAddressCardWithFetch lavaId={decodedLavaId} />
 
-      <ProviderCards addr={decodedLavaId} />
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_3fr] gap-4">
+        <div className="provider-pie-chart-grid" style={{ width: '350px', height: '390px' }}>
+          <ProviderPerSpecRelaysPieChart lavaId={decodedLavaId} />
+        </div>
+        <div>
 
-      <div style={{ marginBottom: '30px' }}></div>
+          <ProviderCards addr={decodedLavaId} />
 
-      <div className="many-legend-chart">
+        </div>
+
+      </div>
+
+      <div className="many-legend-chart" style={{ marginTop: '-10px', marginBottom: '-10px' }}>
         <ProviderChart providerId={decodedLavaId} />
       </div>
 

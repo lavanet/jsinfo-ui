@@ -84,3 +84,23 @@ body {
   background-color: var(--background-color);
   height: 100%;
 }
+
+/* pie chart */
+
+.recharts-sector {
+  transition: all 0.3s ease;
+}
+
+.recharts-pie-sector {
+  animation: fadeIn 0.6s ease-out;
+  transition: all 0.3s ease;
+}
+
+.recharts-sector {
+  transition: transform 4s ease;
+  transform-origin: center center;
+}
+
+.recharts-sector:focus {
+  outline: none;
+}

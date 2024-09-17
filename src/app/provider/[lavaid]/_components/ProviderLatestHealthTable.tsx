@@ -4,7 +4,6 @@
 
 import React, { useMemo, useState } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@jsinfo/components/shadcn/ui2/Table";
-import { Badge } from "@jsinfo/components/shadcn/ui/Badge";
 import { useApiSwrFetch } from '@jsinfo/hooks/useApiSwrFetch';
 import LoadingIndicator from '../../../../components/modern/LoadingIndicator';
 import Link from 'next/link';

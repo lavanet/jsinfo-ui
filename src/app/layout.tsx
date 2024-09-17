@@ -18,7 +18,7 @@ import '@radix-ui/themes/styles.css';
 import "./styles/globals.css";
 import "./styles/accountinfocard.css";
 import "./styles/rsuite.css";
-import "./styles/ui.css";
+import "./styles/shadcn.css";
 import "./styles/modern.css";
 import "./styles/classic.css";
 
