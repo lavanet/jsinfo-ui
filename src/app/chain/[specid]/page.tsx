@@ -60,10 +60,10 @@ export default function Spec({ params }: { params: { specid: string } }) {
       <div className="many-legend-chart">
         <SpecChart spec={specId} />
       </div>
-
+      {/* 
       <div style={{ marginTop: '25px' }}></div>
 
-      <ChainLiveRequestFeed specid={specId} />
+      <ChainLiveRequestFeed specid={specId} /> */}
 
       <div style={{ marginTop: '25px' }}></div>
 
