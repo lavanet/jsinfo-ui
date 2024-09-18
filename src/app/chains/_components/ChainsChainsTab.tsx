@@ -8,6 +8,7 @@ import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { FormatNumber } from "@jsinfo/lib/formatting";
 import { ErrorDisplay } from "@jsinfo/components/modern/ErrorDisplay";
 import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
+import ChainWithIconLink from '@jsinfo/components/modern/ChainWithIconLink';
 
 interface Item {
     chainId: string;
@@ -34,7 +35,7 @@ export default function ChainsChainsTab() {
     return (
         <SortableTableComponent
             columns={[
-                { key: "chainId", name: "Spec" },
+                { key: "chainId", name: "Chain" },
                 { key: "chainName", name: "Chain Name" },
                 { key: "relaySum", name: "Total Relays" },
                 { key: "cuSum", name: "Total Cus" },
@@ -44,8 +45,11 @@ export default function ChainsChainsTab() {
             defaultSortKey="relaySum|desc"
             tableAndTabName="chains"
             pkey="chainId"
-            pkeyUrl="chain"
+            pkeyUrl="none"
             rowFormatters={{
+                chainId: (data) => (
+                    <ChainWithIconLink chainId={data.chainId} className="orangelinks" />
+                ),
                 relaySum: (data) => FormatNumber(data.relaySum),
                 cuSum: (data) => FormatNumber(data.cuSum),
             }}

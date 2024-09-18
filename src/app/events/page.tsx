@@ -12,6 +12,7 @@ import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
 import CsvButton from '@jsinfo/components/classic/CsvButton';
 import MonikerAndProviderLink from '@jsinfo/components/modern/MonikerAndProviderLink';
 import { GetExplorersGuruUrl } from '@jsinfo/lib/env';
+import ChainWithIconLink from '@jsinfo/components/modern/ChainWithIconLink';
 
 export default function Events() {
 
@@ -162,9 +163,7 @@ export default function Events() {
               rowFormatters={{
                 provider: (payment) => (<MonikerAndProviderLink provider={payment} />),
                 specId: (payment) => (
-                  <Link className='orangelinks' href={`/chain/${payment.specId}`}>
-                    {payment.specId}
-                  </Link>
+                  <ChainWithIconLink chainId={payment.specId} className="orangelinks" />
                 ),
                 blockId: (payment) => (
                   <Link className='orangelinks'

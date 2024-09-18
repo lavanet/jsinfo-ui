@@ -132,7 +132,7 @@ export function ConvertToChainName(abbreviation: string): string {
         COS5: "Cosmos Hub",
         STRKT: "Starknet Goerli",
         BERAT: "Berachain Testnet",
-        APT1: "Aptos",
+        APT1: "Aptos Mainnet",
         SOLANA: "Solana",
         POLYGON1T: "Polygon Testnet",
         OPTM: "Optimism",
@@ -181,6 +181,14 @@ export function ConvertToChainName(abbreviation: string): string {
         SQDSUBGRAPH: "Subsquid Subgraphs",
         FTM4002: "Fantom Testnet",
         MORALIS: "Moralis",
+        HOL1: "Holochain",
+        BERAT2: "Berachain",
+        CELESTIA: "Celestia",
+        CELESTIAT: "Celestia Testnet",
+        CELESTIATM: "Celestia Mocha Testnet",
+        KAKAROT: "Kakarot",
+        KAKAROTT: "Kakarot Testnet",
+        ETHBEACON: "ETH Beacon",
     };
 
     return mapping[abbreviation] || "";

@@ -11,6 +11,7 @@ import { MoveUp, MoveDown } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardDescription } from "@jsinfo/components/shadcn/ui/Card";
 import { Checkbox } from "@jsinfo/components/shadcn/ui/Checkbox";
 import StatusCall from '@jsinfo/components/modern/StatusCell';
+import ChainWithIconLink from '@jsinfo/components/modern/ChainWithIconLink';
 
 interface InterfaceData {
   status: string;
@@ -180,7 +181,9 @@ export function ProviderLatestHealthTable({ providerId }: ProviderLatestHealthTa
         <TableBody>
           {sortedData.map((row, index) => (
             <TableRow key={index}>
-              <TableCell><Link className='orangelinks' href={`/chain/${row.spec}`}>{row.spec}</Link></TableCell>
+              <TableCell>
+                <ChainWithIconLink chainId={row.spec} className="orangelinks" />
+              </TableCell>
               <TableCell>{row.interface}</TableCell>
               <TableCell>
                 <StatusCall status={row.status} />

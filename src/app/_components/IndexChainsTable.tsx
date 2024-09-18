@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useApiSwrFetch } from "@jsinfo/hooks/useApiSwrFetch";
 import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
 import PaginationControl from "@jsinfo/components/modern/Pagination";
+import ChainWithIconLink from "@jsinfo/components/modern/ChainWithIconLink";
 
 const ChainsTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -37,9 +38,7 @@ const ChainsTable = () => {
           {paginatedChains.map((chain: any, index: number) => (
             <TableRow key={index}>
               <TableCell>
-                <Link className="orangelinks" href={`/chain/${chain.chainId}`}>
-                  {chain.chainId}
-                </Link>
+                <ChainWithIconLink chainId={chain.chainId} className="orangelinks" />
               </TableCell>
               <TableCell>{Number(chain.relaySum).toLocaleString()}</TableCell>
             </TableRow>

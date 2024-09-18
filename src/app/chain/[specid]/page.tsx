@@ -11,6 +11,9 @@ import ChainStakesTable from './_components/ChainStakesTable';
 import ChainRelaysTable from "./_components/ChainRelaysTable";
 import BackToSpecsLink from "./_components/BackToChains";
 import ChainsCards from "./_components/ChainCards";
+import Image from 'next/image';
+import { chainDictionary } from '@jsinfo/lib/chain-dictionary';
+import ChainLiveRequestFeed from "./_components/ChainLiveRequestFeed";
 
 export default function Spec({ params }: { params: { specid: string } }) {
 
@@ -29,12 +32,24 @@ export default function Spec({ params }: { params: { specid: string } }) {
   }, [decodedSpecId, setCurrentPage]);
 
   const specId = decodedSpecId;
+  const specIdLower = specId.toLocaleLowerCase();
 
   return (
     <>
       <BackToSpecsLink />
 
-      <div style={{ marginLeft: '23px' }}>
+      <div style={{ marginLeft: '23px' }} className="flex items-center gap-2">
+        {chainDictionary[specIdLower] && chainDictionary[specIdLower].icon && (
+          <div className="relative w-8 h-8">
+            <Image
+              src={chainDictionary[specIdLower].icon}
+              alt={`${chainDictionary[specIdLower].name} icon`}
+              fill
+              sizes="32px"
+              style={{ objectFit: 'contain', marginTop: '-8px' }}
+            />
+          </div>
+        )}
         <h1 className="text-3xl font-bold mb-4">{decodedSpecId}</h1>
       </div>
 
@@ -45,6 +60,10 @@ export default function Spec({ params }: { params: { specid: string } }) {
       <div className="many-legend-chart">
         <SpecChart spec={specId} />
       </div>
+
+      <div style={{ marginTop: '25px' }}></div>
+
+      <ChainLiveRequestFeed specid={specId} />
 
       <div style={{ marginTop: '25px' }}></div>
 

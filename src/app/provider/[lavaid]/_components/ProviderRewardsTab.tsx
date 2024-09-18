@@ -8,6 +8,7 @@ import TableCsvButton from "@jsinfo/components/classic/TableCsvButton";
 import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
 import { GetExplorersGuruUrl } from '@jsinfo/lib/env';
 import ModernTooltip from '@jsinfo/components/modern/ModernTooltip';
+import ChainWithIconLink from '@jsinfo/components/modern/ChainWithIconLink';
 
 interface ProviderRewardsTabProps {
     addr: string;
@@ -38,9 +39,7 @@ const ProviderRewardsTab: React.FC<ProviderRewardsTabProps> = ({ addr }) => {
             pkeyUrl="none"
             rowFormatters={{
                 "relay_payments.specId": (payment) => (
-                    <Link className='orangelinks' href={`/chain/${payment.relay_payments.specId}`}>
-                        {payment.relay_payments.specId}
-                    </Link>
+                    <ChainWithIconLink chainId={payment.relay_payments.specId} className="orangelinks" />
                 ),
                 "relay_payments.blockId": (payment) => (
                     <Link className='orangelinks'

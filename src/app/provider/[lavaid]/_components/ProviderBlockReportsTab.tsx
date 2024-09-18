@@ -8,6 +8,7 @@ import TableCsvButton from "@jsinfo/components/classic/TableCsvButton";
 import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
 import { FormatNumberWithString } from '@jsinfo/lib/formatting';
 import { GetExplorersGuruUrl } from '@jsinfo/lib/env';
+import ChainWithIconLink from '@jsinfo/components/modern/ChainWithIconLink';
 
 interface ProviderBlockReportsTabProps {
     addr: string;
@@ -46,7 +47,8 @@ const ProviderBlockReportsTab: React.FC<ProviderBlockReportsTabProps> = ({ addr 
                 ),
                 timestamp: (data) => (<TimeTooltip datetime={data.timestamp} />),
                 chainId: (stake) => (
-                    <Link className='orangelinks' href={`/chain/${stake.chainId}`}>{stake.chainId}</Link>
+                    <ChainWithIconLink chainId={stake.chainId} className="orangelinks" />
+
                 ),
                 chainBlockHeight: (data) => FormatNumberWithString(data.chainBlockHeight),
             }}

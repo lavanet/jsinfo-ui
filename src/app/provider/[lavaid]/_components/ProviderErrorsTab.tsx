@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { DataKeySortableTableInATabComponent } from "@jsinfo/components/classic/DynamicSortTable";
 import TableCsvButton from "@jsinfo/components/classic/TableCsvButton";
 import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
+import ChainWithIconLink from '@jsinfo/components/modern/ChainWithIconLink';
 
 interface ProviderErrorsTabProps {
     addr: string;
@@ -36,7 +37,7 @@ const ProviderErrorsTab: React.FC<ProviderErrorsTabProps> = ({ addr }) => {
             rowFormatters={{
                 date: (data) => (<TimeTooltip datetime={data.date} />),
                 spec: (data) => (
-                    <Link className='orangelinks' href={`/chain/${data.spec}`}>{data.spec}</Link>
+                    <ChainWithIconLink chainId={data.spec} className="orangelinks" />
                 ),
                 error: (data) => {
                     return (

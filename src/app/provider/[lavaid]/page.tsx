@@ -27,6 +27,7 @@ import BackToProvidersLink from "./_components/BackToProviders";
 import { CardDescription, CardHeader, CardTitle } from "@jsinfo/components/shadcn/ui/Card";
 import ProviderHealthTable from "@jsinfo/app/provider/[lavaid]/_components/ProviderLatestHealthTable";
 import { ProviderPerSpecRelaysPieChart } from "./_components/ProviderPerSpecRelaysPieChart";
+import ProviderLiveRequestFeed from "./_components/ProviderLiveRequestFeed";
 
 export default function Provider({ params }: { params: { lavaid: string } }) {
 
@@ -48,6 +49,8 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
   return (
     <>
       <BackToProvidersLink />
+
+
 
       <div style={{ marginBottom: '5px' }}></div>
 
@@ -73,7 +76,11 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
 
       <ProviderHealthTable providerId={decodedLavaId} />
 
-      <div className="box-margin-div"></div>
+      <div style={{ marginBottom: '20px' }}></div>
+
+      <ProviderLiveRequestFeed lavaid={decodedLavaId} />
+
+      <div style={{ marginBottom: '20px' }}></div>
 
       <CardHeader>
         <CardTitle>Full Provider Details</CardTitle>

@@ -1,11 +1,11 @@
 // src/app/consumer/[lavaid]/_components/ConsumerConflictsTab.tsx
 
 import React from 'react';
-import Link from 'next/link';
 import { SortableTableInATabComponent } from "@jsinfo/components/classic/StaticSortTable";
 import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
 import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
 import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
+import ChainWithIconLink from '@jsinfo/components/modern/ChainWithIconLink';
 
 interface ConsumerConflictsTableProps {
     lavaid: string;
@@ -34,7 +34,7 @@ const ConsumerConflictsTable: React.FC<ConsumerConflictsTableProps> = ({ lavaid 
             pkeyUrl="none"
             rowFormatters={{
                 specId: (data) => (
-                    <Link className='orangelinks' href={`/chain/${data.specId}`}>{data.specId}</Link>
+                    <ChainWithIconLink chainId={data.specId} className="orangelinks" />
                 ),
             }}
         />
