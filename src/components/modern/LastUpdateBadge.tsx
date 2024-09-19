@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Badge } from '@jsinfo/components/shadcn/ui/Badge';
-import { useApiFetch } from '@jsinfo/hooks/useApiFetch';
+import { useJsinfobeFetch } from '@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch';
 import ModernTooltip from './ModernTooltip';
 
 interface BlockData {
@@ -16,7 +16,7 @@ interface TimeResponse {
 }
 
 const LastUpdateBadge = () => {
-    const { data, loading } = useApiFetch("indexLatestBlock");
+    const { data, loading } = useJsinfobeFetch("indexLatestBlock");
     const blockData = data as BlockData;
     const [currentTime, setCurrentTime] = useState<Date | null>(null);
 

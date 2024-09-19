@@ -5,7 +5,7 @@
 import React, { useState } from 'react';
 import { Badge } from "@jsinfo/components/shadcn/ui/Badge";
 import { Globe, Clock, Server, Archive, AlertTriangle } from "lucide-react";
-import { chainDictionary } from '@jsinfo/lib/chain-dictionary';
+import { chainDictionary } from '@jsinfo/lib/chain-assets/chain-icons';
 
 interface Entry {
     chain_id: string;

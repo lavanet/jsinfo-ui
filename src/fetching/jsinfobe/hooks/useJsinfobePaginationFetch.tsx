@@ -1,9 +1,10 @@
-// src/hooks/useApiPaginationFetch.tsx
+// src/hooks/useJsinfobePaginationFetch.tsx
 
 import { useEffect, useMemo } from 'react';
 import { SortAndPaginationConfig } from '@jsinfo/lib/types.jsx';
 import { ValidateDataKey } from './utils';
-import { AxiosDataLoader } from '../fetching/AxiosDataLoader';
+import { JsinfobeDataFetcher } from '../api-client/JsinfobeDataFetcher';
+
 export class PaginationState {
     private sortKey: string;
     private direction: "ascending" | "descending";
@@ -173,7 +174,7 @@ export class PaginationState {
     }
 }
 
-interface UseApiPaginationFetchReturn {
+interface UseJsinfobePaginationFetchReturn {
     data: any;
     loading: boolean;
     error: any;
@@ -182,13 +183,13 @@ interface UseApiPaginationFetchReturn {
     paginationState: PaginationState;
 }
 
-export function useApiPaginationFetch({
+export function useJsinfobePaginationFetch({
     dataKey,
     paginationString,
 }: {
     dataKey: string,
     paginationString: string,
-}): UseApiPaginationFetchReturn {
+}): UseJsinfobePaginationFetchReturn {
 
     if (typeof dataKey !== 'string' || dataKey.trim() === '') {
         throw new Error('dataKey must be a non-empty string');
@@ -201,7 +202,7 @@ export function useApiPaginationFetch({
     ValidateDataKey(dataKey);
 
     const paginationState: PaginationState = useMemo(() => PaginationState.Deserialize(paginationString), [paginationString]);
-    const { fetcher, data, loading, error } = AxiosDataLoader.initialize(dataKey, null, paginationState.Serialize());
+    const { fetcher, data, loading, error } = JsinfobeDataFetcher.initialize(dataKey, null, paginationState.Serialize());
 
     function updatePagination() {
         fetcher.SetApiUrlPaginationQuery(paginationState.Serialize());

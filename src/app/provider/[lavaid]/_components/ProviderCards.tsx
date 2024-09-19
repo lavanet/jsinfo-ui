@@ -4,7 +4,7 @@ import React from 'react';
 import StatCard from "@jsinfo/components/sections/StatCard";
 import { ErrorDisplay } from "@jsinfo/components/modern/ErrorDisplay";
 import LavaWithTooltip from "@jsinfo/components/modern/LavaWithTooltip";
-import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
+import { useJsinfobeFetch } from "@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch";
 import { ArrowUpNarrowWide, CalendarHeart, CreditCard, FolderHeart, HeartHandshake, Landmark, MonitorCog } from "lucide-react";
 import LoaderImageForCards from "@jsinfo/components/modern/LoaderImageForCards";
 
@@ -13,7 +13,7 @@ interface ProviderCardsProps {
 }
 
 const ClaimableRewardsCard: React.FC<{ addr: string }> = ({ addr }) => {
-    const { data, loading, error } = useApiFetch(`providerCardsClaimableRewards/${addr}`);
+    const { data, loading, error } = useJsinfobeFetch(`providerCardsClaimableRewards/${addr}`);
 
     if (error) return <ErrorDisplay message={error} />;
     return (
@@ -28,7 +28,7 @@ const ClaimableRewardsCard: React.FC<{ addr: string }> = ({ addr }) => {
 };
 
 const ClaimedRewards30DaysCard: React.FC<{ addr: string }> = ({ addr }) => {
-    const { data, loading, error } = useApiFetch(`providerCardsClaimedRewards30Days/${addr}`);
+    const { data, loading, error } = useJsinfobeFetch(`providerCardsClaimedRewards30Days/${addr}`);
 
     if (error) return <ErrorDisplay message={error} />;
     return (
@@ -43,7 +43,7 @@ const ClaimedRewards30DaysCard: React.FC<{ addr: string }> = ({ addr }) => {
 };
 
 const ClaimedRewardsAllTimeCard: React.FC<{ addr: string }> = ({ addr }) => {
-    const { data, loading, error } = useApiFetch(`providerCardsClaimedRewardsAllTime/${addr}`);
+    const { data, loading, error } = useJsinfobeFetch(`providerCardsClaimedRewardsAllTime/${addr}`);
 
     if (error) return <ErrorDisplay message={error} />;
     return (
@@ -58,7 +58,7 @@ const ClaimedRewardsAllTimeCard: React.FC<{ addr: string }> = ({ addr }) => {
 };
 
 const CuRelayAndRewardsCard: React.FC<{ addr: string }> = ({ addr }) => {
-    const { data, loading, error } = useApiFetch(`providerCardsCuRelayAndRewards/${addr}`);
+    const { data, loading, error } = useJsinfobeFetch(`providerCardsCuRelayAndRewards/${addr}`);
 
     if (error) return <ErrorDisplay message={error} />;
     return (
@@ -92,7 +92,7 @@ const CuRelayAndRewardsCard: React.FC<{ addr: string }> = ({ addr }) => {
 };
 
 const StakesCard: React.FC<{ addr: string }> = ({ addr }) => {
-    const { data, loading, error } = useApiFetch(`providerCardsStakes/${addr}`);
+    const { data, loading, error } = useJsinfobeFetch(`providerCardsStakes/${addr}`);
 
     if (error) return <ErrorDisplay message={error} />;
     return (

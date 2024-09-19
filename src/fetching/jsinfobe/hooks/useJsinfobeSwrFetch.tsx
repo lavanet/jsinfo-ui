@@ -1,19 +1,19 @@
-// src/hooks/useApiSwrFetch.tsx
+// src/hooks/useJsinfobeSwrFetch.tsx
 
 // this refetches things every x seconds and will not fetch if the component is not mounted
 
 import useSWR from "swr";
-import { AxiosApiGet, AxiosApiResponse } from "../fetching/axios";
+import { JsinfobeAxiosGet, AxiosApiResponse } from "../api-client/JsinfobeAxiosGet";
 
 const axiosFetcher = async (url: string) => {
-    const response: AxiosApiResponse = await AxiosApiGet(url);
+    const response: AxiosApiResponse = await JsinfobeAxiosGet(url);
     if (response.status != 200) {
         throw new Error(`SWR API request failed with status ${response.status}: ${response.statusText} to ${url}`);
     }
     return response.data;
 };
 
-export function useApiSwrFetch<T = any>(url: string | (() => string | null)) {
+export function useJsinfobeSwrFetch<T = any>(url: string | (() => string | null)) {
     const { data, error, isLoading } = useSWR<T>(url, axiosFetcher, {
         refreshInterval: 5 * 60 * 1000,
         revalidateOnFocus: false,
@@ -22,7 +22,7 @@ export function useApiSwrFetch<T = any>(url: string | (() => string | null)) {
     return { data, error, isLoading };
 }
 
-export function useApiSwrFetchWithDeps<T = any>(
+export function useJsinfobeSwrFetchWithDeps<T = any>(
     urlOrFunction: string | (() => string | null),
     dependencies: any[] = []
 ) {

@@ -1,7 +1,7 @@
 // src/app/provider/[lavaid]/_components/ProviderSpecsDropDown.tsx
 
 import React from 'react';
-import { useApiFetch } from '@jsinfo/hooks/useApiFetch';
+import { useJsinfobeFetch } from '@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@jsinfo/components/shadcn/ui/Select";
 import { Loader2 } from "lucide-react";
 import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
@@ -16,7 +16,7 @@ interface ProviderSpecsDropDownProps {
 }
 
 const ProviderSpecsDropDown: React.FC<ProviderSpecsDropDownProps> = ({ lavaid, onSpecChange }) => {
-    const { data, loading, error } = useApiFetch(`providerChartsV2/all/${lavaid}`);
+    const { data, loading, error } = useJsinfobeFetch(`providerChartsV2/all/${lavaid}`);
 
     if (error) return <ErrorDisplay message={error} />;
 

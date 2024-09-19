@@ -26,7 +26,7 @@ import {
 import CustomCombobox from "@jsinfo/components/sections/CustomCombobox";
 import { cn } from "@jsinfo/lib/css"
 import UsageGraphSkeleton from "@jsinfo/components/sections/UsageGraphSkeleton";
-import { useApiSwrFetch } from "@jsinfo/hooks/useApiSwrFetch";
+import { useJsinfobeSwrFetch } from "@jsinfo/fetching/jsinfobe/hooks/useJsinfobeSwrFetch";
 import { CalendarWithLastXButtons } from "@jsinfo/components/shadcn/CalendarWithLastXButtons";
 import { CHART_COLORS } from "@jsinfo/lib/consts";
 import { removeSpacesForCss } from "@jsinfo/lib/utils";
@@ -57,7 +57,7 @@ const ConsumerChart: React.FC<UsageGraphProps> = ({ consumerId }) => {
     qosLatencyAvg: true,
   });
 
-  const { data, error, isLoading } = useApiSwrFetch(() => {
+  const { data, error, isLoading } = useJsinfobeSwrFetch(() => {
     if (dateRange?.from && dateRange?.to) {
       const fromDate = format(dateRange.from, "yyyy-MM-dd'Z'");
       const toDate = format(dateRange.to, "yyyy-MM-dd'Z'");

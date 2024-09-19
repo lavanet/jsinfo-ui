@@ -1,6 +1,6 @@
 // src/components/SpecProviderEndpointHealthSummary.tsx
 
-import { useApiFetch } from '@jsinfo/hooks/useApiFetch';
+import { useJsinfobeFetch } from '@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch';
 import React, { CSSProperties } from 'react';
 
 interface SpecProviderEndpointHealthSummaryProps {
@@ -11,7 +11,7 @@ interface SpecProviderEndpointHealthSummaryProps {
 
 const SpecProviderEndpointHealthSummary: React.FC<SpecProviderEndpointHealthSummaryProps> = ({ provider, spec, style }) => {
 
-    const { data, loading, error } = useApiFetch(`specProviderHealth/${spec}/${provider}`);
+    const { data, loading, error } = useJsinfobeFetch(`specProviderHealth/${spec}/${provider}`);
 
     if (error) return null;
     if (loading) return null;

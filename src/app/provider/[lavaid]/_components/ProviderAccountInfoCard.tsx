@@ -5,7 +5,7 @@ import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
 import LoadingIndicator from '@jsinfo/components/modern/LoadingIndicator';
 import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
 import ReactJson from 'react-json-view';
-import { AxiosDataLoader } from '@jsinfo/fetching/AxiosDataLoader';
+import { JsinfobeDataFetcher } from '@jsinfo/fetching/jsinfobe/api-client/JsinfobeDataFetcher';
 import Image from 'next/image';
 
 const ErrorComponent: React.FC<{ message: string }> = ({ message }) => {
@@ -156,7 +156,7 @@ const ProviderAccountInfoCard: React.FC<{ addr: string }> = ({ addr }) => {
     const [maxIdx, setMaxIdx] = useState(0);
     const dataKey = `providerAccountsInfo/${addr}?idx=${idx}`;
 
-    const { fetcher, data, loading, error } = AxiosDataLoader.initialize(dataKey, null, null);
+    const { fetcher, data, loading, error } = JsinfobeDataFetcher.initialize(dataKey, null, null);
 
     useEffect(() => {
         fetcher.SetApiUrl(`providerAccountInfo/${addr}?idx=${idx}`);

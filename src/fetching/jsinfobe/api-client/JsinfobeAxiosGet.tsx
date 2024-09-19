@@ -22,7 +22,7 @@ export interface AxiosApiResponse {
     statusText: string;
 }
 
-export async function AxiosApiGet(apiurl: string, params?: any, timeout: number = AXIOS_TIMEOUT): Promise<AxiosApiResponse> {
+export async function JsinfobeAxiosGet(apiurl: string, params?: any, timeout: number = AXIOS_TIMEOUT): Promise<AxiosApiResponse> {
     const cacheKey = `${apiurl}-${JSON.stringify(params)}`;
     const cachedResponse = cache.get(cacheKey);
 

@@ -1,7 +1,7 @@
 // src/app/_components/IndexPageCards.tsx
 
 import React from 'react';
-import { useApiFetch } from '@jsinfo/hooks/useApiFetch';
+import { useJsinfobeFetch } from '@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch';
 import { ErrorDisplay } from "@jsinfo/components/modern/ErrorDisplay";
 import { FormatAsULava } from '@jsinfo/components/modern/LavaWithTooltip';
 import LoaderImageForCards from '@jsinfo/components/modern/LoaderImageForCards';
@@ -10,7 +10,7 @@ import StatCard from '@jsinfo/components/sections/StatCard';
 import { Contact, Users, CalendarArrowUp, ArrowUpNarrowWide, Landmark, DatabaseZap } from 'lucide-react';
 
 export const IndexUniqueUsersCard: React.FC = () => {
-    const { data, loading, error } = useApiFetch("indexMonthlyUsers");
+    const { data, loading, error } = useJsinfobeFetch("indexMonthlyUsers");
     if (error) return <ErrorDisplay message={error} />
     if (loading) return (
         <StatCard
@@ -33,7 +33,7 @@ export const IndexUniqueUsersCard: React.FC = () => {
 };
 
 export const IndexUniqueUsersAvgCard: React.FC = () => {
-    const { data, loading, error } = useApiFetch("indexMonthlyUsersAvg");
+    const { data, loading, error } = useJsinfobeFetch("indexMonthlyUsersAvg");
     if (error) return <ErrorDisplay message={error} />
     if (loading) return (
         <StatCard
@@ -64,7 +64,7 @@ export const IndexUniqueUsersAvgCard: React.FC = () => {
 };
 
 export const Index30DayRelayCard: React.FC = () => {
-    const { data, loading, error } = useApiFetch("index30DayCu");
+    const { data, loading, error } = useJsinfobeFetch("index30DayCu");
     if (error) return <ErrorDisplay message={error} />
     if (loading) return (
         <StatCard
@@ -95,7 +95,7 @@ export const Index30DayRelayCard: React.FC = () => {
 };
 
 export const IndexTotalRelaysCard: React.FC = () => {
-    const { data, loading, error } = useApiFetch("indexTotalCu");
+    const { data, loading, error } = useJsinfobeFetch("indexTotalCu");
     if (error) return <ErrorDisplay message={error} />
     if (loading) return (
         <StatCard
@@ -126,7 +126,7 @@ export const IndexTotalRelaysCard: React.FC = () => {
 };
 
 export const IndexStakeCard: React.FC = () => {
-    const { data, loading, error } = useApiFetch("indexStakesHandler");
+    const { data, loading, error } = useJsinfobeFetch("indexStakesHandler");
     if (error) return <ErrorDisplay message={error} />
     if (loading) return (
         <StatCard
@@ -155,7 +155,7 @@ export const IndexStakeCard: React.FC = () => {
 };
 
 export const IndexChacheHitCard: React.FC = () => {
-    const { data, loading, error } = useApiFetch("indexCachedMetrics");
+    const { data, loading, error } = useJsinfobeFetch("indexCachedMetrics");
     if (error) return <ErrorDisplay message={error} />
     if (loading) return (
         <StatCard

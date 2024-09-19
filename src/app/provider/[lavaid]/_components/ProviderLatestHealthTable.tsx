@@ -4,7 +4,7 @@
 
 import React, { useMemo, useState } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@jsinfo/components/shadcn/ui2/Table";
-import { useApiSwrFetch } from '@jsinfo/hooks/useApiSwrFetch';
+import { useJsinfobeSwrFetch } from '@jsinfo/fetching/jsinfobe/hooks/useJsinfobeSwrFetch';
 import LoadingIndicator from '../../../../components/modern/LoadingIndicator';
 import Link from 'next/link';
 import { MoveUp, MoveDown } from 'lucide-react';
@@ -59,7 +59,7 @@ export function ProviderLatestHealthTable({ providerId }: ProviderLatestHealthTa
   const [showSummary, setShowSummary] = useState(true);
 
   // Use the provided hook for fetching data
-  const { data, error, isLoading } = useApiSwrFetch(`providerLatestHealth/${providerId}`);
+  const { data, error, isLoading } = useJsinfobeSwrFetch(`providerLatestHealth/${providerId}`);
 
   const healthData: HealthData = data?.data ?? null;
 

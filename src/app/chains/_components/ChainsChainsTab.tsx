@@ -3,8 +3,8 @@
 
 import React from "react";
 import { SortableTableComponent } from "@jsinfo/components/classic/StaticSortTable";
-import { ConvertToChainName } from "@jsinfo/lib/convertors";
-import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
+import { ConvertToChainName } from "@jsinfo/lib/chain-assets/chain-names";
+import { useJsinfobeFetch } from "@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch";
 import { FormatNumber } from "@jsinfo/lib/formatting";
 import { ErrorDisplay } from "@jsinfo/components/modern/ErrorDisplay";
 import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
@@ -16,7 +16,7 @@ interface Item {
 }
 
 export default function ChainsChainsTab() {
-    const { data, loading, error } = useApiFetch("indexTopChains");
+    const { data, loading, error } = useJsinfobeFetch("indexTopChains");
     if (error) return <ErrorDisplay message={error} />;
     if (loading) return (
         <LoadingIndicator loadingText={`Loading chains table`} greyText={`chains`} />

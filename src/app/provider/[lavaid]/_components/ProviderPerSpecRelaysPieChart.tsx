@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@jsinfo/components/sha
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import { ErrorDisplay } from "@jsinfo/components/modern/ErrorDisplay";
-import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
+import { useJsinfobeFetch } from "@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch";
 import { Skeleton } from "@jsinfo/components/shadcn/ui2/Skeleton";
 import { Loader2 } from "lucide-react";
 
@@ -25,7 +25,7 @@ interface ChartDataItem {
 }
 
 export function ProviderPerSpecRelaysPieChart({ lavaId }: { lavaId: string }) {
-    const { data, loading, error } = useApiFetch(`providerRelaysPerSpecPie/${lavaId}`);
+    const { data, loading, error } = useJsinfobeFetch(`providerRelaysPerSpecPie/${lavaId}`);
 
     if (error) return <ErrorDisplay message={error} />;
 

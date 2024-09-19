@@ -2,7 +2,7 @@
 "use client";
 
 import React from 'react';
-import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
+import { useJsinfobeFetch } from "@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch";
 import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
 import StatCard from '@jsinfo/components/sections/StatCard';
 import { MonitorCog, ArrowUpNarrowWide, CreditCard, Users, Activity, Database, SquareActivity } from 'lucide-react';
@@ -14,7 +14,7 @@ interface SpecCardsProps {
 }
 
 const SpecCuRelayRewardsCard: React.FC<SpecCardsProps> = ({ specId }) => {
-    const { data, loading, error } = useApiFetch(`specCuRelayRewards/${specId}`);
+    const { data, loading, error } = useJsinfobeFetch(`specCuRelayRewards/${specId}`);
     if (error) return <ErrorDisplay message={error} />;
     if (loading) return (
         <>
@@ -72,7 +72,7 @@ const SpecCuRelayRewardsCard: React.FC<SpecCardsProps> = ({ specId }) => {
 };
 
 const SpecProviderCountCard: React.FC<SpecCardsProps> = ({ specId }) => {
-    const { data, loading, error } = useApiFetch(`specProviderCount/${specId}`);
+    const { data, loading, error } = useJsinfobeFetch(`specProviderCount/${specId}`);
     if (error) return <ErrorDisplay message={error} />;
     if (loading) return (
         <StatCard
@@ -96,7 +96,7 @@ const SpecProviderCountCard: React.FC<SpecCardsProps> = ({ specId }) => {
 
 
 const SpecEndpointHealthCard: React.FC<SpecCardsProps> = ({ specId }) => {
-    const { data, loading, error } = useApiFetch(`specEndpointHealth/${specId}`);
+    const { data, loading, error } = useJsinfobeFetch(`specEndpointHealth/${specId}`);
     if (error) return <ErrorDisplay message={error} />;
     if (loading) return (
         <StatCard
@@ -125,7 +125,7 @@ const SpecEndpointHealthCard: React.FC<SpecCardsProps> = ({ specId }) => {
 };
 
 const SpecCacheHitRateCard: React.FC<SpecCardsProps> = ({ specId }) => {
-    const { data, loading, error } = useApiFetch(`specCacheHitRate/${specId}`);
+    const { data, loading, error } = useJsinfobeFetch(`specCacheHitRate/${specId}`);
     if (error) return <ErrorDisplay message={error} />;
     if (loading) return (
         <StatCard

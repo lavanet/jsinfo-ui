@@ -2,7 +2,7 @@
 "use client";
 
 import { Box } from "@radix-ui/themes";
-import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
+import { useJsinfobeFetch } from "@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch";
 import { SortableTableInATabComponent } from "@jsinfo/components/classic/StaticSortTable";
 import { StatusToString, GeoLocationToString } from "@jsinfo/lib/convertors";
 import { FormatNumber } from '@jsinfo/lib/formatting';
@@ -15,7 +15,7 @@ interface SpecRelaysTableProps {
 }
 
 const SpecRelaysTable: React.FC<SpecRelaysTableProps> = ({ specid }) => {
-    const { data, loading, error } = useApiFetch("specStakes/" + specid);
+    const { data, loading, error } = useJsinfobeFetch("specStakes/" + specid);
 
     if (error || loading) return null;
 

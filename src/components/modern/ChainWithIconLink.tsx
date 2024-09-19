@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { chainDictionary } from '@jsinfo/lib/chain-dictionary';
+import { chainDictionary } from '@jsinfo/lib/chain-assets/chain-icons';
 
 interface ChainWithIconLinkProps {
     chainId: string;

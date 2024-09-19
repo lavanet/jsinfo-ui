@@ -3,7 +3,7 @@
 import React from 'react';
 import StatCard from '@jsinfo/components/sections/StatCard';
 import { MonitorCog, ArrowUpNarrowWide, CreditCard } from 'lucide-react';
-import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
+import { useJsinfobeFetch } from "@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch";
 import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
 import LoaderImageForCards from '@jsinfo/components/modern/LoaderImageForCards';
 
@@ -12,7 +12,7 @@ interface ConsumerCardsProps {
 }
 
 const ConsumerCards: React.FC<ConsumerCardsProps> = ({ lavaid }) => {
-    const { data: consumer, loading, error } = useApiFetch('consumerV2/' + lavaid);
+    const { data: consumer, loading, error } = useJsinfobeFetch('consumerV2/' + lavaid);
 
     if (error) return <ErrorDisplay message={error} />;
 

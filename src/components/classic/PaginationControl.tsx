@@ -13,7 +13,7 @@ import {
     PaginationPrevious,
 } from "@jsinfo/components/shadcn/ui2/Pagination";
 import { SortAndPaginationConfig } from "@jsinfo/lib/types";
-import { PaginationState } from "@jsinfo/hooks/useApiPaginationFetch";
+import { PaginationState } from "@jsinfo/fetching/jsinfobe/hooks/useJsinfobePaginationFetch";
 
 interface PaginationControlProps {
     paginationState: PaginationState;

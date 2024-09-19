@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useState, useEffect, useRef, ReactNode } from 'react';
 import { Table, Tabs } from '@radix-ui/themes';
 import React from 'react';
-import { PaginationState, useApiPaginationFetch } from '@jsinfo/hooks/useApiPaginationFetch';
+import { PaginationState, useJsinfobePaginationFetch } from '@jsinfo/fetching/jsinfobe/hooks/useJsinfobePaginationFetch';
 import LoadingIndicator from '../modern/LoadingIndicator';
 import { Column, RowFormatters, SortAndPaginationConfig } from '@jsinfo/lib/types';
 import { GetNestedProperty } from '@jsinfo/lib/utils';
@@ -405,7 +405,7 @@ export const DataKeySortableTableComponent: React.FC<DataKeySortableTableCompone
     throw new Error(`firstColumn "${props.firstColumn}" is not included in columns`);
   }
 
-  const { data, loading, error, requestSort, setPage, paginationState } = useApiPaginationFetch({
+  const { data, loading, error, requestSort, setPage, paginationState } = useJsinfobePaginationFetch({
     dataKey: props.dataKey,
     paginationString: props.defaultSortKey + ",1," + JSINFO_QUERY_DEFAULT_ITEMS_PER_PAGE,
   });
