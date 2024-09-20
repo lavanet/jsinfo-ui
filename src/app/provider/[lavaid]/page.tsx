@@ -50,8 +50,6 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
     <>
       <BackToProvidersLink />
 
-
-
       <div style={{ marginBottom: '5px' }}></div>
 
       <MonikerAndProviderAddressCardWithFetch lavaId={decodedLavaId} />
@@ -128,10 +126,6 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
             value: "claimableProviderRewards",
             content: "Claimable Provider Rewards",
           },
-          {
-            value: "accountInfo",
-            content: "Account Info",
-          },
         ]}
       >
         <Box>
@@ -145,7 +139,6 @@ export default function Provider({ params }: { params: { lavaid: string } }) {
           <ProviderReportsTab addr={decodedLavaId} />
           <ProviderBlockReportsTab addr={decodedLavaId} />
           <ProviderClaimableRewardsTab addr={decodedLavaId} />
-          <ProviderAccountInfoTab addr={decodedLavaId} />
 
         </Box>
       </JsinfoTabs>

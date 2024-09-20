@@ -16,7 +16,6 @@ import { ThemeProvider as ShadcnThemeProvider } from "@jsinfo/components/shadcn/
 
 import '@radix-ui/themes/styles.css';
 import "./styles/globals.css";
-import "./styles/accountinfocard.css";
 import "./styles/rsuite.css";
 import "./styles/shadcn.css";
 import "./styles/modern.css";
