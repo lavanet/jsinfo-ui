@@ -3,12 +3,12 @@
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
 import NodeCache from 'node-cache';
-import { GetAxiosCacheTTL, GetAxiosCacheTimeout, GetAxiosRetryCount, GetRestUrl } from '@jsinfo/lib/env';
+import { GetAxiosCacheTTL, GetAxiosCacheTimeout, GetAxiosRetryCount, GetJsinfobeUrl } from '@jsinfo/lib/env';
 
 const AXIOS_TIMEOUT = GetAxiosCacheTimeout();
 
 const axiosInstance = axios.create({
-    baseURL: GetRestUrl(),
+    baseURL: GetJsinfobeUrl(),
 });
 
 axiosRetry(axiosInstance, { retries: GetAxiosRetryCount() });
@@ -22,7 +22,7 @@ export interface AxiosApiResponse {
     statusText: string;
 }
 
-export async function AxiosApiGet(apiurl: string, params?: any, timeout: number = AXIOS_TIMEOUT): Promise<AxiosApiResponse> {
+export async function JsinfobeAxiosGet(apiurl: string, params?: any, timeout: number = AXIOS_TIMEOUT): Promise<AxiosApiResponse> {
     const cacheKey = `${apiurl}-${JSON.stringify(params)}`;
     const cachedResponse = cache.get(cacheKey);
 

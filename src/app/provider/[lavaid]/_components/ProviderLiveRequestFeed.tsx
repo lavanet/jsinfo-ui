@@ -10,6 +10,7 @@ import { Play, Pause } from "lucide-react";
 import { Activity } from "lucide-react";
 import ProviderSpecsDropDown from './ProviderSpecsDropDown';
 import ProviderLiveFeedRequestsTable from './ProviderLiveFeedRequestsTable';
+import { GetLogpushUrl } from '@jsinfo/lib/env';
 
 interface LiveRequestFeedProps {
     lavaid: string;
@@ -52,13 +53,16 @@ const ProviderLiveRequestFeed: React.FC<LiveRequestFeedProps> = ({ lavaid }) => 
             shouldResetEntriesRef.current = false;
         }
 
-        let url = `https://cf-logpush.lavapro.xyz/entries?provider=${lavaid}`;
+        const baseUrl = GetLogpushUrl();
+        let url = new URL('entries', baseUrl);
+        url.searchParams.append('provider', lavaid);
+
         if (selectedChain && selectedChain !== 'all') {
-            url += `&chain_id=${selectedChain.toLocaleLowerCase()}`;
+            url.searchParams.append('chain_id', selectedChain.toLowerCase());
         }
 
         try {
-            const response = await fetch(url);
+            const response = await fetch(url.toString());
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }

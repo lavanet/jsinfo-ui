@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { SortableTableInATabComponent } from "@jsinfo/components/classic/StaticSortTable";
-import { useApiFetch } from "@jsinfo/hooks/useApiFetch";
+import { useJsinfobeFetch } from "@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch";
 import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
 import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
 import ChainWithIconLink from '@jsinfo/components/modern/ChainWithIconLink';
@@ -12,7 +12,7 @@ interface ConsumerConflictsTableProps {
 }
 
 const ConsumerConflictsTable: React.FC<ConsumerConflictsTableProps> = ({ lavaid }) => {
-    const { data: consumer, loading, error } = useApiFetch('consumerConflicts/' + lavaid);
+    const { data: consumer, loading, error } = useJsinfobeFetch('consumerConflicts/' + lavaid);
 
     if (error) return <ErrorDisplay message={error} />;
     if (loading) return <LoadingIndicator loadingText={`Loading ${lavaid} conflicts data`} greyText={`${lavaid} conflicts`} />;

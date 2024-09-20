@@ -7,7 +7,7 @@ import { IsMeaningfulText } from '@jsinfo/lib/formatting';
 import ProviderMoniker from '../classic/ProviderMoniker';
 import { ProviderMonikerFullInfo } from '@jsinfo/lib/types';
 import ModernTooltip from './ModernTooltip';
-import { useApiFetch } from '@jsinfo/hooks/useApiFetch';
+import { useJsinfobeFetch } from '@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch';
 import { ErrorDisplay } from './ErrorDisplay';
 import LoadingIndicator from './LoadingIndicator';
 
@@ -98,7 +98,7 @@ export const MonikerAndProviderAddressCard: React.FC<MonikerAndProviderAddressCa
 };
 
 export const MonikerAndProviderAddressCardWithFetch = ({ lavaId }: { lavaId: string }) => {
-    const { data: provider, loading, error } = useApiFetch("providerV2/" + lavaId);
+    const { data: provider, loading, error } = useJsinfobeFetch("providerV2/" + lavaId);
 
     if (error) return <ErrorDisplay message={error} />;
     if (loading) return <LoadingIndicator loadingText={`Loading ${lavaId} provider details`} greyText={`${lavaId} provider`} />;

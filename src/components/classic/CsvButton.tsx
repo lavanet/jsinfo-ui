@@ -2,7 +2,7 @@
 
 import React, { ReactNode } from 'react';
 import Image from 'next/image';
-import { GetRestUrl } from '@jsinfo/lib/env';
+import { GetJsinfobeUrl } from '@jsinfo/lib/env';
 
 interface CsvButtonProps {
     csvDownloadLink: string;
@@ -10,7 +10,7 @@ interface CsvButtonProps {
 }
 
 const CsvButton: React.FC<CsvButtonProps> = ({ csvDownloadLink, children }) => {
-    const restUrl = GetRestUrl();
+    const restUrl = GetJsinfobeUrl();
     if (!restUrl) {
         return <div>Error: REST URL is empty</div>;
     }

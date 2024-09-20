@@ -1,12 +1,12 @@
-// src/fetching/AxiosDataLoader.tsx
+// src/fetching/JsinfobeDataFetcher.tsx
 
 import { useRef, useState, Dispatch, SetStateAction } from 'react';
-import { AxiosApiGet } from './axios';
+import { JsinfobeAxiosGet } from './JsinfobeAxiosGet';
 import { GetAxiosRetryCount } from '@jsinfo/lib/env';
 import { ConvertDateForServer } from '@jsinfo/lib/dateutils';
 import { CachedFetchDateRange } from '@jsinfo/lib/types';
 
-export class AxiosDataLoader {
+export class JsinfobeDataFetcher {
     private maxRetries = GetAxiosRetryCount();
 
     private apiurl: string | null = null;
@@ -54,7 +54,7 @@ export class AxiosDataLoader {
         const isFetching = useRef<boolean>(false);
         const wasOneFetchDone = useRef<boolean>(false);
 
-        const fetcher = new AxiosDataLoader(apiurlDateRangeQuery, paginationFetcherHook, setData, setLoading, setError, retryTimeout, retryCount, errorCount, isFetching, wasOneFetchDone);
+        const fetcher = new JsinfobeDataFetcher(apiurlDateRangeQuery, paginationFetcherHook, setData, setLoading, setError, retryTimeout, retryCount, errorCount, isFetching, wasOneFetchDone);
         fetcher.SetApiUrl(dataKey);
 
         return { fetcher, data, loading, error };
@@ -102,7 +102,7 @@ export class AxiosDataLoader {
 
         while (retries < this.maxRetries) {
             try {
-                const res = await AxiosApiGet("item-count/" + apiurl);
+                const res = await JsinfobeAxiosGet("item-count/" + apiurl);
                 const itemCount = res.data && res.data['itemCount'];
 
                 if (!itemCount && itemCount !== 0) {
@@ -186,7 +186,7 @@ export class AxiosDataLoader {
                 }
             }
 
-            const res = await AxiosApiGet(this.apiurl, params);
+            const res = await JsinfobeAxiosGet(this.apiurl, params);
             const data = res.data;
             this.isFetching.current = false;
 

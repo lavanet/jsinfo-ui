@@ -26,7 +26,7 @@ import {
 import CustomCombobox from "./IndexChartCustomCombobox";
 import { cn } from "@jsinfo/lib/css"
 import IndexChartSkeleton from "./IndexChartSkeleton";
-import { useApiSwrFetch } from "@jsinfo/hooks/useApiSwrFetch";
+import { useJsinfobeSwrFetch } from "@jsinfo/fetching/jsinfobe/hooks/useJsinfobeSwrFetch";
 import { CalendarWithLastXButtons } from "@jsinfo/components/shadcn/CalendarWithLastXButtons";
 import { Checkbox } from "@jsinfo/components/shadcn/ui/Checkbox";
 
@@ -60,7 +60,7 @@ export function IndexChart(props: IndexChartProps = { providerId: null }) {
   });
   const [showAllChains, setShowAllChains] = useState(true);
 
-  const { data, error, isLoading } = useApiSwrFetch(() => {
+  const { data, error, isLoading } = useJsinfobeSwrFetch(() => {
     if (dateRange?.from && dateRange?.to) {
       const fromDate = format(dateRange.from, "yyyy-MM-dd'Z'");
       const toDate = format(dateRange.to, "yyyy-MM-dd'Z'");

@@ -12,8 +12,8 @@ import {
   TableRow,
 } from "@jsinfo/components/shadcn/ui2/Table";
 import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
-import { useApiSwrFetch } from "@jsinfo/hooks/useApiSwrFetch";
-import { AxiosApiGet } from "@jsinfo/fetching/axios";
+import { useJsinfobeSwrFetch } from "@jsinfo/fetching/jsinfobe/hooks/useJsinfobeSwrFetch";
+import { JsinfobeAxiosGet } from "@jsinfo/fetching/jsinfobe/api-client/JsinfobeAxiosGet";
 import PaginationControl from "@jsinfo/components/modern/Pagination";
 
 const ProvidersTable = () => {
@@ -22,7 +22,7 @@ const ProvidersTable = () => {
 
   const fetchProvidersCount = async () => {
     try {
-      const countData = (await AxiosApiGet("item-count/indexProvidersActive")).data;
+      const countData = (await JsinfobeAxiosGet("item-count/indexProvidersActive")).data;
       setTotalPages(Math.ceil(countData.itemCount / 20));
     } catch (error) {
       console.error("Error fetching providers:", error);
@@ -33,7 +33,7 @@ const ProvidersTable = () => {
     fetchProvidersCount();
   }, [currentPage]);
 
-  const { data, error, isLoading } = useApiSwrFetch(
+  const { data, error, isLoading } = useJsinfobeSwrFetch(
     `indexProvidersActive?pagination=totalStake,d,${currentPage},20`
   );
 

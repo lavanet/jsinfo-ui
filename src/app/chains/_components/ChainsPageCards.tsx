@@ -1,14 +1,14 @@
 // src/app/chains/_components/ChainsPageCards.tsx
 
 import React from 'react';
-import { useApiFetch } from '@jsinfo/hooks/useApiFetch';
+import { useJsinfobeFetch } from '@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch';
 import { ErrorDisplay } from "@jsinfo/components/modern/ErrorDisplay";
 import LoaderImageForCards from '@jsinfo/components/modern/LoaderImageForCards';
 import StatCard from '@jsinfo/components/sections/StatCard';
 import { Link, Blocks } from 'lucide-react';
 
 export const LatestLavaBlockCard: React.FC = () => {
-    const { data, loading, error } = useApiFetch("indexLatestBlock");
+    const { data, loading, error } = useJsinfobeFetch("indexLatestBlock");
     if (error) return <ErrorDisplay message={error} />
     if (loading) return (
         <StatCard
@@ -33,7 +33,7 @@ export const LatestLavaBlockCard: React.FC = () => {
 };
 
 export const TotalChainsCard: React.FC = () => {
-    const { data, loading, error } = useApiFetch("indexTopChains");
+    const { data, loading, error } = useJsinfobeFetch("indexTopChains");
     if (error) return <ErrorDisplay message={error} />
     if (loading) return (
         <StatCard

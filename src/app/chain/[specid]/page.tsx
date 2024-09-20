@@ -12,8 +12,7 @@ import ChainRelaysTable from "./_components/ChainRelaysTable";
 import BackToSpecsLink from "./_components/BackToChains";
 import ChainsCards from "./_components/ChainCards";
 import Image from 'next/image';
-import { chainDictionary } from '@jsinfo/lib/chain-dictionary';
-import ChainLiveRequestFeed from "./_components/ChainLiveRequestFeed";
+import { chainDictionary } from '@jsinfo/lib/chain-assets/chain-icons';
 
 export default function Spec({ params }: { params: { specid: string } }) {
 
@@ -60,10 +59,6 @@ export default function Spec({ params }: { params: { specid: string } }) {
       <div className="many-legend-chart">
         <SpecChart spec={specId} />
       </div>
-      {/* 
-      <div style={{ marginTop: '25px' }}></div>
-
-      <ChainLiveRequestFeed specid={specId} /> */}
 
       <div style={{ marginTop: '25px' }}></div>
 

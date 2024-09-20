@@ -10,7 +10,7 @@ position: relative; --radix-scroll-area-corner-width: 0px; --radix-scroll-area-c
 import React, { useRef, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search } from 'lucide-react';
-import { useApiFetch } from '@jsinfo/hooks/useApiFetch';
+import { useJsinfobeFetch } from '@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch';
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 import ReactDOM from 'react-dom';
 
@@ -28,7 +28,7 @@ function CustomSearchIcon() {
 
 export default function SearchBar() {
     const [items, setItems] = useState<Item[]>([]);
-    const { data, loading, error } = useApiFetch("autoCompleteLinksV2Handler");
+    const { data, loading, error } = useJsinfobeFetch("autoCompleteLinksV2Handler");
     const router = useRouter();
     const searchRef = useRef<HTMLDivElement>(null);
     const [isHovered, setIsHovered] = useState(false);
