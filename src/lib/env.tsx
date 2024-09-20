@@ -16,9 +16,12 @@ const envVars = {
     process.env.NEXT_PUBLIC_AXIOS_CACHE_TIMEOUT,
   NEXT_PUBLIC_AXIOS_CACHE_TTL: process.env.NEXT_PUBLIC_AXIOS_CACHE_TTL,
   NEXT_PUBLIC_AXIOS_RETRY_COUNT: process.env.NEXT_PUBLIC_AXIOS_RETRY_COUNT,
+  REST_LOGPUSH_URL: process.env.REST_LOGPUSH_URL,
+  NEXT_PUBLIC_REST_LOGPUSH_URL: process.env.NEXT_PUBLIC_REST_LOGPUSH_URL,
 }
 
 export function GetEnvVariable(primary: string, defaultValue: string | null = null): string {
+
   if (envCache[primary]) {
     return envCache[primary];
   }
@@ -34,14 +37,12 @@ export function GetEnvVariable(primary: string, defaultValue: string | null = nu
     }
   }
 
-  if (defaultValue) {
+  if (defaultValue !== null) {
     envCache[primary] = defaultValue;
     return defaultValue;
   }
 
-  console.log(`Primary: ${process.env[primary]}, process.env: ${JSON.stringify(process.env)}`);
   throw new Error(`${primary} environment variable is not defined and has no default value.`);
-
 }
 
 export function GetExplorersGuruUrl() {
@@ -49,7 +50,7 @@ export function GetExplorersGuruUrl() {
   return network.includes("mainnet") ? "https://lava.explorers.guru" : "https://testnet.lava.explorers.guru";
 }
 
-export function GetRestUrl() {
+export function GetJsinfobeUrl() {
   return GetEnvVariable("REST_URL");
 }
 
@@ -77,4 +78,8 @@ export function GetAxiosCacheTTL(): number {
 
 export function GetAxiosRetryCount(): number {
   return parseInt(GetEnvVariable("AXIOS_RETRY_COUNT", "3"), 10);
+}
+
+export function GetLogpushUrl(): string {
+  return GetEnvVariable("REST_LOGPUSH_URL", "https://cf-logpush.lavapro.xyz");
 }

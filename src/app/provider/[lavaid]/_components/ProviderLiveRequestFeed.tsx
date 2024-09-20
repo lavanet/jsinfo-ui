@@ -2,8 +2,7 @@
 
 "use client"
 
-import React, { useState, useEffect, useRef } from 'react';
-import { useLogpushStreamFetch } from '@jsinfo/fetching/logpush/hooks/useLogpushStreamFetch';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@jsinfo/components/shadcn/ui/Card";
 import { Checkbox } from "@jsinfo/components/shadcn/ui/Checkbox";
 import { Button } from "@jsinfo/components/shadcn/ui/Button";
@@ -11,6 +10,7 @@ import { Play, Pause } from "lucide-react";
 import { Activity } from "lucide-react";
 import ProviderSpecsDropDown from './ProviderSpecsDropDown';
 import ProviderLiveFeedRequestsTable from './ProviderLiveFeedRequestsTable';
+import { GetLogpushUrl } from '@jsinfo/lib/env';
 
 interface LiveRequestFeedProps {
     lavaid: string;
@@ -34,41 +34,48 @@ interface Entry {
     timestamp: string;
 }
 
-interface LogpushResponse {
-    entries: Entry[];
-}
-
 const MAX_ENTRIES = 10;
 
 const ProviderLiveRequestFeed: React.FC<LiveRequestFeedProps> = ({ lavaid }) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [hasEverPlayed, setHasEverPlayed] = useState(false);
-    const [selectedChain, setSelectedChain] = useState<string | null>(null);
+    const [selectedChain, setSelectedChain] = useState<string>("");
+
     const [showOnlyErrors, setShowOnlyErrors] = useState(false);
     const [entries, setEntries] = useState<Entry[]>([]);
     const [emptyFetchCount, setEmptyFetchCount] = useState(0);
+
     const shouldResetEntriesRef = useRef(false);
 
-    const queryParams: Record<string, string> = {
-        provider: lavaid,
-        ...(selectedChain && selectedChain !== 'all' ? { chain_id: selectedChain.toLowerCase() } : {})
-    };
+    const fetchData = useCallback(async () => {
+        if (shouldResetEntriesRef.current) {
+            setEntries([]);
+            shouldResetEntriesRef.current = false;
+        }
 
-    const { data, error, isLoading, fetchData } = useLogpushStreamFetch<LogpushResponse>({
-        baseUrl: 'https://cf-logpush.lavapro.xyz/entries',
-        queryParams
-    });
+        const baseUrl = GetLogpushUrl();
+        let url = new URL('entries', baseUrl);
+        url.searchParams.append('provider', lavaid);
 
-    useEffect(() => {
-        if (data) {
-            if (shouldResetEntriesRef.current) {
-                setEntries([]);
-                shouldResetEntriesRef.current = false;
+        if (selectedChain && selectedChain !== 'all') {
+            url.searchParams.append('chain_id', selectedChain.toLowerCase());
+        }
+
+        try {
+            const response = await fetch(url.toString());
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+
+            if (!data.entries || !Array.isArray(data.entries)) {
+                console.error("Unexpected data structure:", data);
+                return;
             }
 
             let newEntries = data.entries;
             if (showOnlyErrors) {
-                newEntries = newEntries.filter(entry =>
+                newEntries = newEntries.filter((entry: Entry) =>
                     entry.is_node_error ||
                     entry.node_error !== "" ||
                     entry.status !== 200
@@ -85,21 +92,12 @@ const ProviderLiveRequestFeed: React.FC<LiveRequestFeedProps> = ({ lavaid }) => 
                 const combinedEntries = [...newEntries, ...prevEntries];
                 return combinedEntries.slice(0, MAX_ENTRIES);
             });
+
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            setEmptyFetchCount(prev => prev + 1);
         }
-    }, [data, showOnlyErrors]);
-
-    useEffect(() => {
-        let intervalId: NodeJS.Timeout | null = null;
-
-        if (isPlaying) {
-            fetchData(); // Fetch immediately
-            intervalId = setInterval(fetchData, 500);
-        }
-
-        return () => {
-            if (intervalId) clearInterval(intervalId);
-        };
-    }, [isPlaying, fetchData]);
+    }, [lavaid, selectedChain, showOnlyErrors]);
 
     const handleSpecChange = (spec: string) => {
         setSelectedChain(spec === 'all' ? '' : spec);
@@ -114,6 +112,19 @@ const ProviderLiveRequestFeed: React.FC<LiveRequestFeedProps> = ({ lavaid }) => 
         setIsPlaying(true);
         setEmptyFetchCount(0);
     };
+
+    useEffect(() => {
+        let intervalId: NodeJS.Timeout | null = null;
+
+        if (isPlaying) {
+            fetchData(); // Fetch immediately
+            intervalId = setInterval(fetchData, 500);
+        }
+
+        return () => {
+            if (intervalId) clearInterval(intervalId);
+        };
+    }, [isPlaying, fetchData]);
 
     const togglePlaying = () => {
         setIsPlaying(prev => !prev);

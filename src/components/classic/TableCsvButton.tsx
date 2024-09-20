@@ -4,14 +4,14 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { GetRestUrl } from '@jsinfo/lib/env';
+import { GetJsinfobeUrl } from '@jsinfo/lib/env';
 
 interface TableCsvButtonProps {
     csvDownloadLink: string;
 }
 
 const TableCsvButton: React.FC<TableCsvButtonProps> = ({ csvDownloadLink }) => {
-    const restUrl = GetRestUrl();
+    const restUrl = GetJsinfobeUrl();
     if (!restUrl) {
         return <div>Error: REST URL is empty</div>;
     }

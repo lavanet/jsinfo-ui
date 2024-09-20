@@ -8,6 +8,8 @@ import StatCard from '@jsinfo/components/sections/StatCard';
 import { MonitorCog, ArrowUpNarrowWide, CreditCard, Users, Activity, Database, SquareActivity } from 'lucide-react';
 import LoaderImageForCards from "@jsinfo/components/modern/LoaderImageForCards";
 import ChainProviderHealthSummary from './ChainEndpointHealthSummary';
+import { FormatNumber } from '@jsinfo/lib/formatting';
+import { useLogpushFetch } from '@jsinfo/fetching/logpush/hooks/useLogpushFetch';
 
 interface SpecCardsProps {
     specId: string;
@@ -125,24 +127,31 @@ const SpecEndpointHealthCard: React.FC<SpecCardsProps> = ({ specId }) => {
 };
 
 const SpecCacheHitRateCard: React.FC<SpecCardsProps> = ({ specId }) => {
-    const { data, loading, error } = useJsinfobeFetch(`specCacheHitRate/${specId}`);
+    const { data, loading, error } = useLogpushFetch(`stats/?chain_id=${specId.toLocaleLowerCase()}`);
     if (error) return <ErrorDisplay message={error} />;
     if (loading) return (
         <StatCard
-            title="Cache Hit Rate"
+            title="Cache Hit Rate (24 hours)"
             value={<LoaderImageForCards />}
             className="col-span-1"
             formatNumber={false}
             icon={<Database className="h-4 w-4 text-muted-foreground" />}
         />
     );
+
+    const cacheHitRate = data.total_requests > 0
+        ? ((data.cached_requests / data.total_requests) * 100).toFixed(2)
+        : "0";
+
     return (
         <StatCard
-            title="Cache Hit Rate"
-            value={`${data.cacheHitRate}%`}
+            title="Cache Hit Rate (24 hours)"
+            value={`${cacheHitRate}%`}
             className="col-span-1"
             formatNumber={false}
-            tooltip={`Cache hit/total for ${specId} in the last 30 days`}
+            tooltip={`Cached requests: ${FormatNumber(data.cached_requests)}
+Total requests: ${FormatNumber(data.total_requests)}
+Time period: ${new Date(data.start_date).toLocaleString()} - ${new Date(data.end_date).toLocaleString()}`}
             icon={<Database className="h-4 w-4 text-muted-foreground" />}
         />
     );

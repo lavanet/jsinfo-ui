@@ -3,12 +3,12 @@
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
 import NodeCache from 'node-cache';
-import { GetAxiosCacheTTL, GetAxiosCacheTimeout, GetAxiosRetryCount, GetRestUrl } from '@jsinfo/lib/env';
+import { GetAxiosCacheTTL, GetAxiosCacheTimeout, GetAxiosRetryCount, GetJsinfobeUrl } from '@jsinfo/lib/env';
 
 const AXIOS_TIMEOUT = GetAxiosCacheTimeout();
 
 const axiosInstance = axios.create({
-    baseURL: GetRestUrl(),
+    baseURL: GetJsinfobeUrl(),
 });
 
 axiosRetry(axiosInstance, { retries: GetAxiosRetryCount() });
