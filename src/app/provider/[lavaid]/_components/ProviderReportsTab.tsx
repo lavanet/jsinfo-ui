@@ -3,10 +3,10 @@
 "use client";
 
 import Link from 'next/link'
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
-import TableCsvButton from "@jsinfo/components/TableCsvButton";
-import TimeTooltip from '@jsinfo/components/TimeTooltip';
-import { GetExplorersGuruUrl } from '@jsinfo/common/env';
+import { DataKeySortableTableInATabComponent } from "@jsinfo/components/classic/DynamicSortTable";
+import TableCsvButton from "@jsinfo/components/classic/TableCsvButton";
+import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
+import { GetExplorersGuruUrl } from '@jsinfo/lib/env';
 
 interface ProviderReportsTabProps {
     addr: string;
@@ -38,7 +38,7 @@ const ProviderReportsTab: React.FC<ProviderReportsTabProps> = ({ addr }) => {
             pkeyUrl="none"
             rowFormatters={{
                 "provider_reported.blockId": (report) => (
-                    <Link
+                    <Link className='orangelinks'
                         href={
                             report.provider_reported.tx
                                 ? `${GetExplorersGuruUrl()}/transaction/${report.provider_reported.tx}`

@@ -2,9 +2,10 @@
 
 "use client";
 
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
-import TableCsvButton from "@jsinfo/components/TableCsvButton";
-import LavaWithTooltip from "@jsinfo/components/LavaWithTooltip";
+import { DataKeySortableTableInATabComponent } from "@jsinfo/components/classic/DynamicSortTable";
+import TableCsvButton from "@jsinfo/components/classic/TableCsvButton";
+import ChainWithIconLink from "@jsinfo/components/modern/ChainWithIconLink";
+import LavaWithTooltip from "@jsinfo/components/modern/LavaWithTooltip";
 
 interface ProviderStakesTabProps {
     addr: string;
@@ -30,9 +31,9 @@ const ProviderStakesTab: React.FC<ProviderStakesTabProps> = ({ addr }) => {
             defaultSortKey="specId"
             tableAndTabName="stakes"
             pkey="specId"
-            pkeyUrl="spec"
-
+            pkeyUrl="none"
             rowFormatters={{
+                specId: (data) => <ChainWithIconLink chainId={data.specId} className="orangelinks" />,
                 totalStake: (data) => <LavaWithTooltip amount={data.totalStake} />,
                 stake: (data) => <LavaWithTooltip amount={data.stake} />,
                 delegateLimit: (data) => <LavaWithTooltip amount={data.delegateLimit} />,
