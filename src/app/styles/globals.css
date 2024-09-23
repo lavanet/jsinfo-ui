@@ -36,9 +36,15 @@
 /* -------- Dynamic page size ---------------- */
 
 .rt-ContainerInner {
-  max-width: 1360px;
   width: 100%;
-  padding: 10px;
+}
+
+:where(.rt-Container.rt-r-size-4) .rt-ContainerInner {
+  max-width: none;
+}
+
+.rt-ContainerInner {
+  max-width: none !important;
 }
 
 /* -------- chartjs 2 lines on mobile -------- */
@@ -185,18 +191,19 @@ iframe {
   display: none;
 }
 
-a {
+.orangelinks {
   cursor: var(--cursor-link) !important;
   text-decoration-line: none !important;
   text-decoration-style: solid !important;
   text-decoration-thickness: min(2px, max(1px, 0.05em)) !important;
   text-underline-offset: calc(0.025em + 2px) !important;
-  text-decoration-color: var(--interactive-element-selected-color) !important;
+  text-decoration-color: var(--interactive-element-line-color) !important;
   color: var(--interactive-element-line-color) !important;
 }
 
-a:hover {
+.orangelinks:hover {
   text-decoration-line: underline !important;
+  cursor: pointer !important;
 }
 
 .rt-Button {
@@ -205,149 +212,4 @@ a:hover {
 
 .rt-BaseTabListTrigger:where([data-state="active"], [data-active])::before {
   background-color: var(--interactive-element-line-color);
-}
-
-/* -------- Search bar styles -------- */
-
-.navbar {
-  contain: "none";
-  overflow: "visible";
-}
-
-.search {
-  position: relative;
-  z-index: 9999;
-  transition: width 0.3s ease-in-out; /* Add this line */
-}
-
-.search * {
-  font-size: 10px;
-}
-
-@media (max-width: 600px) {
-  .search * {
-    font-size: 9px;
-  }
-}
-
-.search > div > .wrapper {
-  color: var(--interactive-element-color);
-  background-color: var(--interactive-element-background-color);
-  border-color: transparent;
-  border-radius: 20px;
-}
-
-.search > div > .wrapper:hover,
-.search > div > .wrapper:active {
-  border-color: var(--interactive-element-line-color);
-}
-
-.search > div > .wrapper li.selected {
-  background-color: var(--interactive-element-selected-color);
-}
-
-.search > div > .wrapper input {
-  color: var(--interactive-element-color);
-  background-color: var(--interactive-element-background-color);
-  margin-right: 7px;
-}
-
-.search > div > .wrapper div.line {
-  border-top-color: var(--interactive-element-line-color);
-}
-
-.search > div > .wrapper > div {
-  min-height: 27px;
-}
-
-#NavBarButtons {
-  transition: opacity 0.5s, visibility 0.5s;
-}
-
-@media (max-width: 380px) {
-  .search {
-    visibility: hidden;
-  }
-}
-
-.search > div > .wrapper:first-child svg {
-  fill: var(--interactive-element-line-color) !important;
-  width: 15px;
-  height: 15px;
-}
-
-.search > div > .wrapper:first-child svg.search-icon {
-  margin-left: 10px;
-}
-
-.search > div > .wrapper:first-child input {
-  padding: 0 0 0 7px;
-  font-size: 1.3em;
-}
-
-.search > div > .wrapper:first-child div.clear-icon {
-  margin: 2px 9px 0 0;
-}
-
-.searchBarElement {
-  display: block;
-  text-align: left;
-  font-size: 1.3em;
-  color: var(--interactive-element-color);
-}
-
-/* -------- Global vars but used to hide datepicker overlay -------- */
-
-.hide-animation {
-  animation: hide 0.1s forwards;
-}
-
-@keyframes hide {
-  to {
-    opacity: 0;
-    visibility: hidden;
-  }
-}
-
-/* -------- Show inactive providers checkbox ------- */
-
-.checkbox-container {
-  display: flex;
-  align-items: center;
-  font-family: Arial, sans-serif;
-  color: #ddd; /* Lighter text for dark backgrounds */
-}
-
-.checkbox-label {
-  margin-left: 8px;
-  font-size: 16px;
-  color: #ccc; /* Adjusted for better visibility on dark backgrounds */
-}
-
-.styled-checkbox {
-  width: 20px;
-  height: 20px;
-  appearance: none;
-  -webkit-appearance: none;
-  background-color: #333; /* Darker checkbox background */
-  border: 2px solid #ff8c00; /* Darker orangy border for contrast */
-  border-radius: 4px;
-  cursor: pointer;
-  position: relative;
-}
-
-.styled-checkbox:checked {
-  background-color: #ff8c00; /* Darker orangy background */
-}
-
-.styled-checkbox:checked::after {
-  content: "";
-  position: absolute;
-  left: 6px;
-  top: 2px;
-  width: 5px;
-  height: 10px;
-  border: solid #333; /* Dark check mark for contrast */
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
 }

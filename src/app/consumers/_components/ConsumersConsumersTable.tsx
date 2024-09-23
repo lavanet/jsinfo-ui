@@ -3,25 +3,23 @@
 "use client";
 
 import { Box } from "@radix-ui/themes";
-import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
-import { SortableTableInATabComponent } from "@jsinfo/components/StaticSortTable";
-import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
-import { FormatNumber, RenderInFullPageCard } from '@jsinfo/common/utils';
-import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
+import { useJsinfobeFetch } from "@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch";
+import { SortableTableComponent } from "@jsinfo/components/classic/StaticSortTable";
+import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
+import { FormatNumber } from '@jsinfo/lib/formatting';
+import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
 import Link from "next/link";
-import LavaWithTooltip from "@jsinfo/components/LavaWithTooltip";
+import LavaWithTooltip from "@jsinfo/components/modern/LavaWithTooltip";
 
 const ConsumersConsumersTable: React.FC<{}> = () => {
-    const { data, loading, error } = useApiDataFetch({
-        dataKey: "consumerspageConsumers",
-    });
+    const { data, loading, error } = useJsinfobeFetch("consumerspageConsumers");
 
-    if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
-    if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading consumers table data`} greyText={`consumers table`} />);
+    if (error) return <ErrorDisplay message={error} />;
+    if (loading) return <LoadingIndicator loadingText={`Loading consumers page`} greyText={`consumers`} />;
 
     return (
         <Box>
-            <SortableTableInATabComponent
+            <SortableTableComponent
                 columns={[
                     { key: "consumer", name: "Consumer" },
                     { key: "plan", name: "Plan" },
@@ -37,7 +35,7 @@ const ConsumersConsumersTable: React.FC<{}> = () => {
                 pkey="consumer"
                 pkeyUrl="consumer"
                 rowFormatters={{
-                    consumer: (data) => (<Link href={`/consumer/${data.consumer}`}>
+                    consumer: (data) => (<Link className='orangelinks' href={`/consumer/${data.consumer}`}>
                         {data.consumer}
                     </Link>),
                     cuSum: (data) => FormatNumber(data.cuSum),

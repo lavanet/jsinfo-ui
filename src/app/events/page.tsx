@@ -4,38 +4,26 @@
 import Link from 'next/link';
 import { useEffect } from "react";
 import { Card, Box } from "@radix-ui/themes";
-import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
-import { EventTypeToString } from "@jsinfo/common/convertors";
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
+import { EventTypeToString } from "@jsinfo/lib/convertors";
+import { DataKeySortableTableInATabComponent } from "@jsinfo/components/classic/DynamicSortTable";
 import { usePageContext } from "@jsinfo/context/PageContext";
-import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
-import BlockWithDateCard from "@jsinfo/components/BlockWithDateCard";
-import JsinfoTabs from "@jsinfo/components/JsinfoTabs";
-import TimeTooltip from '@jsinfo/components/TimeTooltip';
-import CsvButton from '@jsinfo/components/CsvButton';
-import { ErrorDisplay } from '@jsinfo/components/ErrorDisplay';
-import { RenderInFullPageCard } from '@jsinfo/common/utils';
-import MonikerAndProviderLink from '@jsinfo/components/MonikerAndProviderLink';
-import { GetExplorersGuruUrl } from '@jsinfo/common/env';
+import JsinfoTabs from "@jsinfo/components/classic/JsinfoTabs";
+import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
+import CsvButton from '@jsinfo/components/classic/CsvButton';
+import MonikerAndProviderLink from '@jsinfo/components/modern/MonikerAndProviderLink';
+import { GetExplorersGuruUrl } from '@jsinfo/lib/env';
+import ChainWithIconLink from '@jsinfo/components/modern/ChainWithIconLink';
 
 export default function Events() {
-
-  const { data, loading, error } = useApiDataFetch({ dataKey: "events" });
 
   const { setCurrentPage } = usePageContext();
 
   useEffect(() => {
-    if (!loading && !error) {
-      setCurrentPage('events');
-    }
-  }, [loading, error, setCurrentPage]);
-
-  if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
-  if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading events page`} greyText={`events`} />);
+    setCurrentPage('events');
+  }, []);
 
   return (
     <>
-      <BlockWithDateCard blockData={data} />
       <Card>
         <JsinfoTabs defaultValue="events"
           tabs={[
@@ -97,7 +85,7 @@ export default function Events() {
               rowFormatters={{
                 provider: (evt) => (<MonikerAndProviderLink provider={evt} />),
                 eventType: (evt) => (
-                  <Link
+                  <Link className='orangelinks'
                     href={
                       evt.tx
                         ? `${GetExplorersGuruUrl()}/transaction/${evt.tx}`
@@ -108,7 +96,7 @@ export default function Events() {
                   </Link>
                 ),
                 blockId: (evt) => (
-                  <Link
+                  <Link className='orangelinks'
                     href={`${GetExplorersGuruUrl()}/block/${evt.blockId}`}
                   >
                     {evt.blockId}
@@ -152,6 +140,7 @@ export default function Events() {
                   );
                 },
               }}
+              NoAutoScrollOnceContentIsLoaded={true}
             />
 
             <DataKeySortableTableInATabComponent
@@ -174,12 +163,10 @@ export default function Events() {
               rowFormatters={{
                 provider: (payment) => (<MonikerAndProviderLink provider={payment} />),
                 specId: (payment) => (
-                  <Link href={`/spec/${payment.specId}`}>
-                    {payment.specId}
-                  </Link>
+                  <ChainWithIconLink chainId={payment.specId} className="orangelinks" />
                 ),
                 blockId: (payment) => (
-                  <Link
+                  <Link className='orangelinks'
                     href={
                       payment.tx
                         ? `${GetExplorersGuruUrl()}/transaction/${payment.tx}`
@@ -191,7 +178,7 @@ export default function Events() {
                 ),
                 datetime: (payment) => (<TimeTooltip datetime={payment.datetime} />),
                 consumer: (payment) => (
-                  <Link href={`/consumer/${payment.consumer}`}>
+                  <Link className='orangelinks' href={`/consumer/${payment.consumer}`}>
                     {payment.consumer}
                   </Link>
                 ),
@@ -221,7 +208,7 @@ export default function Events() {
               rowFormatters={{
                 provider: (report) => (<MonikerAndProviderLink provider={report} />),
                 blockId: (report) => (
-                  <Link
+                  <Link className='orangelinks'
                     href={
                       report.tx
                         ? `${GetExplorersGuruUrl()}/transaction/${report.tx}`

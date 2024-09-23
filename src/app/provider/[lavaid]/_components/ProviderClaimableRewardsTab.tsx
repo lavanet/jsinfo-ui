@@ -3,11 +3,11 @@
 "use client";
 
 import Link from 'next/link'
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
-import TableCsvButton from "@jsinfo/components/TableCsvButton";
-import TimeTooltip from '@jsinfo/components/TimeTooltip';
-import { FormatNumberWithString } from '@jsinfo/common/utils';
-import LavaWithTooltip from '@jsinfo/components/LavaWithTooltip';
+import { DataKeySortableTableInATabComponent } from "@jsinfo/components/classic/DynamicSortTable";
+import TableCsvButton from "@jsinfo/components/classic/TableCsvButton";
+import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
+import LavaWithTooltip from '@jsinfo/components/modern/LavaWithTooltip';
+import ChainWithIconLink from '@jsinfo/components/modern/ChainWithIconLink';
 
 interface ProviderClaimableRewardsTabProps {
     addr: string;
@@ -34,7 +34,7 @@ const ProviderClaimableRewardsTab: React.FC<ProviderClaimableRewardsTabProps> = 
             rowFormatters={{
                 timestamp: (data) => (<TimeTooltip datetime={data.timestamp} />),
                 chainId: (data) => (
-                    <Link href={`/spec/${data.chainId}`}>{data.chainId}</Link>
+                    <ChainWithIconLink chainId={data.chainId} className="orangelinks" />
                 ),
                 amount: (data) => <LavaWithTooltip amount={data.amount} />,
             }}

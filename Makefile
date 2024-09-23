@@ -34,3 +34,6 @@ build:
 
 install:
 	pnpm install
+
+macos_kill:
+	lsof -ti:5100 | xargs kill -9

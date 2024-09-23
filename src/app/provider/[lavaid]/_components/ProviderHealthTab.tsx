@@ -3,10 +3,11 @@
 "use client";
 
 import Link from 'next/link'
-import { DataKeySortableTableInATabComponent } from "@jsinfo/components/DynamicSortTable";
-import TableCsvButton from "@jsinfo/components/TableCsvButton";
-import TimeTooltip from '@jsinfo/components/TimeTooltip';
-import StatusCall from '@jsinfo/components/StatusCell';
+import { DataKeySortableTableInATabComponent } from "@jsinfo/components/classic/DynamicSortTable";
+import TableCsvButton from "@jsinfo/components/classic/TableCsvButton";
+import TimeTooltip from '@jsinfo/components/modern/TimeTooltip';
+import StatusCall from '@jsinfo/components/modern/StatusCell';
+import ChainWithIconLink from '@jsinfo/components/modern/ChainWithIconLink';
 
 interface ProviderHealthTabProps {
     addr: string;
@@ -32,7 +33,7 @@ const ProviderHealthTab: React.FC<ProviderHealthTabProps> = ({ addr }) => {
             rowFormatters={{
                 timestamp: (data) => (<TimeTooltip datetime={data.timestamp} />),
                 spec: (data) => (
-                    <Link href={`/spec/${data.spec}`}>{data.spec}</Link>
+                    <ChainWithIconLink chainId={data.spec} className="orangelinks" />
                 ),
                 status: (data) => <StatusCall status={data.status} />,
             }}
@@ -41,6 +42,7 @@ const ProviderHealthTab: React.FC<ProviderHealthTabProps> = ({ addr }) => {
                     csvDownloadLink={`providerHealthCsv/${addr}`}
                 />
             )}
+            NoAutoScrollOnceContentIsLoaded={true}
         />
     );
 };

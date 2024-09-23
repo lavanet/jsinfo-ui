@@ -1,94 +1,125 @@
 // src/app/provider/[lavaid]/_components/ProviderCards.tsx
 
-import { Flex } from "@radix-ui/themes";
-import TitledCard from "@jsinfo/components/TitledCard";
-import { useApiDataFetch } from "@jsinfo/hooks/useApiDataFetch";
-import { RenderInFullPageCard } from "@jsinfo/common/utils";
-import { ErrorDisplay } from "@jsinfo/components/ErrorDisplay";
-import LoadingIndicator from "@jsinfo/components/LoadingIndicator";
-import LavaWithTooltip from "@jsinfo/components/LavaWithTooltip";
+import React from 'react';
+import StatCard from "@jsinfo/components/sections/StatCard";
+import { ErrorDisplay } from "@jsinfo/components/modern/ErrorDisplay";
+import LavaWithTooltip from "@jsinfo/components/modern/LavaWithTooltip";
+import { useJsinfobeFetch } from "@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch";
+import { ArrowUpNarrowWide, CalendarHeart, CreditCard, FolderHeart, HeartHandshake, Landmark, MonitorCog } from "lucide-react";
+import LoaderImageForCards from "@jsinfo/components/modern/LoaderImageForCards";
 
 interface ProviderCardsProps {
     addr: string;
 }
 
-const ProviderCards: React.FC<ProviderCardsProps> = ({ addr }) => {
-    const { data, loading, error } = useApiDataFetch({
-        dataKey: "providerCards/" + addr,
-    });
+const ClaimableRewardsCard: React.FC<{ addr: string }> = ({ addr }) => {
+    const { data, loading, error } = useJsinfobeFetch(`providerCardsClaimableRewards/${addr}`);
 
-    if (error) return RenderInFullPageCard(<ErrorDisplay message={error} />);
-    if (loading) return RenderInFullPageCard(<LoadingIndicator loadingText={`Loading ${addr} details`} greyText={`${addr} provider`} />);
-
-    const provider = data;
-
-    const requiredFields = ['cuSum', 'relaySum', 'rewardSum', 'stakeSum', 'claimedRewardsAllTime', 'claimedRewards30DaysAgo', 'claimableRewards'];
-
-    const allFieldsPresent = requiredFields.every(field => provider.hasOwnProperty(field));
-
-    if (!allFieldsPresent) {
-        return RenderInFullPageCard(<ErrorDisplay message="Provider data is incomplete or unavailable." />);
-    }
-
+    if (error) return <ErrorDisplay message={error} />;
     return (
-        <Flex gap="3" justify="between" className="grid grid-cols-2 md:grid-cols-4">
-            <TitledCard
-                title="Total CU"
-                value={provider.cuSum}
-                className="col-span-1"
-                formatNumber={true}
-                tooltip="Total compute units for provider"
-            />
-            <TitledCard
-                title="Total Relays"
-                value={provider.relaySum}
-                className="col-span-1"
-                formatNumber={true}
-                tooltip="Total relays for provider"
-            />
-            <TitledCard
-                title="Total Rewards"
-                value={<LavaWithTooltip amount={provider.rewardSum} />}
-                className="col-span-2 md:col-span-1"
-                formatNumber={false}
-                tooltip="Total rewards for provider"
-            />
-            <TitledCard
-                title="Total Stake"
-                value={<LavaWithTooltip amount={provider.stakeSum} />}
-                className="col-span-2 md:col-span-1"
-                formatNumber={false}
-                tooltip="Total stake for all specs"
-            />
-            <TitledCard
-                title="Total Claimed Rewards (All Time)"
-                value={<LavaWithTooltip amount={provider.claimedRewardsAllTime} />}
-                className="col-span-2 md:col-span-1"
-                formatNumber={false}
-            />
-            <TitledCard
-                title="Total Claimed Rewards (30 days ago)"
-                value={<LavaWithTooltip amount={provider.claimedRewards30DaysAgo} />}
-                className="col-span-2 md:col-span-1"
-                formatNumber={false}
-            />
-            <TitledCard
-                title="Claimable Rewards"
-                value={<LavaWithTooltip amount={provider.claimableRewards} />}
-                className="col-span-2 md:col-span-1"
-                formatNumber={false}
-            />
-        </Flex>
+        <StatCard
+            title="Claimable Rewards"
+            value={loading ? <LoaderImageForCards /> : <LavaWithTooltip amount={data?.claimableRewards || "0"} />}
+            className="col-span-2 md:col-span-1"
+            formatNumber={false}
+            icon={<HeartHandshake className="h-4 w-4 text-muted-foreground" />}
+        />
     );
 };
 
+const ClaimedRewards30DaysCard: React.FC<{ addr: string }> = ({ addr }) => {
+    const { data, loading, error } = useJsinfobeFetch(`providerCardsClaimedRewards30Days/${addr}`);
 
-const ProviderCardsMargined: React.FC<ProviderCardsProps> = ({ addr }) => {
+    if (error) return <ErrorDisplay message={error} />;
     return (
-        < div style={{ marginTop: 'var(--box-margin)', marginBottom: 'var(--box-margin)' }}>
-            <ProviderCards addr={addr} />
-        </div>
-    )
+        <StatCard
+            title="Claimed Rewards (Last 30 Days)"
+            value={loading ? <LoaderImageForCards /> : <LavaWithTooltip amount={data?.claimedRewards30DaysAgo?.split(' ')[0] || "0"} />}
+            className="col-span-2 md:col-span-1"
+            formatNumber={false}
+            icon={<CalendarHeart className="h-4 w-4 text-muted-foreground" />}
+        />
+    );
 };
 
-export default ProviderCardsMargined;
+const ClaimedRewardsAllTimeCard: React.FC<{ addr: string }> = ({ addr }) => {
+    const { data, loading, error } = useJsinfobeFetch(`providerCardsClaimedRewardsAllTime/${addr}`);
+
+    if (error) return <ErrorDisplay message={error} />;
+    return (
+        <StatCard
+            title="Total Claimed Rewards (All Time)"
+            value={loading ? <LoaderImageForCards /> : <LavaWithTooltip amount={data?.claimedRewardsAllTime?.split(' ')[0] || "0"} />}
+            className="col-span-2 md:col-span-1"
+            formatNumber={false}
+            icon={<FolderHeart className="h-4 w-4 text-muted-foreground" />}
+        />
+    );
+};
+
+const CuRelayAndRewardsCard: React.FC<{ addr: string }> = ({ addr }) => {
+    const { data, loading, error } = useJsinfobeFetch(`providerCardsCuRelayAndRewards/${addr}`);
+
+    if (error) return <ErrorDisplay message={error} />;
+    return (
+        <>
+            <StatCard
+                title="Total CU"
+                value={loading ? <LoaderImageForCards /> : data?.cuSum || 0}
+                className="col-span-1"
+                formatNumber={true}
+                tooltip="Total compute units for provider"
+                icon={<MonitorCog className="h-4 w-4 text-muted-foreground" />}
+            />
+            <StatCard
+                title="Total Relays"
+                value={loading ? <LoaderImageForCards /> : data?.relaySum || 0}
+                className="col-span-1"
+                formatNumber={true}
+                tooltip="Total relays for provider"
+                icon={<ArrowUpNarrowWide className="h-4 w-4 text-muted-foreground" />}
+            />
+            <StatCard
+                title="Total Rewards"
+                value={loading ? <LoaderImageForCards /> : <LavaWithTooltip amount={data?.rewardSum?.toString() || "0"} />}
+                className="col-span-2 md:col-span-1"
+                formatNumber={false}
+                tooltip="Total rewards for provider"
+                icon={<CreditCard className="h-4 w-4 text-muted-foreground" />}
+            />
+        </>
+    );
+};
+
+const StakesCard: React.FC<{ addr: string }> = ({ addr }) => {
+    const { data, loading, error } = useJsinfobeFetch(`providerCardsStakes/${addr}`);
+
+    if (error) return <ErrorDisplay message={error} />;
+    return (
+        <StatCard
+            title="Total Stake"
+            value={loading ? <LoaderImageForCards /> : <LavaWithTooltip amount={data?.stakeSum || "0"} />}
+            className="col-span-2 md:col-span-1"
+            formatNumber={false}
+            tooltip="Total stake for all specs"
+            icon={<Landmark className="h-4 w-4 text-muted-foreground" />}
+        />
+    );
+};
+
+const ProviderCards: React.FC<ProviderCardsProps> = ({ addr }) => {
+    return (
+        <>
+            <div className="provider-cards-grid">
+                <CuRelayAndRewardsCard addr={addr} />
+                <StakesCard addr={addr} />
+                <ClaimableRewardsCard addr={addr} />
+                <ClaimedRewardsAllTimeCard addr={addr} />
+                <ClaimedRewards30DaysCard addr={addr} />
+            </div>
+            <div style={{ marginTop: '25px' }}></div>
+        </>
+    );
+};
+
+export default ProviderCards;
