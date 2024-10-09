@@ -61,6 +61,24 @@ export function ProviderLatestHealthTable({ providerId }: ProviderLatestHealthTa
   // Use the provided hook for fetching data
   const { data, error, isLoading } = useJsinfobeSwrFetch(`providerLatestHealth/${providerId}`);
 
+  if (isLoading) {
+    return <LoadingIndicator loadingText={`Loading health data`} greyText={`provider health`} />;
+  }
+
+  if (error || (data && 'error' in data)) {
+    return (
+      <Card style={{ padding: '23px' }}>
+        <CardHeader className="p-0">
+          <CardTitle>Provider Latest Health</CardTitle>
+          <CardDescription>Recent health status for provider services</CardDescription>
+        </CardHeader>
+        <div className="mt-4 text-center text-muted-foreground">
+          {error || (data && 'error' in data ? data.error : 'No health data available')}
+        </div>
+      </Card>
+    );
+  }
+
   const healthData: HealthData = data?.data ?? null;
 
   const sortedData = useMemo(() => {
@@ -100,26 +118,9 @@ export function ProviderLatestHealthTable({ providerId }: ProviderLatestHealthTa
     });
   }, [healthData, sortColumn, sortDirection, showSummary]);
 
-  if (isLoading) {
-    return <LoadingIndicator loadingText={`Loading health data`} greyText={`provider health`} />;
-  }
-
   if (error) {
     return <div>Error loading data</div>;
   }
-
-  const getStatusColor = (status: string) => {
-    switch (status.toLowerCase()) {
-      case 'healthy':
-        return 'bg-green-500';
-      case 'unhealthy':
-        return 'bg-red-500';
-      case 'frozen':
-        return 'bg-blue-500';
-      default:
-        return 'bg-gray-500';
-    }
-  };
 
   const handleSort = (column: SortColumn) => {
     if (column === sortColumn) {
