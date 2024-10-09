@@ -61,23 +61,7 @@ export function ProviderLatestHealthTable({ providerId }: ProviderLatestHealthTa
   // Use the provided hook for fetching data
   const { data, error, isLoading } = useJsinfobeSwrFetch(`providerLatestHealth/${providerId}`);
 
-  if (isLoading) {
-    return <LoadingIndicator loadingText={`Loading health data`} greyText={`provider health`} />;
-  }
 
-  if (error || (data && 'error' in data)) {
-    return (
-      <Card style={{ padding: '23px' }}>
-        <CardHeader className="p-0">
-          <CardTitle>Provider Latest Health</CardTitle>
-          <CardDescription>Recent health status for provider services</CardDescription>
-        </CardHeader>
-        <div className="mt-4 text-center text-muted-foreground">
-          {error || (data && 'error' in data ? data.error : 'No health data available')}
-        </div>
-      </Card>
-    );
-  }
 
   const healthData: HealthData = data?.data ?? null;
 
@@ -117,6 +101,24 @@ export function ProviderLatestHealthTable({ providerId }: ProviderLatestHealthTa
       return 0;
     });
   }, [healthData, sortColumn, sortDirection, showSummary]);
+
+  if (isLoading) {
+    return <LoadingIndicator loadingText={`Loading health data`} greyText={`provider health`} />;
+  }
+
+  if (error || (data && 'error' in data)) {
+    return (
+      <Card style={{ padding: '23px' }}>
+        <CardHeader className="p-0">
+          <CardTitle>Provider Latest Health</CardTitle>
+          <CardDescription>Recent health status for provider services</CardDescription>
+        </CardHeader>
+        <div className="mt-4 text-center text-muted-foreground">
+          {error || (data && 'error' in data ? data.error : 'No health data available')}
+        </div>
+      </Card>
+    );
+  }
 
   if (error) {
     return <div>Error loading data</div>;
