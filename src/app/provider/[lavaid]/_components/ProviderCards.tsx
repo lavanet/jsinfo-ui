@@ -113,9 +113,9 @@ const ProviderCards: React.FC<ProviderCardsProps> = ({ addr }) => {
             <div className="provider-cards-grid">
                 <CuRelayAndRewardsCard addr={addr} />
                 <StakesCard addr={addr} />
-                <ClaimableRewardsCard addr={addr} />
+                {/* <ClaimableRewardsCard addr={addr} />
                 <ClaimedRewardsAllTimeCard addr={addr} />
-                <ClaimedRewards30DaysCard addr={addr} />
+                <ClaimedRewards30DaysCard addr={addr} /> */}
             </div>
             <div style={{ marginTop: '25px' }}></div>
         </>
