@@ -25,6 +25,8 @@ const CurrencyChangeButton: FC = () => {
         setCurrency(prev => prev === 'USD' ? 'LAVA' : 'USD');
     };
 
+    return null;
+
     if (!isMainnet) {
         return null;
     }
