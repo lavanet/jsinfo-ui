@@ -14,19 +14,19 @@ const axiosFetcher = async (url: string) => {
 };
 
 export function useJsinfobeSwrFetch<T = any>(url: string | (() => string | null)) {
-    const { data, error, isLoading } = useSWR<T>(url, axiosFetcher, {
+    const { data, error, isLoading, isValidating } = useSWR<T>(url, axiosFetcher, {
         refreshInterval: 5 * 60 * 1000,
         revalidateOnFocus: false,
         keepPreviousData: true,
     });
-    return { data, error, isLoading };
+    return { data, error, isLoading, isValidating };
 }
 
 export function useJsinfobeSwrFetchWithDeps<T = any>(
     urlOrFunction: string | (() => string | null),
     dependencies: any[] = []
 ) {
-    const { data, error, isLoading } = useSWR<T>(
+    const { data, error, isLoading, isValidating } = useSWR<T>(
         () => {
             if (typeof urlOrFunction === 'function') {
                 const result = urlOrFunction();
@@ -41,5 +41,5 @@ export function useJsinfobeSwrFetchWithDeps<T = any>(
             keepPreviousData: true,
         }
     );
-    return { data, error, isLoading };
+    return { data, error, isLoading, isValidating };
 }

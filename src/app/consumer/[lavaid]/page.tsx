@@ -1,7 +1,6 @@
 // src/app/consumer/page.tsx
 "use client";
 
-import Link from 'next/link'
 import { Box } from "@radix-ui/themes";
 import JsinfoTabs from "@jsinfo/components/classic/JsinfoTabs";
 import { useEffect } from "react";

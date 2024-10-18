@@ -106,7 +106,7 @@ export function ProviderLatestHealthTable({ providerId }: ProviderLatestHealthTa
     return <LoadingIndicator loadingText={`Loading health data`} greyText={`provider health`} />;
   }
 
-  if (error || (data && 'error' in data)) {
+  if (data && 'error' in data) {
     return (
       <Card style={{ padding: '23px' }}>
         <CardHeader className="p-0">
@@ -114,7 +114,30 @@ export function ProviderLatestHealthTable({ providerId }: ProviderLatestHealthTa
           <CardDescription>Recent health status for provider services</CardDescription>
         </CardHeader>
         <div className="mt-4 text-center text-muted-foreground">
-          {error || (data && 'error' in data ? data.error : 'No health data available')}
+          {(data && 'error' in data ? data.error : 'No health data available')}
+        </div>
+      </Card>
+    );
+  }
+
+  if (error) {
+    console.log(error);
+    return (
+      <Card style={{ padding: '23px' }}>
+        <CardHeader className="p-0">
+          <CardTitle>Provider Latest Health</CardTitle>
+          <CardDescription>Recent health status for provider services</CardDescription>
+        </CardHeader>
+        <div className="mt-4 text-center text-muted-foreground">
+          {(() => {
+            if (data && 'error' in data) {
+              return data.error;
+            }
+            if (error) {
+              return error?.response?.data?.error || error.message || String(error);
+            }
+            return 'No health data available';
+          })()}
         </div>
       </Card>
     );

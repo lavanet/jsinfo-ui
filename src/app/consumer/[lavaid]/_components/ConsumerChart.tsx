@@ -57,7 +57,7 @@ const ConsumerChart: React.FC<UsageGraphProps> = ({ consumerId }) => {
     qosLatencyAvg: true,
   });
 
-  const { data, error, isLoading } = useJsinfobeSwrFetch(() => {
+  const { data, error, isLoading, isValidating } = useJsinfobeSwrFetch(() => {
     if (dateRange?.from && dateRange?.to) {
       const fromDate = format(dateRange.from, "yyyy-MM-dd'Z'");
       const toDate = format(dateRange.to, "yyyy-MM-dd'Z'");
@@ -416,7 +416,7 @@ const ConsumerChart: React.FC<UsageGraphProps> = ({ consumerId }) => {
             <div>No chart data is available for this consumer or in the selected date range</div>
           </div>
         )}
-        {isLoading && (
+        {(isLoading || isValidating) && (
           <div className="text-center mt-2 text-sm text-muted-foreground">
             Updating data...
           </div>

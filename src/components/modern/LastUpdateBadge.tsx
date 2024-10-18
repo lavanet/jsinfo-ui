@@ -21,14 +21,32 @@ const LastUpdateBadge = () => {
     const [currentTime, setCurrentTime] = useState<Date | null>(null);
 
     async function getUTCTime(): Promise<Date> {
-        try {
-            const response = await fetch('http://worldtimeapi.org/api/timezone/Etc/UTC');
-            const data: TimeResponse = await response.json();
-            return new Date(data.utc_datetime);
-        } catch (error) {
-            console.error('Error fetching UTC time:', error);
-            return new Date(); // Fallback to local system time
+        const isHttps = window.location.protocol === 'https:';
+        const urls = isHttps
+            ? ['https://worldtimeapi.org/api/timezone/Etc/UTC', 'http://worldtimeapi.org/api/timezone/Etc/UTC']
+            : ['http://worldtimeapi.org/api/timezone/Etc/UTC', 'https://worldtimeapi.org/api/timezone/Etc/UTC'];
+
+        for (const url of urls) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data: TimeResponse = await response.json();
+                return new Date(data.utc_datetime);
+            } catch (error) {
+                console.error(`Error fetching UTC time from ${url}:`, error);
+                // If this is the last URL, throw the error
+                if (url === urls[urls.length - 1]) {
+                    throw error;
+                }
+                // Otherwise, continue to the next URL
+            }
         }
+
+        // If all attempts fail, fall back to local system time
+        console.warn('All attempts to fetch UTC time failed. Falling back to local system time.');
+        return new Date();
     }
 
     useEffect(() => {

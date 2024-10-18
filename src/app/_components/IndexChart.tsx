@@ -60,11 +60,12 @@ export function IndexChart(props: IndexChartProps = { providerId: null }) {
   });
   const [showAllChains, setShowAllChains] = useState(true);
 
-  const { data, error, isLoading } = useJsinfobeSwrFetch(() => {
+  const { data, error, isLoading, isValidating } = useJsinfobeSwrFetch(() => {
     if (dateRange?.from && dateRange?.to) {
       const fromDate = format(dateRange.from, "yyyy-MM-dd'Z'");
       const toDate = format(dateRange.to, "yyyy-MM-dd'Z'");
-      return `indexChartsV3?f=${fromDate}&t=${toDate}`;
+      let ret = `indexChartsV3?f=${fromDate}&t=${toDate}`;
+      return ret;
     }
     return null;
   });
@@ -427,7 +428,7 @@ export function IndexChart(props: IndexChartProps = { providerId: null }) {
             <div>No data available for the selected date range</div>
           )}
         </div>
-        {isLoading && (
+        {(isLoading || isValidating) && (
           <div className="text-center mt-2 text-sm text-muted-foreground">
             Updating data...
           </div>
