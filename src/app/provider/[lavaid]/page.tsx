@@ -4,7 +4,6 @@
 import { useEffect } from "react";
 import { Box } from "@radix-ui/themes";
 import { usePageContext } from "@jsinfo/context/PageContext";
-
 import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
 
 import { MonikerAndProviderAddressCardWithFetch } from './_components/MonikerAndProviderAddressCard';
@@ -19,7 +18,7 @@ import ProviderStakesTab from './_components/ProviderStakesTab';
 import ProviderRewardsTab from './_components/ProviderRewardsTab';
 import ProviderReportsTab from './_components/ProviderReportsTab';
 import ProviderBlockReportsTab from './_components/ProviderBlockReportsTab';
-import ProviderClaimableRewardsTab from "./_components/ProviderClaimableRewardsTab";
+// import ProviderClaimableRewardsTab from "./_components/ProviderClaimableRewardsTab";
 import ProviderCards from "./_components/ProviderCards";
 import BackToProvidersLink from "./_components/BackToProviders";
 import { CardDescription, CardHeader, CardTitle } from "@jsinfo/components/shadcn/ui/Card";
