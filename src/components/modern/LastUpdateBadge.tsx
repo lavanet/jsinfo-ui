@@ -18,7 +18,7 @@ interface TimeResponse {
 const LastUpdateBadge = () => {
     const { data, loading } = useJsinfobeFetch("indexLatestBlock");
     const blockData = data as BlockData;
-    const [currentTime, setCurrentTime] = useState<Date | null>(null);
+    const [currentTime, setCurrentTime] = useState<Date | null>(new Date());
 
     async function getUTCTime(): Promise<Date> {
         const isHttps = window.location.protocol === 'https:';
@@ -50,12 +50,23 @@ const LastUpdateBadge = () => {
     }
 
     useEffect(() => {
-        getUTCTime().then(setCurrentTime);
-        const interval = setInterval(() => {
-            getUTCTime().then(setCurrentTime);
-        }, 60000); // Update every minute
+        const updateTimes = [1000, 2000, 5000]; // 1 second, 2 seconds, 5 seconds
+        let updateCount = 0;
 
-        return () => clearInterval(interval);
+        const updateTime = () => {
+            getUTCTime().then(setCurrentTime);
+            updateCount++;
+
+            if (updateCount < updateTimes.length) {
+                setTimeout(updateTime, updateTimes[updateCount] - updateTimes[updateCount - 1]);
+            }
+        };
+
+        // Initial update
+        updateTime();
+
+        return () => {
+        };
     }, []);
 
     const formatLastUpdate = (blockTime: Date, currentTime: Date) => {
@@ -67,6 +78,8 @@ const LastUpdateBadge = () => {
             </>
         );
     };
+
+    console.log("LastUpdateBadge render", "blockData", blockData, "currentTime", currentTime, "loading", loading);
 
     return (
         <ModernTooltip title={`Latest block height: ${blockData ? blockData.height : 'Loading...'}`}>
