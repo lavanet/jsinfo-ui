@@ -180,12 +180,20 @@ const ProviderLiveRequestFeed: React.FC<LiveRequestFeedProps> = ({ lavaid }) => 
                 ) : (
                     <p>
                         {!hasEverPlayed
-                            ? 'Press play to start fetching.'
+                            ? (isPlaying
+                                ? (emptyFetchCount < 3
+                                    ? 'Fetching data... please wait...'
+                                    : 'Still fetching data... but it seems like there are no entries for the selected filters.'
+                                )
+                                : 'Press play to start fetching.'
+                            )
                             : isPlaying
-                                ? emptyFetchCount < 3
+                                ? (emptyFetchCount < 3
                                     ? 'Fetching data...'
                                     : 'Still fetching data... but it seems like there are no entries for the selected filters.'
-                                : 'No entries available. Press play to resume fetching.'}
+                                )
+                                : 'No entries available. Press play to resume fetching.'
+                        }
                     </p>
                 )}
             </CardContent>
