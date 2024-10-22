@@ -189,19 +189,19 @@ export function IndexChart(props: IndexChartProps = { providerId: null }) {
             ) : (
               <p className="font-semibold text-sm">
                 <span className="inline-block w-3 h-3 rounded-full mr-2" style={{ backgroundColor: getQoSColor(qosScore) }}></span>
-                QoS Score: {qosScore?.toFixed(4)}
+                <span className="font-bold">QoS Score:</span> {qosScore?.toFixed(4)}
               </p>
 
             )}
             {selectedChains.map((chain) => (
               <p key={chain} className="text-sm">
-                <span className="inline-block w-3 h-3 rounded-full mr-2" style={{ backgroundColor: chartConfig[chain]?.color }}></span>
-                {chain}: <span className="font-mono">{payload.find(p => p.dataKey === chain)?.value?.toLocaleString().padStart(10)}</span>
+                <span className="inline-block w-3 h-3 rounded-full mr-2 font-bold" style={{ backgroundColor: chartConfig[chain]?.color }}></span>
+                <span className="font-bold">{chain}</span>: <span className="font-mono">{payload.find(p => p.dataKey === chain)?.value?.toLocaleString().padStart(10)}</span> Relays
               </p>
             ))}
-            <p className="font-semibold text-sm mt-2">
+            {/* <p className="font-semibold text-sm mt-2">
               Total Relays: <span className="font-mono">{payload.find(p => p.dataKey === selectedChains[0])?.payload?.totalRelays?.toLocaleString().padStart(10)}</span>
-            </p>
+            </p> */}
           </CardContent>
         </Card >
       )
