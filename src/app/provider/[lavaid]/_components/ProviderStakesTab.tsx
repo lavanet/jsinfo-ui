@@ -38,7 +38,11 @@ const ProviderStakesTab: React.FC<ProviderStakesTabProps> = ({ addr }) => {
                 stake: (data) => <LavaWithTooltip amount={data.stake} />,
                 delegateLimit: (data) => <LavaWithTooltip amount={data.delegateLimit} />,
                 delegateTotal: (data) => <LavaWithTooltip amount={data.delegateTotal} />,
-                delegateCommission: (data) => <LavaWithTooltip amount={data.delegateCommission} />,
+                delegateCommission: (data) => {
+                    const commission = data.delegateCommission;
+                    const formattedCommission = `${String(commission).trim()}%`;
+                    return <LavaWithTooltip amount={formattedCommission} />;
+                },
             }}
             csvButton={(
                 <TableCsvButton
