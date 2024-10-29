@@ -77,7 +77,7 @@ const ProviderChart: React.FC<ProviderChartProps> = ({ providerId }) => {
     cus: true,
   });
 
-  const { data, error, isLoading } = useJsinfobeSwrFetchWithDeps<ProviderChartV2Data>(() => {
+  const { data, error, isLoading, isValidating } = useJsinfobeSwrFetchWithDeps<ProviderChartV2Data>(() => {
     if (dateRange?.from && dateRange?.to) {
       const fromDate = format(dateRange.from, "yyyy-MM-dd'Z'");
       const toDate = format(dateRange.to, "yyyy-MM-dd'Z'");
@@ -403,7 +403,7 @@ const ProviderChart: React.FC<ProviderChartProps> = ({ providerId }) => {
             <div>No chart data is available for this provider or in the selected date range</div>
           </div>
         )}
-        {isLoading && (
+        {(isLoading || isValidating) && (
           <div className="text-center mt-2 text-sm text-muted-foreground">
             Updating data...
           </div>

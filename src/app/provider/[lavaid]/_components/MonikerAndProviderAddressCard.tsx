@@ -4,12 +4,12 @@ import React from 'react';
 import Image from 'next/image';
 import { Text } from "@radix-ui/themes";
 import { IsMeaningfulText } from '@jsinfo/lib/formatting';
-import ProviderMoniker from '../classic/ProviderMoniker';
+import ProviderMoniker from '../../../../components/classic/ProviderMoniker';
 import { ProviderMonikerFullInfo } from '@jsinfo/lib/types';
-import ModernTooltip from './ModernTooltip';
+import ModernTooltip from '../../../../components/modern/ModernTooltip';
 import { useJsinfobeFetch } from '@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch';
-import { ErrorDisplay } from './ErrorDisplay';
-import LoadingIndicator from './LoadingIndicator';
+import { ErrorDisplay } from '../../../../components/modern/ErrorDisplay';
+import LoadingIndicator from '../../../../components/modern/LoadingIndicator';
 
 /*
       <h1 className="text-3xl font-bold mb-4">{providerData?.moniker || 'Unknown Provider'}</h1>
@@ -97,12 +97,29 @@ export const MonikerAndProviderAddressCard: React.FC<MonikerAndProviderAddressCa
     );
 };
 
-export const MonikerAndProviderAddressCardWithFetch = ({ lavaId }: { lavaId: string }) => {
+export const MonikerAndProviderAddressCardWithFetch = ({ lavaId }: { lavaId: string }): { hasNoData: boolean, component: React.ReactElement } => {
     const { data: provider, loading, error } = useJsinfobeFetch("providerV2/" + lavaId);
 
-    if (error) return <ErrorDisplay message={error} />;
-    if (loading) return <LoadingIndicator loadingText={`Loading ${lavaId} provider details`} greyText={`${lavaId} provider`} />;
+    const checkForNoData = (obj: any): boolean => {
+        return JSON.stringify(obj).toLowerCase().includes("does not exist");
+    };
 
-    return <MonikerAndProviderAddressCard provider={provider} />;
+    if (loading) {
+        return {
+            hasNoData: false,
+            component: <LoadingIndicator loadingText={`Loading ${lavaId} provider details`} greyText={`${lavaId} provider`} />
+        };
+    }
+
+    if (error || checkForNoData(error) || checkForNoData(provider)) {
+        return {
+            hasNoData: true,
+            component: <ErrorDisplay message="No data for provider found" />
+        };
+    }
+
+    return {
+        hasNoData: false,
+        component: <MonikerAndProviderAddressCard provider={provider} />
+    };
 };
-

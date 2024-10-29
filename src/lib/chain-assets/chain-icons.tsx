@@ -54,6 +54,7 @@ export const chainDictionary: { [key: string]: ChainInfo } = {
     clover: { name: "Clover", icon: "/icons/clover.svg" },
     csc: { name: "CoinEx Smart Chain", icon: "/icons/coinex-smart-chain.svg" },
     conflux: { name: "Conflux", icon: "/icons/conflux.svg" },
+    cos5: { name: "Cosmos Hub", icon: "/icons/cosmos-hub.svg" },
     cosmos: { name: "Cosmos Hub", icon: "/icons/cosmos-hub.svg" },
     cosmoshub: { name: "Cosmos Hub", icon: "/icons/cosmos-hub.svg" },
     cosmoshubt: { name: "Cosmos Hub", icon: "/icons/cosmos-hub.svg" },

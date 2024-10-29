@@ -18,26 +18,55 @@ interface TimeResponse {
 const LastUpdateBadge = () => {
     const { data, loading } = useJsinfobeFetch("indexLatestBlock");
     const blockData = data as BlockData;
-    const [currentTime, setCurrentTime] = useState<Date | null>(null);
+    const [currentTime, setCurrentTime] = useState<Date | null>(new Date());
 
     async function getUTCTime(): Promise<Date> {
-        try {
-            const response = await fetch('http://worldtimeapi.org/api/timezone/Etc/UTC');
-            const data: TimeResponse = await response.json();
-            return new Date(data.utc_datetime);
-        } catch (error) {
-            console.error('Error fetching UTC time:', error);
-            return new Date(); // Fallback to local system time
+        const isHttps = window.location.protocol === 'https:';
+        const urls = isHttps
+            ? ['https://worldtimeapi.org/api/timezone/Etc/UTC', 'http://worldtimeapi.org/api/timezone/Etc/UTC']
+            : ['http://worldtimeapi.org/api/timezone/Etc/UTC', 'https://worldtimeapi.org/api/timezone/Etc/UTC'];
+
+        for (const url of urls) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data: TimeResponse = await response.json();
+                return new Date(data.utc_datetime);
+            } catch (error) {
+                console.error(`Error fetching UTC time from ${url}:`, error);
+                // If this is the last URL, throw the error
+                if (url === urls[urls.length - 1]) {
+                    throw error;
+                }
+                // Otherwise, continue to the next URL
+            }
         }
+
+        // If all attempts fail, fall back to local system time
+        console.warn('All attempts to fetch UTC time failed. Falling back to local system time.');
+        return new Date();
     }
 
     useEffect(() => {
-        getUTCTime().then(setCurrentTime);
-        const interval = setInterval(() => {
-            getUTCTime().then(setCurrentTime);
-        }, 60000); // Update every minute
+        const updateTimes = [1000, 2000, 5000]; // 1 second, 2 seconds, 5 seconds
+        let updateCount = 0;
 
-        return () => clearInterval(interval);
+        const updateTime = () => {
+            getUTCTime().then(setCurrentTime);
+            updateCount++;
+
+            if (updateCount < updateTimes.length) {
+                setTimeout(updateTime, updateTimes[updateCount] - updateTimes[updateCount - 1]);
+            }
+        };
+
+        // Initial update
+        updateTime();
+
+        return () => {
+        };
     }, []);
 
     const formatLastUpdate = (blockTime: Date, currentTime: Date) => {
@@ -49,6 +78,8 @@ const LastUpdateBadge = () => {
             </>
         );
     };
+
+    console.log("LastUpdateBadge render", "blockData", blockData, "currentTime", currentTime, "loading", loading);
 
     return (
         <ModernTooltip title={`Latest block height: ${blockData ? blockData.height : 'Loading...'}`}>

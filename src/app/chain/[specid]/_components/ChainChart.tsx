@@ -68,7 +68,7 @@ const ChainChart: React.FC<ChainChartProps> = ({ spec, addr }) => {
     cus: true,
   });
 
-  const { data, error, isLoading } = useJsinfobeSwrFetchWithDeps<ChainChartV2Data>(() => {
+  const { data, error, isLoading, isValidating } = useJsinfobeSwrFetchWithDeps<ChainChartV2Data>(() => {
     if (dateRange?.from && dateRange?.to) {
       const fromDate = format(dateRange.from, "yyyy-MM-dd'Z'");
       const toDate = format(dateRange.to, "yyyy-MM-dd'Z'");
@@ -386,7 +386,7 @@ const ChainChart: React.FC<ChainChartProps> = ({ spec, addr }) => {
             <div>No data available</div>
           </div>
         )}
-        {isLoading && (
+        {(isLoading || isValidating) && (
           <div className="text-center mt-2 text-sm text-muted-foreground">
             Updating data...
           </div>

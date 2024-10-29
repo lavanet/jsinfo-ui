@@ -75,6 +75,7 @@ export function ConvertToChainName(abbreviation: string): string {
         KAKAROT: "Kakarot",
         KAKAROTT: "Kakarot Testnet",
         ETHBEACON: "ETH Beacon",
+        LAVA: "Lava Network",
     };
 
     return mapping[abbreviation] || "";
