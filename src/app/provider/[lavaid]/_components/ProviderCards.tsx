@@ -5,59 +5,14 @@ import StatCard from "@jsinfo/components/sections/StatCard";
 import { ErrorDisplay } from "@jsinfo/components/modern/ErrorDisplay";
 import LavaWithTooltip from "@jsinfo/components/modern/LavaWithTooltip";
 import { useJsinfobeFetch } from "@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch";
-import { ArrowUpNarrowWide, CalendarHeart, CreditCard, FolderHeart, HeartHandshake, Landmark, MonitorCog } from "lucide-react";
+import { ArrowUpNarrowWide, CreditCard, Landmark, MonitorCog } from "lucide-react";
 import LoaderImageForCards from "@jsinfo/components/modern/LoaderImageForCards";
 
 interface ProviderCardsProps {
     addr: string;
 }
 
-const ClaimableRewardsCard: React.FC<{ addr: string }> = ({ addr }) => {
-    const { data, loading, error } = useJsinfobeFetch(`providerCardsClaimableRewards/${addr}`);
-
-    if (error) return <ErrorDisplay message={error} />;
-    return (
-        <StatCard
-            title="Claimable Rewards"
-            value={loading ? <LoaderImageForCards /> : <LavaWithTooltip amount={data?.claimableRewards || "0"} />}
-            className="col-span-2 md:col-span-1"
-            formatNumber={false}
-            icon={<HeartHandshake className="h-4 w-4 text-muted-foreground" />}
-        />
-    );
-};
-
-const ClaimedRewards30DaysCard: React.FC<{ addr: string }> = ({ addr }) => {
-    const { data, loading, error } = useJsinfobeFetch(`providerCardsClaimedRewards30Days/${addr}`);
-
-    if (error) return <ErrorDisplay message={error} />;
-    return (
-        <StatCard
-            title="Claimed Rewards (Last 30 Days)"
-            value={loading ? <LoaderImageForCards /> : <LavaWithTooltip amount={data?.claimedRewards30DaysAgo?.split(' ')[0] || "0"} />}
-            className="col-span-2 md:col-span-1"
-            formatNumber={false}
-            icon={<CalendarHeart className="h-4 w-4 text-muted-foreground" />}
-        />
-    );
-};
-
-const ClaimedRewardsAllTimeCard: React.FC<{ addr: string }> = ({ addr }) => {
-    const { data, loading, error } = useJsinfobeFetch(`providerCardsClaimedRewardsAllTime/${addr}`);
-
-    if (error) return <ErrorDisplay message={error} />;
-    return (
-        <StatCard
-            title="Total Claimed Rewards (All Time)"
-            value={loading ? <LoaderImageForCards /> : <LavaWithTooltip amount={data?.claimedRewardsAllTime?.split(' ')[0] || "0"} />}
-            className="col-span-2 md:col-span-1"
-            formatNumber={false}
-            icon={<FolderHeart className="h-4 w-4 text-muted-foreground" />}
-        />
-    );
-};
-
-const CuRelayAndRewardsCard: React.FC<{ addr: string }> = ({ addr }) => {
+const CuRelayAndRewardsCard: React.FC<{ addr: string }> = ({ addr }: { addr: string }) => {
     const { data, loading, error } = useJsinfobeFetch(`providerCardsCuRelayAndRewards/${addr}`);
 
     if (error) return <ErrorDisplay message={error} />;
@@ -91,7 +46,7 @@ const CuRelayAndRewardsCard: React.FC<{ addr: string }> = ({ addr }) => {
     );
 };
 
-const StakesCard: React.FC<{ addr: string }> = ({ addr }) => {
+const StakesCard: React.FC<{ addr: string }> = ({ addr }: { addr: string }) => {
     const { data, loading, error } = useJsinfobeFetch(`providerCardsStakes/${addr}`);
 
     if (error) return <ErrorDisplay message={error} />;
@@ -107,15 +62,12 @@ const StakesCard: React.FC<{ addr: string }> = ({ addr }) => {
     );
 };
 
-const ProviderCards: React.FC<ProviderCardsProps> = ({ addr }) => {
+const ProviderCards: React.FC<ProviderCardsProps> = ({ addr }: { addr: string }) => {
     return (
         <>
             <div className="provider-cards-grid">
                 <CuRelayAndRewardsCard addr={addr} />
                 <StakesCard addr={addr} />
-                {/* <ClaimableRewardsCard addr={addr} />
-                <ClaimedRewardsAllTimeCard addr={addr} />
-                <ClaimedRewards30DaysCard addr={addr} /> */}
             </div>
             <div style={{ marginTop: '25px' }}></div>
         </>
