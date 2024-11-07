@@ -8,6 +8,7 @@ import { useJsinfobeFetch } from "@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFet
 import { ArrowUpNarrowWide, CreditCard, Landmark, MonitorCog, Trophy } from "lucide-react";
 import LoaderImageForCards from "@jsinfo/components/modern/LoaderImageForCards";
 import { FormatNumber } from '@jsinfo/lib/formatting';
+import { GetInfoNetwork } from '@jsinfo/lib/env';
 
 
 interface ProviderCardsProps {
@@ -84,21 +85,25 @@ const StakesCard: React.FC<{ addr: string }> = ({ addr }: { addr: string }) => {
 const DelegatorRewardsCard: React.FC<{ addr: string }> = ({ addr }: { addr: string }) => {
     const { data: rawData, loading, error } = useJsinfobeFetch(`providerCardsDelegatorRewards/${addr}`);
     const data = rawData as DelegatorRewardsResponse;
+    const network = GetInfoNetwork().toLowerCase();
 
     if (loading || error || data?.error) return null;
 
+    const filteredRewards = network.includes('mainnet')
+        ? data?.data.rewards
+        : data?.data.rewards.filter(reward => reward.denom.toLowerCase().includes('lava'));
+
     return (
         <StatCard
-            title="Delegator Rewards"
-            value={data?.data.rewards
+            title="Claimable Provider Rewards"
+            value={filteredRewards
                 .sort((a, b) => {
-                    const aLength = `${a.provider}: ${FormatNumber(a.amount)} ${a.denom.toUpperCase()}`.length;
-                    const bLength = `${b.provider}: ${FormatNumber(b.amount)} ${b.denom.toUpperCase()}`.length;
-                    return bLength - aLength;  // b - a for descending order
+                    const aLength = `${FormatNumber(a.amount)} ${a.denom.toUpperCase()}`.length;
+                    const bLength = `${FormatNumber(b.amount)} ${b.denom.toUpperCase()}`.length;
+                    return bLength - aLength;
                 })
                 .map((reward, index) => (
                     <div key={index}>
-                        {reward.provider !== addr && `${reward.provider}: `}
                         {`${FormatNumber(reward.amount)} ${reward.denom.toUpperCase()}`}
                     </div>
                 ))
@@ -106,7 +111,7 @@ const DelegatorRewardsCard: React.FC<{ addr: string }> = ({ addr }: { addr: stri
             formatNumber={false}
             className="col-span-2 md:col-span-1"
             icon={<Trophy className="h-4 w-4 text-muted-foreground" />}
-            tooltip="Dual Stacking rewards for provider"
+            tooltip="The rewards the provider can claim"
         />
     );
 };
