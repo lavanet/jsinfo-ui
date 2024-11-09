@@ -10,6 +10,8 @@ import ModernTooltip from '../../../../components/modern/ModernTooltip';
 import { useJsinfobeFetch } from '@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch';
 import { ErrorDisplay } from '../../../../components/modern/ErrorDisplay';
 import LoadingIndicator from '../../../../components/modern/LoadingIndicator';
+import { Copy } from 'lucide-react';
+import { GetExplorersGuruUrl } from '@jsinfo/lib/env';
 
 /*
       <h1 className="text-3xl font-bold mb-4">{providerData?.moniker || 'Unknown Provider'}</h1>
@@ -46,8 +48,23 @@ const renderProviderAddressInLineWithIcon = (provider: string) => (
 );
 
 const renderProviderAddressOnNewLine = (provider: string) => (
-    <p className="text-muted-foreground mb-8" style={{ marginTop: '-7px' }}>
-        Address:&nbsp;{provider}
+    <p className="text-muted-foreground mb-8 flex items-center gap-2" style={{ marginTop: '-7px' }}>
+        <span>Address:&nbsp;
+            <a
+                href={`${GetExplorersGuruUrl()}/account/${provider}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+            >
+                {provider}
+            </a>
+        </span>
+        <button
+            onClick={() => navigator.clipboard.writeText(provider)}
+            className="hover:text-muted-foreground"
+        >
+            <Copy className="h-3 w-3" />
+        </button>
     </p>
 );
 
