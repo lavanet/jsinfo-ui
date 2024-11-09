@@ -5,7 +5,7 @@ import React from 'react';
 import { useJsinfobeFetch } from "@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch";
 import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
 import StatCard from '@jsinfo/components/sections/StatCard';
-import { MonitorCog, ArrowUpNarrowWide, CreditCard, Users, Activity, Database, SquareActivity } from 'lucide-react';
+import { MonitorCog, ArrowUpNarrowWide, CreditCard, Users, Activity, Database, SquareActivity, Network } from 'lucide-react';
 import LoaderImageForCards from "@jsinfo/components/modern/LoaderImageForCards";
 import ChainProviderHealthSummary from './ChainEndpointHealthSummary';
 import { FormatNumber } from '@jsinfo/lib/formatting';
@@ -14,6 +14,25 @@ import { useLogpushFetch } from '@jsinfo/fetching/logpush/hooks/useLogpushFetch'
 interface SpecCardsProps {
     specId: string;
 }
+
+interface SpecTrackedInfoResponse {
+    cuSum: string;
+}
+
+const SpecIpRpcCuCard: React.FC<{ specid: string }> = ({ specid }) => {
+    const { data, loading, error } = useJsinfobeFetch<SpecTrackedInfoResponse>(`specTrackedInfo/${specid}`);
+
+    if (loading || error || !data || data.cuSum === "0") return null;
+
+    return (
+        <StatCard
+            title="Monthly IP/RPC CU"
+            value={FormatNumber(data.cuSum)}
+            className="col-span-1"
+            icon={<Network className="h-4 w-4 text-muted-foreground" />}
+        />
+    );
+};
 
 const SpecCuRelayRewardsCard: React.FC<SpecCardsProps> = ({ specId }) => {
     const { data, loading, error } = useJsinfobeFetch(`specCuRelayRewards/${specId}`);
@@ -34,13 +53,6 @@ const SpecCuRelayRewardsCard: React.FC<SpecCardsProps> = ({ specId }) => {
                 formatNumber={false}
                 icon={<ArrowUpNarrowWide className="h-4 w-4 text-muted-foreground" />}
             />
-            {/* <StatCard
-                title="Total Rewards"
-                value={<LoaderImageForCards />}
-                className="col-span-1"
-                formatNumber={false}
-                icon={<CreditCard className="h-4 w-4 text-muted-foreground" />}
-            /> */}
         </>
     );
     return (
@@ -61,14 +73,6 @@ const SpecCuRelayRewardsCard: React.FC<SpecCardsProps> = ({ specId }) => {
                 tooltip={`Total relays for ${specId} by all providers`}
                 icon={<ArrowUpNarrowWide className="h-4 w-4 text-muted-foreground" />}
             />
-            {/* <StatCard
-                title="Total Rewards"
-                value={<LavaWithTooltip amount={data.rewardSum} />}
-                className="col-span-1"
-                formatNumber={false}
-                tooltip={`Total rewards for ${specId} by all providers`}
-                icon={<CreditCard className="h-4 w-4 text-muted-foreground" />}
-            /> */}
         </>
     );
 };
@@ -161,6 +165,7 @@ const SpecCards: React.FC<SpecCardsProps> = ({ specId }) => {
     return (
         <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
             <SpecCuRelayRewardsCard specId={specId} />
+            <SpecIpRpcCuCard specid={specId} />
             <SpecProviderCountCard specId={specId} />
             <SpecEndpointHealthCard specId={specId} />
             <SpecCacheHitRateCard specId={specId} />
