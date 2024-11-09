@@ -20,14 +20,15 @@ interface SpecTrackedInfoResponse {
 }
 
 const SpecIpRpcCuCard: React.FC<{ specid: string }> = ({ specid }) => {
-    const { data, loading, error } = useJsinfobeFetch<SpecTrackedInfoResponse>(`specTrackedInfo/${specid}`);
+    const { data: rawData, loading, error } = useJsinfobeFetch(`specTrackedInfo/${specid}`);
+    const data = rawData as SpecTrackedInfoResponse;
 
     if (loading || error || !data || data.cuSum === "0") return null;
 
     return (
         <StatCard
             title="Monthly IP/RPC CU"
-            value={FormatNumber(data.cuSum)}
+            value={FormatNumber(parseInt(data.cuSum))}
             className="col-span-1"
             icon={<Network className="h-4 w-4 text-muted-foreground" />}
         />
