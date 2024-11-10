@@ -17,6 +17,7 @@ const ProviderReportsTab: React.FC<ProviderReportsTabProps> = ({ addr }) => {
         <DataKeySortableTableInATabComponent
             columns={[
                 { key: "provider_reported.blockId", name: "Block" },
+                { key: "provider_reported.chainId", name: "Chain" },
                 { key: "blocks.datetime", name: "Time" },
                 { key: "provider_reported.cu", name: "CU" },
                 {
@@ -37,6 +38,13 @@ const ProviderReportsTab: React.FC<ProviderReportsTabProps> = ({ addr }) => {
             pkey="provider_reported.provider,provider_reported.blockId"
             pkeyUrl="none"
             rowFormatters={{
+                "provider_reported.chainId": (report) => (
+                    <Link className='orangelinks'
+                        href={`/chain/${report.provider_reported.chainId}`}
+                    >
+                        {report.provider_reported.chainId}
+                    </Link>
+                ),
                 "provider_reported.blockId": (report) => (
                     <Link className='orangelinks'
                         href={
