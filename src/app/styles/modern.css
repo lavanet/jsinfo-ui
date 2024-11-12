@@ -369,6 +369,7 @@ body {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1rem;
+  align-items: start;
 }
 
 @media (min-width: 1600px) {

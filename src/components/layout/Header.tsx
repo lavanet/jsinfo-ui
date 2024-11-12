@@ -9,6 +9,7 @@ import LastUpdateBadge from '../modern/LastUpdateBadge';
 import CurrencyChangeButton from '../modern/CurrencyChangeButton';
 import LavaLogoLink from '../modern/LavaLogoLink';
 import SearchForm from './SearchBar';
+import { NetworkSwitch } from './_components/NetworkSwitch';
 
 export default function Header() {
   const [opacity, setOpacity] = useState(1);
@@ -45,6 +46,7 @@ export default function Header() {
     <header className="top-header sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 header-fade" style={{ opacity }}>
       <MobileNavigation />
       <LavaLogoLink />
+      <NetworkSwitch />
       <Navigation />
       <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
         <LastUpdateBadge />

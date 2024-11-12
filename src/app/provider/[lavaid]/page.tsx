@@ -130,10 +130,6 @@ export default function ProviderPage({ params }: { params: { lavaid: string } })
             value: "blockReports",
             content: "Block Reports",
           },
-          // {
-          //   value: "claimableProviderRewards",
-          //   content: "Claimable Provider Rewards",
-          // },
         ]}
       >
         <Box>
@@ -146,7 +142,6 @@ export default function ProviderPage({ params }: { params: { lavaid: string } })
           <ProviderRewardsTab addr={decodedLavaId} />
           <ProviderReportsTab addr={decodedLavaId} />
           <ProviderBlockReportsTab addr={decodedLavaId} />
-          {/* <ProviderClaimableRewardsTab addr={decodedLavaId} /> */}
 
         </Box>
       </JsinfoTabs>
