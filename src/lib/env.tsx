@@ -55,6 +55,7 @@ export function GetJsinfobeUrl() {
 }
 
 export function GetLogoUrl() {
+  return "https://gateway-fe-public-assets.s3.us-east-1.amazonaws.com/env/LavaOnly.svg";
   return GetEnvVariable("LOGO_URL");
 }
 
