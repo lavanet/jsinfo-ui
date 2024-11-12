@@ -6,7 +6,7 @@ interface NetworkSwitchProps extends React.HTMLAttributes<HTMLDivElement> { }
 
 export const NetworkSwitch = React.forwardRef<HTMLDivElement, NetworkSwitchProps>(
     ({ className, ...props }, ref) => {
-        const isMainnet = GetInfoNetwork().toLowerCase() !== 'mainnet';
+        const isMainnet = GetInfoNetwork().toLowerCase() === 'mainnet';
 
         const handleNetworkSwitch = () => {
             if (!isMainnet) {
