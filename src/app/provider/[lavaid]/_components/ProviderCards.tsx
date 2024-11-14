@@ -137,16 +137,14 @@ const ProviderCards: React.FC<ProviderCardsProps> = ({ addr }: { addr: string })
     const cards = isSmallScreen ? (
         <>
             <CuRelayAndRewardsCard addr={addr} />
-            {/* TODO: Add back in once we have the testnet backend deployed */}
-            {/* <StakesCard addr={addr} /> */}
+            <StakesCard addr={addr} />
             <DelegatorRewardsCard addr={addr} />
         </>
     ) : (
         <>
             <CuRelayAndRewardsCard addr={addr} />
             <DelegatorRewardsCard addr={addr} />
-            {/* TODO: Add back in once we have the testnet backend deployed */}
-            {/* <StakesCard addr={addr} /> */}
+            <StakesCard addr={addr} />
         </>
     );
 

@@ -5,7 +5,7 @@ import React from 'react';
 import { useJsinfobeFetch } from "@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch";
 import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
 import StatCard from '@jsinfo/components/sections/StatCard';
-import { MonitorCog, ArrowUpNarrowWide, CreditCard, Users, Activity, Database, SquareActivity, Network } from 'lucide-react';
+import { MonitorCog, ArrowUpNarrowWide, Users, Activity, Database, SquareActivity, Network } from 'lucide-react';
 import LoaderImageForCards from "@jsinfo/components/modern/LoaderImageForCards";
 import ChainProviderHealthSummary from './ChainEndpointHealthSummary';
 import { FormatNumber } from '@jsinfo/lib/formatting';
@@ -166,8 +166,7 @@ const SpecCards: React.FC<SpecCardsProps> = ({ specId }) => {
     return (
         <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
             <SpecCuRelayRewardsCard specId={specId} />
-            {/* TODO: Add back in once we have the testnet backend deployed */}
-            {/* <SpecIpRpcCuCard specid={specId} /> */}
+            <SpecIpRpcCuCard specid={specId} />
             <SpecProviderCountCard specId={specId} />
             <SpecEndpointHealthCard specId={specId} />
             <SpecCacheHitRateCard specId={specId} />
