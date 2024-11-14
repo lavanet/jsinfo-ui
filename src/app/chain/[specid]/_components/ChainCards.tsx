@@ -125,7 +125,7 @@ const SpecEndpointHealthCard: React.FC<SpecCardsProps> = ({ specId }) => {
             )}
             className="col-span-1 md:col-span-1"
             formatNumber={false}
-            tooltip={`Total rewards for ${specId} by all providers`}
+            tooltip={`Endpoint status for ${specId} by all providers`}
             icon={<SquareActivity className="h-4 w-4 text-muted-foreground" />}
         />
     );

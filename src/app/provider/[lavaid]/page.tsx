@@ -18,7 +18,6 @@ import ProviderStakesTab from './_components/ProviderStakesTab';
 import ProviderRewardsTab from './_components/ProviderRewardsTab';
 import ProviderReportsTab from './_components/ProviderReportsTab';
 import ProviderBlockReportsTab from './_components/ProviderBlockReportsTab';
-// import ProviderClaimableRewardsTab from "./_components/ProviderClaimableRewardsTab";
 import ProviderCards from "./_components/ProviderCards";
 import BackToProvidersLink from "./_components/BackToProviders";
 import { CardDescription, CardHeader, CardTitle } from "@jsinfo/components/shadcn/ui/Card";
