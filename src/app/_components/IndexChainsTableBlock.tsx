@@ -14,7 +14,7 @@ export default function IndexChainsTableBlock() {
         <div className="grid gap-2">
           <CardTitle>Chains</CardTitle>
           <CardDescription>
-            Recent transactions from your store.
+            Recent chain statistics
           </CardDescription>
         </div>
         <Button asChild size="sm" className="ml-auto gap-1">
