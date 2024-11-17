@@ -31,7 +31,7 @@ const ChainsTable = () => {
         <TableHeader>
           <TableRow>
             <TableHead>Chain ID</TableHead>
-            <TableHead>Relay Sum</TableHead>
+            <TableHead>30d Relays</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
