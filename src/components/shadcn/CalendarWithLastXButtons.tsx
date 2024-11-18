@@ -11,14 +11,14 @@ import { buttonVariants } from "@jsinfo/components/shadcn/ui/Button"
 import { subDays, startOfWeek, startOfMonth, startOfYear, subMonths, subWeeks } from 'date-fns';
 
 const predefinedRanges: any[] = [
-  {
-    label: 'Last week',
-    value: [startOfWeek(subWeeks(new Date(), 1)), new Date()],
-  },
-  {
-    label: 'Last 7 days',
-    value: [subDays(new Date(), 6), new Date()]
-  },
+  // {
+  //   label: 'Last week',
+  //   value: [startOfWeek(subWeeks(new Date(), 1)), new Date()],
+  // },
+  // {
+  //   label: 'Last 7 days',
+  //   value: [subDays(new Date(), 6), new Date()]
+  // },
   {
     label: 'This month',
     value: [startOfMonth(new Date()), new Date()]
