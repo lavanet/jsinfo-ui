@@ -15,6 +15,7 @@ import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
 import { useJsinfobeSwrFetch } from "@jsinfo/fetching/jsinfobe/hooks/useJsinfobeSwrFetch";
 import { JsinfobeAxiosGet } from "@jsinfo/fetching/jsinfobe/api-client/JsinfobeAxiosGet";
 import PaginationControl from "@jsinfo/components/modern/Pagination";
+import ModernTooltip from "@jsinfo/components/modern/ModernTooltip";
 
 const ProvidersTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -57,7 +58,7 @@ const ProvidersTable = () => {
         <TableHeader>
           <TableRow>
             <TableHead>Moniker</TableHead>
-            <TableHead>Total Services</TableHead>
+            <TableHead>Active Services</TableHead>
             <TableHead>Total Stake</TableHead>
           </TableRow>
         </TableHeader>
@@ -67,7 +68,11 @@ const ProvidersTable = () => {
               <Link className="orangelinks" href={`/provider/${provider.provider}`}>
                 <TableCell>{provider.moniker}</TableCell>
               </Link>
-              <TableCell>{provider.totalServices}</TableCell>
+              <TableCell>
+                <ModernTooltip title={`Active chains serviced by the provider (non frozen services)`}>
+                  {provider.totalServices.split('/')[0].trim()}
+                </ModernTooltip>
+              </TableCell>
               <TableCell>{Number(provider.totalStake).toLocaleString()}</TableCell>
             </TableRow>
           ))}

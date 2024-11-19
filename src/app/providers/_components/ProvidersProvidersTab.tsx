@@ -49,7 +49,7 @@ export default function ProvidersProviderTab() {
                         moniker: (data) => (<MonikerWithTooltip provider={data} />),
                         rewardSum: (data) => (<LavaWithTooltip amount={data.rewardSum} />),
                         totalStake: (data) => (<LavaWithTooltip amount={data.totalStake} />),
-                        totalServices: (data) => (<ModernTooltip title={`The total number of active chains serviced by the provider (excluding frozen services) / the total number of serviced chains for the provider`}>{data.totalServices}</ModernTooltip>)
+                        totalServices: (data) => (<ModernTooltip title={`Active chains serviced by the provider (non frozen) / Total count of serviced chains by the provider`}>{data.totalServices}</ModernTooltip>)
                     }}
                     csvButton={<TableCsvButton csvDownloadLink="indexProvidersCsv" />}
                 />

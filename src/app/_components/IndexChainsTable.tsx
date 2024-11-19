@@ -40,7 +40,7 @@ const ChainsTable = () => {
               <TableCell>
                 <ChainWithIconLink chainId={chain.chainId} className="orangelinks" />
               </TableCell>
-              <TableCell>{Number(chain.relaySum).toLocaleString()}</TableCell>
+              <TableCell>{Number(chain.relaySum30Days).toLocaleString()}</TableCell>
             </TableRow>
           ))}
         </TableBody>

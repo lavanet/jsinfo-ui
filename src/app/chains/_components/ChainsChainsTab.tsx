@@ -38,7 +38,9 @@ export default function ChainsChainsTab() {
                 { key: "chainId", name: "Chain" },
                 { key: "chainName", name: "Chain Name" },
                 { key: "relaySum", name: "Total Relays" },
-                { key: "cuSum", name: "Total Cus" },
+                { key: "cuSum", name: "Total CUs" },
+                { key: "relaySum30Days", name: "30 Day Relays" },
+                { key: "cuSum30Days", name: "30 Day CU" },
             ]}
             key="ChainsChainsTabs"
             data={transformedSpecData}
@@ -52,6 +54,8 @@ export default function ChainsChainsTab() {
                 ),
                 relaySum: (data) => FormatNumber(data.relaySum),
                 cuSum: (data) => FormatNumber(data.cuSum),
+                relaySum30Days: (data) => FormatNumber(data.relaySum30Days),
+                cuSum30Days: (data) => FormatNumber(data.cuSum30Days),
             }}
         />
     );
