@@ -16,6 +16,7 @@ import { useJsinfobeSwrFetch } from "@jsinfo/fetching/jsinfobe/hooks/useJsinfobe
 import { JsinfobeAxiosGet } from "@jsinfo/fetching/jsinfobe/api-client/JsinfobeAxiosGet";
 import PaginationControl from "@jsinfo/components/modern/Pagination";
 import ModernTooltip from "@jsinfo/components/modern/ModernTooltip";
+import { IsMeaningfulText } from "@jsinfo/lib/formatting";
 
 const ProvidersTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -66,7 +67,7 @@ const ProvidersTable = () => {
           {providers.map((provider: any, index: number) => (
             <TableRow key={index}>
               <Link className="orangelinks" href={`/provider/${provider.provider}`}>
-                <TableCell>{provider.moniker}</TableCell>
+                <TableCell>{IsMeaningfulText(provider.moniker) ? provider.moniker : provider.provider}</TableCell>
               </Link>
               <TableCell>
                 <ModernTooltip title={`Active chains serviced by the provider (non frozen services)`}>
