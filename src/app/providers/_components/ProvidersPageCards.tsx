@@ -10,9 +10,9 @@ import StatCard from '@jsinfo/components/sections/StatCard';
 import { MonitorCog, CalendarArrowUp, ArrowUpNarrowWide, Landmark, CalendarCog, Activity } from 'lucide-react';
 
 export const Providers30DayRelayCard: React.FC = () => {
-    const { data, loading, error } = useJsinfobeFetch("index30DayCu");
+    const { data, isLoading, error } = useJsinfobeFetch("index30DayCu");
     if (error) return <ErrorDisplay message={error} />
-    if (loading) return (
+    if (isLoading) return (
         <StatCard
             title="Relays (30 days)"
             value={<LoaderImageForCards />}
@@ -41,9 +41,9 @@ export const Providers30DayRelayCard: React.FC = () => {
 };
 
 export const ProvidersTotalRelaysCard: React.FC = () => {
-    const { data, loading, error } = useJsinfobeFetch("indexTotalCu");
+    const { data, isLoading, error } = useJsinfobeFetch("indexTotalCu");
     if (error) return <ErrorDisplay message={error} />
-    if (loading) return (
+    if (isLoading) return (
         <StatCard
             title="Relays (All Time)"
             value={<LoaderImageForCards />}
@@ -72,9 +72,9 @@ export const ProvidersTotalRelaysCard: React.FC = () => {
 };
 
 export const Providers30DayCUCard: React.FC = () => {
-    const { data, loading, error } = useJsinfobeFetch("index30DayCu");
+    const { data, isLoading, error } = useJsinfobeFetch("index30DayCu");
     if (error) return <ErrorDisplay message={error} />
-    if (loading) return (
+    if (isLoading) return (
         <StatCard
             title="CU (30 days)"
             value={<LoaderImageForCards />}
@@ -103,9 +103,9 @@ export const Providers30DayCUCard: React.FC = () => {
 };
 
 export const ProvidersTotalCuCard: React.FC = () => {
-    const { data, loading, error } = useJsinfobeFetch("indexTotalCu");
+    const { data, isLoading, error } = useJsinfobeFetch("indexTotalCu");
     if (error) return <ErrorDisplay message={error} />
-    if (loading) return (
+    if (isLoading) return (
         <StatCard
             title="CU (All Time)"
             value={<LoaderImageForCards />}
@@ -134,9 +134,9 @@ export const ProvidersTotalCuCard: React.FC = () => {
 };
 
 export const ProvidersStakeCard: React.FC = () => {
-    const { data, loading, error } = useJsinfobeFetch("indexStakesHandler");
+    const { data, isLoading, error } = useJsinfobeFetch("indexStakesHandler");
     if (error) return <ErrorDisplay message={error} />
-    if (loading) return (
+    if (isLoading) return (
         <StatCard
             title="Stake"
             value={<LoaderImageForCards />}
@@ -163,9 +163,9 @@ export const ProvidersStakeCard: React.FC = () => {
 };
 
 export const ProvidersTotalActiveProviders: React.FC = () => {
-    const { data, loading, error } = useJsinfobeFetch("item-count/indexProvidersActive");
+    const { data, isLoading, error } = useJsinfobeFetch("item-count/indexProvidersActive");
     if (error) return <ErrorDisplay message={error} />
-    if (loading) return (
+    if (isLoading) return (
         <StatCard
             title="Total active providers"
             value={<LoaderImageForCards />}

@@ -25,11 +25,11 @@ interface ChartDataItem {
 }
 
 export function ProviderPerSpecRelaysPieChart({ lavaId }: { lavaId: string }) {
-    const { data, loading, error } = useJsinfobeFetch(`providerRelaysPerSpecPie/${lavaId}`);
+    const { data, isLoading, error } = useJsinfobeFetch(`providerRelaysPerSpecPie/${lavaId}`);
 
     if (error) return <ErrorDisplay message={error} />;
 
-    if (loading) {
+    if (isLoading) {
         return (
             <Card className="flex flex-col w-fit" style={{ height: '330px', width: '350px' }}>
                 <CardHeader className="items-center pb-0">

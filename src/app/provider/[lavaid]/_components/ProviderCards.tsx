@@ -33,14 +33,14 @@ interface DelegatorRewardsResponse {
 }
 
 const CuRelayAndRewardsCard: React.FC<{ addr: string }> = ({ addr }: { addr: string }) => {
-    const { data, loading, error } = useJsinfobeFetch(`providerCardsCuRelayAndRewards/${addr}`);
+    const { data, isLoading, error } = useJsinfobeFetch(`providerCardsCuRelayAndRewards/${addr}`);
 
     if (error) return <ErrorDisplay message={error} />;
     return (
         <>
             <StatCard
                 title="Total CU"
-                value={loading ? <LoaderImageForCards /> : data?.cuSum || 0}
+                value={isLoading ? <LoaderImageForCards /> : data?.cuSum || 0}
                 className="col-span-1"
                 formatNumber={true}
                 tooltip="Total compute units for provider"
@@ -48,7 +48,7 @@ const CuRelayAndRewardsCard: React.FC<{ addr: string }> = ({ addr }: { addr: str
             />
             <StatCard
                 title="Total Relays"
-                value={loading ? <LoaderImageForCards /> : data?.relaySum || 0}
+                value={isLoading ? <LoaderImageForCards /> : data?.relaySum || 0}
                 className="col-span-1"
                 formatNumber={true}
                 tooltip="Total relays for provider"
@@ -56,7 +56,7 @@ const CuRelayAndRewardsCard: React.FC<{ addr: string }> = ({ addr }: { addr: str
             />
             <StatCard
                 title="Total Rewards"
-                value={loading ? <LoaderImageForCards /> : <LavaWithTooltip amount={data?.rewardSum?.toString() || "0"} />}
+                value={isLoading ? <LoaderImageForCards /> : <LavaWithTooltip amount={data?.rewardSum?.toString() || "0"} />}
                 className="col-span-2 md:col-span-1"
                 formatNumber={false}
                 tooltip="Total rewards for provider"
@@ -67,13 +67,13 @@ const CuRelayAndRewardsCard: React.FC<{ addr: string }> = ({ addr }: { addr: str
 };
 
 const StakesCard: React.FC<{ addr: string }> = ({ addr }: { addr: string }) => {
-    const { data, loading, error } = useJsinfobeFetch(`providerCardsStakes/${addr}`);
+    const { data, isLoading, error } = useJsinfobeFetch(`providerCardsStakes/${addr}`);
 
     if (error) return <ErrorDisplay message={error} />;
     return (
         <StatCard
             title="Total Stake"
-            value={loading ? <LoaderImageForCards /> : <LavaWithTooltip amount={data?.stakeSum || "0"} />}
+            value={isLoading ? <LoaderImageForCards /> : <LavaWithTooltip amount={data?.stakeSum || "0"} />}
             className="col-span-2 md:col-span-1"
             formatNumber={false}
             tooltip="Total stake for all specs"
@@ -83,11 +83,11 @@ const StakesCard: React.FC<{ addr: string }> = ({ addr }: { addr: string }) => {
 };
 
 const DelegatorRewardsCard: React.FC<{ addr: string }> = ({ addr }: { addr: string }) => {
-    const { data: rawData, loading, error } = useJsinfobeFetch(`providerCardsDelegatorRewards/${addr}`);
+    const { data: rawData, isLoading, error } = useJsinfobeFetch(`providerCardsDelegatorRewards/${addr}`);
     const data = rawData as DelegatorRewardsResponse;
     const network = GetInfoNetwork().toLowerCase();
 
-    if (loading || error || data?.error) return null;
+    if (isLoading || error || data?.error) return null;
 
     const filteredRewards = network.includes('mainnet')
         ? data?.data.rewards

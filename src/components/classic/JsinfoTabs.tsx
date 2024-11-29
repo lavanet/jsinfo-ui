@@ -61,8 +61,13 @@ const JsinfoTabs: React.FC<JsinfoTabsProps> = ({ tabs, defaultValue, children })
                         key={tab.value}
                         value={tab.value}
                         style={{ transition: "transform 0.3s ease-in-out" }}
-                        onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.02)")}
-                        onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.transform = "scale(1.02)"; // Scale up on mouse enter
+                            e.currentTarget.style.cursor = "pointer"; // Set the mouse cursor to pointer
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.transform = "scale(1)"; // Scale back to original on mouse leave
+                        }}
                         onClick={() => setActiveTab(tab.value)}
                     >
                         {tab.content}

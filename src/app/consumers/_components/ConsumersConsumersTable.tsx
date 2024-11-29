@@ -12,10 +12,10 @@ import Link from "next/link";
 import LavaWithTooltip from "@jsinfo/components/modern/LavaWithTooltip";
 
 const ConsumersConsumersTable: React.FC<{}> = () => {
-    const { data, loading, error } = useJsinfobeFetch("consumerspageConsumers");
+    const { data, isLoading, error } = useJsinfobeFetch("consumerspageConsumers");
 
     if (error) return <ErrorDisplay message={error} />;
-    if (loading) return <LoadingIndicator loadingText={`Loading consumers page`} greyText={`consumers`} />;
+    if (isLoading) return <LoadingIndicator loadingText={`Loading consumers page`} greyText={`consumers`} />;
 
     return (
         <Box>

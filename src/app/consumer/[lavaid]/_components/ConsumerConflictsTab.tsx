@@ -12,11 +12,11 @@ interface ConsumerConflictsTableProps {
 }
 
 const ConsumerConflictsTable: React.FC<ConsumerConflictsTableProps> = ({ lavaid }) => {
-    const { data: consumer, loading, error } = useJsinfobeFetch('consumerConflicts/' + lavaid);
+    const { data: consumer, isLoading, error } = useJsinfobeFetch('consumerConflicts/' + lavaid);
 
     // this loads together with the first tab 
     if (error) return null; //return <ErrorDisplay message={error} />;
-    if (loading) return null; //<LoadingIndicator loadingText={`Loading ${lavaid} conflicts data`} greyText={`${lavaid} conflicts`} />;
+    if (isLoading) return null; //<LoadingIndicator loadingText={`Loading ${lavaid} conflicts data`} greyText={`${lavaid} conflicts`} />;
 
     return (
         <SortableTableInATabComponent

@@ -20,10 +20,10 @@ interface SpecTrackedInfoResponse {
 }
 
 const SpecIpRpcCuCard: React.FC<{ specid: string }> = ({ specid }) => {
-    const { data: rawData, loading, error } = useJsinfobeFetch(`specTrackedInfo/${specid}`);
+    const { data: rawData, isLoading, error } = useJsinfobeFetch(`specTrackedInfo/${specid}`);
     const data = rawData as SpecTrackedInfoResponse;
 
-    if (loading || error || !data || data.cuSum === "0") return null;
+    if (isLoading || error || !data || data.cuSum === "0") return null;
 
     return (
         <StatCard
@@ -36,9 +36,9 @@ const SpecIpRpcCuCard: React.FC<{ specid: string }> = ({ specid }) => {
 };
 
 const SpecCuRelayRewardsCard: React.FC<SpecCardsProps> = ({ specId }) => {
-    const { data, loading, error } = useJsinfobeFetch(`specCuRelayRewards/${specId}`);
+    const { data, isLoading, error } = useJsinfobeFetch(`specCuRelayRewards/${specId}`);
     if (error) return <ErrorDisplay message={error} />;
-    if (loading) return (
+    if (isLoading) return (
         <>
             <StatCard
                 title="Total CU"
@@ -79,9 +79,9 @@ const SpecCuRelayRewardsCard: React.FC<SpecCardsProps> = ({ specId }) => {
 };
 
 const SpecProviderCountCard: React.FC<SpecCardsProps> = ({ specId }) => {
-    const { data, loading, error } = useJsinfobeFetch(`specProviderCount/${specId}`);
+    const { data, isLoading, error } = useJsinfobeFetch(`specProviderCount/${specId}`);
     if (error) return <ErrorDisplay message={error} />;
-    if (loading) return (
+    if (isLoading) return (
         <StatCard
             title="Provider Count"
             value={<LoaderImageForCards />}
@@ -103,9 +103,9 @@ const SpecProviderCountCard: React.FC<SpecCardsProps> = ({ specId }) => {
 
 
 const SpecEndpointHealthCard: React.FC<SpecCardsProps> = ({ specId }) => {
-    const { data, loading, error } = useJsinfobeFetch(`specEndpointHealth/${specId}`);
+    const { data, isLoading, error } = useJsinfobeFetch(`specEndpointHealth/${specId}`);
     if (error) return <ErrorDisplay message={error} />;
-    if (loading) return (
+    if (isLoading) return (
         <StatCard
             title="Endpoint Health"
             value={<LoaderImageForCards />}

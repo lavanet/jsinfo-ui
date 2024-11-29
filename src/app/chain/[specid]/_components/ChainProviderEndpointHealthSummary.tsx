@@ -11,10 +11,10 @@ interface SpecProviderEndpointHealthSummaryProps {
 
 const SpecProviderEndpointHealthSummary: React.FC<SpecProviderEndpointHealthSummaryProps> = ({ provider, spec, style }) => {
 
-    const { data, loading, error } = useJsinfobeFetch(`specProviderHealth/${spec}/${provider}`);
+    const { data, isLoading, error } = useJsinfobeFetch(`specProviderHealth/${spec}/${provider}`);
 
     if (error) return null;
-    if (loading) return null;
+    if (isLoading) return null;
 
     if (!data || !data.data || (!data.data.healthy && !data.data.unhealthy)) {
         return null;

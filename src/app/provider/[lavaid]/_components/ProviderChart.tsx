@@ -25,7 +25,7 @@ import {
 } from "@jsinfo/components/shadcn/ui/Popover";
 import { cn } from "@jsinfo/lib/css"
 import UsageGraphSkeleton from "@jsinfo/components/sections/UsageGraphSkeleton";
-import { useJsinfobeSwrFetchWithDeps } from "@jsinfo/fetching/jsinfobe/hooks/useJsinfobeSwrFetch";
+import { useJsinfobeFetchWithDeps } from "@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch";
 import { CalendarWithLastXButtons } from "@jsinfo/components/shadcn/CalendarWithLastXButtons";
 import { CHART_COLORS } from "@jsinfo/lib/consts";
 import { removeSpacesForCss } from "@jsinfo/lib/utils";
@@ -77,7 +77,7 @@ const ProviderChart: React.FC<ProviderChartProps> = ({ providerId }) => {
     cus: true,
   });
 
-  const { data, error, isLoading, isValidating } = useJsinfobeSwrFetchWithDeps<ProviderChartV2Data>(() => {
+  const { data, error, isLoading, isValidating } = useJsinfobeFetchWithDeps<ProviderChartV2Data>(() => {
     if (dateRange?.from && dateRange?.to) {
       const fromDate = format(dateRange.from, "yyyy-MM-dd'Z'");
       const toDate = format(dateRange.to, "yyyy-MM-dd'Z'");

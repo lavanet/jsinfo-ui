@@ -16,9 +16,9 @@ interface Item {
 }
 
 export default function ChainsChainsTab() {
-    const { data, loading, error } = useJsinfobeFetch("indexTopChains");
+    const { data, isLoading, error } = useJsinfobeFetch("indexTopChains");
     if (error) return <ErrorDisplay message={error} />;
-    if (loading) return (
+    if (isLoading) return (
         <LoadingIndicator loadingText={`Loading chains table`} greyText={`chains`} />
     );
 

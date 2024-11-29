@@ -3,7 +3,8 @@
 import { useEffect, useMemo } from 'react';
 import { SortAndPaginationConfig } from '@jsinfo/lib/types.jsx';
 import { ValidateDataKey } from './utils';
-import { JsinfobeDataFetcher } from '../api-client/JsinfobeDataFetcher';
+import { useJsinfobeFetch } from './useJsinfobeFetch';
+import { JsinfobeAxiosGet } from '../api-client/JsinfobeAxiosGet';
 
 export class PaginationState {
     private sortKey: string;
@@ -202,11 +203,13 @@ export function useJsinfobePaginationFetch({
     ValidateDataKey(dataKey);
 
     const paginationState: PaginationState = useMemo(() => PaginationState.Deserialize(paginationString), [paginationString]);
-    const { fetcher, data, loading, error } = JsinfobeDataFetcher.initialize(dataKey, null, paginationState.Serialize());
+    const { data, error, isLoading, isValidating } = useJsinfobeFetch(
+        () => {
+            return dataKey + '?pagination=' + paginationState.Serialize();
+        }
+    );
 
     function updatePagination() {
-        fetcher.SetApiUrlPaginationQuery(paginationState.Serialize());
-        fetcher.FetchAndPopulateData();
         paginationState.NotifyConfigUpdate();
     }
 
@@ -217,10 +220,10 @@ export function useJsinfobePaginationFetch({
 
     useEffect(() => {
         const fetchTotalItemCount = async () => {
-            await fetcher.FetchItemCount(setTotalItemCountCallback);
+            const response = await JsinfobeAxiosGet("/item-count/" + dataKey);
+            setTotalItemCountCallback(response.data);
         };
         fetchTotalItemCount();
-        fetcher.FetchAndPopulateData();
     }, []);
 
     const requestSort = (key: string) => {
@@ -233,5 +236,5 @@ export function useJsinfobePaginationFetch({
         updatePagination();
     };
 
-    return { data, loading, error, requestSort, setPage, paginationState };
+    return { data, loading: isLoading, error, requestSort, setPage, paginationState };
 }

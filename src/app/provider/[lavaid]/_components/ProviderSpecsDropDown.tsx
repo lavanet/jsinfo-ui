@@ -16,13 +16,13 @@ interface ProviderSpecsDropDownProps {
 }
 
 const ProviderSpecsDropDown: React.FC<ProviderSpecsDropDownProps> = ({ lavaid, onSpecChange }) => {
-    const { data, loading, error } = useJsinfobeFetch(`providerChartsV2/all/${lavaid}`);
+    const { data, isLoading, error } = useJsinfobeFetch(`providerChartsV2/all/${lavaid}`);
 
     if (error) return <ErrorDisplay message={error} />;
 
     const specData = data as ProviderSpecsDropDownData | undefined;
 
-    if (loading) {
+    if (isLoading) {
         return (
             <div className="flex items-center space-x-2">
                 <Loader2 className="h-4 w-4 animate-spin" />

@@ -14,10 +14,10 @@ interface SpecStakesTableProps {
 }
 
 const SpecStakesTable: React.FC<SpecStakesTableProps> = ({ specid }) => {
-    const { data, loading, error } = useJsinfobeFetch("specStakes/" + specid);
+    const { data, isLoading, error } = useJsinfobeFetch("specStakes/" + specid);
 
     if (error) return <ErrorDisplay message={error} />;
-    if (loading) return <LoadingIndicator loadingText={`Loading ${specid} stake data`} greyText={`${specid} stake`} />;
+    if (isLoading) return <LoadingIndicator loadingText={`Loading ${specid} stake data`} greyText={`${specid} stake`} />;
 
     return (
         <Box>

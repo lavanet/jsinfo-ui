@@ -12,7 +12,7 @@ import {
   TableRow,
 } from "@jsinfo/components/shadcn/ui2/Table";
 import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
-import { useJsinfobeSwrFetch } from "@jsinfo/fetching/jsinfobe/hooks/useJsinfobeSwrFetch";
+import { useJsinfobeFetch } from "@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch";
 import { JsinfobeAxiosGet } from "@jsinfo/fetching/jsinfobe/api-client/JsinfobeAxiosGet";
 import PaginationControl from "@jsinfo/components/modern/Pagination";
 import ModernTooltip from "@jsinfo/components/modern/ModernTooltip";
@@ -35,7 +35,7 @@ const ProvidersTable = () => {
     fetchProvidersCount();
   }, [currentPage]);
 
-  const { data, error, isLoading } = useJsinfobeSwrFetch(
+  const { data, error, isLoading } = useJsinfobeFetch(
     `indexProvidersActive?pagination=totalStake,d,${currentPage},20`
   );
 

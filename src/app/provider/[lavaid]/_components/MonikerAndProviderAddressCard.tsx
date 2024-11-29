@@ -115,13 +115,13 @@ export const MonikerAndProviderAddressCard: React.FC<MonikerAndProviderAddressCa
 };
 
 export const MonikerAndProviderAddressCardWithFetch = ({ lavaId }: { lavaId: string }): { hasNoData: boolean, component: React.ReactElement } => {
-    const { data: provider, loading, error } = useJsinfobeFetch("providerV2/" + lavaId);
+    const { data: provider, isLoading, error } = useJsinfobeFetch("providerV2/" + lavaId);
 
     const checkForNoData = (obj: any): boolean => {
-        return JSON.stringify(obj).toLowerCase().includes("does not exist");
+        return JSON.stringify(obj || "").toLowerCase().includes("does not exist");
     };
 
-    if (loading) {
+    if (isLoading) {
         return {
             hasNoData: false,
             component: <LoadingIndicator loadingText={`Loading ${lavaId} provider details`} greyText={`${lavaId} provider`} />

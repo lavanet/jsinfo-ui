@@ -8,9 +8,9 @@ import StatCard from '@jsinfo/components/sections/StatCard';
 import { Link, Blocks } from 'lucide-react';
 
 export const LatestLavaBlockCard: React.FC = () => {
-    const { data, loading, error } = useJsinfobeFetch("indexLatestBlock");
+    const { data, isLoading, error } = useJsinfobeFetch("indexLatestBlock");
     if (error) return <ErrorDisplay message={error} />
-    if (loading) return (
+    if (isLoading) return (
         <StatCard
             title="Lava Latest Block"
             value={<LoaderImageForCards />}
@@ -33,9 +33,9 @@ export const LatestLavaBlockCard: React.FC = () => {
 };
 
 export const TotalChainsCard: React.FC = () => {
-    const { data, loading, error } = useJsinfobeFetch("indexTopChains");
+    const { data, isLoading, error } = useJsinfobeFetch("indexTopChains");
     if (error) return <ErrorDisplay message={error} />
-    if (loading) return (
+    if (isLoading) return (
         <StatCard
             title="Active Chain Count"
             value={<LoaderImageForCards />}

@@ -28,10 +28,9 @@ function CustomSearchIcon() {
 
 export default function SearchBar() {
     const [items, setItems] = useState<Item[]>([]);
-    const { data, loading, error } = useJsinfobeFetch("autoCompleteLinksV2Handler");
+    const { data, isLoading, error } = useJsinfobeFetch("autoCompleteLinksV2Handler");
     const router = useRouter();
     const searchRef = useRef<HTMLDivElement>(null);
-    const [isHovered, setIsHovered] = useState(false);
 
     function toggleChartPositionRelativeOverride(isOpen: boolean) {
 
@@ -47,14 +46,14 @@ export default function SearchBar() {
     }
 
     useEffect(() => {
-        if (!error && !loading && data?.data) {
+        if (!error && !isLoading && data?.data) {
             const processedItems = data.data.map((item: Item, index: number) => ({
                 ...item,
                 id: `${item.id}-${index}`
             }));
             setItems(processedItems);
         }
-    }, [data, loading, error]);
+    }, [data, isLoading, error]);
 
     const handleOnSelect = (item: Item) => {
         if (item && item.link) {

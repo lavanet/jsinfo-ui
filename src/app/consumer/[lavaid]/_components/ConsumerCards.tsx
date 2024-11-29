@@ -12,11 +12,11 @@ interface ConsumerCardsProps {
 }
 
 const ConsumerCards: React.FC<ConsumerCardsProps> = ({ lavaid }) => {
-    const { data: consumer, loading, error } = useJsinfobeFetch('consumerV2/' + lavaid);
+    const { data: consumer, isLoading, error } = useJsinfobeFetch('consumerV2/' + lavaid);
 
     if (error) return <ErrorDisplay message={error} />;
 
-    if (loading) return (
+    if (isLoading) return (
         <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
             <StatCard
                 title="Cu Sum"

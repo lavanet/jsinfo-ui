@@ -3,8 +3,7 @@
 "use client";
 import React, { useState } from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@jsinfo/components/shadcn/ui2/Table";
-import Link from "next/link";
-import { useJsinfobeSwrFetch } from "@jsinfo/fetching/jsinfobe/hooks/useJsinfobeSwrFetch";
+import { useJsinfobeFetch } from "@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch";
 import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
 import PaginationControl from "@jsinfo/components/modern/Pagination";
 import ChainWithIconLink from "@jsinfo/components/modern/ChainWithIconLink";
@@ -12,7 +11,7 @@ import ChainWithIconLink from "@jsinfo/components/modern/ChainWithIconLink";
 const ChainsTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data, error, isLoading } = useJsinfobeSwrFetch("indexTopChains");
+  const { data, error, isLoading } = useJsinfobeFetch("indexTopChains");
 
   if (!data) return <LoadingIndicator loadingText={`Loading chains data`} greyText={`chains`} />;
 

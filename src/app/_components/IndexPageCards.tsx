@@ -11,9 +11,9 @@ import { CalendarArrowUp, ArrowUpNarrowWide, Landmark, DatabaseZap } from 'lucid
 import { useLogpushFetch } from '@jsinfo/fetching/logpush/hooks/useLogpushFetch';
 
 export const Index30DayRelayCard: React.FC = () => {
-    const { data, loading, error } = useJsinfobeFetch("index30DayCu");
+    const { data, isLoading, error } = useJsinfobeFetch("index30DayCu");
     if (error) return <ErrorDisplay message={error} />
-    if (loading) return (
+    if (isLoading) return (
         <StatCard
             title="Relays (30 days)"
             value={<LoaderImageForCards />}
@@ -42,9 +42,9 @@ export const Index30DayRelayCard: React.FC = () => {
 };
 
 export const IndexTotalRelaysCard: React.FC = () => {
-    const { data, loading, error } = useJsinfobeFetch("indexTotalCu");
+    const { data, isLoading, error } = useJsinfobeFetch("indexTotalCu");
     if (error) return <ErrorDisplay message={error} />
-    if (loading) return (
+    if (isLoading) return (
         <StatCard
             title="Relays (All Time)"
             value={<LoaderImageForCards />}
@@ -73,9 +73,9 @@ export const IndexTotalRelaysCard: React.FC = () => {
 };
 
 export const IndexStakeCard: React.FC = () => {
-    const { data, loading, error } = useJsinfobeFetch("indexStakesHandler");
+    const { data, isLoading, error } = useJsinfobeFetch("indexStakesHandler");
     if (error) return <ErrorDisplay message={error} />
-    if (loading) return (
+    if (isLoading) return (
         <StatCard
             title="Stake"
             value={<LoaderImageForCards />}

@@ -15,9 +15,9 @@ interface SpecRelaysTableProps {
 }
 
 const SpecRelaysTable: React.FC<SpecRelaysTableProps> = ({ specid }) => {
-    const { data, loading, error } = useJsinfobeFetch("specStakes/" + specid);
+    const { data, isLoading, error } = useJsinfobeFetch("specStakes/" + specid);
 
-    if (error || loading) return null;
+    if (error || isLoading) return null;
 
     return (
         <Box>
