@@ -8,9 +8,10 @@ export function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const key = searchParams.get('key') || '';
 
+    const vercelRegion = process.env.VERCEL_REGION || 'Region not defined';
     counter += 1;
 
-    return new Response(JSON.stringify({ key, counter, processStartTime }), {
+    return new Response(JSON.stringify({ key, counter, processStartTime, vercelRegion }), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
     });
