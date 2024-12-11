@@ -61,10 +61,23 @@ const LastUpdateBadge = () => {
             }
         };
 
+        // Handle visibility change
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === 'visible') {
+                updateCount = 0; // Reset the counter
+                updateTime(); // Start the update sequence
+            }
+        };
+
+        // Add visibility change listener
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
         // Initial update
         updateTime();
 
+        // Cleanup
         return () => {
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
         };
     }, []);
 

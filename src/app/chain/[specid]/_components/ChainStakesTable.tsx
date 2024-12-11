@@ -26,7 +26,7 @@ const SpecStakesTable: React.FC<SpecStakesTableProps> = ({ specid }) => {
                     { key: "provider", name: "Provider" },
                     { key: "totalStake", name: "Total Stake" },
                     { key: "stake", name: "Self Stake" },
-                    { key: "delegateLimit", name: "Delegation Limit" },
+                    // { key: "delegateLimit", name: "Delegation Limit" },
                     { key: "delegateTotal", name: "Delegation Total" },
                     { key: "delegateCommission", name: "Delegate Commission" },
                 ]}
@@ -39,7 +39,7 @@ const SpecStakesTable: React.FC<SpecStakesTableProps> = ({ specid }) => {
                     provider: (data) => (<MonikerAndProviderLink provider={data} />),
                     totalStake: (data) => <LavaWithTooltip amount={data.totalStake} />,
                     stake: (data) => <LavaWithTooltip amount={data.stake} />,
-                    delegateLimit: (data) => <LavaWithTooltip amount={data.delegateLimit} />,
+                    // delegateLimit: (data) => <LavaWithTooltip amount={data.delegateLimit} />,
                     delegateTotal: (data) => <LavaWithTooltip amount={data.delegateTotal} />,
                     delegateCommission: (data) => {
                         const commission = data.delegateCommission;

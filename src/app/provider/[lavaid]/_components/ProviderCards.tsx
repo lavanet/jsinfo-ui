@@ -54,14 +54,16 @@ const CuRelayAndRewardsCard: React.FC<{ addr: string }> = ({ addr }: { addr: str
                 tooltip="Total relays for provider"
                 icon={<ArrowUpNarrowWide className="h-4 w-4 text-muted-foreground" />}
             />
-            <StatCard
-                title="Total Rewards"
-                value={isLoading ? <LoaderImageForCards /> : <LavaWithTooltip amount={data?.rewardSum?.toString() || "0"} />}
-                className="col-span-2 md:col-span-1"
-                formatNumber={false}
-                tooltip="Total rewards for provider"
-                icon={<CreditCard className="h-4 w-4 text-muted-foreground" />}
-            />
+            {data?.rewardSum && data.rewardSum !== "0" && (
+                <StatCard
+                    title="Total Rewards"
+                    value={isLoading ? <LoaderImageForCards /> : <LavaWithTooltip amount={data?.rewardSum?.toString() || "0"} />}
+                    className="col-span-2 md:col-span-1"
+                    formatNumber={false}
+                    tooltip="Total rewards for provider"
+                    icon={<CreditCard className="h-4 w-4 text-muted-foreground" />}
+                />
+            )}
         </>
     );
 };
@@ -92,6 +94,8 @@ const DelegatorRewardsCard: React.FC<{ addr: string }> = ({ addr }: { addr: stri
     const filteredRewards = network.includes('mainnet')
         ? data?.data.rewards
         : data?.data.rewards.filter(reward => reward.denom.toLowerCase().includes('lava'));
+
+    if (!filteredRewards || filteredRewards.length === 0) return null;
 
     return (
         <StatCard

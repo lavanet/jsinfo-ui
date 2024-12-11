@@ -36,6 +36,7 @@ export const Index30DayRelayCard: React.FC = () => {
             }
             className="col-span-1"
             formatNumber={false}
+            tooltip={`Total relays for all chains on lava in the last 30 days.`}
             icon={<CalendarArrowUp className="h-4 w-4 text-muted-foreground" />}
         />
     )
@@ -67,6 +68,7 @@ export const IndexTotalRelaysCard: React.FC = () => {
             }
             className="col-span-1"
             formatNumber={false}
+            tooltip={`Total relays for all chains on lava.`}
             icon={<ArrowUpNarrowWide className="h-4 w-4 text-muted-foreground" />}
         />
     )
@@ -95,7 +97,7 @@ export const IndexStakeCard: React.FC = () => {
             value={lavaValue + " LAVA"}
             className="col-span-1"
             formatNumber={false}
-            tooltip={`Cache hit/total for all specs in the last 30 days.\nvalue in ulava: ${ulavaValue}.`}
+            tooltip={`Total stake and total delegations for all providers of all chains on lava.`}
             icon={<Landmark className="h-4 w-4 text-muted-foreground" />}
         />
     )
