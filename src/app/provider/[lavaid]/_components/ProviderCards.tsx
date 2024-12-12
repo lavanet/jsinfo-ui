@@ -54,7 +54,7 @@ const CuRelayAndRewardsCard: React.FC<{ addr: string }> = ({ addr }: { addr: str
                 tooltip="Total relays for provider"
                 icon={<ArrowUpNarrowWide className="h-4 w-4 text-muted-foreground" />}
             />
-            {data?.rewardSum && data.rewardSum !== "0" && (
+            {Boolean(data?.rewardSum && data.rewardSum !== "0") && (
                 <StatCard
                     title="Total Rewards"
                     value={isLoading ? <LoaderImageForCards /> : <LavaWithTooltip amount={data?.rewardSum?.toString() || "0"} />}
@@ -72,7 +72,7 @@ const StakesCard: React.FC<{ addr: string }> = ({ addr }: { addr: string }) => {
     const { data, isLoading, error } = useJsinfobeFetch(`providerCardsStakes/${addr}`);
 
     if (error) {
-        console.error('StakesCard Error:', error);
+        console.error('ProviderStakesCard Error:', error);
         return null;
     }
 

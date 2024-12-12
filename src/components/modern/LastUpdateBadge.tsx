@@ -1,6 +1,6 @@
 // src/components/modern/LastUpdateBadge.tsx
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Badge } from '@jsinfo/components/shadcn/ui/Badge';
 import { useJsinfobeFetch } from '@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch';
 import ModernTooltip from './ModernTooltip';
@@ -8,106 +8,35 @@ import ModernTooltip from './ModernTooltip';
 interface BlockData {
     height: number;
     datetime: number;
+    serverTime?: number;
 }
 
-interface TimeResponse {
-    datetime: string;
-    utc_datetime: string;
-}
-
-async function getUTCTime(): Promise<Date> {
-    const isHttps = window.location.protocol === 'https:';
-    const urls = isHttps
-        ? ['https://worldtimeapi.org/api/timezone/Etc/UTC', 'http://worldtimeapi.org/api/timezone/Etc/UTC']
-        : ['http://worldtimeapi.org/api/timezone/Etc/UTC', 'https://worldtimeapi.org/api/timezone/Etc/UTC'];
-
-    for (const url of urls) {
-        try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const data: TimeResponse = await response.json();
-            return new Date(data.utc_datetime);
-        } catch (error) {
-            console.error(`Error fetching UTC time from ${url}:`, error);
-            // If this is the last URL, throw the error
-            if (url === urls[urls.length - 1]) {
-                throw error;
-            }
-            // Otherwise, continue to the next URL
-        }
-    }
-
-    // If all attempts fail, fall back to local system time
-    console.warn('All attempts to fetch UTC time failed. Falling back to local system time.');
-    return new Date();
-}
 const LastUpdateBadge = () => {
-    const { data, isLoading } = useJsinfobeFetch("indexLatestBlock");
-    const blockData = data as BlockData;
-    const [currentTime, setCurrentTime] = useState<Date | null>(new Date());
+    const { data: blockData, isLoading } = useJsinfobeFetch("indexLatestBlock");
 
-    useEffect(() => {
-        const updateTimes = [1000, 2000, 5000]; // 1 second, 2 seconds, 5 seconds
-        let updateCount = 0;
-
-        const updateTime = () => {
-            getUTCTime().then(setCurrentTime);
-            updateCount++;
-
-            if (updateCount < updateTimes.length) {
-                setTimeout(updateTime, updateTimes[updateCount] - updateTimes[updateCount - 1]);
-            }
-        };
-
-        // Handle visibility change
-        const handleVisibilityChange = () => {
-            if (document.visibilityState === 'visible') {
-                updateCount = 0; // Reset the counter
-                updateTime(); // Start the update sequence
-            }
-        };
-
-        // Add visibility change listener
-        document.addEventListener('visibilitychange', handleVisibilityChange);
-
-        // Initial update
-        updateTime();
-
-        // Cleanup
-        return () => {
-            document.removeEventListener('visibilitychange', handleVisibilityChange);
-        };
-    }, []);
-
-    const formatLastUpdate = (blockTime: Date, currentTime: Date) => {
-        try {
-            const diff = Math.floor((currentTime.getTime() - blockTime.getTime()) / 60000);
-            return (
-                <>
-                    <span className="last-update-badge-update-text">Last update</span>
-                    <span className="last-update-badge-time-text">{`${diff} minute${diff !== 1 ? 's' : ''} ago`}</span>
-                </>
-            );
-        } catch (error) {
-            console.error("Error formatting last update:", error);
-            return null;
-        }
+    const formatLastUpdate = (blockTime: Date, serverTime: Date) => {
+        const diff = Math.floor((serverTime.getTime() - blockTime.getTime()) / 60000);
+        return (
+            <>
+                <span className="last-update-badge-update-text">Last update</span>
+                <span className="last-update-badge-time-text">{`${diff} minute${diff !== 1 ? 's' : ''} ago`}</span>
+            </>
+        );
     };
-
-    // console.log("LastUpdateBadge render", "blockData", blockData, "currentTime", currentTime, "loading", loading);
 
     return (
         <ModernTooltip title={`Latest block height: ${blockData ? blockData.height : 'Loading...'}`}>
             <Badge variant="outline" className="last-update-badge-content">
-                {isLoading || !blockData || !currentTime ? (
+                {isLoading || !blockData || !blockData.serverTime ? (
                     <>
                         <span className="last-update-badge-update-text">Last update</span>
                         <span className="last-update-badge-time-text">Loading...</span>
                     </>
                 ) : (
-                    formatLastUpdate(new Date(blockData.datetime), currentTime)
+                    formatLastUpdate(
+                        new Date(blockData.datetime),
+                        new Date(blockData.serverTime || Date.now())
+                    )
                 )}
             </Badge>
         </ModernTooltip>
