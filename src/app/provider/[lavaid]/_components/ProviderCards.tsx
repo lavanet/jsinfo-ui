@@ -71,7 +71,13 @@ const CuRelayAndRewardsCard: React.FC<{ addr: string }> = ({ addr }: { addr: str
 const StakesCard: React.FC<{ addr: string }> = ({ addr }: { addr: string }) => {
     const { data, isLoading, error } = useJsinfobeFetch(`providerCardsStakes/${addr}`);
 
-    if (error) return <ErrorDisplay message={error} />;
+    if (error) {
+        console.error('StakesCard Error:', error);
+        return null;
+    }
+
+    if (!isLoading && (!data || !data.stakeSum)) return null;
+
     return (
         <StatCard
             title="Total Stake"

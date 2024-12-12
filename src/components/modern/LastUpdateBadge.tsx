@@ -82,13 +82,18 @@ const LastUpdateBadge = () => {
     }, []);
 
     const formatLastUpdate = (blockTime: Date, currentTime: Date) => {
-        const diff = Math.floor((currentTime.getTime() - blockTime.getTime()) / 60000);
-        return (
-            <>
-                <span className="last-update-badge-update-text">Last update</span>
-                <span className="last-update-badge-time-text">{`${diff} minute${diff !== 1 ? 's' : ''} ago`}</span>
-            </>
-        );
+        try {
+            const diff = Math.floor((currentTime.getTime() - blockTime.getTime()) / 60000);
+            return (
+                <>
+                    <span className="last-update-badge-update-text">Last update</span>
+                    <span className="last-update-badge-time-text">{`${diff} minute${diff !== 1 ? 's' : ''} ago`}</span>
+                </>
+            );
+        } catch (error) {
+            console.error("Error formatting last update:", error);
+            return null;
+        }
     };
 
     // console.log("LastUpdateBadge render", "blockData", blockData, "currentTime", currentTime, "loading", loading);
