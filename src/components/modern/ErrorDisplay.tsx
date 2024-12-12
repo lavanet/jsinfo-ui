@@ -7,6 +7,12 @@ interface ErrorDisplayProps {
 }
 
 export const ErrorDisplay: React.FC<ErrorDisplayProps> = ({ message }) => {
+    // If message is longer than 100 characters, log it and return null
+    if (!message || (message + "").length > 100 || JSON.stringify(message).length > 100) {
+        console.log('Long error message:', message);
+        return null;
+    }
+
     if (message === "No data for chart loaded") {
         return (
             <div style={{ color: 'grey' }}>
@@ -14,6 +20,11 @@ export const ErrorDisplay: React.FC<ErrorDisplayProps> = ({ message }) => {
             </div>
         );
     }
+
+    if (typeof message !== 'string' || typeof message !== 'number' || typeof message !== 'boolean') {
+        message = JSON.stringify(message);
+    }
+
     return (
         <div>
             <Image
