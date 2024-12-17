@@ -103,7 +103,11 @@ export function ProviderLatestHealthTable({ providerId }: ProviderLatestHealthTa
   }, [healthData, sortColumn, sortDirection, showSummary]);
 
   if (isLoading) {
-    return <LoadingIndicator loadingText={`Loading health data`} greyText={`provider health`} />;
+    return (
+      <Card style={{ padding: '23px' }}>
+        <LoadingIndicator loadingText={`Loading health data`} greyText={`provider health`} />
+      </Card>
+    );
   }
 
   if (data && 'error' in data) {

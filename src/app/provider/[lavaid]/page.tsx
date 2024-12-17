@@ -25,6 +25,7 @@ import ProviderHealthTable from "@jsinfo/app/provider/[lavaid]/_components/Provi
 import { ProviderPerSpecRelaysPieChart } from "./_components/ProviderPerSpecRelaysPieChart";
 import ProviderLiveRequestFeed from "./_components/ProviderLiveRequestFeed";
 import VerifyComponent from '@jsinfo/app/components/VerifyComponent';
+import ProviderConsumerOptimizerMetricsChart from "./_components/ProviderOptimzerMetricsChart";
 
 export default function ProviderPage({ params }: { params: { lavaid: string } }) {
   const decodedLavaId = decodeURIComponent(params.lavaid);
@@ -87,6 +88,12 @@ export default function ProviderPage({ params }: { params: { lavaid: string } })
 
       <VerifyComponent keyName="Provider Health Table">
         <ProviderHealthTable providerId={decodedLavaId} />
+      </VerifyComponent>
+
+      <div style={{ marginBottom: '20px' }}></div>
+
+      <VerifyComponent keyName="Provider Optimizer Metrics Chart">
+        <ProviderConsumerOptimizerMetricsChart providerId={decodedLavaId} />
       </VerifyComponent>
 
       <div style={{ marginBottom: '20px' }}></div>
