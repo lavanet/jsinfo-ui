@@ -20,6 +20,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@jsinfo/components/shad
 import { Button } from "@jsinfo/components/shadcn/ui/Button";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { cn } from "@jsinfo/lib/css";
+import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
 
 interface ProviderConsumerOptimizerMetricsChartProps {
   providerId: string;
@@ -80,7 +81,7 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
       latency_score: parseFloat(metric.latency_score),
       availability_score: parseFloat(metric.availability_score),
       generic_score: parseFloat(metric.generic_score),
-      node_error_rate: parseFloat(metric.node_error_rate),
+      // node_error_rate: parseFloat(metric.node_error_rate),
       entry_index: parseFloat(metric.entry_index),
     }));
   }, [data?.metrics]);
@@ -91,7 +92,13 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
     }
   }, [isLoading]);
 
-  if (!initialLoadComplete && isLoading) return null;
+  if (!initialLoadComplete && isLoading) {
+    return (
+      <Card style={{ padding: '23px' }}>
+        <LoadingIndicator loadingText={`Loading optimizer metrics data`} greyText={`metrics`} />
+      </Card>
+    );
+  }
 
   const handleDateRangeSelect = (range: any) => {
     setTempDateRange(range);
@@ -129,7 +136,7 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
           <p className="text-sm">Latency Score: {Number(data.latency_score).toFixed(4)}</p>
           <p className="text-sm">Availability Score: {Number(data.availability_score).toFixed(4)}</p>
           <p className="text-sm">Generic Score: {Number(data.generic_score).toFixed(4)}</p>
-          <p className="text-sm">Node Error Rate: {Number(data.node_error_rate).toFixed(4)}</p>
+          {/* <p className="text-sm">Node Error Rate: {Number(data.node_error_rate).toFixed(4)}</p> */}
           <p className="text-sm">Entry Index: {Number(data.entry_index).toFixed(4)}</p>
         </CardContent>
       </Card>
