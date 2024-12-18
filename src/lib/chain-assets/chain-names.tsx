@@ -37,9 +37,12 @@ export function ConvertToChainName(abbreviation: string): string {
         BASET: "Base Testnet",
         JUN1: "Juno",
         OPTMT: "Optimism Testnet",
+        POLYGON: "Polygon",
+        POLYGONT: "Polygon Testnet",
         ALFAJORES: "Celo Alfajores Testnet",
         BLAST: "Blast",
         FVM: "Filecoin",
+        FVMT: "Filecoin Testnet",
         COS4: "Osmosis Testnet",
         OSMOSIST: "Osmosis Testnet",
         SOLANAT: "Solana Testnet",
@@ -60,6 +63,8 @@ export function ConvertToChainName(abbreviation: string): string {
         COSMOSHUBT: "Cosmos Hub Testnet",
         OPTMS: "Optimism Staging",
         ARBS: "Arbitrum Staging",
+        ARBITRUM: "Arbitrum",
+        ARBITRUMT: "Arbitrum Testnet",
         FUSE: "Fuse",
         SUIT: "Sui",
         COSMOSSDKFULL: "Cosmos SDK Full",
@@ -76,6 +81,8 @@ export function ConvertToChainName(abbreviation: string): string {
         KAKAROTT: "Kakarot Testnet",
         ETHBEACON: "ETH Beacon",
         LAVA: "Lava Network",
+        MOVEMENTT: "Movement Testnet",
+        MOVEMENT: "Movement",
     };
 
     return mapping[abbreviation] || "";

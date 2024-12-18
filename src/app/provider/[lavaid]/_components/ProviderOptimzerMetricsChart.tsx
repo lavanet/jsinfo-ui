@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { format, addDays } from "date-fns";
 import {
   ComposedChart, Line, XAxis, YAxis, Tooltip, CartesianGrid,
@@ -33,16 +33,18 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
     to: new Date(),
   });
 
-  const [apiFilters, setApiFilters] = useState({
+  const apiFilters = useMemo(() => ({
     consumer: uiConsumer,
     chainId: uiChainId,
     dateRange: uiDateRange
-  });
+  }), [uiConsumer, uiChainId, uiDateRange]);
 
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [tempDateRange, setTempDateRange] = useState(uiDateRange);
 
-  const { data, error, isLoading } = useJsinfobeFetchWithDeps<any>(() => {
+  const [initialLoadComplete, setInitialLoadComplete] = useState(false);
+
+  const { data, error, isLoading, isValidating } = useJsinfobeFetchWithDeps<any>(() => {
     const fromDate = format(apiFilters.dateRange.from, "yyyy-MM-dd'Z'");
     const toDate = format(apiFilters.dateRange.to, "yyyy-MM-dd'Z'");
     return `providerConsumerOptimizerMetrics/${providerId}?f=${fromDate}&t=${toDate}&consumer=${apiFilters.consumer}&chain_id=${apiFilters.chainId}`;
@@ -72,33 +74,27 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
 
   const chartData = useMemo(() => {
     if (!data?.metrics) return [];
-    return data.metrics
-      .filter((metric: any) =>
-        (uiConsumer === "all" || metric.consumer === uiConsumer) &&
-        (uiChainId === "all" || metric.chain_id === uiChainId)
-      )
-      .map((metric: any) => ({
-        timestamp: new Date(metric.timestamp).getTime(),
-        sync_score: parseFloat(metric.sync_score),
-        latency_score: parseFloat(metric.latency_score),
-        availability_score: parseFloat(metric.availability_score),
-        generic_score: parseFloat(metric.generic_score),
-        node_error_rate: parseFloat(metric.node_error_rate),
-        entry_index: parseFloat(metric.entry_index),
-      }));
-  }, [data?.metrics, uiConsumer, uiChainId]);
+    return data.metrics.map((metric: any) => ({
+      timestamp: new Date(metric.timestamp).getTime(),
+      sync_score: parseFloat(metric.sync_score),
+      latency_score: parseFloat(metric.latency_score),
+      availability_score: parseFloat(metric.availability_score),
+      generic_score: parseFloat(metric.generic_score),
+      node_error_rate: parseFloat(metric.node_error_rate),
+      entry_index: parseFloat(metric.entry_index),
+    }));
+  }, [data?.metrics]);
+
+  useEffect(() => {
+    if (!isLoading && !initialLoadComplete) {
+      setInitialLoadComplete(true);
+    }
+  }, [isLoading]);
+
+  if (!initialLoadComplete && isLoading) return null;
 
   const handleDateRangeSelect = (range: any) => {
     setTempDateRange(range);
-  };
-
-  const handleCalendarClose = () => {
-    setApiFilters({
-      consumer: uiConsumer,
-      chainId: uiChainId,
-      dateRange: tempDateRange
-    });
-    setIsCalendarOpen(false);
   };
 
   const handleCalendarCancel = () => {
@@ -106,15 +102,18 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
     setIsCalendarOpen(false);
   };
 
-  const handleApplyFilters = () => {
-    setApiFilters({
-      consumer: uiConsumer,
-      chainId: uiChainId,
-      dateRange: uiDateRange
-    });
+  const handleConsumerChange = (value: string) => {
+    setUiConsumer(value);
   };
 
-  if (isLoading || error || !data) return null;
+  const handleChainChange = (value: string) => {
+    setUiChainId(value);
+  };
+
+  const handleCalendarClose = () => {
+    setUiDateRange(tempDateRange);
+    setIsCalendarOpen(false);
+  };
 
   const CustomTooltip = ({ active, payload }: any) => {
     if (!active || !payload?.[0]) return null;
@@ -140,26 +139,31 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
   return (
     <Card>
       <CardHeader>
-        <div className="flex justify-between items-center">
+        <div className="flex flex-col gap-4 min-[1200px]:flex-row min-[1200px]:items-center min-[1200px]:justify-between">
           <div>
             <CardTitle>Provider's Consumer Optimizer Metrics</CardTitle>
             <CardDescription>
               Provider score and rank as reported from the lava consumer's side
             </CardDescription>
           </div>
-          <div className="flex gap-4">
+          <div className="grid grid-cols-1 [&>*:last-child]:col-span-1 min-[1000px]:grid-cols-3 min-[1200px]:flex min-[1200px]:gap-4 gap-2">
             <DropDownRadioOptions
               options={consumerOptions}
               value={uiConsumer}
-              setValue={setUiConsumer}
+              setValue={handleConsumerChange}
               placeholder="Select a consumer"
-              className="w-[500px]"
+              displayValue={(value) => {
+                const option = consumerOptions.find(opt => opt.value === value);
+                return option ? (option.label.length > 20 ? `${option.label.slice(0, 20)}...` : option.label) : '';
+              }}
+              className="w-full"
             />
             <DropDownRadioOptions
               options={chainOptions}
               value={uiChainId}
-              setValue={setUiChainId}
+              setValue={handleChainChange}
               placeholder="Select a chain"
+              className="w-full"
             />
             <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
               <PopoverTrigger asChild>
@@ -206,20 +210,7 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
       </CardHeader>
       <CardContent>
         <div className="h-[400px] relative">
-          {isLoading && (
-            <div className="absolute inset-0 flex items-center justify-center bg-background/50 z-10">
-              <p>Reloading data...</p>
-            </div>
-          )}
-          {error ? (
-            <div className="h-full flex items-center justify-center">
-              <p className="text-destructive">Error: {error.message}</p>
-            </div>
-          ) : chartData.length === 0 ? (
-            <div className="h-full flex items-center justify-center">
-              <p className="text-muted-foreground">No entries found</p>
-            </div>
-          ) : (
+          {chartData.length > 0 && (
             <ResponsiveContainer width="100%" height="100%">
               <ComposedChart data={chartData}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -229,7 +220,6 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
                   scale="time"
                   domain={['auto', 'auto']}
                   tickFormatter={(timestamp) => format(timestamp, "MM/dd")}
-                  tick={{ key: "x-axis-tick" }}
                 />
                 <YAxis />
                 <Tooltip content={<CustomTooltip />} />
@@ -242,6 +232,16 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
                 />
               </ComposedChart>
             </ResponsiveContainer>
+          )}
+
+          {(isValidating || error || chartData.length === 0) && (
+            <div className="absolute inset-0 flex items-center justify-center bg-background/50">
+              {isValidating && <p className="text-muted-foreground">Reloading data...</p>}
+              {error && <p className="text-destructive">Error: {error.message}</p>}
+              {!isValidating && !error && chartData.length === 0 && (
+                <p className="text-muted-foreground">No entries found</p>
+              )}
+            </div>
           )}
         </div>
       </CardContent>
