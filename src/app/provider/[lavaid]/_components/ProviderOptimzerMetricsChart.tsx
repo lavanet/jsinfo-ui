@@ -4,7 +4,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { format, addDays } from "date-fns";
 import {
   ComposedChart, Line, XAxis, YAxis, Tooltip, CartesianGrid,
-  ResponsiveContainer
+  ResponsiveContainer, Brush
 } from "recharts";
 import {
   Card,
@@ -21,6 +21,8 @@ import { Button } from "@jsinfo/components/shadcn/ui/Button";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { cn } from "@jsinfo/lib/css";
 import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
+import ModernTooltip from "@jsinfo/components/modern/ModernTooltip";
+import { InfoCircledIcon } from "@radix-ui/react-icons";
 
 interface ProviderConsumerOptimizerMetricsChartProps {
   providerId: string;
@@ -44,6 +46,7 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
   const [tempDateRange, setTempDateRange] = useState(uiDateRange);
 
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
+  const [hasEverHadData, setHasEverHadData] = useState(false);
 
   const { data, error, isLoading, isValidating } = useJsinfobeFetchWithDeps<any>(() => {
     const fromDate = format(apiFilters.dateRange.from, "yyyy-MM-dd'Z'");
@@ -75,15 +78,21 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
 
   const chartData = useMemo(() => {
     if (!data?.metrics) return [];
-    return data.metrics.map((metric: any) => ({
-      timestamp: new Date(metric.timestamp).getTime(),
-      sync_score: parseFloat(metric.sync_score),
-      latency_score: parseFloat(metric.latency_score),
-      availability_score: parseFloat(metric.availability_score),
-      generic_score: parseFloat(metric.generic_score),
-      // node_error_rate: parseFloat(metric.node_error_rate),
-      entry_index: parseFloat(metric.entry_index),
-    }));
+    return data.metrics
+      .map((metric: any) => ({
+        timestamp: new Date(metric.timestamp).getTime(),
+        sync_score: parseFloat(metric.sync_score),
+        latency_score: parseFloat(metric.latency_score),
+        availability_score: parseFloat(metric.availability_score),
+        generic_score: parseFloat(metric.generic_score),
+        entry_index: parseFloat(metric.entry_index),
+      }))
+      .filter((metric: any) =>
+        metric.sync_score >= 0 && metric.sync_score <= 1 &&
+        metric.latency_score >= 0 && metric.latency_score <= 1 &&
+        metric.availability_score >= 0 && metric.availability_score <= 1 &&
+        metric.generic_score >= 0 && metric.generic_score <= 1
+      );
   }, [data?.metrics]);
 
   useEffect(() => {
@@ -91,6 +100,12 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
       setInitialLoadComplete(true);
     }
   }, [isLoading]);
+
+  useEffect(() => {
+    if (chartData.length > 0) {
+      setHasEverHadData(true);
+    }
+  }, [chartData]);
 
   if (!initialLoadComplete && isLoading) {
     return (
@@ -129,7 +144,7 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
     return (
       <Card className="p-2">
         <CardHeader className="p-2">
-          <CardTitle className="text-sm">{format(data.timestamp, "MMM d, yyyy")}</CardTitle>
+          <CardTitle className="text-sm">{format(data.timestamp, "MMM d, yyyy HH:mm")}</CardTitle>
         </CardHeader>
         <CardContent className="p-2">
           <p className="text-sm">Sync Score: {Number(data.sync_score).toFixed(4)}</p>
@@ -137,7 +152,7 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
           <p className="text-sm">Availability Score: {Number(data.availability_score).toFixed(4)}</p>
           <p className="text-sm">Generic Score: {Number(data.generic_score).toFixed(4)}</p>
           {/* <p className="text-sm">Node Error Rate: {Number(data.node_error_rate).toFixed(4)}</p> */}
-          <p className="text-sm">Entry Index: {Number(data.entry_index).toFixed(4)}</p>
+          <p className="text-sm">Relative Placement: {Number(data.entry_index).toFixed(4)}</p>
         </CardContent>
       </Card>
     );
@@ -147,11 +162,22 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
     <Card>
       <CardHeader>
         <div className="flex flex-col gap-4 min-[1200px]:flex-row min-[1200px]:items-center min-[1200px]:justify-between">
-          <div>
-            <CardTitle>Provider's Consumer Optimizer Metrics</CardTitle>
-            <CardDescription>
-              Provider score and rank as reported from the lava consumer's side
-            </CardDescription>
+          <div className="flex items-center gap-2">
+            <Card>
+              <CardTitle>Provider's Consumer Optimizer Metrics
+                <ModernTooltip title={
+                  "Scores range from 0 to 1, where lower scores are better for latency and sync,\n" +
+                  "while availability should be close to 1.\n" +
+                  "The Relative Placement shows this provider's rank compared to other providers,\n" +
+                  "where 1 represents the best performing provider."
+                }>
+                  <InfoCircledIcon className="h-4 w-4 text-muted-foreground cursor-help ml-2" />
+                </ModernTooltip>
+              </CardTitle>
+              <CardDescription>
+                Provider score and rank as reported from the lava consumer's side
+              </CardDescription>
+            </Card>
           </div>
           <div className="grid grid-cols-1 [&>*:last-child]:col-span-1 min-[1000px]:grid-cols-3 min-[1200px]:flex min-[1200px]:gap-4 gap-2">
             <DropDownRadioOptions
@@ -216,7 +242,10 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
         </div>
       </CardHeader>
       <CardContent>
-        <div className="h-[400px] relative">
+        <div className={cn(
+          "relative",
+          (!hasEverHadData && initialLoadComplete) ? "h-[100px]" : "h-[400px]"
+        )}>
           {chartData.length > 0 && (
             <ResponsiveContainer width="100%" height="100%">
               <ComposedChart data={chartData}>
@@ -226,9 +255,21 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
                   type="number"
                   scale="time"
                   domain={['auto', 'auto']}
-                  tickFormatter={(timestamp) => format(timestamp, "MM/dd")}
+                  // interval={5}
+                  tickFormatter={(timestamp) => {
+                    const date = new Date(timestamp)
+                    return `${date.getDate()} ${date.toLocaleDateString("en-US", { month: "short" })} ${date.toLocaleTimeString("en-US", { hour12: false, hour: "2-digit", minute: "2-digit" })}`
+                  }}
+                  interval="preserveStartEnd"
+                  minTickGap={50}
+                  tick={{
+                    fontSize: 12,
+                    textAnchor: "end"
+                  }}
                 />
-                <YAxis />
+                <YAxis
+                  style={{ fontSize: '0.75rem' }}
+                />
                 <Tooltip content={<CustomTooltip />} />
                 <Line
                   type="monotone"
@@ -236,6 +277,20 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
                   stroke="#8884d8"
                   dot={false}
                   name="Sync Score"
+
+                />
+                <Brush
+                  dataKey="timestamp"
+                  height={30}
+                  stroke="hsl(var(--muted-foreground) / 0.3)"
+                  tickFormatter={(timestamp) => {
+                    const date = new Date(timestamp)
+                    return date.toLocaleDateString("en-US", { day: "numeric", month: "short" }) +
+                      " " +
+                      date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })
+                  }}
+                  fill="hsl(var(--background))"
+                  travellerWidth={10}
                 />
               </ComposedChart>
             </ResponsiveContainer>
