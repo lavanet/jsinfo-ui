@@ -78,13 +78,13 @@ const ProviderChart: React.FC<ProviderChartProps> = ({ providerId }) => {
   });
 
   const { data, error, isLoading, isValidating } = useJsinfobeFetchWithDeps<ProviderChartV2Data>(() => {
-    if (dateRange?.from && dateRange?.to) {
+    if (dateRange?.from && dateRange?.to && selectedChain) {
       const fromDate = format(dateRange.from, "yyyy-MM-dd'Z'");
       const toDate = format(dateRange.to, "yyyy-MM-dd'Z'");
       return `providerChartsV2/${selectedChain}/${providerId}?f=${fromDate}&t=${toDate}`;
     }
     return null;
-  }, [dateRange, selectedChain, providerId]);
+  }, [dateRange?.from, dateRange?.to, selectedChain, providerId]);
 
   const qosColors: { [key: string]: { start: string; end: string } } = {
     qos: { start: "#00ff00", end: "#ff0000" },
