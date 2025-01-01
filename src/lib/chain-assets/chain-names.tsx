@@ -10,6 +10,7 @@ export function ConvertToChainName(abbreviation: string): string {
         NEART: "NEAR Testnet",
         EVMOST: "Evmos Testnet",
         ARB1: "Arbitrum",
+        POLYGON: "Polygon",
         POLYGON1: "Polygon",
         CELO: "Celo",
         STRK: "Starknet",
@@ -23,6 +24,7 @@ export function ConvertToChainName(abbreviation: string): string {
         POLYGON1T: "Polygon Testnet",
         OPTM: "Optimism",
         BASE: "Base",
+        BASES: "Base Sepolia Testnet",
         ARBN: "Arbitrum Nova",
         AVAX: "Avalanche",
         LAV1: "Lava Testnet",
@@ -40,6 +42,12 @@ export function ConvertToChainName(abbreviation: string): string {
         ALFAJORES: "Celo Alfajores Testnet",
         BLAST: "Blast",
         FVM: "Filecoin",
+        FVMT: "Filecoin Testnet",
+        ARBITRUM: "Arbitrum",
+        ARBITRUMT: "Arbitrum Testnet",
+        ARBITRUMN: "Arbitrum Nova",
+        ARBITRUMST: "Arbitrum Sepolia Testnet",
+        ARBITRUMS: "Arbitrum Sepolia Testnet",
         COS4: "Osmosis Testnet",
         OSMOSIST: "Osmosis Testnet",
         SOLANAT: "Solana Testnet",
@@ -76,6 +84,8 @@ export function ConvertToChainName(abbreviation: string): string {
         KAKAROTT: "Kakarot Testnet",
         ETHBEACON: "ETH Beacon",
         LAVA: "Lava Network",
+        MOVEMENT: "Movement",
+        MOVEMENTT: "Movement Testnet",
     };
 
     return mapping[abbreviation] || "";
