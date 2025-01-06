@@ -246,14 +246,15 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
               <ComposedChart data={chartData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis
-                  padding={{ left: 60, right: 20 }}
+                  padding={{ left: 0, right: 0 }}
                   dataKey="timestamp"
                   type="number"
                   scale="time"
                   domain={['auto', 'auto']}
-                  tickFormatter={(timestamp) => {
+                  tickFormatter={(timestamp, index) => {
+                    if (index === 0) return '';
                     const date = new Date(timestamp)
-                    return `${date.getDate()} ${date.toLocaleDateString("en-US", { month: "short" })} ${date.toLocaleTimeString("en-US", { hour12: false, hour: "2-digit", minute: "2-digit" })}`
+                    return `${date.getDate()} ${date.toLocaleDateString("en-US", { month: "short" })}` // ${date.toLocaleTimeString("en-US", { hour12: false, hour: "2-digit", minute: "2-digit" })}`
                   }}
                   interval="preserveStartEnd"
                   minTickGap={50}
