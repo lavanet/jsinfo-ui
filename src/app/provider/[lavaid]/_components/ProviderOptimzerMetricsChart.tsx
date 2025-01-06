@@ -225,8 +225,8 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
                 className="h-2 w-2 rounded-full ring-1 ring-offset-1 ring-offset-background"
                 style={{
                   backgroundColor: color,
-                  ringColor: color
-                }}
+                  '--tw-ring-color': color
+                } as React.CSSProperties}
               />
               <p className="text-sm flex justify-between items-center w-full gap-8">
                 <span className="text-muted-foreground whitespace-nowrap">{label}:</span>
@@ -397,8 +397,8 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
                 style={{
                   backgroundColor: color,
                   boxShadow: `0 0 0.5rem ${color}25`,
-                  ringColor: color
-                }}
+                  '--tw-ring-color': color
+                } as React.CSSProperties}
               />
               <div className="space-y-0.5 relative">
                 <div className="absolute -inset-2 rounded-md opacity-0 group-hover:opacity-100 bg-gradient-to-r transition-opacity duration-200"
