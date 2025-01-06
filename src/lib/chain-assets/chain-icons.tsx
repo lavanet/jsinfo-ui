@@ -53,6 +53,8 @@ export const chainDictionary: { [key: string]: ChainInfo } = {
     btc: { name: "Bitcoin", icon: "/icons/bitcoin.svg" },
     bitkub: { name: "Bitkub Chain", icon: "/icons/bitkub-chain.svg" },
     blast: { name: "Blast", icon: "/icons/blast.svg" },
+    blastt: { name: "Blast Testnet", icon: "/icons/blast.svg" },
+    blastsp: { name: "Blast Sepolia Testnet", icon: "/icons/blast.svg" },
     boba: { name: "Boba", icon: "/icons/boba.svg" },
     bouncebit: { name: "BounceBit", icon: "/icons/bouncebit.svg" },
     cardano: { name: "Cardano", icon: "/icons/cardano.svg" },
