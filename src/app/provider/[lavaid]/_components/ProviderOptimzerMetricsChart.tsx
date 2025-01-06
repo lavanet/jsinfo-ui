@@ -28,6 +28,76 @@ interface ProviderConsumerOptimizerMetricsChartProps {
   providerId: string;
 }
 
+interface ChartDataPoint {
+  timestamp: number;
+  sync_score: number;
+  latency_score: number;
+  availability_score: number;
+  generic_score: number;
+  node_error_rate: number;
+  entry_index: number;
+}
+
+interface MetricDefinition {
+  label: string;
+  dataKey: keyof Omit<ChartDataPoint, 'timestamp'>;
+  color: string;
+  description: string;
+}
+
+const METRICS: MetricDefinition[] = [
+  {
+    label: 'Sync Score',
+    dataKey: 'sync_score',
+    color: '#4f46e5', // Indigo
+    description: 'Lower is better. Measures block height difference from network average'
+  },
+  {
+    label: 'Latency Score',
+    dataKey: 'latency_score',
+    color: '#059669', // Emerald
+    description: 'Lower is better. Average response time compared to other providers'
+  },
+  {
+    label: 'Availability Score',
+    dataKey: 'availability_score',
+    color: '#eab308', // Yellow
+    description: 'Higher is better. Percentage of successful responses over time'
+  },
+  {
+    label: 'Generic Score',
+    dataKey: 'generic_score',
+    color: '#7c3aed', // Violet
+    description: 'Lower is better. Combined performance metric across all categories'
+  },
+  {
+    label: 'Node Error Rate',
+    dataKey: 'node_error_rate',
+    color: '#dc2626', // Red
+    description: 'Lower is better. Percentage of requests resulting in errors'
+  },
+  {
+    label: 'Relative Placement',
+    dataKey: 'entry_index',
+    color: '#0891b2', // Cyan
+    description: '1 is best. Your ranking position among all active providers'
+  }
+];
+
+interface DateFormatterOptions {
+  timestamp: number;
+  index: number;
+  showTime?: boolean;
+}
+
+const formatChartDate = ({ timestamp, index, showTime = false }: DateFormatterOptions): string => {
+  if (index === 0) return '';
+  const date = new Date(timestamp);
+  const dateStr = `${date.getDate()} ${date.toLocaleDateString("en-US", { month: "short" })}`;
+  if (!showTime) return dateStr;
+  return `${dateStr} ${date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}`;
+};
+
 const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerMetricsChartProps> = ({ providerId }) => {
   const [uiConsumer, setUiConsumer] = useState("all");
   const [uiChainId, setUiChainId] = useState("all");
@@ -78,16 +148,15 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
 
   const chartData = useMemo(() => {
     if (!data?.metrics) return [];
-    return data.metrics
-      .map((metric: any) => ({
-        timestamp: new Date(metric.hourly_timestamp).getTime(),
-        sync_score: parseFloat(metric.sync_score),
-        latency_score: parseFloat(metric.latency_score),
-        availability_score: parseFloat(metric.availability_score),
-        generic_score: parseFloat(metric.generic_score),
-        entry_index: parseFloat(metric.entry_index),
-        node_error_rate: parseFloat(metric.node_error_rate),
-      }));
+    return data.metrics.map((metric: any): ChartDataPoint => ({
+      timestamp: new Date(metric.hourly_timestamp).getTime(),
+      sync_score: parseFloat(metric.sync_score),
+      latency_score: parseFloat(metric.latency_score),
+      availability_score: parseFloat(metric.availability_score),
+      generic_score: parseFloat(metric.generic_score),
+      entry_index: parseFloat(metric.entry_index),
+      node_error_rate: parseFloat(metric.node_error_rate),
+    }));
   }, [data?.metrics]);
 
   useEffect(() => {
@@ -101,6 +170,9 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
       setHasEverHadData(true);
     }
   }, [chartData]);
+
+  const formatAxisDate = (timestamp: number, index: number): string =>
+    formatChartDate({ timestamp, index });
 
   if (!initialLoadComplete && isLoading) {
     return (
@@ -134,20 +206,21 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
 
   const CustomTooltip = ({ active, payload }: any) => {
     if (!active || !payload?.[0]) return null;
+    const data = payload[0].payload as ChartDataPoint;
 
-    const data = payload[0].payload;
     return (
       <Card className="p-2">
         <CardHeader className="p-2">
-          <CardTitle className="text-sm">{format(data.timestamp, "MMM d, yyyy HH:mm")}</CardTitle>
+          <CardTitle className="text-sm">
+            {formatChartDate({ timestamp: data.timestamp, index: 1, showTime: true })}
+          </CardTitle>
         </CardHeader>
         <CardContent className="p-2">
-          <p className="text-sm">Sync Score: {Number(data.sync_score).toFixed(4)}</p>
-          <p className="text-sm">Latency Score: {Number(data.latency_score).toFixed(4)}</p>
-          <p className="text-sm">Availability Score: {Number(data.availability_score).toFixed(4)}</p>
-          <p className="text-sm">Generic Score: {Number(data.generic_score).toFixed(4)}</p>
-          <p className="text-sm">Node Error Rate: {Number(data.node_error_rate).toFixed(4)}</p>
-          <p className="text-sm">Relative Placement: {Number(data.entry_index).toFixed(4)}</p>
+          {METRICS.map(({ label, dataKey }) => (
+            <p key={dataKey} className="text-sm">
+              {label}: {Number(data[dataKey]).toFixed(4)}
+            </p>
+          ))}
         </CardContent>
       </Card>
     );
@@ -242,8 +315,11 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
           (!hasEverHadData && initialLoadComplete) ? "h-[100px]" : "h-[400px]"
         )}>
           {chartData.length > 0 && (
-            <ResponsiveContainer width="100%" height="100%">
-              <ComposedChart data={chartData}>
+            <ResponsiveContainer width="100%" height="100%" className="-ml-6">
+              <ComposedChart
+                data={chartData}
+                margin={{ left: 0, right: 0, top: 0, bottom: 0 }}
+              >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis
                   padding={{ left: 0, right: 0 }}
@@ -251,11 +327,7 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
                   type="number"
                   scale="time"
                   domain={['auto', 'auto']}
-                  tickFormatter={(timestamp, index) => {
-                    if (index === 0) return '';
-                    const date = new Date(timestamp)
-                    return `${date.getDate()} ${date.toLocaleDateString("en-US", { month: "short" })}` // ${date.toLocaleTimeString("en-US", { hour12: false, hour: "2-digit", minute: "2-digit" })}`
-                  }}
+                  tickFormatter={formatAxisDate}
                   interval="preserveStartEnd"
                   minTickGap={50}
                   textAnchor="end"
@@ -267,24 +339,21 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
                   style={{ fontSize: '0.75rem' }}
                 />
                 <Tooltip content={<CustomTooltip />} />
-                <Line
-                  type="monotone"
-                  dataKey="sync_score"
-                  stroke="#8884d8"
-                  dot={false}
-                  name="Sync Score"
-
-                />
+                {METRICS.map(({ dataKey, color, label }) => (
+                  <Line
+                    key={dataKey}
+                    type="monotone"
+                    dataKey={dataKey}
+                    stroke={color}
+                    dot={false}
+                    name={label}
+                  />
+                ))}
                 <Brush
                   dataKey="timestamp"
                   height={30}
                   stroke="hsl(var(--muted-foreground) / 0.3)"
-                  tickFormatter={(timestamp) => {
-                    const date = new Date(timestamp)
-                    return date.toLocaleDateString("en-US", { day: "numeric", month: "short" }) +
-                      " " +
-                      date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })
-                  }}
+                  tickFormatter={formatAxisDate}
                   fill="hsl(var(--background))"
                   travellerWidth={10}
                 />
@@ -301,6 +370,37 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
               )}
             </div>
           )}
+        </div>
+        <div className="mt-4 grid grid-cols-2 gap-2 lg:grid-cols-3 text-xs">
+          {METRICS.map(({ label, color, description }) => (
+            <div
+              key={label}
+              className="group relative flex items-start gap-2 p-2 rounded-md border border-border/50 bg-card/50 hover:bg-card transition-all duration-200"
+            >
+              <div
+                className="mt-1 h-2.5 w-2.5 flex-shrink-0 rounded-full ring-2 ring-offset-2 ring-offset-background transition-all duration-200 group-hover:ring-offset-4"
+                style={{
+                  backgroundColor: color,
+                  boxShadow: `0 0 0.5rem ${color}25`,
+                  ringColor: color
+                }}
+              />
+              <div className="space-y-0.5 relative">
+                <div className="absolute -inset-2 rounded-md opacity-0 group-hover:opacity-100 bg-gradient-to-r transition-opacity duration-200"
+                  style={{
+                    background: `linear-gradient(45deg, ${color}03, ${color}09)`,
+                    zIndex: -1
+                  }}
+                />
+                <p className="font-medium text-foreground/90 group-hover:text-foreground transition-colors duration-200">
+                  {label}
+                </p>
+                <p className="text-[10px] text-muted-foreground/80 group-hover:text-muted-foreground transition-colors duration-200">
+                  {description}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
       </CardContent>
     </Card>
