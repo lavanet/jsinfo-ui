@@ -49,7 +49,7 @@ export const chainDictionary: { [key: string]: ChainInfo } = {
     avax: { name: "Avalanche", icon: "/icons/avalanche.svg" },
     beam: { name: "Beam", icon: "/icons/beam.svg" },
     bsc: { name: "Binance Smart Chain", icon: "/icons/binance-smart-chain.svg" },
-    bsct: { name: "Binance Smart Chain", icon: "/icons/binance-smart-chain.svg" },
+    bsct: { name: "Binance Smart Chain Testnet", icon: "/icons/binance-smart-chain.svg" },
     btc: { name: "Bitcoin", icon: "/icons/bitcoin.svg" },
     bitkub: { name: "Bitkub Chain", icon: "/icons/bitkub-chain.svg" },
     blast: { name: "Blast", icon: "/icons/blast.svg" },

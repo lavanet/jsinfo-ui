@@ -39,6 +39,7 @@ export function ConvertToChainName(abbreviation: string): string {
         BASET: "Base Testnet",
         JUN1: "Juno",
         OPTMT: "Optimism Testnet",
+        POLYGONT: "Polygon Testnet",
         ALFAJORES: "Celo Alfajores Testnet",
         BLAST: "Blast",
         FVM: "Filecoin",
