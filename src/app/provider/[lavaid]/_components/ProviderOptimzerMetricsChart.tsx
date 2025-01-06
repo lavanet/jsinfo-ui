@@ -215,11 +215,26 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
             {formatChartDate({ timestamp: data.timestamp, index: 1, showTime: true })}
           </CardTitle>
         </CardHeader>
-        <CardContent className="p-2">
-          {METRICS.map(({ label, dataKey }) => (
-            <p key={dataKey} className="text-sm">
-              {label}: {Number(data[dataKey]).toFixed(4)}
-            </p>
+        <CardContent className="p-2 space-y-1">
+          {METRICS.map(({ label, dataKey, color }) => (
+            <div
+              key={dataKey}
+              className="flex items-center gap-2"
+            >
+              <div
+                className="h-2 w-2 rounded-full ring-1 ring-offset-1 ring-offset-background"
+                style={{
+                  backgroundColor: color,
+                  ringColor: color
+                }}
+              />
+              <p className="text-sm flex justify-between items-center w-full gap-8">
+                <span className="text-muted-foreground whitespace-nowrap">{label}:</span>
+                <span className="font-medium tabular-nums" style={{ color }}>
+                  {Number(data[dataKey]).toFixed(4)}
+                </span>
+              </p>
+            </div>
           ))}
         </CardContent>
       </Card>
