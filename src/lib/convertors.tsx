@@ -73,6 +73,8 @@ export function StatusToString(status: number) {
             return "Unstaking";
         case 4:
             return "Inactive";
+        case 5:
+            return "Jailed";
         default:
             return "Unknown";
     }
