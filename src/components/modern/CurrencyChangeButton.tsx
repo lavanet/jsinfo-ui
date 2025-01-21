@@ -25,11 +25,11 @@ const CurrencyChangeButton: FC = () => {
         setCurrency(prev => prev === 'USD' ? 'LAVA' : 'USD');
     };
 
-    return null;
+    // return null;
 
-    if (!isMainnet) {
-        return null;
-    }
+    // if (!isMainnet) {
+    //     return null;
+    // }
 
     return (
         <div className="flex justify-between items-center">
