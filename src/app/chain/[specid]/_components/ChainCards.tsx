@@ -35,7 +35,7 @@ const SpecIpRpcCuCard: React.FC<{ specid: string }> = ({ specid }) => {
     );
 };
 
-const SpecCuRelayRewardsCard: React.FC<SpecCardsProps> = ({ specId }) => {
+const SpecCuRelayCard: React.FC<SpecCardsProps> = ({ specId }) => {
     const { data, isLoading, error } = useJsinfobeFetch(`specCuRelayRewards/${specId}`);
     if (error) return <ErrorDisplay message={error} />;
     if (isLoading) return (
@@ -165,7 +165,7 @@ Time period: ${new Date(data.start_date).toLocaleString()} - ${new Date(data.end
 const SpecCards: React.FC<SpecCardsProps> = ({ specId }) => {
     return (
         <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
-            <SpecCuRelayRewardsCard specId={specId} />
+            <SpecCuRelayCard specId={specId} />
             <SpecIpRpcCuCard specid={specId} />
             <SpecProviderCountCard specId={specId} />
             <SpecEndpointHealthCard specId={specId} />

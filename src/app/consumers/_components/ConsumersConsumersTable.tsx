@@ -25,7 +25,7 @@ const ConsumersConsumersTable: React.FC<{}> = () => {
                     { key: "plan", name: "Plan" },
                     { key: "cuSum", name: "CU Sum" },
                     { key: "relaySum", name: "Relay Sum" },
-                    { key: "rewardSum", name: "Reward Sum" },
+                    // { key: "rewardSum", name: "Reward Sum" },
                     { key: "qosSyncAvg", name: "Qos Sync Avg" },
                     { key: "qosSyncExcAvg", name: "Qos Sync Exc Avg" },
                 ]}
@@ -40,7 +40,7 @@ const ConsumersConsumersTable: React.FC<{}> = () => {
                     </Link>),
                     cuSum: (data) => FormatNumber(data.cuSum),
                     relaySum: (data) => FormatNumber(data.relaySum),
-                    rewardSum: (data) => <LavaWithTooltip amount={data.rewardSum} />,
+                    // rewardSum: (data) => <LavaWithTooltip amount={data.rewardSum} />,
                     qosSyncAvg: (data) => FormatNumber(data.qosSyncAvg),
                     qosSyncExcAvg: (data) => FormatNumber(data.qosSyncExcAvg),
                 }}

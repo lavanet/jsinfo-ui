@@ -54,7 +54,7 @@ const CuRelayAndRewardsCard: React.FC<{ addr: string }> = ({ addr }: { addr: str
                 tooltip="Total relays for provider"
                 icon={<ArrowUpNarrowWide className="h-4 w-4 text-muted-foreground" />}
             />
-            {Boolean(data?.rewardSum && data.rewardSum !== "0") && (
+            {/* {Boolean(data?.rewardSum && data.rewardSum !== "0") && (
                 <StatCard
                     title="Total Rewards"
                     value={isLoading ? <LoaderImageForCards /> : <LavaWithTooltip amount={data?.rewardSum?.toString() || "0"} />}
@@ -63,7 +63,7 @@ const CuRelayAndRewardsCard: React.FC<{ addr: string }> = ({ addr }: { addr: str
                     tooltip="Total rewards for provider"
                     icon={<CreditCard className="h-4 w-4 text-muted-foreground" />}
                 />
-            )}
+            )} */}
         </>
     );
 };

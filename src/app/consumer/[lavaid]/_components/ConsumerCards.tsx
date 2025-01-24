@@ -58,13 +58,13 @@ const ConsumerCards: React.FC<ConsumerCardsProps> = ({ lavaid }) => {
                 formatNumber={true}
                 icon={<ArrowUpNarrowWide className="h-4 w-4 text-muted-foreground" />}
             />
-            <StatCard
+            {/* <StatCard
                 title="Pay Sum"
                 value={consumer.rewardSum}
                 className="col-span-2 md:col-span-1"
                 formatNumber={true}
                 icon={<CreditCard className="h-4 w-4 text-muted-foreground" />}
-            />
+            /> */}
         </div>
     );
 };

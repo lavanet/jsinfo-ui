@@ -31,7 +31,7 @@ export default function ProvidersProviderTab() {
                     columns={[
                         { key: "moniker", name: "Moniker" },
                         { key: "provider", name: "Provider Address" },
-                        { key: "rewardSum", name: "Total Rewards" },
+                        // { key: "rewardSum", name: "Total Rewards" },
                         {
                             key: "totalServices",
                             name: "Active/Total Services",
@@ -47,7 +47,7 @@ export default function ProvidersProviderTab() {
                     dataKey="indexProviders"
                     rowFormatters={{
                         moniker: (data) => (<MonikerWithTooltip provider={data} />),
-                        rewardSum: (data) => (<LavaWithTooltip amount={data.rewardSum} />),
+                        // rewardSum: (data) => (<LavaWithTooltip amount={data.rewardSum} />),
                         totalStake: (data) => (<LavaWithTooltip amount={data.totalStake} />),
                         totalServices: (data) => (<ModernTooltip title={`Active chains serviced by the provider (non frozen) / Total count of serviced chains by the provider`}>{data.totalServices}</ModernTooltip>)
                     }}
