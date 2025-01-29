@@ -21,7 +21,9 @@ const MonikerWithTooltip: React.FC<MonikerWithTooltipProps> = ({ provider }: Mon
         if (IsMeaningfulText(provider.moniker)) {
             return (
                 <ModernTooltip title={provider.monikerfull}>
-                    {provider.moniker}
+                    <span style={{ textAlign: 'left', display: 'block' }}>
+                        {provider.moniker}
+                    </span>
                 </ModernTooltip>
             );
         } else {

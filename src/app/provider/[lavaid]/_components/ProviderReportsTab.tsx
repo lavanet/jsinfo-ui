@@ -29,7 +29,9 @@ const ProviderReportsTab: React.FC<ProviderReportsTabProps> = ({ addr }) => {
             ]}
             tableDescription={
                 <>
-                    Jail reports are recorded on the chain following their submission. Disconnections indicate that the consumer was unable to establish a connection. For detailed information on errors, please refer to the Errors tab.
+                    Jail reports are recorded on the chain following their submission.<br />
+                    Disconnections indicate that the consumer was unable to establish a connection.<br />
+                    For detailed information on errors, please refer to the Errors tab.
                 </>
             }
             dataKey={`providerReports/${addr}`}

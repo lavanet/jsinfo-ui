@@ -28,6 +28,7 @@ type DataKeySortableTableComponentProps = {
   tableDescription?: React.ReactNode;
   firstColumn?: string;
   csvButton?: React.ReactNode;
+  csvButtonMargin?: string;
 };
 
 function usePaginatedData(dataKey: string, page: number, sortKey: string, sortDirection: 'a' | 'd') {
@@ -39,8 +40,14 @@ function usePaginatedData(dataKey: string, page: number, sortKey: string, sortDi
     `${dataKey}?pagination=${sortKey},${sortDirection},${page},20`
   );
 
+  const isEmptyResponse = data?.data &&
+    data.data.length === 1 &&
+    data.data[0] &&
+    (Object.values(data.data[0]).every(value => value === "") ||
+      (data.data[0].date === "" && data.data[0].spec === "" && data.data[0].error === ""));
+
   return {
-    data: data?.data || [],
+    data: isEmptyResponse ? [] : (data?.data || []),
     totalItems: countData?.itemCount || 0,
     isLoading,
     error
@@ -143,7 +150,18 @@ export const DataKeySortableTableComponent: React.FC<DataKeySortableTableCompone
           </div>
         )}
         <div style={{ opacity: isLoading ? 0.5 : 1 }}>
-          {props.tableDescription}
+          {props.tableDescription && (
+            <div style={{
+              color: 'var(--gray-11)',
+              margin: '16px 0 16px 16px',
+              fontSize: '15px',
+              lineHeight: '1.6',
+              fontWeight: 500,
+              paddingTop: '8px'
+            } as CSSProperties}>
+              {props.tableDescription}
+            </div>
+          )}
           <Table.Root>
             <Table.Header>
               <Table.Row>
@@ -180,7 +198,7 @@ export const DataKeySortableTableComponent: React.FC<DataKeySortableTableCompone
                             marginLeft: 'auto',
                             display: 'flex',
                             alignItems: 'center',
-                            marginTop: '0px'
+                            marginTop: props.csvButtonMargin || '0px'
                           } as CSSProperties}>
                             {props.csvButton}
                           </span>
