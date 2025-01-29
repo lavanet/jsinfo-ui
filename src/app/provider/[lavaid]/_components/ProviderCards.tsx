@@ -5,7 +5,7 @@ import StatCard from "@jsinfo/components/sections/StatCard";
 import { ErrorDisplay } from "@jsinfo/components/modern/ErrorDisplay";
 import LavaWithTooltip from "@jsinfo/components/modern/LavaWithTooltip";
 import { useJsinfobeFetch } from "@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch";
-import { ArrowUpNarrowWide, CreditCard, Landmark, MonitorCog, Trophy } from "lucide-react";
+import { ArrowUpNarrowWide, Landmark, MonitorCog, Trophy } from "lucide-react";
 import LoaderImageForCards from "@jsinfo/components/modern/LoaderImageForCards";
 import { FormatNumber } from '@jsinfo/lib/formatting';
 import { GetInfoNetwork } from '@jsinfo/lib/env';
@@ -54,16 +54,6 @@ const CuRelayAndRewardsCard: React.FC<{ addr: string }> = ({ addr }: { addr: str
                 tooltip="Total relays for provider"
                 icon={<ArrowUpNarrowWide className="h-4 w-4 text-muted-foreground" />}
             />
-            {/* {Boolean(data?.rewardSum && data.rewardSum !== "0") && (
-                <StatCard
-                    title="Total Rewards"
-                    value={isLoading ? <LoaderImageForCards /> : <LavaWithTooltip amount={data?.rewardSum?.toString() || "0"} />}
-                    className="col-span-2 md:col-span-1"
-                    formatNumber={false}
-                    tooltip="Total rewards for provider"
-                    icon={<CreditCard className="h-4 w-4 text-muted-foreground" />}
-                />
-            )} */}
         </>
     );
 };

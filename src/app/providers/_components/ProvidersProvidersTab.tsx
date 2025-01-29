@@ -16,56 +16,53 @@ export default function ProvidersProviderTab() {
         setDataKey(checked ? "indexProviders" : "indexProvidersActive");
     };
 
-    let tableCheckbox = (
-        <div style={{ color: 'grey', margin: '5px', marginLeft: '13px' }}>
-            <TextCheckbox key="indexprovidertabcheckbox" text="Show inactive providers" onChange={handleShowInactiveProviders} style={{ display: 'inline-block' }} />
-        </div>
-    )
+    // let tableCheckbox = (
+    //     <div style={{ color: 'grey', margin: '5px', marginLeft: '13px' }}>
+    //         <TextCheckbox key="indexprovidertabcheckbox" text="Show inactive providers" onChange={handleShowInactiveProviders} style={{ display: 'inline-block' }} />
+    //     </div>
+    // )
 
-    if ("indexProviders" == dataKey) {
-        return (
-            <Tabs.Content value={"providers"}>
-                {tableCheckbox}
-                <DataKeySortableTableComponent
-                    key="inactiveProviders"
-                    columns={[
-                        { key: "moniker", name: "Moniker" },
-                        { key: "provider", name: "Provider Address" },
-                        // { key: "rewardSum", name: "Total Rewards" },
-                        {
-                            key: "totalServices",
-                            name: "Active/Total Services",
-                            altKey: "nStakes",
-                        },
-                        { key: "totalStake", name: "Total Stake" },
-                    ]}
-                    defaultSortKey="totalStake|desc"
-                    tableAndTabName="inactiveProviders"
-                    pkey="provider"
-                    pkeyUrl="provider"
-                    firstColumn="moniker"
-                    dataKey="indexProviders"
-                    rowFormatters={{
-                        moniker: (data) => (<MonikerWithTooltip provider={data} />),
-                        // rewardSum: (data) => (<LavaWithTooltip amount={data.rewardSum} />),
-                        totalStake: (data) => (<LavaWithTooltip amount={data.totalStake} />),
-                        totalServices: (data) => (<ModernTooltip title={`Active chains serviced by the provider (non frozen) / Total count of serviced chains by the provider`}>{data.totalServices}</ModernTooltip>)
-                    }}
-                    csvButton={<TableCsvButton csvDownloadLink="indexProvidersCsv" />}
-                />
-            </Tabs.Content>
-        );
-    }
+    // if ("indexProviders" == dataKey) {
+    //     return (
+    //         <Tabs.Content value={"providers"}>
+    //             {tableCheckbox}
+    //             <DataKeySortableTableComponent
+    //                 key="inactiveProviders"
+    //                 columns={[
+    //                     { key: "moniker", name: "Moniker" },
+    //                     { key: "provider", name: "Provider Address" },
+    //                     {
+    //                         key: "totalServices",
+    //                         name: "Active/Total Services",
+    //                         altKey: "nStakes",
+    //                     },
+    //                     { key: "totalStake", name: "Total Stake" },
+    //                 ]}
+    //                 defaultSortKey="totalStake|desc"
+    //                 tableAndTabName="inactiveProviders"
+    //                 pkey="provider"
+    //                 pkeyUrl="provider"
+    //                 firstColumn="moniker"
+    //                 dataKey="indexProviders"
+    //                 rowFormatters={{
+    //                     moniker: (data) => (<MonikerWithTooltip provider={data} />),
+    //                     totalStake: (data) => (<LavaWithTooltip amount={data.totalStake} />),
+    //                     totalServices: (data) => (<ModernTooltip title={`Active chains serviced by the provider (non frozen) / Total count of serviced chains by the provider`}>{data.totalServices}</ModernTooltip>)
+    //                 }}
+    //                 csvButton={<TableCsvButton csvDownloadLink="indexProvidersCsv" />}
+    //             />
+    //         </Tabs.Content>
+    //     );
+    // }
 
     return (
         <Tabs.Content value={"providers"}>
-            {tableCheckbox}
+            {/* {tableCheckbox} */}
             <DataKeySortableTableComponent
                 key="activeProviders"
                 columns={[
                     { key: "moniker", name: "Moniker" },
                     { key: "provider", name: "Provider Address" },
-                    { key: "rewardSum", name: "Total Rewards" },
                     {
                         key: "totalServices",
                         name: "Active/Total Services",
@@ -81,7 +78,6 @@ export default function ProvidersProviderTab() {
                 dataKey="indexProvidersActive"
                 rowFormatters={{
                     moniker: (data) => (<MonikerWithTooltip provider={data} />),
-                    rewardSum: (data) => (<LavaWithTooltip amount={data.rewardSum} />),
                     totalStake: (data) => (<LavaWithTooltip amount={data.totalStake} />),
                     totalServices: (data) => (<ModernTooltip title={`The total number of active chains serviced by the provider (excluding frozen services) / the total number of serviced chains for the provider`}>{data.totalServices}</ModernTooltip>)
                 }}
