@@ -27,8 +27,9 @@ interface ItemCountData {
 
 export const Providers30DayRelayCard: React.FC = () => {
     const { data, isLoading, error } = useJsinfobeFetch<CUData>("index30DayCu");
+
     if (error) return <ErrorDisplay message={error} />
-    if (isLoading) return (
+    if (isLoading || !data) return (
         <StatCard
             title="Relays (30 days)"
             value={<LoaderImageForCards />}
@@ -39,18 +40,18 @@ export const Providers30DayRelayCard: React.FC = () => {
     );
 
     const tooltip = FormatNumber(data.relaySum30Days);
-    const value = FormatNumberKMB(data.relaySum30Days);
+    const value = FormatNumberKMB(data.relaySum30Days.toString());
 
     return (
         <StatCard
             title="Relays (30 days)"
-            value={
-                <span title={tooltip} style={{ whiteSpace: 'nowrap' }}>
-                    {value}
-                </span>
-            }
+            value={<span title={tooltip} style={{ whiteSpace: 'nowrap' }}>{value}</span>}
             className="col-span-1"
             formatNumber={false}
+            tooltip={[
+                "Total number of relays processed by all providers in the last 30 days",
+                `Exact value: ${tooltip}`
+            ].join('\n')}
             icon={<CalendarArrowUp className="h-4 w-4 text-muted-foreground" />}
         />
     )
@@ -58,8 +59,9 @@ export const Providers30DayRelayCard: React.FC = () => {
 
 export const ProvidersTotalRelaysCard: React.FC = () => {
     const { data, isLoading, error } = useJsinfobeFetch<CUData>("indexTotalCu");
+
     if (error) return <ErrorDisplay message={error} />
-    if (isLoading) return (
+    if (isLoading || !data) return (
         <StatCard
             title="Relays (All Time)"
             value={<LoaderImageForCards />}
@@ -70,18 +72,18 @@ export const ProvidersTotalRelaysCard: React.FC = () => {
     );
 
     const tooltip = FormatNumber(data.relaySum);
-    const value = FormatNumberKMB(data.relaySum);
+    const value = FormatNumberKMB(data.relaySum.toString());
 
     return (
         <StatCard
             title="Relays (All Time)"
-            value={
-                <span title={tooltip} style={{ whiteSpace: 'nowrap' }}>
-                    {value}
-                </span>
-            }
+            value={<span title={tooltip} style={{ whiteSpace: 'nowrap' }}>{value}</span>}
             className="col-span-1"
             formatNumber={false}
+            tooltip={[
+                "Total number of relays processed since genesis",
+                `Exact value: ${tooltip}`
+            ].join('\n')}
             icon={<ArrowUpNarrowWide className="h-4 w-4 text-muted-foreground" />}
         />
     )
@@ -90,7 +92,7 @@ export const ProvidersTotalRelaysCard: React.FC = () => {
 export const Providers30DayCUCard: React.FC = () => {
     const { data, isLoading, error } = useJsinfobeFetch<CUData>("index30DayCu");
     if (error) return <ErrorDisplay message={error} />
-    if (isLoading) return (
+    if (isLoading || !data) return (
         <StatCard
             title="CU (30 days)"
             value={<LoaderImageForCards />}
@@ -101,18 +103,18 @@ export const Providers30DayCUCard: React.FC = () => {
     );
 
     const tooltip = FormatNumber(data.cuSum30Days);
-    const value = FormatNumberKMB(data.cuSum30Days);
+    const value = FormatNumberKMB(data.cuSum30Days.toString());
 
     return (
         <StatCard
             title="CU (30 days)"
-            value={
-                <span title={tooltip} style={{ whiteSpace: 'nowrap' }}>
-                    {value}
-                </span>
-            }
+            value={<span title={tooltip} style={{ whiteSpace: 'nowrap' }}>{value}</span>}
             className="col-span-1"
             formatNumber={false}
+            tooltip={[
+                "Total Compute Units (CU) processed in the last 30 days",
+                `Exact value: ${tooltip}`
+            ].join('\n')}
             icon={<CalendarCog className="h-4 w-4 text-muted-foreground" />}
         />
     )
@@ -121,7 +123,7 @@ export const Providers30DayCUCard: React.FC = () => {
 export const ProvidersTotalCuCard: React.FC = () => {
     const { data, isLoading, error } = useJsinfobeFetch<CUData>("indexTotalCu");
     if (error) return <ErrorDisplay message={error} />
-    if (isLoading) return (
+    if (isLoading || !data) return (
         <StatCard
             title="CU (All Time)"
             value={<LoaderImageForCards />}
@@ -132,18 +134,18 @@ export const ProvidersTotalCuCard: React.FC = () => {
     );
 
     const tooltip = FormatNumber(data.cuSum);
-    const value = FormatNumberKMB(data.cuSum);
+    const value = FormatNumberKMB(data.cuSum.toString());
 
     return (
         <StatCard
             title="CU (All Time)"
-            value={
-                <span title={tooltip} style={{ whiteSpace: 'nowrap' }}>
-                    {value}
-                </span>
-            }
+            value={<span title={tooltip} style={{ whiteSpace: 'nowrap' }}>{value}</span>}
             className="col-span-1"
             formatNumber={false}
+            tooltip={[
+                "Total Compute Units (CU) processed since genesis",
+                `Exact value: ${tooltip}`
+            ].join('\n')}
             icon={<MonitorCog className="h-4 w-4 text-muted-foreground" />}
         />
     )
@@ -151,8 +153,9 @@ export const ProvidersTotalCuCard: React.FC = () => {
 
 export const ProvidersStakeCard: React.FC = () => {
     const { data, isLoading, error } = useJsinfobeFetch<StakeData>("indexStakesHandler");
+
     if (error) return <ErrorDisplay message={error} />
-    if (isLoading) return (
+    if (isLoading || !data) return (
         <StatCard
             title="Stake"
             value={<LoaderImageForCards />}
@@ -162,17 +165,21 @@ export const ProvidersStakeCard: React.FC = () => {
         />
     );
 
-    let ulavaValue = FormatAsULava(data.stakeSum);
-    let stakeSumLava = parseInt(data.stakeSum + "", 10) / 1000000
-    let lavaValue = FormatNumberKMB(stakeSumLava + "");
+    const stakeNum = typeof data.stakeSum === 'string' ? parseInt(data.stakeSum, 10) : data.stakeSum;
+    const ulavaValue = FormatAsULava(stakeNum);
+    const stakeSumLava = stakeNum / 1000000;
+    const lavaValue = FormatNumberKMB(stakeSumLava.toString());
 
     return (
         <StatCard
             title="Stake"
-            value={lavaValue + " LAVA"}
+            value={`${lavaValue} LAVA`}
             className="col-span-1"
             formatNumber={false}
-            tooltip={`Cache hit/total for all specs in the last 30 days.\nvalue in ulava: ${ulavaValue}.`}
+            tooltip={[
+                "Total amount staked by all providers",
+                `Value in ulava: ${ulavaValue}`
+            ].join('\n')}
             icon={<Landmark className="h-4 w-4 text-muted-foreground" />}
         />
     )
