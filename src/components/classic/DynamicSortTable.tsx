@@ -15,6 +15,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@jsinfo/components/shadcn/ui2/Pagination";
+import type { CSSProperties } from 'react';
 
 type DataKeySortableTableComponentProps = {
   columns: Column[];
@@ -146,23 +147,48 @@ export const DataKeySortableTableComponent: React.FC<DataKeySortableTableCompone
           <Table.Root>
             <Table.Header>
               <Table.Row>
-                {props.columns.map(column => (
+                {props.columns.map((column, index) => (
                   <Table.ColumnHeaderCell
                     key={column.key}
                     onClick={() => handleSort(column.key)}
-                    style={{ cursor: 'pointer', textAlign: 'left' }}
+                    style={{
+                      cursor: 'pointer',
+                      textAlign: 'left',
+                      padding: '16px 16px 20px',
+                      height: '56px',
+                      verticalAlign: 'top'
+                    } as CSSProperties}
                   >
-                    {column.name}
-                    {sortKey === column.key && (
-                      <span>{sortDirection === 'a' ? ' ↑' : ' ↓'}</span>
-                    )}
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      justifyContent: 'space-between',
+                      height: '100%',
+                      paddingTop: '4px'
+                    }}>
+                      <span>{column.name}</span>
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '12px'
+                      }}>
+                        {sortKey === column.key && (
+                          <span>{sortDirection === 'a' ? ' ↑' : ' ↓'}</span>
+                        )}
+                        {props.csvButton && index === props.columns.length - 1 && (
+                          <span style={{
+                            marginLeft: 'auto',
+                            display: 'flex',
+                            alignItems: 'center',
+                            marginTop: '0px'
+                          } as CSSProperties}>
+                            {props.csvButton}
+                          </span>
+                        )}
+                      </div>
+                    </div>
                   </Table.ColumnHeaderCell>
                 ))}
-                {props.csvButton && (
-                  <Table.ColumnHeaderCell style={{ width: '1%', padding: '0 8px' }}>
-                    {props.csvButton}
-                  </Table.ColumnHeaderCell>
-                )}
               </Table.Row>
             </Table.Header>
             <Table.Body>
@@ -181,7 +207,6 @@ export const DataKeySortableTableComponent: React.FC<DataKeySortableTableCompone
                       )}
                     </Table.Cell>
                   ))}
-                  {props.csvButton && <Table.Cell style={{ width: '1%' }} />}
                 </Table.Row>
               ))}
             </Table.Body>
