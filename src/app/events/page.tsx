@@ -140,7 +140,6 @@ export default function Events() {
                   );
                 },
               }}
-              NoAutoScrollOnceContentIsLoaded={true}
             />
 
             <DataKeySortableTableInATabComponent

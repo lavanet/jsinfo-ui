@@ -25,7 +25,7 @@ const ProviderBlockReportsTab: React.FC<ProviderBlockReportsTabProps> = ({ addr 
             ]}
             tableDescription={
                 <>
-                    The chains (cookbook specs) supported by this provider in thier latest blocks
+                    The chains lava/specs (on the github) supported by this provider in thier latest blocks
                 </>
             }
             dataKey={`providerBlockReports/${addr}`}

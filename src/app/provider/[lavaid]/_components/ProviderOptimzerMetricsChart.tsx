@@ -49,37 +49,37 @@ const METRICS: MetricDefinition[] = [
   {
     label: 'Sync Score',
     dataKey: 'sync_score',
-    color: '#4f46e5', // Indigo
+    color: '#dc2626', // Red-600
     description: 'Lower is better. Measures block height difference from network average'
   },
   {
     label: 'Latency Score',
     dataKey: 'latency_score',
-    color: '#059669', // Emerald
+    color: '#b91c1c', // Red-700
     description: 'Lower is better. Average response time compared to other providers'
   },
   {
     label: 'Availability Score',
     dataKey: 'availability_score',
-    color: '#eab308', // Yellow
+    color: '#ef4444', // Red-500
     description: 'Higher is better. Percentage of successful responses over time'
   },
   {
     label: 'Generic Score',
     dataKey: 'generic_score',
-    color: '#7c3aed', // Violet
+    color: '#991b1b', // Red-800
     description: 'Lower is better. Combined performance metric across all categories'
   },
   {
     label: 'Node Error Rate',
     dataKey: 'node_error_rate',
-    color: '#dc2626', // Red
+    color: '#7f1d1d', // Red-900
     description: 'Lower is better. Percentage of requests resulting in errors'
   },
   {
     label: 'Relative Placement',
     dataKey: 'entry_index',
-    color: '#0891b2', // Cyan
+    color: '#f87171', // Red-400
     description: '1 is best. Your ranking position among all active providers'
   }
 ];
@@ -248,13 +248,15 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
           <div className="flex items-center gap-2">
             <div className="flex flex-col">
               <CardTitle>Provider's Consumer Optimizer Metrics
-                <ModernTooltip title={
-                  "Scores range from 0 to 1, where lower scores are better for latency and sync,\n" +
-                  "while availability should be close to 1.\n" +
-                  "The Relative Placement shows this provider's rank compared to other providers,\n" +
+                <ModernTooltip title={[
+                  "Scores range from 0 to 1, where lower scores are better for latency and sync,",
+                  "while availability should be close to 1.",
+                  "The Relative Placement shows this provider's rank compared to other providers,",
                   "where 1 represents the best performing provider."
-                }>
-                  <InfoCircledIcon className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors duration-200 cursor-pointer ml-2" />
+                ].join('\n')}>
+                  <InfoCircledIcon
+                    className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors duration-200 cursor-pointer ml-2"
+                  />
                 </ModernTooltip>
               </CardTitle>
               <CardDescription>

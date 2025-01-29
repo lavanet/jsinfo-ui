@@ -42,7 +42,6 @@ const ProviderHealthTab: React.FC<ProviderHealthTabProps> = ({ addr }) => {
                     csvDownloadLink={`providerHealthCsv/${addr}`}
                 />
             )}
-            NoAutoScrollOnceContentIsLoaded={true}
         />
     );
 };
