@@ -9,8 +9,24 @@ import { FormatNumber, FormatNumberKMB } from '@jsinfo/lib/formatting';
 import StatCard from '@jsinfo/components/sections/StatCard';
 import { MonitorCog, CalendarArrowUp, ArrowUpNarrowWide, Landmark, CalendarCog, Activity } from 'lucide-react';
 
+// Add these interfaces at the top of the file after the imports
+interface CUData {
+    relaySum30Days: number;
+    relaySum: number;
+    cuSum30Days: number;
+    cuSum: number;
+}
+
+interface StakeData {
+    stakeSum: string | number;
+}
+
+interface ItemCountData {
+    itemCount: number;
+}
+
 export const Providers30DayRelayCard: React.FC = () => {
-    const { data, isLoading, error } = useJsinfobeFetch("index30DayCu");
+    const { data, isLoading, error } = useJsinfobeFetch<CUData>("index30DayCu");
     if (error) return <ErrorDisplay message={error} />
     if (isLoading) return (
         <StatCard
@@ -41,7 +57,7 @@ export const Providers30DayRelayCard: React.FC = () => {
 };
 
 export const ProvidersTotalRelaysCard: React.FC = () => {
-    const { data, isLoading, error } = useJsinfobeFetch("indexTotalCu");
+    const { data, isLoading, error } = useJsinfobeFetch<CUData>("indexTotalCu");
     if (error) return <ErrorDisplay message={error} />
     if (isLoading) return (
         <StatCard
@@ -72,7 +88,7 @@ export const ProvidersTotalRelaysCard: React.FC = () => {
 };
 
 export const Providers30DayCUCard: React.FC = () => {
-    const { data, isLoading, error } = useJsinfobeFetch("index30DayCu");
+    const { data, isLoading, error } = useJsinfobeFetch<CUData>("index30DayCu");
     if (error) return <ErrorDisplay message={error} />
     if (isLoading) return (
         <StatCard
@@ -103,7 +119,7 @@ export const Providers30DayCUCard: React.FC = () => {
 };
 
 export const ProvidersTotalCuCard: React.FC = () => {
-    const { data, isLoading, error } = useJsinfobeFetch("indexTotalCu");
+    const { data, isLoading, error } = useJsinfobeFetch<CUData>("indexTotalCu");
     if (error) return <ErrorDisplay message={error} />
     if (isLoading) return (
         <StatCard
@@ -134,7 +150,7 @@ export const ProvidersTotalCuCard: React.FC = () => {
 };
 
 export const ProvidersStakeCard: React.FC = () => {
-    const { data, isLoading, error } = useJsinfobeFetch("indexStakesHandler");
+    const { data, isLoading, error } = useJsinfobeFetch<StakeData>("indexStakesHandler");
     if (error) return <ErrorDisplay message={error} />
     if (isLoading) return (
         <StatCard
@@ -163,7 +179,7 @@ export const ProvidersStakeCard: React.FC = () => {
 };
 
 export const ProvidersTotalActiveProviders: React.FC = () => {
-    const { data, isLoading, error } = useJsinfobeFetch("item-count/indexProvidersActive");
+    const { data, isLoading, error } = useJsinfobeFetch<ItemCountData>("item-count/indexProvidersActive");
     if (error) return <ErrorDisplay message={error} />
     if (isLoading) return (
         <StatCard
@@ -175,7 +191,8 @@ export const ProvidersTotalActiveProviders: React.FC = () => {
         />
     );
 
-    const itemCount = data.itemCount ?? 0;
+    const typedData = data as ItemCountData;
+    const itemCount = typedData.itemCount ?? 0;
 
     return (
         <StatCard
@@ -183,7 +200,10 @@ export const ProvidersTotalActiveProviders: React.FC = () => {
             value={itemCount}
             className="col-span-1"
             formatNumber={false}
-            tooltip={`Cache hit/total for all specs in the last 30 days`}
+            tooltip={[
+                "Number of providers that are currently active in the network.",
+                "Active means: not jailed, not frozen, and has processed at least 1 relay in the last 30 days."
+            ].join('\n')}
             icon={<Activity className="h-4 w-4 text-muted-foreground" />}
         />
     )
