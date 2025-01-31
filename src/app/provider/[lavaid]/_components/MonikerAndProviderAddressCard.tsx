@@ -1,5 +1,7 @@
 // src/components/MonikerAndProviderAddressCard.tsx
 
+"use client";
+
 import React from 'react';
 import Image from 'next/image';
 import { Text } from "@radix-ui/themes";
@@ -22,16 +24,52 @@ interface MonikerAndProviderAddressCardProps {
     provider: ProviderMonikerFullInfo;
 }
 
-const renderUserIcon = () => (
-    <div style={{ margin: "-15px", marginBottom: "-1px", marginLeft: "-25px" }}>
-        <Image
-            src="/user-line.svg"
-            width={70}
-            height={70}
-            alt="user"
-        />
-    </div>
-);
+const renderUserIcon = (providerId: string) => {
+    const { data: avatarData } = useJsinfobeFetch<{ avatar_url: string }>(
+        `provider_avatar/${providerId}`
+    );
+
+    if (avatarData?.avatar_url) {
+        return (
+            <div style={{
+                marginTop: "-14px",
+                marginLeft: "2px",
+                marginRight: "10px",
+                marginBottom: "0px",
+                width: "30px",
+                height: "30px",
+                flexShrink: 0,
+                display: 'flex',
+                alignItems: 'center'
+            }}>
+                <img
+                    src={avatarData.avatar_url}
+                    width={25}
+                    height={25}
+                    alt="provider avatar"
+                    style={{
+                        borderRadius: '50%',
+                        objectFit: 'cover',
+                        width: '100%',
+                        height: '100%'
+                    }}
+                />
+            </div>
+        );
+    }
+
+    // Fallback to default user icon
+    return (
+        <div style={{ margin: "-15px", marginBottom: "-1px", marginLeft: "-25px" }}>
+            <Image
+                src="/user-line.svg"
+                width={70}
+                height={70}
+                alt="user"
+            />
+        </div>
+    );
+};
 
 const renderMoniker = (moniker: string, monikerfull: string) => (
     <ModernTooltip title={monikerfull}>
@@ -85,7 +123,7 @@ export const MonikerAndProviderAddressCard: React.FC<MonikerAndProviderAddressCa
                 return (
                     <>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                            {renderUserIcon()}
+                            {renderUserIcon(provider.provider)}
                             {renderMoniker(provider.moniker, provider.monikerfull)}
                         </div>
                         {renderProviderAddressOnNewLine(provider.provider)}
@@ -94,7 +132,7 @@ export const MonikerAndProviderAddressCard: React.FC<MonikerAndProviderAddressCa
             } else if (IsMeaningfulText(provider.provider)) {
                 return (
                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                        {renderUserIcon()}
+                        {renderUserIcon(provider.provider)}
                         {renderProviderAddressInLineWithIcon(provider.provider)}
                     </div>
                 );
