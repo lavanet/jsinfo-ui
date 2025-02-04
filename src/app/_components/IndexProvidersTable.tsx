@@ -17,6 +17,7 @@ import { JsinfobeAxiosGet } from "@jsinfo/fetching/jsinfobe/api-client/JsinfobeA
 import PaginationControl from "@jsinfo/components/modern/Pagination";
 import ModernTooltip from "@jsinfo/components/modern/ModernTooltip";
 import { IsMeaningfulText } from "@jsinfo/lib/formatting";
+import LavaWithTooltip from "@jsinfo/components/modern/LavaWithTooltip";
 
 const ProvidersTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -74,7 +75,7 @@ const ProvidersTable = () => {
                   {provider.totalServices.split('/')[0].trim()}
                 </ModernTooltip>
               </TableCell>
-              <TableCell>{Number(provider.totalStake).toLocaleString()}</TableCell>
+              <TableCell><LavaWithTooltip amount={provider.totalStake} /></TableCell>
             </TableRow>
           ))}
         </TableBody>
