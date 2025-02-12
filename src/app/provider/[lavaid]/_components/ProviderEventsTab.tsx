@@ -43,11 +43,9 @@ const ProviderEventsTab: React.FC<ProviderEventsTabProps> = ({ addr }) => {
             rowFormatters={{
                 "events.eventType": (evt) => (
                     <Link className='orangelinks'
-                        href={
-                            evt.events.tx
-                                ? `${GetExplorersGuruUrl()}/transaction/${evt.events.tx}`
-                                : `${GetExplorersGuruUrl()}/block/${evt.events.blockId}`
-                        }
+                        href={evt.events.tx ?
+                            `${GetExplorersGuruUrl()}/transaction/${evt.events.tx}` :
+                            `${GetExplorersGuruUrl()}/block/${evt.events.blockId}`}
                     >
                         {EventTypeToString(evt.events.eventType)}
                     </Link>
@@ -59,44 +57,30 @@ const ProviderEventsTab: React.FC<ProviderEventsTabProps> = ({ addr }) => {
                         {evt.events.blockId}
                     </Link>
                 ),
-                "blocks.datetime": (evt) =>
-                    (<TimeTooltip datetime={evt.blocks.datetime} />),
-                text1: (evt) => {
-                    return (
-                        <div
-                            style={{
-                                wordBreak: "break-all",
-                                whiteSpace: "pre-wrap",
-                            }}
-                        >
-                            {evt.events.t1}
-                        </div>
-                    );
-                },
-                text2: (evt) => {
-                    return (
-                        <div
-                            style={{
-                                wordBreak: "break-all",
-                                whiteSpace: "pre-wrap",
-                            }}
-                        >
-                            {evt.events.t2}
-                        </div>
-                    );
-                },
-                text3: (evt) => {
-                    return (
-                        <div
-                            style={{
-                                wordBreak: "break-all",
-                                whiteSpace: "pre-wrap",
-                            }}
-                        >
-                            {evt.events.t3}
-                        </div>
-                    );
-                },
+                "blocks.datetime": (evt) => (
+                    <TimeTooltip datetime={evt.blocks.datetime} />
+                ),
+                "events.t1": (evt) => (
+                    <div style={{ wordBreak: "break-all", whiteSpace: "pre-wrap" }}>
+                        {evt.events.t1}
+                    </div>
+                ),
+                "events.t2": (evt) => (
+                    <div style={{ wordBreak: "break-all", whiteSpace: "pre-wrap" }}>
+                        {evt.events.t2}
+                    </div>
+                ),
+                "events.t3": (evt) => (
+                    <div style={{ wordBreak: "break-all", whiteSpace: "pre-wrap" }}>
+                        {evt.events.t3}
+                    </div>
+                ),
+                "events.b1": (evt) => evt.events.b1,
+                "events.b2": (evt) => evt.events.b2,
+                "events.b3": (evt) => evt.events.b3,
+                "events.i1": (evt) => evt.events.i1,
+                "events.i2": (evt) => evt.events.i2,
+                "events.i3": (evt) => evt.events.i3
             }}
             csvButton={(
                 <TableCsvButton

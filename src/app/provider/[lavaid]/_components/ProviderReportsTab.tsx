@@ -60,6 +60,10 @@ const ProviderReportsTab: React.FC<ProviderReportsTabProps> = ({ addr }) => {
                 ),
                 "blocks.datetime": (report) =>
                     (<TimeTooltip datetime={report.blocks.datetime} />),
+                "provider_reported.cu": (report) => report.provider_reported.cu,
+                "provider_reported.disconnections": (report) => report.provider_reported.disconnections,
+                "provider_reported.errors": (report) => report.provider_reported.errors,
+                "provider_reported.project": (report) => report.provider_reported.project
             }}
             csvButton={(
                 <TableCsvButton
