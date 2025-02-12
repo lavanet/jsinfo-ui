@@ -26,6 +26,22 @@ export default function Navigation() {
       <Link href="/consumers" className={`nav-link ${isActive('/consumers') ? 'nav-link-selected' : ''}`}>
         Consumers
       </Link>
+      <Link
+        href="https://rewards.lavanet.xyz"
+        className="nav-link"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Rewards
+      </Link>
+      <Link
+        href="https://stats.lavanet.xyz"
+        className="nav-link"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span className="whitespace-nowrap">Network Stats</span>
+      </Link>
     </nav>
   );
 }

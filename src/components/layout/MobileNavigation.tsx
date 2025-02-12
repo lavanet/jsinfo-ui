@@ -42,6 +42,24 @@ export default function MobileNavigation() {
           <Link href="/consumers" className={`nav-link ${isActive('/consumers') ? 'nav-link-selected' : ''}`} onClick={closeMenu}>
             Consumers
           </Link>
+          <Link
+            href="https://rewards.lavanet.xyz"
+            className="nav-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={closeMenu}
+          >
+            Rewards
+          </Link>
+          <Link
+            href="https://stats.lavanet.xyz"
+            className="nav-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={closeMenu}
+          >
+            Network Stats
+          </Link>
         </nav>
       </SheetContent>
     </Sheet>

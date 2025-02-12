@@ -19,6 +19,30 @@ import ModernTooltip from "@jsinfo/components/modern/ModernTooltip";
 import { IsMeaningfulText } from "@jsinfo/lib/formatting";
 import LavaWithTooltip from "@jsinfo/components/modern/LavaWithTooltip";
 
+const ProviderWithAvatar = ({ provider }: { provider: any }) => {
+  const { data: avatarData } = useJsinfobeFetch<{ avatar_url: string }>(
+    `provider_avatar/${provider.provider}`
+  );
+
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+      {avatarData?.avatar_url && (
+        <img
+          src={avatarData.avatar_url}
+          width={20}
+          height={20}
+          alt="provider avatar"
+          style={{
+            borderRadius: '50%',
+            objectFit: 'cover'
+          }}
+        />
+      )}
+      {IsMeaningfulText(provider.moniker) ? provider.moniker : provider.provider}
+    </div>
+  );
+};
+
 const ProvidersTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -68,7 +92,9 @@ const ProvidersTable = () => {
           {providers.map((provider: any, index: number) => (
             <TableRow key={index}>
               <Link className="orangelinks" href={`/provider/${provider.provider}`}>
-                <TableCell>{IsMeaningfulText(provider.moniker) ? provider.moniker : provider.provider}</TableCell>
+                <TableCell>
+                  <ProviderWithAvatar provider={provider} />
+                </TableCell>
               </Link>
               <TableCell>
                 <ModernTooltip title={`Active chains serviced by the provider (non frozen services)`}>
