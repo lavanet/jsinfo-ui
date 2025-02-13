@@ -38,7 +38,22 @@ export const viewport: Viewport = {
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
-})
+  display: 'swap',
+  preload: true,
+  fallback: [
+    '-apple-system',
+    'BlinkMacSystemFont',
+    'Segoe UI',
+    'Roboto',
+    'Oxygen',
+    'Ubuntu',
+    'Cantarell',
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    'sans-serif'
+  ],
+});
 
 export default function RootLayout({
   children,
@@ -50,6 +65,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
         <Script
           id="console-warnings"
           strategy="beforeInteractive"
@@ -61,7 +81,11 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
+      <body className={cn(
+        "min-h-screen bg-background antialiased",
+        fontSans.variable,
+        fontSans.className
+      )}>
         <ShadcnThemeProvider attribute="class" defaultTheme="dark">
           <Container>
             {!isDev && <SpeedInsights />}

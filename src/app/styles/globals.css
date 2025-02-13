@@ -10,9 +10,17 @@
 
 /* -------- fonts --------------------------- */
 :root {
-  --default-font-family: -apple-system, system-ui, BlinkMacSystemFont,
-    "Segoe UI", Roboto;
+  --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, Segoe UI,
+    Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+    sans-serif;
 }
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .body,
 .rt-BaseCard,
 .radix-themes {
