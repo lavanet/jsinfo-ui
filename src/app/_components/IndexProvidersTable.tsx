@@ -91,17 +91,22 @@ const ProvidersTable = () => {
         <TableBody>
           {providers.map((provider: any, index: number) => (
             <TableRow key={index}>
-              <Link className="orangelinks" href={`/provider/${provider.provider}`}>
-                <TableCell>
+              <TableCell>
+                <Link
+                  className="orangelinks"
+                  href={`/provider/${provider.provider}`}
+                >
                   <ProviderWithAvatar provider={provider} />
-                </TableCell>
-              </Link>
+                </Link>
+              </TableCell>
               <TableCell>
                 <ModernTooltip title={`Active chains serviced by the provider (non frozen services)`}>
                   {provider.totalServices.split('/')[0].trim()}
                 </ModernTooltip>
               </TableCell>
-              <TableCell><LavaWithTooltip amount={provider.totalStake} /></TableCell>
+              <TableCell>
+                <LavaWithTooltip amount={provider.totalStake} />
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

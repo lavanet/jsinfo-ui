@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation';
 import { Search } from 'lucide-react';
 import { useJsinfobeFetch } from '@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch';
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 interface Item {
     id: string;
@@ -87,7 +87,10 @@ export default function SearchBar() {
                 iconContainer.style.top = '27%';
                 iconContainer.style.transform = 'translateY(-50%)';
                 iconContainer.style.zIndex = '1';
-                ReactDOM.render(<CustomSearchIcon />, iconContainer);
+
+                const root = createRoot(iconContainer);
+                root.render(<CustomSearchIcon />);
+
                 input.parentNode?.insertBefore(iconContainer, input);
 
                 const originalPlaceholder = input.placeholder;

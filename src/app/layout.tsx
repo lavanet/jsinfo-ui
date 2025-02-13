@@ -13,6 +13,7 @@ import { cn } from "@jsinfo/lib/css"
 import { TooltipProvider } from "@jsinfo/components/shadcn/ui/Tooltip";
 import { NoSsrComponent } from "@jsinfo/components/helpers/NoSsrComponent";
 import { ThemeProvider as ShadcnThemeProvider } from "@jsinfo/components/shadcn/ThemeProvider";
+import Script from 'next/script';
 
 import '@radix-ui/themes/styles.css';
 import "./styles/globals.css";
@@ -41,26 +42,29 @@ const fontSans = FontSans({
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
+  const isDev = process.env.NODE_ENV === 'development';
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
-        )}
-      >
-
-        <ShadcnThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-        >
-
+      <head>
+        <Script
+          id="console-warnings"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              console.warn = function() {};
+              console.error = function() {};
+            `,
+          }}
+        />
+      </head>
+      <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
+        <ShadcnThemeProvider attribute="class" defaultTheme="dark">
           <Container>
-            <SpeedInsights />
+            {!isDev && <SpeedInsights />}
             <div className="flex min-h-screen mx-auto flex-col">
               <PageProvider>
                 <TooltipProvider>
@@ -77,13 +81,11 @@ export default function RootLayout({
                   </NoSsrComponent>
                 </TooltipProvider>
               </PageProvider>
-              <Analytics />
+              {!isDev && <Analytics />}
             </div>
           </Container>
-
         </ShadcnThemeProvider>
-
       </body>
     </html>
-  );
+  )
 }
