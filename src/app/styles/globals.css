@@ -221,3 +221,19 @@ iframe {
 .rt-BaseTabListTrigger:where([data-state="active"], [data-active])::before {
   background-color: var(--interactive-element-line-color);
 }
+
+.custom-tooltip {
+  background-color: hsl(var(--background) / 0.95);
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.2);
+  backdrop-filter: blur(8px);
+}
+
+.custom-tooltip .label {
+  margin-bottom: 0.5rem;
+  color: hsl(var(--foreground));
+  font-size: 0.875rem;
+  font-weight: 500;
+}

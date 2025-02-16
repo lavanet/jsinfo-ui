@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from "react";
-import { format, addDays } from "date-fns";
+import { format, addDays, startOfDay, endOfDay, parseISO, isWithinInterval, subDays } from "date-fns";
 import {
   ComposedChart, Line, XAxis, YAxis, Tooltip, CartesianGrid,
   ResponsiveContainer, Brush
@@ -23,19 +23,48 @@ import { cn } from "@jsinfo/lib/css";
 import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
 import ModernTooltip from "@jsinfo/components/modern/ModernTooltip";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
+import { useSearchParams } from "next/navigation";
+import { DateRange } from "react-day-picker";
 
 interface ProviderConsumerOptimizerMetricsChartProps {
   providerId: string;
 }
 
-interface ChartDataPoint {
-  timestamp: number;
-  sync_score: number;
+// Define types for the metrics data
+interface TierChances {
+  tier0: number;
+  tier1: number;
+  tier2: number;
+  tier3: number;
+}
+
+interface BaseMetric {
+  hourly_timestamp: string;
+  consumer: string;
+  chain_id: string;
   latency_score: number;
   availability_score: number;
-  generic_score: number;
+  sync_score: number;
   node_error_rate: number;
   entry_index: number;
+  generic_score: number;
+  provider_stake: number;
+  epoch: number;
+}
+
+interface FullMetric extends BaseMetric {
+  tier_average: number;
+  tier_chances: TierChances;
+}
+
+interface ChartDataPoint {
+  timestamp: number;
+  latency_score: number;
+  availability_score: number;
+  sync_score: number;
+  node_error_rate: number;
+  entry_index: number;
+  generic_score: number;
 }
 
 interface MetricDefinition {
@@ -45,44 +74,100 @@ interface MetricDefinition {
   description: string;
 }
 
-const METRICS: MetricDefinition[] = [
-  {
-    label: 'Sync Score',
-    dataKey: 'sync_score',
-    color: '#dc2626', // Red-600
-    description: 'Lower is better. Measures block height difference from network average'
+// Define metrics configuration with consistent colors and labels
+const METRICS_CONFIG = {
+  latency_score: {
+    label: "Latency Score",
+    color: "#FF9F9F",      // Lighter coral
+    description: "Lower is better. Average response time compared to other providers"
   },
-  {
-    label: 'Latency Score',
-    dataKey: 'latency_score',
-    color: '#b91c1c', // Red-700
-    description: 'Lower is better. Average response time compared to other providers'
+  availability_score: {
+    label: "Availability Score",
+    color: "#6EE7B7",      // Emerald green
+    description: "Higher is better. Percentage of successful responses over time"
   },
-  {
-    label: 'Availability Score',
-    dataKey: 'availability_score',
-    color: '#ef4444', // Red-500
-    description: 'Higher is better. Percentage of successful responses over time'
+  sync_score: {
+    label: "Sync Score",
+    color: "#93C5FD",      // Bright blue
+    description: "Lower is better. Measures block height difference from network average"
   },
-  {
-    label: 'Generic Score',
-    dataKey: 'generic_score',
-    color: '#991b1b', // Red-800
-    description: 'Lower is better. Combined performance metric across all categories'
+  node_error_rate: {
+    label: "Node Error Rate",
+    color: "#FCD34D",      // Bright yellow
+    description: "Lower is better. Percentage of requests resulting in errors"
   },
-  {
-    label: 'Node Error Rate',
-    dataKey: 'node_error_rate',
-    color: '#7f1d1d', // Red-900
-    description: 'Lower is better. Percentage of requests resulting in errors'
+  entry_index: {
+    label: "Entry Index",
+    color: "#C4B5FD",      // Bright purple
+    description: "1 is best. Your ranking position among all active providers"
   },
-  {
-    label: 'Relative Placement',
-    dataKey: 'entry_index',
-    color: '#f87171', // Red-400
-    description: '1 is best. Your ranking position among all active providers'
+  generic_score: {
+    label: "Reputation Score",
+    color: "#FDA4AF",      // Bright pink
+    description: "Lower is better. Combined performance metric across all categories"
   }
-];
+} as const;
+
+// Add tier metrics config
+const TIER_METRICS_CONFIG = {
+  tier_average: {
+    label: "Tier Average",
+    color: "#A78BFA",      // Bright violet
+    description: "Average tier position"
+  },
+  tier0: {
+    label: "Tier 0 Chance",
+    color: "#F472B6",      // Pink
+    description: "Probability of reaching Tier 0"
+  },
+  tier1: {
+    label: "Tier 1 Chance",
+    color: "#60A5FA",      // Blue
+    description: "Probability of reaching Tier 1"
+  },
+  tier2: {
+    label: "Tier 2 Chance",
+    color: "#34D399",      // Green
+    description: "Probability of reaching Tier 2"
+  },
+  tier3: {
+    label: "Tier 3 Chance",
+    color: "#FBBF24",      // Yellow
+    description: "Probability of reaching Tier 3"
+  }
+};
+
+// Combine base and tier metrics configs
+const ALL_METRICS_CONFIG = {
+  ...METRICS_CONFIG,
+  tier_average: {
+    label: "Tier Average",
+    color: "#A78BFA",      // Bright violet
+    description: "Average tier position"
+  },
+  tier0: {
+    label: "Tier 0 Chance",
+    color: "#F472B6",      // Pink
+    description: "Probability of reaching Tier 0"
+  },
+  tier1: {
+    label: "Tier 1 Chance",
+    color: "#60A5FA",      // Blue
+    description: "Probability of reaching Tier 1"
+  },
+  tier2: {
+    label: "Tier 2 Chance",
+    color: "#34D399",      // Green
+    description: "Probability of reaching Tier 2"
+  },
+  tier3: {
+    label: "Tier 3 Chance",
+    color: "#FBBF24",      // Yellow
+    description: "Probability of reaching Tier 3"
+  }
+} as const;
+
+type MetricKey = keyof typeof ALL_METRICS_CONFIG;
 
 interface DateFormatterOptions {
   timestamp: number;
@@ -98,66 +183,123 @@ const formatChartDate = ({ timestamp, index, showTime = false }: DateFormatterOp
   return `${dateStr} ${date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}`;
 };
 
-const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerMetricsChartProps> = ({ providerId }) => {
+// Define distinct colors for better visibility
+const METRIC_COLORS = {
+  latency_score: "#FF6B6B",      // Coral red
+  availability_score: "#4ECDC4",  // Turquoise
+  sync_score: "#45B7D1",         // Sky blue
+  node_error_rate: "#96CEB4",    // Sage green
+  entry_index: "#FFEEAD",        // Light yellow
+  generic_score: "#D4A5A5"       // Dusty rose
+};
+
+export function ProviderOptimizerMetricsChart({ providerId }: { providerId: string }) {
   const [uiConsumer, setUiConsumer] = useState("all");
   const [uiChainId, setUiChainId] = useState("all");
-  const [uiDateRange, setUiDateRange] = useState({
-    from: addDays(new Date(), -90),
+  const [uiDateRange, setUiDateRange] = useState<DateRange>({
+    from: subDays(new Date(), 2),
     to: new Date(),
   });
-
-  const apiFilters = useMemo(() => ({
-    consumer: uiConsumer,
-    chainId: uiChainId,
-    dateRange: uiDateRange
-  }), [uiConsumer, uiChainId, uiDateRange]);
-
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [tempDateRange, setTempDateRange] = useState(uiDateRange);
-
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
   const [hasEverHadData, setHasEverHadData] = useState(false);
+  const [hasTierData, setHasTierData] = useState(false);
+  const [visibleLines, setVisibleLines] = useState<Record<MetricKey, boolean>>(() => {
+    return Object.keys(ALL_METRICS_CONFIG).reduce((acc, key) => ({
+      ...acc,
+      [key]: true
+    }), {} as Record<MetricKey, boolean>);
+  });
 
-  const { data, error, isLoading, isValidating } = useJsinfobeFetchWithDeps<any>(() => {
-    const fromDate = format(apiFilters.dateRange.from, "yyyy-MM-dd'Z'");
-    const toDate = format(apiFilters.dateRange.to, "yyyy-MM-dd'Z'");
-    return `providerConsumerOptimizerMetrics/${providerId}?f=${fromDate}&t=${toDate}&consumer=${apiFilters.consumer}&chain_id=${apiFilters.chainId}`;
-  }, [providerId, apiFilters]);
+  const searchParams = useSearchParams();
+  const key = searchParams.get('key');
+  const [isFullMode, setIsFullMode] = useState(false);
+
+  const { data: rawData, error, isLoading, isValidating } = useJsinfobeFetchWithDeps<any>(() => {
+    if (!uiDateRange.from || !uiDateRange.to) return '';
+
+    const fromDate = format(uiDateRange.from, "yyyy-MM-dd'Z'");
+    const toDate = format(uiDateRange.to, "yyyy-MM-dd'Z'");
+
+    // Base URL and common parameters
+    const baseParams = `f=${fromDate}&t=${toDate}&consumer=${uiConsumer}&chain_id=${uiChainId}`;
+
+    // Choose endpoint based on key presence
+    const endpoint = key
+      ? `providerConsumerOptimizerMetricsFull/${providerId}`
+      : `providerConsumerOptimizerMetrics/${providerId}`;
+
+    // Combine endpoint with parameters
+    return `${endpoint}?${baseParams}${key ? `&key=${key}` : ''}`;
+  }, [providerId, uiConsumer, uiChainId, uiDateRange, key]);
+
+  const chartData = useMemo(() => {
+    if (!rawData?.metrics) return [];
+
+    return rawData.metrics.map((metric: any) => {
+      const baseData = {
+        timestamp: new Date(metric.hourly_timestamp).getTime(),
+        latency_score: parseFloat(metric.latency_score.toString()),
+        availability_score: parseFloat(metric.availability_score.toString()),
+        sync_score: parseFloat(metric.sync_score.toString()),
+        node_error_rate: parseFloat(metric.node_error_rate.toString()),
+        entry_index: parseFloat(metric.entry_index.toString()),
+        generic_score: parseFloat(metric.generic_score.toString()),
+      };
+
+      // Add tier data if it exists in the response
+      if ('tier_chances' in metric) {
+        return {
+          ...baseData,
+          tier_average: parseFloat(metric.tier_average.toString()),
+          tier0: parseFloat(metric.tier_chances.tier0.toString()),
+          tier1: parseFloat(metric.tier_chances.tier1.toString()),
+          tier2: parseFloat(metric.tier_chances.tier2.toString()),
+          tier3: parseFloat(metric.tier_chances.tier3.toString()),
+        };
+      }
+
+      return baseData;
+    });
+  }, [rawData]);
+
+  // Filter data to match exact date range
+  const filteredData = useMemo(() => {
+    if (!rawData?.metrics || !uiDateRange.from || !uiDateRange.to) return rawData;
+
+    const startDate = startOfDay(uiDateRange.from);
+    const endDate = endOfDay(uiDateRange.to);
+
+    const filteredMetrics = rawData.metrics.filter((metric: BaseMetric | FullMetric) => {
+      const metricDate = parseISO(metric.hourly_timestamp);
+      return isWithinInterval(metricDate, { start: startDate, end: endDate });
+    });
+
+    return { ...rawData, metrics: filteredMetrics };
+  }, [rawData, uiDateRange]);
 
   const consumerOptions = useMemo(() => {
-    if (!data?.possibleConsumers) return [];
+    if (!filteredData?.possibleConsumers) return [];
     return [
       { value: "all", label: "All Consumers" },
-      ...data.possibleConsumers.map((consumer: string) => ({
+      ...filteredData.possibleConsumers.map((consumer: string) => ({
         value: consumer,
         label: consumer
       }))
     ];
-  }, [data?.possibleConsumers]);
+  }, [filteredData?.possibleConsumers]);
 
   const chainOptions = useMemo(() => {
-    if (!data?.possibleChainIds) return [];
+    if (!filteredData?.possibleChainIds) return [];
     return [
       { value: "all", label: "All Chains" },
-      ...data.possibleChainIds.map((chainId: string) => ({
+      ...filteredData.possibleChainIds.map((chainId: string) => ({
         value: chainId,
         label: chainId
       }))
     ];
-  }, [data?.possibleChainIds]);
-
-  const chartData = useMemo(() => {
-    if (!data?.metrics) return [];
-    return data.metrics.map((metric: any): ChartDataPoint => ({
-      timestamp: new Date(metric.hourly_timestamp).getTime(),
-      sync_score: parseFloat(metric.sync_score),
-      latency_score: parseFloat(metric.latency_score),
-      availability_score: parseFloat(metric.availability_score),
-      generic_score: parseFloat(metric.generic_score),
-      entry_index: parseFloat(metric.entry_index),
-      node_error_rate: parseFloat(metric.node_error_rate),
-    }));
-  }, [data?.metrics]);
+  }, [filteredData?.possibleChainIds]);
 
   useEffect(() => {
     if (!isLoading && !initialLoadComplete) {
@@ -170,6 +312,10 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
       setHasEverHadData(true);
     }
   }, [chartData]);
+
+  useEffect(() => {
+    setIsFullMode(Boolean(rawData?.metrics?.[0]?.tier_chances));
+  }, [rawData]);
 
   const formatAxisDate = (timestamp: number, index: number): string =>
     formatChartDate({ timestamp, index });
@@ -204,41 +350,87 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
     setIsCalendarOpen(false);
   };
 
-  const CustomTooltip = ({ active, payload }: any) => {
-    if (!active || !payload?.[0]) return null;
-    const data = payload[0].payload as ChartDataPoint;
+  const toggleLine = (key: MetricKey) => {
+    setVisibleLines(prev => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
+  };
 
-    return (
-      <Card className="p-2">
-        <CardHeader className="p-2">
-          <CardTitle className="text-sm">
-            {formatChartDate({ timestamp: data.timestamp, index: 1, showTime: true })}
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="p-2 space-y-1">
-          {METRICS.map(({ label, dataKey, color }) => (
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      const sortedPayload = [...payload]
+        .filter((entry) => entry.dataKey in ALL_METRICS_CONFIG && visibleLines[entry.dataKey as MetricKey])
+        .sort((a, b) => b.value - a.value);
+
+      return (
+        <div className="custom-tooltip bg-background border border-border rounded-lg shadow-lg p-3">
+          <p className="label text-sm font-medium text-foreground mb-2">
+            {formatChartDate({ timestamp: label, index: 1, showTime: true })}
+          </p>
+          {sortedPayload.map((entry) => (
             <div
-              key={dataKey}
-              className="flex items-center gap-2"
+              key={entry.dataKey}
+              className="flex items-center justify-between py-1"
             >
-              <div
-                className="h-2 w-2 rounded-full ring-1 ring-offset-1 ring-offset-background"
-                style={{
-                  backgroundColor: color,
-                  '--tw-ring-color': color
-                } as React.CSSProperties}
-              />
-              <p className="text-sm flex justify-between items-center w-full gap-8">
-                <span className="text-muted-foreground whitespace-nowrap">{label}:</span>
-                <span className="font-medium tabular-nums" style={{ color }}>
-                  {Number(data[dataKey]).toFixed(4)}
+              <div className="flex items-center gap-2">
+                <div
+                  className="w-3 h-3 rounded-full"
+                  style={{ backgroundColor: ALL_METRICS_CONFIG[entry.dataKey as MetricKey].color }}
+                />
+                <span className="text-sm text-foreground">
+                  {ALL_METRICS_CONFIG[entry.dataKey as MetricKey].label}:
                 </span>
-              </p>
+              </div>
+              <span className="text-sm font-medium text-foreground ml-4">
+                {entry.value.toFixed(5)}
+              </span>
             </div>
           ))}
-        </CardContent>
-      </Card>
+        </div>
+      );
+    }
+    return null;
+  };
+
+  const CustomLegend = ({ payload }: any) => {
+    return (
+      <div className="custom-legend">
+        {payload.map((entry: any) => (
+          <div
+            key={entry.dataKey}
+            className="legend-item"
+            style={{ color: METRICS_CONFIG[entry.dataKey as MetricKey].color }}
+          >
+            <span className="legend-color" style={{ backgroundColor: METRICS_CONFIG[entry.dataKey as MetricKey].color }} />
+            <span>{METRICS_CONFIG[entry.dataKey as MetricKey].label}</span>
+          </div>
+        ))}
+      </div>
     );
+  };
+
+  const getVisibleMetricKeys = () => {
+    const baseMetrics = ['latency_score', 'availability_score', 'sync_score', 'node_error_rate', 'entry_index', 'generic_score'];
+    const tierMetrics = ['tier_average', 'tier0', 'tier1', 'tier2', 'tier3'];
+
+    return isFullMode ? [...baseMetrics, ...tierMetrics] : baseMetrics;
+  };
+
+  const renderMetricLines = () => {
+    const visibleMetricKeys = getVisibleMetricKeys();
+    return Object.entries(ALL_METRICS_CONFIG)
+      .filter(([key]) => visibleMetricKeys.includes(key) && visibleLines[key as MetricKey])
+      .map(([key, config]) => (
+        <Line
+          key={key}
+          type="monotone"
+          dataKey={key}
+          name={config.label}
+          stroke={config.color}
+          dot={false}
+        />
+      ));
   };
 
   return (
@@ -356,16 +548,7 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
                   style={{ fontSize: '0.75rem' }}
                 />
                 <Tooltip content={<CustomTooltip />} />
-                {METRICS.map(({ dataKey, color, label }) => (
-                  <Line
-                    key={dataKey}
-                    type="monotone"
-                    dataKey={dataKey}
-                    stroke={color}
-                    dot={false}
-                    name={label}
-                  />
-                ))}
+                {renderMetricLines()}
                 <Brush
                   dataKey="timestamp"
                   height={30}
@@ -389,39 +572,49 @@ const ProviderConsumerOptimizerMetricsChart: React.FC<ProviderConsumerOptimizerM
           )}
         </div>
         <div className="mt-4 grid grid-cols-2 gap-2 lg:grid-cols-3 text-xs">
-          {METRICS.map(({ label, color, description }) => (
-            <div
-              key={label}
-              className="group relative flex items-start gap-2 p-2 rounded-md border border-border/50 bg-card/50 hover:bg-card transition-all duration-200"
-            >
+          {Object.entries(ALL_METRICS_CONFIG)
+            .filter(([key]) => getVisibleMetricKeys().includes(key))
+            .map(([key, config]) => (
               <div
-                className="mt-1 h-2.5 w-2.5 flex-shrink-0 rounded-full ring-2 ring-offset-2 ring-offset-background transition-all duration-200 group-hover:ring-offset-4"
-                style={{
-                  backgroundColor: color,
-                  boxShadow: `0 0 0.5rem ${color}25`,
-                  '--tw-ring-color': color
-                } as React.CSSProperties}
-              />
-              <div className="space-y-0.5 relative">
-                <div className="absolute -inset-2 rounded-md opacity-0 group-hover:opacity-100 bg-gradient-to-r transition-opacity duration-200"
+                key={key}
+                className={`group relative flex items-start gap-2 p-2 rounded-md border border-border/50 
+                  ${visibleLines[key as MetricKey] ? 'bg-card/50' : 'bg-muted/50'} 
+                  hover:bg-card transition-all duration-200 cursor-pointer`}
+                onClick={() => toggleLine(key as MetricKey)}
+              >
+                <div
+                  className={`mt-1 h-2.5 w-2.5 flex-shrink-0 rounded-full ring-2 ring-offset-2 ring-offset-background 
+                    transition-all duration-200 group-hover:ring-offset-4
+                    ${!visibleLines[key as MetricKey] && 'opacity-50'}`}
                   style={{
-                    background: `linear-gradient(45deg, ${color}03, ${color}09)`,
-                    zIndex: -1
-                  }}
+                    backgroundColor: config.color,
+                    boxShadow: `0 0 0.5rem ${config.color}25`,
+                    '--tw-ring-color': config.color
+                  } as React.CSSProperties}
                 />
-                <p className="font-medium text-foreground/90 group-hover:text-foreground transition-colors duration-200">
-                  {label}
-                </p>
-                <p className="text-[10px] text-muted-foreground/80 group-hover:text-muted-foreground transition-colors duration-200">
-                  {description}
-                </p>
+                <div className="space-y-0.5 relative">
+                  <div
+                    className="absolute -inset-2 rounded-md opacity-0 group-hover:opacity-100 bg-gradient-to-r transition-opacity duration-200"
+                    style={{
+                      background: `linear-gradient(45deg, ${config.color}03, ${config.color}09)`,
+                      zIndex: -1
+                    }}
+                  />
+                  <p className={`font-medium transition-colors duration-200
+                    ${visibleLines[key as MetricKey] ? 'text-foreground/90 group-hover:text-foreground' : 'text-muted-foreground/60'}`}>
+                    {config.label}
+                  </p>
+                  <p className={`text-[10px] transition-colors duration-200
+                    ${visibleLines[key as MetricKey] ? 'text-muted-foreground/80 group-hover:text-muted-foreground' : 'text-muted-foreground/50'}`}>
+                    {config.description}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </CardContent>
     </Card>
   );
-};
+}
 
-export default ProviderConsumerOptimizerMetricsChart;
+export default ProviderOptimizerMetricsChart;
