@@ -400,10 +400,10 @@ export function ProviderOptimizerMetricsChart({ providerId }: { providerId: stri
           <div
             key={entry.dataKey}
             className="legend-item"
-            style={{ color: METRICS_CONFIG[entry.dataKey as MetricKey].color }}
+            style={{ color: ALL_METRICS_CONFIG[entry.dataKey as MetricKey].color }}
           >
-            <span className="legend-color" style={{ backgroundColor: METRICS_CONFIG[entry.dataKey as MetricKey].color }} />
-            <span>{METRICS_CONFIG[entry.dataKey as MetricKey].label}</span>
+            <span className="legend-color" style={{ backgroundColor: ALL_METRICS_CONFIG[entry.dataKey as MetricKey].color }} />
+            <span>{ALL_METRICS_CONFIG[entry.dataKey as MetricKey].label}</span>
           </div>
         ))}
       </div>
