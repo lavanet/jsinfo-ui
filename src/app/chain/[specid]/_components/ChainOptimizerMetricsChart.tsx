@@ -216,10 +216,19 @@ export function ChainOptimizerMetricsChart({ specId }: ChainOptimizerMetricsChar
         setShowAllProviders(prev => !prev);
     };
 
+    // Add a ref to track if we've already set initial providers
+    const initialProvidersSet = React.useRef(false);
+
     useEffect(() => {
-        if (rawData?.filters?.options?.providers?.top && selectedProviders.length === 0) {
+        // Only set initial providers once when they become available
+        if (
+            !initialProvidersSet.current &&
+            rawData?.filters?.options?.providers?.top &&
+            selectedProviders.length === 0
+        ) {
             const topProviderIds = Object.keys(rawData.filters.options.providers.top);
             setSelectedProviders(topProviderIds);
+            initialProvidersSet.current = true;
         }
     }, [rawData?.filters?.options?.providers?.top]);
 
@@ -239,6 +248,9 @@ export function ChainOptimizerMetricsChart({ specId }: ChainOptimizerMetricsChar
             No data to show for selected filters
         </div>
     );
+
+    // Fix the no data check
+    const hasData = rawData?.metrics && rawData.metrics.length > 0;
 
     if (error) {
         return (
@@ -342,7 +354,7 @@ export function ChainOptimizerMetricsChart({ specId }: ChainOptimizerMetricsChar
             </CardHeader>
             <CardContent>
                 <div className="h-[400px] relative">
-                    {rawData?.metrics.length === 0 ? (
+                    {!hasData ? (
                         <NoDataMessage />
                     ) : (
                         <ResponsiveContainer width="100%" height="100%">
@@ -402,78 +414,78 @@ export function ChainOptimizerMetricsChart({ specId }: ChainOptimizerMetricsChar
                     )}
                 </div>
 
-                {/* Only show legend if we have data */}
-                {rawData?.metrics?.length && rawData?.metrics?.length > 0 && (
-                    <div className="mt-6">
-                        <h3 className="text-sm font-medium mb-3">Top 10 Chain Providers And All Providers Average</h3>
-                        <div className="grid grid-cols-2 gap-2 lg:grid-cols-3 text-xs">
+                {/* Always show legend, regardless of data */}
+                <div className="mt-6">
+                    <h3 className="text-sm font-medium mb-3">Top 10 Chain Providers And All Providers Average</h3>
+                    <div className="grid grid-cols-2 gap-2 lg:grid-cols-3 text-xs">
+                        {/* Always show All Providers Average */}
+                        <div
+                            className={`flex items-center gap-2 p-2 rounded-md border border-border/50 
+                                ${showAllProviders ? 'bg-card/50' : 'bg-muted/50'} 
+                                hover:bg-card transition-all duration-200 cursor-pointer`}
+                            onClick={handleAllProvidersClick}
+                        >
                             <div
-                                className={`flex items-center gap-2 p-2 rounded-md border border-border/50 
-                                    ${showAllProviders ? 'bg-card/50' : 'bg-muted/50'} 
-                                    hover:bg-card transition-all duration-200 cursor-pointer`}
-                                onClick={handleAllProvidersClick}
-                            >
-                                <div
-                                    className={`w-2 h-2 rounded-full ${showAllProviders ? 'opacity-100' : 'opacity-50'}`}
-                                    style={{
-                                        backgroundColor: COLORS[COLORS.length - 1],
-                                        boxShadow: showAllProviders
-                                            ? `0 0 0.5rem ${COLORS[COLORS.length - 1]}25`
-                                            : 'none'
-                                    }}
-                                />
-                                <div className="flex flex-col flex-1">
-                                    <span className={`text-sm transition-colors duration-200 ${showAllProviders
-                                        ? 'text-foreground'
-                                        : 'text-muted-foreground'
-                                        }`}>
-                                        All Providers Average
-                                    </span>
-                                    <span className="text-[10px] text-muted-foreground">Average of all providers</span>
-                                </div>
+                                className={`w-2 h-2 rounded-full ${showAllProviders ? 'opacity-100' : 'opacity-50'}`}
+                                style={{
+                                    backgroundColor: COLORS[COLORS.length - 1],
+                                    boxShadow: showAllProviders
+                                        ? `0 0 0.5rem ${COLORS[COLORS.length - 1]}25`
+                                        : 'none'
+                                }}
+                            />
+                            <div className="flex flex-col flex-1">
+                                <span className={`text-sm transition-colors duration-200 ${showAllProviders
+                                    ? 'text-foreground'
+                                    : 'text-muted-foreground'
+                                    }`}>
+                                    All Providers Average
+                                </span>
+                                <span className="text-[10px] text-muted-foreground">Average of all providers</span>
                             </div>
-
-                            {rawData?.filters?.options?.providers?.top &&
-                                Object.entries(rawData.filters.options.providers.top).map(([providerId, providerName], index) => (
-                                    <div
-                                        key={providerId}
-                                        className={`flex items-center gap-2 p-2 rounded-md border border-border/50 
-                                            ${selectedProviders.includes(providerId) ? 'bg-card/50' : 'bg-muted/50'} 
-                                            hover:bg-card transition-all duration-200 cursor-pointer`}
-                                        onClick={() => {
-                                            setSelectedProviders(prev =>
-                                                prev.includes(providerId)
-                                                    ? prev.filter(id => id !== providerId)
-                                                    : [...prev, providerId]
-                                            );
-                                        }}
-                                    >
-                                        <div
-                                            className={`w-2 h-2 rounded-full ${selectedProviders.includes(providerId) ? 'opacity-100' : 'opacity-50'
-                                                }`}
-                                            style={{
-                                                backgroundColor: COLORS[index % COLORS.length],
-                                                boxShadow: selectedProviders.includes(providerId)
-                                                    ? `0 0 0.5rem ${COLORS[index % COLORS.length]}25`
-                                                    : 'none'
-                                            }}
-                                        />
-                                        <div className="flex flex-col flex-1">
-                                            <span className={`text-sm transition-colors duration-200 ${selectedProviders.includes(providerId)
-                                                ? 'text-foreground'
-                                                : 'text-muted-foreground'
-                                                }`}>
-                                                {providerName}
-                                            </span>
-                                            <span className="text-[10px] text-muted-foreground break-all">
-                                                {providerId}
-                                            </span>
-                                        </div>
-                                    </div>
-                                ))}
                         </div>
+
+                        {/* Show top providers if available */}
+                        {rawData?.filters?.options?.providers?.top &&
+                            Object.entries(rawData.filters.options.providers.top).map(([providerId, providerName], index) => (
+                                <div
+                                    key={providerId}
+                                    className={`flex items-center gap-2 p-2 rounded-md border border-border/50 
+                                        ${selectedProviders.includes(providerId) ? 'bg-card/50' : 'bg-muted/50'} 
+                                        hover:bg-card transition-all duration-200 cursor-pointer`}
+                                    onClick={() => {
+                                        setSelectedProviders(prev =>
+                                            prev.includes(providerId)
+                                                ? prev.filter(id => id !== providerId)
+                                                : [...prev, providerId]
+                                        );
+                                    }}
+                                >
+                                    <div
+                                        className={`w-2 h-2 rounded-full ${selectedProviders.includes(providerId) ? 'opacity-100' : 'opacity-50'
+                                            }`}
+                                        style={{
+                                            backgroundColor: COLORS[index % COLORS.length],
+                                            boxShadow: selectedProviders.includes(providerId)
+                                                ? `0 0 0.5rem ${COLORS[index % COLORS.length]}25`
+                                                : 'none'
+                                        }}
+                                    />
+                                    <div className="flex flex-col flex-1">
+                                        <span className={`text-sm transition-colors duration-200 ${selectedProviders.includes(providerId)
+                                            ? 'text-foreground'
+                                            : 'text-muted-foreground'
+                                            }`}>
+                                            {providerName}
+                                        </span>
+                                        <span className="text-[10px] text-muted-foreground break-all">
+                                            {providerId}
+                                        </span>
+                                    </div>
+                                </div>
+                            ))}
                     </div>
-                )}
+                </div>
             </CardContent>
         </Card>
     );
