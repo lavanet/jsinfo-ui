@@ -416,7 +416,7 @@ export function ChainOptimizerMetricsChart({ specId }: ChainOptimizerMetricsChar
 
                 {/* Always show legend, regardless of data */}
                 <div className="mt-6">
-                    <h3 className="text-sm font-medium mb-3">Top 10 Chain Providers And All Providers Average</h3>
+                    <h3 className="text-sm font-medium mb-3">Top 10 Chain Providers & All Providers Average</h3>
                     <div className="grid grid-cols-2 gap-2 lg:grid-cols-3 text-xs">
                         {/* Always show All Providers Average */}
                         <div
