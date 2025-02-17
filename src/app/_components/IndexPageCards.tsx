@@ -3,7 +3,6 @@
 import React from 'react';
 import { useJsinfobeFetch } from '@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch';
 import { ErrorDisplay } from "@jsinfo/components/modern/ErrorDisplay";
-import { FormatAsULava } from '@jsinfo/components/modern/LavaWithTooltip';
 import LoaderImageForCards from '@jsinfo/components/modern/LoaderImageForCards';
 import { FormatNumber, FormatNumberKMB } from '@jsinfo/lib/formatting';
 import StatCard from '@jsinfo/components/sections/StatCard';
@@ -87,17 +86,21 @@ export const IndexStakeCard: React.FC = () => {
         />
     );
 
-    let ulavaValue = FormatAsULava(data.stakeSum);
-    let stakeSumLava = parseInt(data.stakeSum + "", 10) / 1000000
-    let lavaValue = FormatNumberKMB(stakeSumLava + "");
+    const stakeNum = Number(data.stakeSum);
+    const ulavaValue = FormatNumber(stakeNum) + " ULAVA";
+    const lavaAmount = stakeNum / 1_000_000;
+    const lavaValue = FormatNumber(Number(lavaAmount.toFixed(2))) + " LAVA";
 
     return (
         <StatCard
             title="Stake"
-            value={lavaValue + " LAVA"}
+            value={lavaValue}
             className="col-span-1"
             formatNumber={false}
-            tooltip={`Total stake and total delegations for all providers of all chains on lava.`}
+            tooltip={[
+                "Total stake and total delegations for all providers of all chains on lava.",
+                `Value in ulava: ${ulavaValue}`
+            ].join('\n')}
             icon={<Landmark className="h-4 w-4 text-muted-foreground" />}
         />
     )

@@ -44,7 +44,7 @@ const SpecStakesTable: React.FC<SpecStakesTableProps> = ({ specid }) => {
                     delegateCommission: (data) => {
                         const commission = data.delegateCommission;
                         const formattedCommission = `${String(commission).trim()}%`;
-                        return <LavaWithTooltip amount={formattedCommission} />;
+                        return formattedCommission;
                     },
                 }}
             />

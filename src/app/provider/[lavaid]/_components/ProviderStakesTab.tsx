@@ -18,7 +18,6 @@ const ProviderStakesTab: React.FC<ProviderStakesTabProps> = ({ addr }) => {
                 { key: "specId", name: "Spec" },
                 { key: "totalStake", name: "Total Stake" },
                 { key: "stake", name: "Self Stake" },
-                // { key: "delegateLimit", name: "Delegation Limit" },
                 { key: "delegateTotal", name: "Delegation Total" },
                 { key: "delegateCommission", name: "Delegate Commission" },
             ]}
@@ -36,12 +35,10 @@ const ProviderStakesTab: React.FC<ProviderStakesTabProps> = ({ addr }) => {
                 specId: (data) => <ChainWithIconLink chainId={data.specId} className="orangelinks" />,
                 totalStake: (data) => <LavaWithTooltip amount={data.totalStake} />,
                 stake: (data) => <LavaWithTooltip amount={data.stake} />,
-                // delegateLimit: (data) => <LavaWithTooltip amount={data.delegateLimit} />,
                 delegateTotal: (data) => <LavaWithTooltip amount={data.delegateTotal} />,
                 delegateCommission: (data) => {
                     const commission = data.delegateCommission;
-                    const formattedCommission = `${String(commission).trim()}%`;
-                    return <LavaWithTooltip amount={formattedCommission} />;
+                    return `${String(commission).trim()}%`;
                 },
             }}
             csvButton={(
