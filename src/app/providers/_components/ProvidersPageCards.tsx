@@ -3,7 +3,6 @@
 import React from 'react';
 import { useJsinfobeFetch } from '@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch';
 import { ErrorDisplay } from "@jsinfo/components/modern/ErrorDisplay";
-import { FormatAsULava } from '@jsinfo/components/modern/LavaWithTooltip';
 import LoaderImageForCards from '@jsinfo/components/modern/LoaderImageForCards';
 import { FormatNumber, FormatNumberKMB } from '@jsinfo/lib/formatting';
 import StatCard from '@jsinfo/components/sections/StatCard';
@@ -165,15 +164,15 @@ export const ProvidersStakeCard: React.FC = () => {
         />
     );
 
-    const stakeNum = typeof data.stakeSum === 'string' ? parseInt(data.stakeSum, 10) : data.stakeSum;
-    const ulavaValue = FormatAsULava(stakeNum);
-    const stakeSumLava = stakeNum / 1000000;
-    const lavaValue = FormatNumberKMB(stakeSumLava.toString());
+    const stakeNum = Number(data.stakeSum);
+    const ulavaValue = FormatNumber(stakeNum) + " ULAVA";
+    const lavaAmount = stakeNum / 1_000_000;
+    const lavaValue = FormatNumber(Number(lavaAmount.toFixed(2))) + " LAVA";
 
     return (
         <StatCard
             title="Stake"
-            value={`${lavaValue} LAVA`}
+            value={lavaValue}
             className="col-span-1"
             formatNumber={false}
             tooltip={[

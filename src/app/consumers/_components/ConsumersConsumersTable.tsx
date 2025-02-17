@@ -9,7 +9,6 @@ import LoadingIndicator from "@jsinfo/components/modern/LoadingIndicator";
 import { FormatNumber } from '@jsinfo/lib/formatting';
 import { ErrorDisplay } from '@jsinfo/components/modern/ErrorDisplay';
 import Link from "next/link";
-import LavaWithTooltip from "@jsinfo/components/modern/LavaWithTooltip";
 
 const ConsumersConsumersTable: React.FC<{}> = () => {
     const { data, isLoading, error } = useJsinfobeFetch("consumerspageConsumers");
