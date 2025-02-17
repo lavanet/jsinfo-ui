@@ -26,10 +26,6 @@ import { InfoCircledIcon } from "@radix-ui/react-icons";
 import { useSearchParams } from "next/navigation";
 import { DateRange } from "react-day-picker";
 
-interface ProviderConsumerOptimizerMetricsChartProps {
-  providerId: string;
-}
-
 // Define types for the metrics data
 interface TierChances {
   tier0: number;
@@ -108,35 +104,6 @@ const METRICS_CONFIG = {
   }
 } as const;
 
-// Add tier metrics config
-const TIER_METRICS_CONFIG = {
-  tier_average: {
-    label: "Tier Average",
-    color: "#A78BFA",      // Bright violet
-    description: "Average tier position"
-  },
-  tier0: {
-    label: "Tier 0 Chance",
-    color: "#F472B6",      // Pink
-    description: "Probability of reaching Tier 0"
-  },
-  tier1: {
-    label: "Tier 1 Chance",
-    color: "#60A5FA",      // Blue
-    description: "Probability of reaching Tier 1"
-  },
-  tier2: {
-    label: "Tier 2 Chance",
-    color: "#34D399",      // Green
-    description: "Probability of reaching Tier 2"
-  },
-  tier3: {
-    label: "Tier 3 Chance",
-    color: "#FBBF24",      // Yellow
-    description: "Probability of reaching Tier 3"
-  }
-};
-
 // Combine base and tier metrics configs
 const ALL_METRICS_CONFIG = {
   ...METRICS_CONFIG,
@@ -183,16 +150,6 @@ const formatChartDate = ({ timestamp, index, showTime = false }: DateFormatterOp
   return `${dateStr} ${date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}`;
 };
 
-// Define distinct colors for better visibility
-const METRIC_COLORS = {
-  latency_score: "#FF6B6B",      // Coral red
-  availability_score: "#4ECDC4",  // Turquoise
-  sync_score: "#45B7D1",         // Sky blue
-  node_error_rate: "#96CEB4",    // Sage green
-  entry_index: "#FFEEAD",        // Light yellow
-  generic_score: "#D4A5A5"       // Dusty rose
-};
-
 export function ProviderOptimizerMetricsChart({ providerId }: { providerId: string }) {
   const [uiConsumer, setUiConsumer] = useState("all");
   const [uiChainId, setUiChainId] = useState("all");
@@ -204,7 +161,6 @@ export function ProviderOptimizerMetricsChart({ providerId }: { providerId: stri
   const [tempDateRange, setTempDateRange] = useState(uiDateRange);
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
   const [hasEverHadData, setHasEverHadData] = useState(false);
-  const [hasTierData, setHasTierData] = useState(false);
   const [visibleLines, setVisibleLines] = useState<Record<MetricKey, boolean>>(() => {
     return Object.keys(ALL_METRICS_CONFIG).reduce((acc, key) => ({
       ...acc,

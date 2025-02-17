@@ -1,6 +1,8 @@
 // src/components/SpecProviderEndpointHealthSummary.tsx
 
-import { useJsinfobeFetch } from '@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { GetJsinfobeUrl } from '@jsinfo/lib/env';
 import React, { CSSProperties } from 'react';
 
 interface SpecProviderEndpointHealthSummaryProps {
@@ -10,8 +12,49 @@ interface SpecProviderEndpointHealthSummaryProps {
 }
 
 const SpecProviderEndpointHealthSummary: React.FC<SpecProviderEndpointHealthSummaryProps> = ({ provider, spec, style }) => {
+    const [data, setData] = useState<any>(null);
+    const [error, setError] = useState<any>(null);
+    const [isLoading, setIsLoading] = useState(true);
 
-    const { data, isLoading, error } = useJsinfobeFetch(`specProviderHealth/${spec}/${provider}`);
+    useEffect(() => {
+        let isMounted = true;
+        const controller = new AbortController();
+
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(
+                    `${GetJsinfobeUrl()}/specProviderHealth/${spec}/${provider}`,
+                    { signal: controller.signal }
+                );
+
+                if (isMounted) {
+                    if (response.data?.error === "Provider does not exist on specProviderHealth") {
+                        setError(response.data);
+                        setData(null);
+                    } else {
+                        setData(response.data);
+                        setError(null);
+                    }
+                }
+            } catch (err) {
+                if (isMounted) {
+                    setError(err);
+                    setData(null);
+                }
+            } finally {
+                if (isMounted) {
+                    setIsLoading(false);
+                }
+            }
+        };
+
+        fetchData();
+
+        return () => {
+            isMounted = false;
+            controller.abort();
+        };
+    }, [spec, provider]);
 
     if (error) return null;
     if (isLoading) return null;
