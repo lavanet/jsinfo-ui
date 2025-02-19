@@ -56,7 +56,6 @@ export function GetJsinfobeUrl() {
 
 export function GetLogoUrl() {
   return "https://gateway-fe-public-assets.s3.us-east-1.amazonaws.com/env/LavaOnly.svg";
-  return GetEnvVariable("LOGO_URL");
 }
 
 export function GetInfoNetwork() {
@@ -83,4 +82,8 @@ export function GetAxiosRetryCount(): number {
 
 export function GetLogpushUrl(): string {
   return GetEnvVariable("REST_LOGPUSH_URL", "https://cf-logpush.lavapro.xyz");
+}
+
+export function IsMainnet(): boolean {
+  return GetInfoNetwork().toLowerCase().trim().includes("mainnet");
 }

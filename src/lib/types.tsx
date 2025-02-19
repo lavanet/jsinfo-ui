@@ -4,6 +4,7 @@ export type Column = {
     key: string;
     name: string;
     altKey?: string;
+    tooltip?: string;
 }
 
 export type SortConfig = {

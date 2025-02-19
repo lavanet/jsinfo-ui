@@ -16,6 +16,7 @@ import {
   PaginationPrevious,
 } from "@jsinfo/components/shadcn/ui2/Pagination";
 import type { CSSProperties } from 'react';
+import ModernTooltip from '@jsinfo/components/modern/ModernTooltip';
 
 type DataKeySortableTableComponentProps = {
   columns: Column[];
@@ -184,7 +185,15 @@ export const DataKeySortableTableComponent: React.FC<DataKeySortableTableCompone
                       height: '100%',
                       paddingTop: '4px'
                     }}>
-                      <span>{column.name}</span>
+                      {column.tooltip ? (
+                        <ModernTooltip title={column.tooltip}>
+                          <span style={{ cursor: 'help' }}>
+                            {column.name}
+                          </span>
+                        </ModernTooltip>
+                      ) : (
+                        column.name
+                      )}
                       <div style={{
                         display: 'flex',
                         alignItems: 'center',
