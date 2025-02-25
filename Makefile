@@ -7,7 +7,7 @@ run:
 
 testnet_run:
 	@export NEXT_PUBLIC_LOGO_URL=https://gateway-fe-public-assets.s3.amazonaws.com/env/LavaTestnet.svg && \
-	export NEXT_PUBLIC_INFO_NETWORK=testnetl && \
+	export NEXT_PUBLIC_INFO_NETWORK=testnet && \
 	export NEXT_PUBLIC_REST_URL=https://jsinfo.lavanet.xyz && \
 	export PORT=5100 && \
 	pnpm dev
