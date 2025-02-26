@@ -171,36 +171,6 @@ export const DataKeySortableTableComponent: React.FC<DataKeySortableTableCompone
     });
   };
 
-  const customSort = (data: any[], key: string, direction: 'a' | 'd') => {
-    return [...data].sort((a, b) => {
-      const aVal = a[key];
-      const bVal = b[key];
-
-      const aIsDash = aVal === "-";
-      const bIsDash = bVal === "-";
-
-      const aIsZero = aVal === "0" || aVal === 0;
-      const bIsZero = bVal === "0" || bVal === 0;
-
-      if ((aIsDash || aIsZero) && (bIsDash || bIsZero)) {
-        if (aIsDash && bIsZero) return direction === 'a' ? 1 : -1;
-        if (aIsZero && bIsDash) return direction === 'a' ? -1 : 1;
-        return 0;
-      }
-
-      if (aIsDash || aIsZero) return direction === 'a' ? 1 : -1;
-      if (bIsDash || bIsZero) return direction === 'a' ? -1 : 1;
-
-      if (typeof aVal === 'number' && typeof bVal === 'number') {
-        return direction === 'a' ? aVal - bVal : bVal - aVal;
-      }
-
-      const aStr = String(aVal || '').toLowerCase();
-      const bStr = String(bVal || '').toLowerCase();
-      return direction === 'a' ? aStr.localeCompare(bStr) : bStr.localeCompare(aStr);
-    });
-  };
-
   if (error) {
     console.error('Failed to fetch data:', error);
     return (
@@ -224,15 +194,15 @@ export const DataKeySortableTableComponent: React.FC<DataKeySortableTableCompone
     );
   }
 
-  const cellStyle = leftAlignNoWrap ? {
+  const cellStyle: React.CSSProperties = leftAlignNoWrap ? {
     whiteSpace: 'nowrap',
-    textAlign: 'left',
+    textAlign: 'left' as const,
     verticalAlign: 'top'
   } : {};
 
-  const headerCellStyle = leftAlignNoWrap ? {
+  const headerCellStyle: React.CSSProperties = leftAlignNoWrap ? {
     whiteSpace: 'nowrap',
-    textAlign: 'left',
+    textAlign: 'left' as const,
     verticalAlign: 'top'
   } : {};
 
