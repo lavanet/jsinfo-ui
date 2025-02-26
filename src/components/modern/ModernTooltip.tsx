@@ -5,9 +5,10 @@ import React from 'react';
 interface ModernTooltipProps {
     title?: string;
     children: React.ReactNode;
+    isHtml?: boolean;
 }
 
-const ModernTooltip: React.FC<ModernTooltipProps> = ({ title, children }) => {
+const ModernTooltip: React.FC<ModernTooltipProps> = ({ title, children, isHtml = false }) => {
     if (!title) {
         return <>{children}</>;
     }
@@ -18,12 +19,16 @@ const ModernTooltip: React.FC<ModernTooltipProps> = ({ title, children }) => {
                 <span style={{ textAlign: 'left' }} >{children}</span>
             </TooltipTrigger>
             <TooltipContent className="modern-tool-tip-content">
-                {title.split('\n').map((line, index, array) => (
-                    <React.Fragment key={index}>
-                        {line}
-                        {index < array.length - 1 && <br />}
-                    </React.Fragment>
-                ))}
+                {isHtml ? (
+                    <div dangerouslySetInnerHTML={{ __html: title }} />
+                ) : (
+                    title.split('\n').map((line, index, array) => (
+                        <React.Fragment key={index}>
+                            {line}
+                            {index < array.length - 1 && <br />}
+                        </React.Fragment>
+                    ))
+                )}
             </TooltipContent>
         </Tooltip>
     );
