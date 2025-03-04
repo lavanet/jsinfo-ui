@@ -143,7 +143,7 @@ Time period: ${new Date(data.start_date).toLocaleString()} - ${new Date(data.end
 export const IndexAllCards: React.FC = () => {
     return (
         <>
-            <div className="grid gap-4 grid-cols-2 md:gap-8 lg:grid-cols-4">
+            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 md:gap-8 xl:grid-cols-4">
                 <IndexTotalRelaysCard />
                 <Index30DayRelayCard />
                 <IndexStakeCard />
