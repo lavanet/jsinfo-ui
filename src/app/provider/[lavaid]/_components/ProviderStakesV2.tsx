@@ -119,6 +119,15 @@ const CUCell = ({ cuData, relayData }: { cuData: number | string, relayData: num
     );
 };
 
+// Add a function to check if all rewards are empty
+const hasAnyRewardsData = (stakes: ProviderStakeData[]) => {
+    return stakes.some(stake =>
+        typeof stake.rewards !== 'string' &&
+        stake.rewards.lava !== '0' &&
+        stake.rewards.lava !== '-'
+    );
+};
+
 export default function ProviderStakesV2({ providerId }: { providerId: string }) {
     const [activeFilter, setActiveFilter] = useState<'active' | 'inactive'>('active');
     const [dataView, setDataView] = useState<'stake' | 'performance'>('stake');
@@ -210,6 +219,9 @@ export default function ProviderStakesV2({ providerId }: { providerId: string })
         activeFilter === 'active' ? activeStakes : inactiveStakes
     );
 
+    // Inside the render section, calculate if we should show rewards
+    const showRewardsColumns = hasAnyRewardsData(displayStakes);
+
     return (
         <div className="space-y-4">
             <div className="flex items-center justify-between mb-4">
@@ -276,16 +288,20 @@ export default function ProviderStakesV2({ providerId }: { providerId: string })
                                             <span>Applied Height {sortField === 'appliedHeight' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
                                         </ModernTooltip>
                                     </TableHead>
-                                    <TableHead className="cursor-pointer" onClick={() => handleSortChange('rewards')}>
-                                        <ModernTooltip title="Rewards distributed last month in LAVA tokens">
-                                            <span>Rewards (LAVA) {sortField === 'rewards' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
-                                        </ModernTooltip>
-                                    </TableHead>
-                                    <TableHead className="cursor-pointer" onClick={() => handleSortChange('rewardsUsd')}>
-                                        <ModernTooltip title="USD value of rewards distributed last month">
-                                            <span>Rewards (USD) {sortField === 'rewardsUsd' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
-                                        </ModernTooltip>
-                                    </TableHead>
+                                    {showRewardsColumns && (
+                                        <TableHead className="cursor-pointer" onClick={() => handleSortChange('rewards')}>
+                                            <ModernTooltip title="Rewards distributed last month in LAVA tokens">
+                                                <span>Rewards (LAVA) {sortField === 'rewards' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
+                                            </ModernTooltip>
+                                        </TableHead>
+                                    )}
+                                    {showRewardsColumns && (
+                                        <TableHead className="cursor-pointer" onClick={() => handleSortChange('rewardsUsd')}>
+                                            <ModernTooltip title="USD value of rewards distributed last month">
+                                                <span>Rewards (USD) {sortField === 'rewardsUsd' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
+                                            </ModernTooltip>
+                                        </TableHead>
+                                    )}
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
@@ -332,16 +348,20 @@ export default function ProviderStakesV2({ providerId }: { providerId: string })
                                         <TableCell>
                                             {stake.appliedHeight > 0 ? FormatNumber(stake.appliedHeight) : "-"}
                                         </TableCell>
-                                        <TableCell>
-                                            <ModernTooltip title="Monthly rewards">
-                                                {typeof stake.rewards === 'string' ? '-' : FormatNumber(parseFloat(stake.rewards.lava))}
-                                            </ModernTooltip>
-                                        </TableCell>
-                                        <TableCell>
-                                            <ModernTooltip title="Monthly rewards in USD">
-                                                {typeof stake.rewards === 'string' ? '-' : stake.rewards.usd}
-                                            </ModernTooltip>
-                                        </TableCell>
+                                        {showRewardsColumns && (
+                                            <TableCell>
+                                                <ModernTooltip title="Monthly rewards">
+                                                    {typeof stake.rewards === 'string' ? '-' : FormatNumber(parseFloat(stake.rewards.lava))}
+                                                </ModernTooltip>
+                                            </TableCell>
+                                        )}
+                                        {showRewardsColumns && (
+                                            <TableCell>
+                                                <ModernTooltip title="Monthly rewards in USD">
+                                                    {typeof stake.rewards === 'string' ? '-' : stake.rewards.usd}
+                                                </ModernTooltip>
+                                            </TableCell>
+                                        )}
                                     </TableRow>
                                 ))}
                             </TableBody>
@@ -560,16 +580,20 @@ export default function ProviderStakesV2({ providerId }: { providerId: string })
                                             <span>Applied Height {sortField === 'appliedHeight' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
                                         </ModernTooltip>
                                     </TableHead>
-                                    <TableHead className="cursor-pointer" onClick={() => handleSortChange('rewards')}>
-                                        <ModernTooltip title="Rewards distributed last month in LAVA tokens">
-                                            <span>Rewards (LAVA) {sortField === 'rewards' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
-                                        </ModernTooltip>
-                                    </TableHead>
-                                    <TableHead className="cursor-pointer" onClick={() => handleSortChange('rewardsUsd')}>
-                                        <ModernTooltip title="USD value of rewards distributed last month">
-                                            <span>Rewards (USD) {sortField === 'rewardsUsd' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
-                                        </ModernTooltip>
-                                    </TableHead>
+                                    {showRewardsColumns && (
+                                        <TableHead className="cursor-pointer" onClick={() => handleSortChange('rewards')}>
+                                            <ModernTooltip title="Rewards distributed last month in LAVA tokens">
+                                                <span>Rewards (LAVA) {sortField === 'rewards' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
+                                            </ModernTooltip>
+                                        </TableHead>
+                                    )}
+                                    {showRewardsColumns && (
+                                        <TableHead className="cursor-pointer" onClick={() => handleSortChange('rewardsUsd')}>
+                                            <ModernTooltip title="USD value of rewards distributed last month">
+                                                <span>Rewards (USD) {sortField === 'rewardsUsd' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
+                                            </ModernTooltip>
+                                        </TableHead>
+                                    )}
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
@@ -616,16 +640,20 @@ export default function ProviderStakesV2({ providerId }: { providerId: string })
                                         <TableCell>
                                             {stake.appliedHeight > 0 ? FormatNumber(stake.appliedHeight) : "-"}
                                         </TableCell>
-                                        <TableCell>
-                                            <ModernTooltip title="Monthly rewards">
-                                                {typeof stake.rewards === 'string' ? '-' : FormatNumber(parseFloat(stake.rewards.lava))}
-                                            </ModernTooltip>
-                                        </TableCell>
-                                        <TableCell>
-                                            <ModernTooltip title="Monthly rewards in USD">
-                                                {typeof stake.rewards === 'string' ? '-' : stake.rewards.usd}
-                                            </ModernTooltip>
-                                        </TableCell>
+                                        {showRewardsColumns && (
+                                            <TableCell>
+                                                <ModernTooltip title="Monthly rewards">
+                                                    {typeof stake.rewards === 'string' ? '-' : FormatNumber(parseFloat(stake.rewards.lava))}
+                                                </ModernTooltip>
+                                            </TableCell>
+                                        )}
+                                        {showRewardsColumns && (
+                                            <TableCell>
+                                                <ModernTooltip title="Monthly rewards in USD">
+                                                    {typeof stake.rewards === 'string' ? '-' : stake.rewards.usd}
+                                                </ModernTooltip>
+                                            </TableCell>
+                                        )}
                                     </TableRow>
                                 ))}
                             </TableBody>
