@@ -78,6 +78,12 @@ export default function ProviderPage({ params }: { params: { lavaid: string } })
         </div>
       </VerifyComponent>
 
+      <VerifyComponent keyName="Provider Optimizer Metrics Chart">
+        <ProviderConsumerOptimizerMetricsChart providerId={decodedLavaId} />
+      </VerifyComponent>
+
+      <div style={{ marginBottom: '20px' }}></div>
+
       <VerifyComponent keyName="Provider Chart">
         <div className="many-legend-chart" style={{ marginTop: '-10px', marginBottom: '-10px' }}>
           <ProviderChart providerId={decodedLavaId} />
@@ -88,12 +94,6 @@ export default function ProviderPage({ params }: { params: { lavaid: string } })
 
       <VerifyComponent keyName="Provider Health Table">
         <ProviderHealthTable providerId={decodedLavaId} />
-      </VerifyComponent>
-
-      <div style={{ marginBottom: '20px' }}></div>
-
-      <VerifyComponent keyName="Provider Optimizer Metrics Chart">
-        <ProviderConsumerOptimizerMetricsChart providerId={decodedLavaId} />
       </VerifyComponent>
 
       <div style={{ marginBottom: '20px' }}></div>

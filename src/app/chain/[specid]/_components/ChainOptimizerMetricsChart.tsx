@@ -67,8 +67,8 @@ interface ConsumerOption {
 }
 
 const COLORS = [
-    '#FF9F9F', '#6EE7B7', '#93C5FD', '#FCD34D', '#C4B5FD',
-    '#FDA4AF', '#A78BFA', '#F472B6', '#60A5FA', '#34D399'
+    '#0082FB', '#00D7B0', '#0EBA53', '#1F4A30', '#7679FF',
+    '#E76678', '#EC25F4', '#FF1D70', '#FF3900', '#FFBC0A'
 ];
 
 interface ChainOptimizerMetricsChartProps {

@@ -54,16 +54,18 @@ export default function Spec({ params }: { params: { specid: string } }) {
       </div>
 
       <div style={{ marginTop: '5px' }}></div>
+
       <ChainsCards specId={specId} />
+
       <div style={{ marginTop: '30px' }}></div>
+
+      <ChainOptimizerMetricsChart specId={specId} />
+
+      <div style={{ marginTop: '25px' }}></div>
 
       <div className="many-legend-chart">
         <SpecChart spec={specId} />
       </div>
-
-      <div style={{ marginTop: '25px' }}></div>
-
-      <ChainOptimizerMetricsChart specId={specId} />
 
       <div style={{ marginTop: '25px' }}></div>
 

@@ -74,32 +74,32 @@ interface MetricDefinition {
 const METRICS_CONFIG = {
   latency_score: {
     label: "Latency Score",
-    color: "#FF9F9F",      // Lighter coral
+    color: "#0082FB",      // Changed to new blue
     description: "Lower is better. Average response time compared to other providers"
   },
   availability_score: {
     label: "Availability Score",
-    color: "#6EE7B7",      // Emerald green
+    color: "#00D7B0",      // Changed to teal
     description: "Higher is better. Percentage of successful responses over time"
   },
   sync_score: {
     label: "Sync Score",
-    color: "#93C5FD",      // Bright blue
+    color: "#0EBA53",      // Changed to green
     description: "Lower is better. Measures block height difference from network average"
   },
   node_error_rate: {
     label: "Node Error Rate",
-    color: "#FCD34D",      // Bright yellow
+    color: "#1F4A30",      // Changed to dark green
     description: "Lower is better. Percentage of requests resulting in errors"
   },
   entry_index: {
     label: "Entry Index",
-    color: "#C4B5FD",      // Bright purple
+    color: "#7679FF",      // Changed to purple-blue
     description: "1 is best. Your ranking position among all active providers"
   },
   generic_score: {
     label: "Reputation Score",
-    color: "#FDA4AF",      // Bright pink
+    color: "#E76678",      // Changed to pink-red
     description: "Lower is better. Combined performance metric across all categories"
   }
 } as const;
@@ -109,27 +109,27 @@ const ALL_METRICS_CONFIG = {
   ...METRICS_CONFIG,
   tier_average: {
     label: "Tier Average",
-    color: "#A78BFA",      // Bright violet
+    color: "#EC25F4",      // Changed to magenta
     description: "Average tier position"
   },
   tier0: {
     label: "Tier 0 Chance",
-    color: "#F472B6",      // Pink
+    color: "#FF1D70",      // Changed to hot pink
     description: "Probability of reaching Tier 0"
   },
   tier1: {
     label: "Tier 1 Chance",
-    color: "#60A5FA",      // Blue
+    color: "#FF3900",      // Changed to orange-red
     description: "Probability of reaching Tier 1"
   },
   tier2: {
     label: "Tier 2 Chance",
-    color: "#34D399",      // Green
+    color: "#FFBC0A",      // Changed to amber
     description: "Probability of reaching Tier 2"
   },
   tier3: {
     label: "Tier 3 Chance",
-    color: "#FBBF24",      // Yellow
+    color: "#0082FB",      // Reusing blue for last tier
     description: "Probability of reaching Tier 3"
   }
 } as const;
