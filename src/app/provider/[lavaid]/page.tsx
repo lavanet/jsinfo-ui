@@ -14,7 +14,6 @@ import ProviderHealthTab from './_components/ProviderHealthTab';
 import ProviderErrorsTab from './_components/ProviderErrorsTab';
 import ProviderEventsTab from './_components/ProviderEventsTab';
 import ProviderAttributesTab from './_components/ProviderAttributesTab';
-import ProviderStakesTab from './_components/ProviderStakesTab';
 import ProviderRewardsTab from './_components/ProviderRewardsTab';
 import ProviderReportsTab from './_components/ProviderReportsTab';
 import ProviderBlockReportsTab from './_components/ProviderBlockReportsTab';
@@ -26,6 +25,8 @@ import { ProviderPerSpecRelaysPieChart } from "./_components/ProviderPerSpecRela
 import ProviderLiveRequestFeed from "./_components/ProviderLiveRequestFeed";
 import VerifyComponent from '@jsinfo/app/components/VerifyComponent';
 import ProviderConsumerOptimizerMetricsChart from "./_components/ProviderOptimzerMetricsChart";
+import ProviderStakesV2 from "./_components/ProviderStakesV2";
+import ProviderStakesTab from "./_components/ProviderStakesTab";
 
 export default function ProviderPage({ params }: { params: { lavaid: string } }) {
   const decodedLavaId = decodeURIComponent(params.lavaid);
@@ -104,6 +105,13 @@ export default function ProviderPage({ params }: { params: { lavaid: string } })
 
       <div style={{ marginBottom: '20px' }}></div>
 
+
+      <VerifyComponent keyName="Provider Stakes V2">
+        <ProviderStakesV2 providerId={decodedLavaId} />
+      </VerifyComponent>
+
+      <div style={{ marginBottom: '5px' }}></div>
+
       <VerifyComponent keyName="Card Header">
         <CardHeader>
           <CardTitle>Full Provider Details</CardTitle>
@@ -111,15 +119,15 @@ export default function ProviderPage({ params }: { params: { lavaid: string } })
         </CardHeader>
       </VerifyComponent>
 
-      <div className="box-margin-div"></div>
+      <div style={{ marginBottom: '5px' }}></div>
 
       <VerifyComponent keyName="Jsinfo Tabs">
         <JsinfoTabs defaultValue="health"
           tabs={[
             { value: "health", content: "Health History" },
             { value: "errors", content: "Errors" },
-            { value: "attributes", content: "Attributes" },
-            { value: "stakes", content: "Stakes" },
+            // { value: "attributes", content: "Attributes" },
+            // { value: "stakes", content: "Stakes" },
             { value: "events", content: "Events" },
             { value: "rewards", content: "Rewards" },
             { value: "reports", content: "Reports" },
@@ -136,12 +144,12 @@ export default function ProviderPage({ params }: { params: { lavaid: string } })
             <VerifyComponent keyName="Provider Events Tab">
               <ProviderEventsTab addr={decodedLavaId} />
             </VerifyComponent>
-            <VerifyComponent keyName="Provider Attributes Tab">
+            {/* <VerifyComponent keyName="Provider Attributes Tab">
               <ProviderAttributesTab addr={decodedLavaId} />
             </VerifyComponent>
             <VerifyComponent keyName="Provider Stakes Tab">
               <ProviderStakesTab addr={decodedLavaId} />
-            </VerifyComponent>
+            </VerifyComponent> */}
             <VerifyComponent keyName="Provider Rewards Tab">
               <ProviderRewardsTab addr={decodedLavaId} />
             </VerifyComponent>
