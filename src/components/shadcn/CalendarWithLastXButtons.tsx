@@ -8,9 +8,16 @@ import { DayPicker, DateRange } from "react-day-picker"
 import { cn } from "@jsinfo/lib/css"
 import { buttonVariants } from "@jsinfo/components/shadcn/ui/Button"
 
-import { subDays, startOfWeek, startOfMonth, startOfYear, subMonths, subWeeks } from 'date-fns';
+import { subDays, startOfWeek, startOfMonth, startOfYear, subMonths, subWeeks, endOfMonth } from 'date-fns';
 
-const predefinedRanges: any[] = [
+interface PredefinedRange {
+  label: string;
+  value: [Date, Date];
+  placement: 'left';
+  disabled: boolean;
+}
+
+const predefinedRanges: PredefinedRange[] = [
   // {
   //   label: 'Last week',
   //   value: [startOfWeek(subWeeks(new Date(), 1)), new Date()],
@@ -25,18 +32,21 @@ const predefinedRanges: any[] = [
   },
   {
     label: 'Last month',
-    value: [startOfMonth(subMonths(new Date(), 1)), new Date()]
+    value: [
+      startOfMonth(subMonths(new Date(), 1)),
+      endOfMonth(subMonths(new Date(), 1))
+    ]
   },
   {
     label: '1 Month ago',
     value: [subMonths(new Date(), 1), new Date()]
   },
   {
-    label: '2 Month ago',
+    label: '2 Months ago',
     value: [subMonths(new Date(), 2), new Date()]
   },
   {
-    label: '3 Month ago',
+    label: '3 Months ago',
     value: [subMonths(new Date(), 3), new Date()]
   },
   // {
@@ -55,7 +65,12 @@ const predefinedRanges: any[] = [
   //   label: 'This year',
   //   value: [startOfYear(new Date()), new Date()],
   // },
-].map(item => ({ ...item, placement: 'left', disabled: false }));
+].map(item => ({
+  ...item,
+  placement: 'left' as const,
+  disabled: false,
+  value: item.value as [Date, Date]
+}));
 
 interface CalendarWithLastXButtonsProps {
   onSelect: (range: DateRange | undefined) => void;
@@ -63,23 +78,39 @@ interface CalendarWithLastXButtonsProps {
 }
 
 const CalendarWithLastXButtons: React.FC<CalendarWithLastXButtonsProps> = ({ onSelect, selected }) => {
+  const [error, setError] = React.useState<Error | null>(null);
+  const defaultRange = { from: subMonths(new Date(), 1), to: new Date() };
+  const initialRange = selected || defaultRange;
+  const [selectedRange, setSelectedRange] = React.useState<DateRange | undefined>(initialRange);
 
-  if (!selected) selected = { from: subMonths(new Date(), 1), to: new Date() }
-
-  const [selectedRange, setSelectedRange] = React.useState<DateRange | undefined>(selected);
-
-  const handleRangeClick = (range: any) => {
-    setSelectedRange({ from: range.value[0], to: range.value[1] })
-    onSelect(selectedRange)
+  const handleRangeClick = (range: PredefinedRange) => {
+    try {
+      const newRange = { from: range.value[0], to: range.value[1] };
+      console.log('handleRangeClick - newRange:', newRange);
+      setSelectedRange(newRange);
+      onSelect(newRange);
+    } catch (err) {
+      setError(err instanceof Error ? err : new Error('Error handling range selection'));
+    }
   }
 
   const onDateRangeSelectHandler = (range: DateRange | undefined) => {
-    console.log('CalendatWith x ubsttong onDateRangeSelectHandler', range)
-    setSelectedRange(range)
-    onSelect(range)
+    if (range && range.from && range.to && range.from > range.to) {
+      return;
+    }
+    console.log('CalendarWithLastXButtons - onDateRangeSelectHandler:', range);
+    setSelectedRange(range);
+    onSelect(range);
   }
 
-  const disabledDays = { before: subMonths(new Date(), 6), after: new Date() };
+  const disabledDays = React.useMemo(() => ({
+    before: subMonths(new Date(), 3), // Limited to 3 months back
+    after: new Date()
+  }), []);
+
+  if (error) {
+    return <div>Error initializing calendar: {error.message}</div>;
+  }
 
   return (
     <div className="flex">
@@ -98,7 +129,7 @@ const CalendarWithLastXButtons: React.FC<CalendarWithLastXButtonsProps> = ({ onS
       </div>
 
       <DayPicker
-        mode={"range"}
+        mode="range"
         defaultMonth={subMonths(new Date(), 1)}
         numberOfMonths={2}
         disabled={disabledDays}
@@ -119,8 +150,7 @@ const CalendarWithLastXButtons: React.FC<CalendarWithLastXButtonsProps> = ({ onS
           nav_button_next: "absolute right-1",
           table: "w-full border-collapse space-y-1",
           head_row: "flex",
-          head_cell:
-            "text-muted-foreground rounded-md w-8 font-normal text-[0.8rem]",
+          head_cell: "text-muted-foreground rounded-md w-8 font-normal text-[0.8rem]",
           row: "flex w-full mt-2",
           cell: cn(
             "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected].day-range-end)]:rounded-r-md",
@@ -148,11 +178,11 @@ const CalendarWithLastXButtons: React.FC<CalendarWithLastXButtonsProps> = ({ onS
           // IconLeft: () => <ChevronLeft className="h-4 w-4" />,
           // IconRight: () => <ChevronRight className="h-4 w-4" />,
         }}
-
       />
     </div>
   )
 }
+
 CalendarWithLastXButtons.displayName = "CalendarWithLastXButtons"
 
 export { CalendarWithLastXButtons }
