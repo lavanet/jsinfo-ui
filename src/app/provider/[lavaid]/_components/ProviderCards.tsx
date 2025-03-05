@@ -84,21 +84,34 @@ const StakesCard: React.FC<{ addr: string }> = ({ addr }: { addr: string }) => {
 const DelegatorRewardsCard: React.FC<{ addr: string }> = ({ addr }: { addr: string }) => {
     const { data: rawData, isLoading, error } = useJsinfobeFetch(`providerCardsDelegatorRewards/${addr}`);
     const data = rawData as DelegatorRewardsResponse;
-    const network = GetInfoNetwork().toLowerCase();
+    const isTestnet = !GetInfoNetwork().toLowerCase().includes('mainnet');
 
-    if (isLoading || error || data?.error) return null;
+    if (isLoading || error || data?.error || !data?.data?.rewards?.length) return null;
 
-    const filteredRewards = network.includes('mainnet')
-        ? data?.data.rewards
-        : data?.data.rewards.filter(reward => reward.denom.toLowerCase().includes('lava'));
+    // Get all rewards for processing
+    const rewards = data.data.rewards;
 
-    if (!filteredRewards || filteredRewards.length === 0) return null;
+    // Find LAVA rewards
+    const lavaReward = rewards.find(r => r.denom.toLowerCase() === 'lava');
+    if (!lavaReward) return null; // No LAVA rewards to show
 
-    // Calculate total USD value
-    const totalUsdValue = filteredRewards.reduce((sum, reward) =>
+    // For testnet, only show LAVA
+    if (isTestnet) {
+        return (
+            <StatCard
+                title="Claimable Provider Rewards"
+                value={`${FormatNumber(lavaReward.amount)} LAVA`}
+                formatNumber={false}
+                className="col-span-2 md:col-span-1"
+                icon={<Trophy className="h-4 w-4 text-muted-foreground" />}
+                tooltip="The rewards the provider can claim"
+            />
+        );
+    }
+
+    // For mainnet, show all rewards
+    const totalUsdValue = rewards.reduce((sum, reward) =>
         sum + parseFloat(String(reward.usdcValue || '0')), 0);
-
-    const lavaReward = filteredRewards.find(r => r.denom === 'lava')?.amount.toString() || '0';
 
     return (
         <div className="col-span-2 md:col-span-1">
@@ -113,7 +126,7 @@ const DelegatorRewardsCard: React.FC<{ addr: string }> = ({ addr }: { addr: stri
                         content={
                             <div className="space-y-1">
                                 <div className="font-medium border-b pb-1 mb-1">Reward Breakdown</div>
-                                {filteredRewards.map((reward, index) => (
+                                {rewards.map((reward, index) => (
                                     <div key={index} className="flex justify-between">
                                         <span>{`${FormatNumber(reward.amount)} ${reward.denom.toUpperCase()}`}</span>
                                         <span className="ml-4 text-gray-300">
