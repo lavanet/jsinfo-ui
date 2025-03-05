@@ -9,6 +9,7 @@ import { ArrowUpNarrowWide, Landmark, MonitorCog, Trophy } from "lucide-react";
 import LoaderImageForCards from "@jsinfo/components/modern/LoaderImageForCards";
 import { FormatNumber } from '@jsinfo/lib/formatting';
 import { GetInfoNetwork } from '@jsinfo/lib/env';
+import ModernTooltip from "@jsinfo/components/modern/ModernTooltip";
 
 
 interface ProviderCardsProps {
@@ -93,26 +94,46 @@ const DelegatorRewardsCard: React.FC<{ addr: string }> = ({ addr }: { addr: stri
 
     if (!filteredRewards || filteredRewards.length === 0) return null;
 
+    // Calculate total USD value
+    const totalUsdValue = filteredRewards.reduce((sum, reward) =>
+        sum + parseFloat(String(reward.usdcValue || '0')), 0);
+
+    const lavaReward = filteredRewards.find(r => r.denom === 'lava')?.amount.toString() || '0';
+
     return (
-        <StatCard
-            title="Claimable Provider Rewards"
-            value={filteredRewards
-                .sort((a, b) => {
-                    const aLength = `${FormatNumber(a.amount)} ${a.denom.toUpperCase()}`.length;
-                    const bLength = `${FormatNumber(b.amount)} ${b.denom.toUpperCase()}`.length;
-                    return bLength - aLength;
-                })
-                .map((reward, index) => (
-                    <div key={index}>
-                        {`${FormatNumber(reward.amount)} ${reward.denom.toUpperCase()}`}
-                    </div>
-                ))
-            }
-            formatNumber={false}
-            className="col-span-2 md:col-span-1"
-            icon={<Trophy className="h-4 w-4 text-muted-foreground" />}
-            tooltip="The rewards the provider can claim"
-        />
+        <div className="col-span-2 md:col-span-1">
+            <div className="w-full h-full rounded-lg border bg-card text-card-foreground shadow-sm"
+                style={{ backgroundColor: 'var(--background-color)' }}>
+                <div className="flex flex-row items-center justify-between space-y-0 p-6 pb-2">
+                    <h3 className="text-sm font-medium">Claimable Provider Rewards</h3>
+                    <Trophy className="h-4 w-4 text-muted-foreground" />
+                </div>
+                <div className="p-6 pt-0">
+                    <ModernTooltip
+                        content={
+                            <div className="space-y-1">
+                                <div className="font-medium border-b pb-1 mb-1">Reward Breakdown</div>
+                                {filteredRewards.map((reward, index) => (
+                                    <div key={index} className="flex justify-between">
+                                        <span>{`${FormatNumber(reward.amount)} ${reward.denom.toUpperCase()}`}</span>
+                                        <span className="ml-4 text-gray-300">
+                                            ${parseFloat(String(reward.usdcValue || '0')).toFixed(2)}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+                        }
+                    >
+                        <div className="text-2xl font-bold flex items-center">
+                            <span>${totalUsdValue.toFixed(2)}</span>
+                            <span className="text-sm text-gray-400 ml-2">
+                                ({lavaReward} LAVA)
+                            </span>
+                        </div>
+                    </ModernTooltip>
+                </div>
+            </div>
+        </div>
     );
 };
 
