@@ -140,7 +140,7 @@ const DelegatorRewardsCard: React.FC<{ addr: string }> = ({ addr }: { addr: stri
                         <div className="text-2xl font-bold flex items-center">
                             <span>${totalUsdValue.toFixed(2)}</span>
                             <span className="text-sm text-gray-400 ml-2">
-                                ({lavaReward} LAVA)
+                                ({lavaReward.amount} LAVA)
                             </span>
                         </div>
                     </ModernTooltip>
