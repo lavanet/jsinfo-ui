@@ -151,6 +151,8 @@ export const chainDictionary: { [key: string]: ChainInfo } = {
     zora: { name: "Zora", icon: "/icons/zora.svg" },
     zyx: { name: "ZYX", icon: "/icons/zyx.svg" },
     berat2: { name: "Berachain", icon: "/icons/berachain-icon.webp" },
+    bera: { name: "Berachain", icon: "/icons/berachain-icon.webp" },
+    berat: { name: "Berachain Testnet", icon: "/icons/berachain-icon.webp" },
     canto: { name: "Canto Network", icon: "/icons/canto-network.webp" },
     agr: { name: "Agoric", icon: "/icons/agoric.png" },
     agrt: { name: "Agoric Testnet", icon: "/icons/agoric.png" },
@@ -168,4 +170,8 @@ export const chainDictionary: { [key: string]: ChainInfo } = {
     kakarott: { name: "Kakarot Testnet", icon: "/icons/kakarot.webp" },
     movement: { name: "Movement", icon: "/icons/movement3.webp" },
     movementt: { name: "Movement Testnet", icon: "/icons/movement3.svg" },
+    secret: { name: "Secret", icon: "/icons/secret.png" },
+    secrett: { name: "Secret Testnet", icon: "/icons/secret.png" },
+    secret2: { name: "Secret", icon: "/icons/secret.png" },
+    secret2t: { name: "Secret Testnet", icon: "/icons/secret.png" },
 };

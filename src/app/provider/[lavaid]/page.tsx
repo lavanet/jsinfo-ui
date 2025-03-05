@@ -13,20 +13,21 @@ import ProviderChart from '@jsinfo/app/provider/[lavaid]/_components/ProviderCha
 import ProviderHealthTab from './_components/ProviderHealthTab';
 import ProviderErrorsTab from './_components/ProviderErrorsTab';
 import ProviderEventsTab from './_components/ProviderEventsTab';
-import ProviderAttributesTab from './_components/ProviderAttributesTab';
+// import ProviderAttributesTab from './_components/ProviderAttributesTab';
 import ProviderRewardsTab from './_components/ProviderRewardsTab';
 import ProviderReportsTab from './_components/ProviderReportsTab';
 import ProviderBlockReportsTab from './_components/ProviderBlockReportsTab';
 import ProviderCards from "./_components/ProviderCards";
 import BackToProvidersLink from "./_components/BackToProviders";
-import { CardDescription, CardHeader, CardTitle } from "@jsinfo/components/shadcn/ui/Card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@jsinfo/components/shadcn/ui/Card";
 import ProviderHealthTable from "@jsinfo/app/provider/[lavaid]/_components/ProviderLatestHealthTable";
 import { ProviderPerSpecRelaysPieChart } from "./_components/ProviderPerSpecRelaysPieChart";
 import ProviderLiveRequestFeed from "./_components/ProviderLiveRequestFeed";
 import VerifyComponent from '@jsinfo/app/components/VerifyComponent';
 import ProviderConsumerOptimizerMetricsChart from "./_components/ProviderOptimzerMetricsChart";
 import ProviderStakesV2 from "./_components/ProviderStakesV2";
-import ProviderStakesTab from "./_components/ProviderStakesTab";
+import { GetJsinfobeUrl } from "@jsinfo/lib/env";
+// import ProviderStakesTab from "./_components/ProviderStakesTab";
 
 export default function ProviderPage({ params }: { params: { lavaid: string } }) {
   const decodedLavaId = decodeURIComponent(params.lavaid);
@@ -105,9 +106,42 @@ export default function ProviderPage({ params }: { params: { lavaid: string } })
 
       <div style={{ marginBottom: '20px' }}></div>
 
-
       <VerifyComponent keyName="Provider Stakes V2">
-        <ProviderStakesV2 providerId={decodedLavaId} />
+        <Box>
+          <Card className="w-full">
+            <CardHeader>
+              <CardTitle className="flex justify-between items-center">
+                <div className="flex items-center space-x-2">
+                  <span>Stakes</span>
+                </div>
+                <a
+                  href={`${GetJsinfobeUrl().endsWith('/') ? GetJsinfobeUrl().slice(0, -1) : GetJsinfobeUrl()}/providerStakesV2Csv/${decodedLavaId}`}
+                  download={`${decodedLavaId}-stakes.csv`}
+                  className="inline-flex items-center px-2 py-1 text-xs bg-gray-800 hover:bg-gray-700 text-gray-100 rounded-md transition-colors"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-3 w-3 mr-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    />
+                  </svg>
+                  CSV
+                </a>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ProviderStakesV2 providerId={decodedLavaId} />
+            </CardContent>
+          </Card>
+        </Box>
       </VerifyComponent>
 
       <div style={{ marginBottom: '5px' }}></div>
