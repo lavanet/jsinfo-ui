@@ -14,6 +14,7 @@ import ChainsCards from "./_components/ChainCards";
 import Image from 'next/image';
 import { chainDictionary } from '@jsinfo/lib/chain-assets/chain-icons';
 import ChainOptimizerMetricsChart from "./_components/ChainOptimizerMetricsChart";
+import ChainStakesV2 from "./_components/ChainStakesV2";
 
 export default function Spec({ params }: { params: { specid: string } }) {
 
@@ -57,11 +58,14 @@ export default function Spec({ params }: { params: { specid: string } }) {
 
       <ChainsCards specId={specId} />
 
-      <div style={{ marginTop: '30px' }}></div>
+      <div style={{ marginTop: '25px' }}></div>
 
       <ChainOptimizerMetricsChart specId={specId} />
 
       <div style={{ marginTop: '25px' }}></div>
+
+
+      {/* <div style={{ marginTop: '25px' }}></div> */}
 
       <div className="many-legend-chart">
         <SpecChart spec={specId} />
@@ -69,7 +73,11 @@ export default function Spec({ params }: { params: { specid: string } }) {
 
       <div style={{ marginTop: '25px' }}></div>
 
-      <JsinfoTabs defaultValue="relays"
+      <ChainStakesV2 specId={specId} />
+
+      <div style={{ marginTop: '25px' }}></div>
+
+      {/* <JsinfoTabs defaultValue="relays"
         tabs={[
           {
             value: "relays",
@@ -87,7 +95,7 @@ export default function Spec({ params }: { params: { specid: string } }) {
         <Box>
           <ChainStakesTable specid={specId} />
         </Box>
-      </JsinfoTabs>
+      </JsinfoTabs> */}
     </>
   );
 }

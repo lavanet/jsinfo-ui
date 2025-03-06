@@ -290,7 +290,7 @@ export default function ProviderStakesV2({ providerId }: { providerId: string })
                                     </TableHead>
                                     {showRewardsColumns && (
                                         <TableHead className="cursor-pointer" onClick={() => handleSortChange('rewards')}>
-                                            <ModernTooltip title="Rewards distributed last month in LAVA tokens">
+                                            <ModernTooltip title="Rewards distributed last month of LAVA tokens">
                                                 <span>Rewards (LAVA) {sortField === 'rewards' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
                                             </ModernTooltip>
                                         </TableHead>
@@ -582,7 +582,7 @@ export default function ProviderStakesV2({ providerId }: { providerId: string })
                                     </TableHead>
                                     {showRewardsColumns && (
                                         <TableHead className="cursor-pointer" onClick={() => handleSortChange('rewards')}>
-                                            <ModernTooltip title="Rewards distributed last month in LAVA tokens">
+                                            <ModernTooltip title="Rewards distributed last month of LAVA tokens">
                                                 <span>Rewards (LAVA) {sortField === 'rewards' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
                                             </ModernTooltip>
                                         </TableHead>
