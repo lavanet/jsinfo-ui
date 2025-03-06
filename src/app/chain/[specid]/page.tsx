@@ -14,6 +14,7 @@ import ChainsCards from "./_components/ChainCards";
 import Image from 'next/image';
 import { chainDictionary } from '@jsinfo/lib/chain-assets/chain-icons';
 import ChainOptimizerMetricsChart from "./_components/ChainOptimizerMetricsChart";
+import ChainStakesV2 from "./_components/ChainStakesV2";
 
 export default function Spec({ params }: { params: { specid: string } }) {
 
@@ -52,6 +53,8 @@ export default function Spec({ params }: { params: { specid: string } }) {
         )}
         <h1 className="text-3xl font-bold mb-4">{decodedSpecId}</h1>
       </div>
+
+      <ChainStakesV2 specId={specId} />
 
       <div style={{ marginTop: '5px' }}></div>
 
