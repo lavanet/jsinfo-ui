@@ -224,7 +224,20 @@ const RewardsCards: React.FC<{ addr: string }> = ({ addr }) => {
 
     if (!showLava && !showUsd) return null;
 
-    const rewardsTooltip = "Total rewards as distributed last month. For more info see: https://rewards.lavanet.xyz/provider_rewards";
+    // Create a React component for the tooltip
+    const rewardsTooltip = (
+        <div>
+            <p>Total rewards as distributed last month.</p>
+            <a
+                href="https://rewards.lavanet.xyz/provider_rewards"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-400 hover:underline"
+            >
+                View details on rewards.lavanet.xyz
+            </a>
+        </div>
+    );
 
     return (
         <>

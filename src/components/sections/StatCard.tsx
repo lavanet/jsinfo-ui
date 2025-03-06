@@ -12,7 +12,7 @@ interface StatCardProps {
     icon?: ReactNode | null;
     formatNumber?: boolean;
     className?: string;
-    tooltip?: string;
+    tooltip?: string | ReactNode;
 }
 
 const StatCard: React.FC<StatCardProps> = ({ title, value, footer, icon, formatNumber, className, tooltip }) => {
@@ -27,7 +27,7 @@ const StatCard: React.FC<StatCardProps> = ({ title, value, footer, icon, formatN
     }
 
     return (
-        <ModernTooltip title={tooltip}>
+        <ModernTooltip title={typeof tooltip === 'string' ? tooltip : undefined} content={typeof tooltip !== 'string' ? tooltip : undefined}>
             <Card className={`w-full ${className}`} style={{ backgroundColor: 'var( --background-color)' }}>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
