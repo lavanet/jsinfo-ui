@@ -195,31 +195,159 @@ const DelegatorRewardsCard: React.FC<{ addr: string }> = ({ addr }: { addr: stri
     );
 };
 
-// Update the ProviderCards component to better organize the card layout
+// Create components for the new cards
+const CommissionCard: React.FC<{ addr: string }> = ({ addr }) => {
+    const { data, isLoading, error } = useJsinfobeFetch(`providerCardsStakes/${addr}`);
+
+    if (error || isLoading || !data?.commission || data.commission === "0") return null;
+
+    return (
+        <StatCard
+            title="Commission"
+            value={`${data.commission}%`}
+            className="col-span-1"
+            formatNumber={false}
+            tooltip="Percentage of delegation rewards retained by the provider"
+            icon={<Landmark className="h-4 w-4 text-muted-foreground" />}
+        />
+    );
+};
+
+const RewardsCards: React.FC<{ addr: string }> = ({ addr }) => {
+    const { data, isLoading, error } = useJsinfobeFetch(`providerCardsStakes/${addr}`);
+
+    if (error || isLoading || !data?.rewards) return null;
+
+    const { lava, usd } = data.rewards;
+    const showLava = lava && lava !== "0";
+    const showUsd = usd && usd !== "0";
+
+    if (!showLava && !showUsd) return null;
+
+    const rewardsTooltip = "Total rewards as distributed last month. For more info see: https://rewards.lavanet.xyz/provider_rewards";
+
+    return (
+        <>
+            {showLava && (
+                <StatCard
+                    title="Monthly LAVA Rewards"
+                    value={
+                        <div className="flex items-end">
+                            <span className="text-2xl font-bold">{FormatNumber(Number(lava) / 1000000)}</span>
+                            <span className="text-lg ml-2" style={{ marginBottom: '1px' }}>LAVA</span>
+                        </div>
+                    }
+                    className="col-span-1"
+                    formatNumber={false}
+                    tooltip={rewardsTooltip}
+                    icon={<Trophy className="h-4 w-4 text-muted-foreground" />}
+                />
+            )}
+
+            {showUsd && (
+                <StatCard
+                    title="Monthly USD Rewards"
+                    value={`$${FormatNumber(Number(usd))}`}
+                    className="col-span-1"
+                    formatNumber={false}
+                    tooltip={rewardsTooltip}
+                    icon={<Trophy className="h-4 w-4 text-muted-foreground" />}
+                />
+            )}
+        </>
+    );
+};
+
+// Update the ProviderCards component to swap Total Stake and Self Stake positions
 const ProviderCards: React.FC<ProviderCardsProps> = ({ addr }: { addr: string }) => {
-    // Modify to use a simpler approach - the order is the same for both layouts
     return (
         <>
             <div className="provider-cards-grid">
+                {/* Row 1: CU, Relays, Total Stake (moved up) */}
                 <CuRelayAndRewardsCard addr={addr} />
 
-                {/* Main Total Stake Card always comes before rewards */}
                 <StatCard
                     title="Total Stake"
                     value={<StakeTotalCard addr={addr} />}
-                    className="col-span-2 md:col-span-1"
+                    className="col-span-1"
                     formatNumber={false}
                     tooltip="Total bonded tokens (self stake + delegations)"
                     icon={<Coins className="h-4 w-4 text-muted-foreground" />}
                 />
 
+                {/* Row 2: Delegator Rewards, Commission */}
                 <DelegatorRewardsCard addr={addr} />
 
-                {/* Additional stake cards (Self Stake and Delegations) come after rewards */}
-                <StakeDetailCards addr={addr} />
+                <CommissionCard addr={addr} />
+
+                {/* Row 3: Monthly Rewards (LAVA and USD) */}
+                <RewardsCards addr={addr} />
+
+                {/* Row 4: Delegation Stake */}
+                <StatCard
+                    title="Delegation Stake"
+                    value={
+                        <div className="flex items-end">
+                            <StakeDelegationCard addr={addr} />
+                        </div>
+                    }
+                    className="col-span-1"
+                    formatNumber={false}
+                    tooltip="Total stake from delegators"
+                    icon={<Users className="h-4 w-4 text-muted-foreground" />}
+                />
+
+                {/* Row 5: Self Stake (moved down) */}
+                <StatCard
+                    title="Self Stake"
+                    value={
+                        <div className="flex items-end">
+                            <StakeSelfCard addr={addr} />
+                        </div>
+                    }
+                    className="col-span-2 md:col-span-1"
+                    formatNumber={false}
+                    tooltip="Tokens bonded directly by the provider"
+                    icon={<User className="h-4 w-4 text-muted-foreground" />}
+                />
             </div>
             <div style={{ marginTop: '25px' }}></div>
         </>
+    );
+};
+
+// Create individual stake components for reuse
+const StakeSelfCard: React.FC<{ addr: string }> = ({ addr }) => {
+    const { data, isLoading, error } = useJsinfobeFetch(`providerCardsStakes/${addr}`);
+
+    if (error || isLoading || !data?.stake) {
+        return isLoading ? <LoaderImageForCards /> : null;
+    }
+
+    const lavaAmount = Number(data.stake) / 1000000;
+
+    return (
+        <div className="flex items-end">
+            <span className="text-2xl font-bold">{FormatNumber(lavaAmount)}</span>
+            <span className="text-lg ml-2" style={{ marginBottom: '1px' }}>LAVA</span>
+        </div>
+    );
+};
+
+const StakeDelegationCard: React.FC<{ addr: string }> = ({ addr }) => {
+    const { data, isLoading, error } = useJsinfobeFetch(`providerCardsStakes/${addr}`);
+
+    if (error || isLoading || !data?.delegateTotal) {
+        return isLoading ? <LoaderImageForCards /> : null;
+    }
+
+    const lavaAmount = Number(data.delegateTotal) / 1000000;
+
+    return (
+        <div className="flex items-end">
+            <span className="text-2xl font-bold">{FormatNumber(lavaAmount)}</span>
+            <span className="text-lg ml-2" style={{ marginBottom: '1px' }}>LAVA</span>
+        </div>
     );
 };
 
