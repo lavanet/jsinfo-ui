@@ -279,7 +279,7 @@ export default function ChainStakesV2({ specId }: { specId: string }) {
                                     </TableHead>
                                     {showRewardsColumns && (
                                         <TableHead className="cursor-pointer" onClick={() => handleSortChange('rewardsLava')}>
-                                            <ModernTooltip title="Rewards distributed last month in LAVA tokens">
+                                            <ModernTooltip title="Rewards distributed last month of LAVA tokens">
                                                 <span>Rewards (LAVA) {sortField === 'rewardsLava' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
                                             </ModernTooltip>
                                         </TableHead>
@@ -311,7 +311,7 @@ export default function ChainStakesV2({ specId }: { specId: string }) {
                                                 <div>
                                                     <div className="font-medium">
                                                         <a
-                                                            href={`/provider/${provider.provider.split('@')[1]}`}
+                                                            href={`/provider/${provider.provider}`}
                                                             className="text-orange-700 hover:text-orange-800 hover:underline"
                                                         >
                                                             {provider.moniker}
@@ -449,7 +449,7 @@ export default function ChainStakesV2({ specId }: { specId: string }) {
                                                 <div>
                                                     <div className="font-medium">
                                                         <a
-                                                            href={`/provider/${provider.provider.split('@')[1]}`}
+                                                            href={`/provider/${provider.provider}`}
                                                             className="text-orange-700 hover:text-orange-800 hover:underline"
                                                         >
                                                             {provider.moniker}
