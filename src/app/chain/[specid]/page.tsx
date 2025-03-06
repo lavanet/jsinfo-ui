@@ -54,17 +54,18 @@ export default function Spec({ params }: { params: { specid: string } }) {
         <h1 className="text-3xl font-bold mb-4">{decodedSpecId}</h1>
       </div>
 
-      <ChainStakesV2 specId={specId} />
-
       <div style={{ marginTop: '5px' }}></div>
 
       <ChainsCards specId={specId} />
 
-      <div style={{ marginTop: '30px' }}></div>
+      <div style={{ marginTop: '25px' }}></div>
 
       <ChainOptimizerMetricsChart specId={specId} />
 
       <div style={{ marginTop: '25px' }}></div>
+
+
+      {/* <div style={{ marginTop: '25px' }}></div> */}
 
       <div className="many-legend-chart">
         <SpecChart spec={specId} />
@@ -72,7 +73,11 @@ export default function Spec({ params }: { params: { specid: string } }) {
 
       <div style={{ marginTop: '25px' }}></div>
 
-      <JsinfoTabs defaultValue="relays"
+      <ChainStakesV2 specId={specId} />
+
+      <div style={{ marginTop: '25px' }}></div>
+
+      {/* <JsinfoTabs defaultValue="relays"
         tabs={[
           {
             value: "relays",
@@ -90,7 +95,7 @@ export default function Spec({ params }: { params: { specid: string } }) {
         <Box>
           <ChainStakesTable specid={specId} />
         </Box>
-      </JsinfoTabs>
+      </JsinfoTabs> */}
     </>
   );
 }
