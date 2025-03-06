@@ -5,7 +5,7 @@ import StatCard from "@jsinfo/components/sections/StatCard";
 import { ErrorDisplay } from "@jsinfo/components/modern/ErrorDisplay";
 import LavaWithTooltip from "@jsinfo/components/modern/LavaWithTooltip";
 import { useJsinfobeFetch } from "@jsinfo/fetching/jsinfobe/hooks/useJsinfobeFetch";
-import { ArrowUpNarrowWide, Landmark, MonitorCog, Trophy } from "lucide-react";
+import { ArrowUpNarrowWide, Landmark, MonitorCog, Trophy, Users, User, Coins } from "lucide-react";
 import LoaderImageForCards from "@jsinfo/components/modern/LoaderImageForCards";
 import { FormatNumber } from '@jsinfo/lib/formatting';
 import { GetInfoNetwork } from '@jsinfo/lib/env';
@@ -59,25 +59,70 @@ const CuRelayAndRewardsCard: React.FC<{ addr: string }> = ({ addr }: { addr: str
     );
 };
 
-const StakesCard: React.FC<{ addr: string }> = ({ addr }: { addr: string }) => {
+// For StakeTotalCard, just show the value without a complex tooltip
+const StakeTotalCard: React.FC<{ addr: string }> = ({ addr }) => {
     const { data, isLoading, error } = useJsinfobeFetch(`providerCardsStakes/${addr}`);
 
-    if (error) {
-        console.error('ProviderStakesCard Error:', error);
-        return null;
+    if (error || isLoading || !data?.stakeSum) {
+        return isLoading ? <LoaderImageForCards /> : null;
     }
 
-    if (!isLoading && (!data || !data.stakeSum)) return null;
+    const lavaAmount = Number(data.stakeSum) / 1000000;
 
     return (
-        <StatCard
-            title="Total Stake"
-            value={isLoading ? <LoaderImageForCards /> : <LavaWithTooltip amount={data?.stakeSum || "0"} />}
-            className="col-span-2 md:col-span-1"
-            formatNumber={false}
-            tooltip="Total stake for all specs"
-            icon={<Landmark className="h-4 w-4 text-muted-foreground" />}
-        />
+        <div className="flex items-end">
+            <span className="text-2xl font-bold">{FormatNumber(lavaAmount)}</span>
+            <span className="text-lg ml-2" style={{ marginBottom: '1px' }}>LAVA</span>
+        </div>
+    );
+};
+
+// Simplify StakeDetailCards to remove the complex tooltips
+const StakeDetailCards: React.FC<{ addr: string }> = ({ addr }) => {
+    const { data, isLoading, error } = useJsinfobeFetch(`providerCardsStakes/${addr}`);
+
+    if (error || isLoading || !data?.stakeSum) return null;
+
+    const selfStake = data?.stake || "0";
+    const delegations = data?.delegateTotal || "0";
+
+    const showSelfStake = parseInt(selfStake) > 0;
+    const showDelegations = parseInt(delegations) > 0;
+
+    return (
+        <>
+            {showDelegations && (
+                <StatCard
+                    title="Delegation Stake"
+                    value={
+                        <div className="flex items-end">
+                            <span className="text-2xl font-bold">{FormatNumber(Number(delegations) / 1000000)}</span>
+                            <span className="text-lg ml-2" style={{ marginBottom: '1px' }}>LAVA</span>
+                        </div>
+                    }
+                    className="col-span-1"
+                    formatNumber={false}
+                    tooltip="Total stake from delegators"
+                    icon={<Users className="h-4 w-4 text-muted-foreground" />}
+                />
+            )}
+
+            {showSelfStake && (
+                <StatCard
+                    title="Self Stake"
+                    value={
+                        <div className="flex items-end">
+                            <span className="text-2xl font-bold">{FormatNumber(Number(selfStake) / 1000000)}</span>
+                            <span className="text-lg ml-2" style={{ marginBottom: '1px' }}>LAVA</span>
+                        </div>
+                    }
+                    className="col-span-1"
+                    formatNumber={false}
+                    tooltip="Tokens bonded directly by the provider"
+                    icon={<User className="h-4 w-4 text-muted-foreground" />}
+                />
+            )}
+        </>
     );
 };
 
@@ -100,7 +145,7 @@ const DelegatorRewardsCard: React.FC<{ addr: string }> = ({ addr }: { addr: stri
         return (
             <StatCard
                 title="Claimable Provider Rewards"
-                value={`${FormatNumber(lavaReward.amount)} LAVA`}
+                value={`${FormatNumber(Number(lavaReward.amount))} LAVA`}
                 formatNumber={false}
                 className="col-span-2 md:col-span-1"
                 icon={<Trophy className="h-4 w-4 text-muted-foreground" />}
@@ -128,7 +173,7 @@ const DelegatorRewardsCard: React.FC<{ addr: string }> = ({ addr }: { addr: stri
                                 <div className="font-medium border-b pb-1 mb-1">Reward Breakdown</div>
                                 {rewards.map((reward, index) => (
                                     <div key={index} className="flex justify-between">
-                                        <span>{`${FormatNumber(reward.amount)} ${reward.denom.toUpperCase()}`}</span>
+                                        <span>{`${FormatNumber(Number(reward.amount))} ${reward.denom.toUpperCase()}`}</span>
                                         <span className="ml-4 text-gray-300">
                                             ${parseFloat(String(reward.usdcValue || '0')).toFixed(2)}
                                         </span>
@@ -140,7 +185,7 @@ const DelegatorRewardsCard: React.FC<{ addr: string }> = ({ addr }: { addr: stri
                         <div className="text-2xl font-bold flex items-center">
                             <span>${totalUsdValue.toFixed(2)}</span>
                             <span className="text-sm text-gray-400 ml-2">
-                                ({lavaReward.amount} LAVA)
+                                ({FormatNumber(Number(lavaReward.amount))} LAVA)
                             </span>
                         </div>
                     </ModernTooltip>
@@ -150,42 +195,28 @@ const DelegatorRewardsCard: React.FC<{ addr: string }> = ({ addr }: { addr: stri
     );
 };
 
+// Update the ProviderCards component to better organize the card layout
 const ProviderCards: React.FC<ProviderCardsProps> = ({ addr }: { addr: string }) => {
-    const [isSmallScreen, setIsSmallScreen] = useState(false);
-
-    useEffect(() => {
-        const checkScreenSize = () => {
-            setIsSmallScreen(window.innerWidth < 1279);
-        };
-
-        // Check initial size
-        checkScreenSize();
-
-        // Add resize listener
-        window.addEventListener('resize', checkScreenSize);
-
-        // Cleanup
-        return () => window.removeEventListener('resize', checkScreenSize);
-    }, []);
-
-    const cards = isSmallScreen ? (
-        <>
-            <CuRelayAndRewardsCard addr={addr} />
-            <StakesCard addr={addr} />
-            <DelegatorRewardsCard addr={addr} />
-        </>
-    ) : (
-        <>
-            <CuRelayAndRewardsCard addr={addr} />
-            <DelegatorRewardsCard addr={addr} />
-            <StakesCard addr={addr} />
-        </>
-    );
-
+    // Modify to use a simpler approach - the order is the same for both layouts
     return (
         <>
             <div className="provider-cards-grid">
-                {cards}
+                <CuRelayAndRewardsCard addr={addr} />
+
+                {/* Main Total Stake Card always comes before rewards */}
+                <StatCard
+                    title="Total Stake"
+                    value={<StakeTotalCard addr={addr} />}
+                    className="col-span-2 md:col-span-1"
+                    formatNumber={false}
+                    tooltip="Total bonded tokens (self stake + delegations)"
+                    icon={<Coins className="h-4 w-4 text-muted-foreground" />}
+                />
+
+                <DelegatorRewardsCard addr={addr} />
+
+                {/* Additional stake cards (Self Stake and Delegations) come after rewards */}
+                <StakeDetailCards addr={addr} />
             </div>
             <div style={{ marginTop: '25px' }}></div>
         </>
