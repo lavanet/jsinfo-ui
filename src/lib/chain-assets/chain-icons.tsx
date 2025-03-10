@@ -168,7 +168,7 @@ export const chainDictionary: { [key: string]: ChainInfo } = {
     apt1: { name: "Aptos", icon: "/icons/aptos-icon.webp" },
     kakarot: { name: "Kakarot", icon: "/icons/kakarot.webp" },
     kakarott: { name: "Kakarot Testnet", icon: "/icons/kakarot.webp" },
-    movement: { name: "Movement", icon: "/icons/movement3.webp" },
+    movement: { name: "Movement", icon: "/icons/movement3.svg" },
     movementt: { name: "Movement Testnet", icon: "/icons/movement3.svg" },
     secret: { name: "Secret", icon: "/icons/secret.png" },
     secrett: { name: "Secret Testnet", icon: "/icons/secret.png" },
