@@ -57,10 +57,6 @@ interface ProviderStakeData {
     } | string;
 }
 
-interface ProviderStakesResponse {
-    data: ProviderStakeData[];
-}
-
 const HealthStatusBadge = ({ health }: { health: ProviderStakeData['health'] }) => {
     if (typeof health === 'string') {
         return <Badge variant="outline" className="bg-gray-100 text-gray-500">N/A</Badge>;
@@ -121,7 +117,7 @@ const hasAnyRewardsData = (stakes: ProviderStakeData[]) => {
 export default function ChainStakesV2({ specId }: { specId: string }) {
     const [activeFilter, setActiveFilter] = useState<'active' | 'inactive'>('active');
     const [dataView, setDataView] = useState<'stake' | 'performance'>('stake');
-    const [sortField, setSortField] = useState<keyof ProviderStakeData | 'rewardsLava' | 'rewardsUsd'>('totalStake');
+    const [sortField, setSortField] = useState<keyof ProviderStakeData | 'rewardsLava' | 'rewardsUsd' | 'addonsExtensions'>('totalStake');
     const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
 
     // Fetch provider stakes for this specific chain
@@ -175,6 +171,14 @@ export default function ChainStakesV2({ specId }: { specId: string }) {
                 bValue = Number(bValue);
             }
 
+            // Handle CU and relay fields
+            if (sortField === 'cuSum30Days' || sortField === 'cuSum90Days' ||
+                sortField === 'relaySum30Days' || sortField === 'relaySum90Days') {
+                // Convert string to number, handling empty or invalid values
+                aValue = typeof aValue === 'string' ? parseFloat(aValue) || 0 : (aValue || 0);
+                bValue = typeof bValue === 'string' ? parseFloat(bValue) || 0 : (bValue || 0);
+            }
+
             // Handle rewards special cases
             if (sortField === 'rewardsLava') {
                 aValue = typeof a.rewards === 'string' ? 0 : parseFloat(a.rewards.lava);
@@ -188,13 +192,49 @@ export default function ChainStakesV2({ specId }: { specId: string }) {
                     parseFloat(b.rewards.usd.replace('$', '').replace(',', ''));
             }
 
+            // Handle health status sorting
+            if (sortField === 'health') {
+                const healthPriority = {
+                    'healthy': 4,
+                    'warning': 3,
+                    'unhealthy': 2,
+                    'frozen': 1,
+                    'N/A': 0
+                };
+
+                const getHealthStatus = (health: ProviderStakeData['health']) => {
+                    if (typeof health === 'string') return 'N/A';
+                    return health.overallStatus.toLowerCase();
+                };
+
+                aValue = healthPriority[getHealthStatus(a.health) as keyof typeof healthPriority];
+                bValue = healthPriority[getHealthStatus(b.health) as keyof typeof healthPriority];
+            }
+
+            // Handle addons/extensions sorting
+            if (sortField === 'addonsExtensions') {
+                const countFeatures = (provider: ProviderStakeData) => {
+                    let count = 0;
+                    if (provider.addons && provider.addons !== '-') {
+                        count += provider.addons.split(',').length;
+                    }
+                    if (provider.extensions && provider.extensions !== '-') {
+                        count += provider.extensions.split(',').length;
+                    }
+                    return count;
+                };
+
+                aValue = countFeatures(a);
+                bValue = countFeatures(b);
+            }
+
             if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
             if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
             return 0;
         });
     };
 
-    const handleSortChange = (field: keyof ProviderStakeData | 'rewardsLava' | 'rewardsUsd') => {
+    const handleSortChange = (field: keyof ProviderStakeData | 'rewardsLava' | 'rewardsUsd' | 'addonsExtensions') => {
         if (field === sortField) {
             setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
         } else {
@@ -419,14 +459,14 @@ export default function ChainStakesV2({ specId }: { specId: string }) {
                                             <span>Relays (90d) {sortField === 'relaySum90Days' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
                                         </ModernTooltip>
                                     </TableHead>
-                                    <TableHead>
+                                    <TableHead className="cursor-pointer" onClick={() => handleSortChange('health')}>
                                         <ModernTooltip title="Current health status of the provider's service">
-                                            <span>Health</span>
+                                            <span>Health {sortField === 'health' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
                                         </ModernTooltip>
                                     </TableHead>
-                                    <TableHead>
+                                    <TableHead className="cursor-pointer" onClick={() => handleSortChange('addonsExtensions')}>
                                         <ModernTooltip title="Special functionality provided by this service">
-                                            <span>Addons/Extensions</span>
+                                            <span>Addons/Extensions {sortField === 'addonsExtensions' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
                                         </ModernTooltip>
                                     </TableHead>
                                 </TableRow>
@@ -486,17 +526,17 @@ export default function ChainStakesV2({ specId }: { specId: string }) {
                                             <HealthStatusBadge health={provider.health} />
                                         </TableCell>
                                         <TableCell>
-                                            <div className="text-xs">
-                                                {provider.addons !== '-' && (
-                                                    <Badge className="mr-1 bg-blue-100 text-blue-800 border-blue-200">
-                                                        {provider.addons}
+                                            <div className="text-xs space-x-1">
+                                                {provider.addons !== '-' && provider.addons.split(',').map((addon, idx) => (
+                                                    <Badge key={`addon-${idx}`} className="mr-1 bg-blue-100 text-blue-800 border-blue-200">
+                                                        {addon.trim()}
                                                     </Badge>
-                                                )}
-                                                {provider.extensions !== '-' && (
-                                                    <Badge className="bg-purple-100 text-purple-800 border-purple-200">
-                                                        {provider.extensions}
+                                                ))}
+                                                {provider.extensions !== '-' && provider.extensions.split(',').map((extension, idx) => (
+                                                    <Badge key={`ext-${idx}`} className="bg-purple-100 text-purple-800 border-purple-200">
+                                                        {extension.trim()}
                                                     </Badge>
-                                                )}
+                                                ))}
                                                 {(provider.addons === '-' && provider.extensions === '-') && (
                                                     <span className="text-gray-500">-</span>
                                                 )}
