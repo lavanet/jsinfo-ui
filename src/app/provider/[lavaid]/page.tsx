@@ -158,35 +158,35 @@ export default function ProviderPage({ params }: { params: { lavaid: string } })
       <VerifyComponent keyName="Jsinfo Tabs">
         <JsinfoTabs defaultValue="health"
           tabs={[
-            { value: "health", content: "Health History" },
+            // { value: "health", content: "Health History" },
             { value: "errors", content: "Errors" },
             // { value: "attributes", content: "Attributes" },
             // { value: "stakes", content: "Stakes" },
-            { value: "events", content: "Events" },
-            { value: "rewards", content: "Rewards" },
+            // { value: "events", content: "Events" },
+            // { value: "rewards", content: "Rewards" },
             { value: "reports", content: "Reports" },
             { value: "blockReports", content: "Block Reports" },
           ]}
         >
           <Box>
-            <VerifyComponent keyName="Provider Health Tab">
+            {/* <VerifyComponent keyName="Provider Health Tab">
               <ProviderHealthTab addr={decodedLavaId} />
-            </VerifyComponent>
+            </VerifyComponent> */}
             <VerifyComponent keyName="Provider Errors Tab">
               <ProviderErrorsTab addr={decodedLavaId} />
             </VerifyComponent>
-            <VerifyComponent keyName="Provider Events Tab">
+            {/* <VerifyComponent keyName="Provider Events Tab">
               <ProviderEventsTab addr={decodedLavaId} />
-            </VerifyComponent>
+            </VerifyComponent> */}
             {/* <VerifyComponent keyName="Provider Attributes Tab">
               <ProviderAttributesTab addr={decodedLavaId} />
             </VerifyComponent>
             <VerifyComponent keyName="Provider Stakes Tab">
               <ProviderStakesTab addr={decodedLavaId} />
             </VerifyComponent> */}
-            <VerifyComponent keyName="Provider Rewards Tab">
+            {/* <VerifyComponent keyName="Provider Rewards Tab">
               <ProviderRewardsTab addr={decodedLavaId} />
-            </VerifyComponent>
+            </VerifyComponent> */}
             <VerifyComponent keyName="Provider Reports Tab">
               <ProviderReportsTab addr={decodedLavaId} />
             </VerifyComponent>

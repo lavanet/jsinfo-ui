@@ -89,9 +89,9 @@ const ChainChart: React.FC<ChainChartProps> = ({ spec, addr }) => {
     }
 
     const chartConfig: { [key: string]: { label: string; color: string } } = {
-      qosSyncAvg: { label: "QoS Sync Score", color: qosColors.qosSyncAvg.start },
-      qosAvailabilityAvg: { label: "QoS Availability Score", color: qosColors.qosAvailabilityAvg.start },
-      qosLatencyAvg: { label: "QoS Latency Score", color: qosColors.qosLatencyAvg.start },
+      // qosSyncAvg: { label: "QoS Sync Score", color: qosColors.qosSyncAvg.start },
+      // qosAvailabilityAvg: { label: "QoS Availability Score", color: qosColors.qosAvailabilityAvg.start },
+      // qosLatencyAvg: { label: "QoS Latency Score", color: qosColors.qosLatencyAvg.start },
       relays: { label: "Relays", color: CHART_COLORS[0] },
       cus: { label: "CUs", color: CHART_COLORS[1] },
     };
@@ -134,9 +134,9 @@ const ChainChart: React.FC<ChainChartProps> = ({ spec, addr }) => {
             <CardTitle className="text-sm">{new Date(label).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</CardTitle>
           </CardHeader>
           <CardContent className="p-2">
-            <p className="text-sm">QoS Sync Score: {payload.find(p => p.dataKey === 'qosSyncAvg')?.value?.toFixed(4)}</p>
+            {/* <p className="text-sm">QoS Sync Score: {payload.find(p => p.dataKey === 'qosSyncAvg')?.value?.toFixed(4)}</p>
             <p className="text-sm">QoS Availability Score: {payload.find(p => p.dataKey === 'qosAvailabilityAvg')?.value?.toFixed(4)}</p>
-            <p className="text-sm">QoS Latency Score: {payload.find(p => p.dataKey === 'qosLatencyAvg')?.value?.toFixed(4)}</p>
+            <p className="text-sm">QoS Latency Score: {payload.find(p => p.dataKey === 'qosLatencyAvg')?.value?.toFixed(4)}</p> */}
             <p className="text-sm">
               <span className="inline-block w-3 h-3 rounded-full mr-2" style={{ backgroundColor: chartConfig.relays?.color }}></span>
               Relays: <span className="font-mono">{payload.find(p => p.dataKey === 'relays')?.value?.toLocaleString().padStart(10)}</span>
@@ -306,7 +306,7 @@ const ChainChart: React.FC<ChainChartProps> = ({ spec, addr }) => {
                 <Tooltip content={<CustomTooltip active={false} payload={[]} label={""} />} />
                 <Legend content={renderLegend} />
 
-                <Line
+                {/* <Line
                   yAxisId="right"
                   type="monotone"
                   dataKey="qosSyncAvg"
@@ -335,7 +335,7 @@ const ChainChart: React.FC<ChainChartProps> = ({ spec, addr }) => {
                   strokeWidth={2}
                   dot={false}
                   hide={!visibleLines.qosLatencyAvg}
-                />
+                /> */}
 
                 <Area
                   yAxisId="left"
@@ -348,13 +348,13 @@ const ChainChart: React.FC<ChainChartProps> = ({ spec, addr }) => {
                   hide={!visibleLines.relays}
                 />
                 <Area
-                  yAxisId="left"
+                  yAxisId="right"
                   type="monotone"
                   dataKey="cus"
                   name="CUs"
                   stroke={`var(--${removeSpacesForCss('cus')}-color)`}
                   fill={`url(#fill${removeSpacesForCss('cus')})`}
-                  stackId="1"
+                  stackId="2"
                   hide={!visibleLines.cus}
                 />
                 <Brush
