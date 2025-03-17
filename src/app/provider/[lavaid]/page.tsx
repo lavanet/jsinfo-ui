@@ -156,7 +156,7 @@ export default function ProviderPage({ params }: { params: { lavaid: string } })
       <div style={{ marginBottom: '5px' }}></div>
 
       <VerifyComponent keyName="Jsinfo Tabs">
-        <JsinfoTabs defaultValue="health"
+        <JsinfoTabs defaultValue="errors"
           tabs={[
             // { value: "health", content: "Health History" },
             { value: "errors", content: "Errors" },
