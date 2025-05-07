@@ -18,8 +18,10 @@ const StatusCall: React.FC<StatusCallProps> = ({ status, style }) => {
             lowerStatus === "upgrade available") {
             return "green";
         }
-        if (lowerStatus === "frozen" ||
-            lowerStatus === "unhealthy" ||
+        if (lowerStatus === "frozen") {
+            return "yellow";
+        }
+        if (lowerStatus === "unhealthy" ||
             lowerStatus === "jailed") {
             return "red";
         }
@@ -48,6 +50,8 @@ const StatusCall: React.FC<StatusCallProps> = ({ status, style }) => {
             return 'Upgrade Available';
         } else if (lowerStatus === 'version_upgrade_required' || lowerStatus === 'upgrade required') {
             return 'Upgrade Required';
+        } else if (lowerStatus === 'frozen') {
+            return 'Paused (Frozen)';
         }
 
         // General formatting for other statuses

@@ -96,6 +96,8 @@ ${Object.entries(health.interfaceDetails || {}).map(([k, v]) =>
                 return <Badge variant="outline" className="bg-red-100 text-red-700">Unhealthy</Badge>;
             case 'warning':
                 return <Badge variant="outline" className="bg-yellow-100 text-yellow-700">Warning</Badge>;
+            case 'frozen':
+                return <Badge variant="outline" className="bg-yellow-100 text-yellow-700">Paused (Frozen)</Badge>;
             default:
                 return <Badge variant="outline" className="bg-gray-100 text-gray-500">{status}</Badge>;
         }
