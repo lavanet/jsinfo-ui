@@ -76,7 +76,22 @@ ${Object.entries(health.interfaceDetails || {}).map(([k, v]) =>
     ).join('\n')}`;
 
     const getBadge = () => {
-        switch (status) {
+        // Normalize status for easier matching
+        const normalizedStatus = status.toLowerCase();
+
+        // Check for upgrade statuses
+        if (normalizedStatus === 'version_upgrade_available' ||
+            normalizedStatus === 'upgrade available') {
+            return <Badge variant="outline" className="bg-green-100 text-green-700">Upgrade Available</Badge>;
+        }
+
+        if (normalizedStatus === 'version_upgrade_required' ||
+            normalizedStatus === 'upgrade required') {
+            return <Badge variant="outline" className="bg-yellow-100 text-yellow-700">Upgrade Required</Badge>;
+        }
+
+        // Original statuses
+        switch (normalizedStatus) {
             case 'healthy':
                 return <Badge variant="outline" className="bg-green-100 text-green-700">Healthy</Badge>;
             case 'unhealthy':

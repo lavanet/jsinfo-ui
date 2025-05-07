@@ -79,7 +79,7 @@ export function ProviderLatestHealthTable({ providerId }: ProviderLatestHealthTa
           .reduce((latest, current) =>
             latest.timestamp > current.timestamp ? latest : current
           ).timestamp,
-        message: undefined // Add this line
+        message: undefined
       }));
     }
 
@@ -216,7 +216,7 @@ export function ProviderLatestHealthTable({ providerId }: ProviderLatestHealthTa
               </TableCell>
               <TableCell>{row.interface}</TableCell>
               <TableCell>
-                <StatusCall status={row.status} />
+                <StatusCall status={row.status || 'unknown'} />
               </TableCell>
               {!showSummary && (
                 <>
