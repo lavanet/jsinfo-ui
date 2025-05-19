@@ -15,6 +15,7 @@ export const chainDictionary: { [key: string]: ChainInfo } = {
     strks: { name: "Starknet Sepolia", icon: "/icons/starknet.svg" },
     polygon: { name: "Polygon", icon: "/icons/polygon-pos.svg" },
     polygon1: { name: "Polygon", icon: "/icons/polygon-pos.svg" },
+    polygona: { name: "Polygon", icon: "/icons/polygon-pos.svg" },
     solana: { name: "Solana", icon: "/icons/solana.svg" },
     solanat: { name: "Solana Testnet", icon: "/icons/solana.svg" },
     eth1: { name: "Ethereum", icon: "/icons/ethereum.svg" },
