@@ -83,6 +83,7 @@ const chainMapping: Record<string, string> = {
     NAMTSE: "Namada SE Testnet",
     COSMOSSDK: "Cosmos SDK",
     POLYGON1A: "Polygon Amoy Testnet",
+    POLYGONA: "Polygon Amoy Testnet",
     COS3: "Osmosis Mainnet",
     COS4: "Osmosis Testnet",
     COS5: "Cosmos Hub Mainnet",
