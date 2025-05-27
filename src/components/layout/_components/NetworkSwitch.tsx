@@ -10,9 +10,9 @@ export const NetworkSwitch = React.forwardRef<HTMLDivElement, NetworkSwitchProps
 
         const handleNetworkSwitch = () => {
             if (!isMainnet) {
-                window.location.href = 'https://info-mainnet.lavanet.xyz';
-            } else {
                 window.location.href = 'https://info.lavanet.xyz';
+            } else {
+                window.location.href = 'https://info-testnet.lavanet.xyz';
             }
         };
 
