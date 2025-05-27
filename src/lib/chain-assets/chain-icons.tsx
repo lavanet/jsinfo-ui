@@ -175,4 +175,6 @@ export const chainDictionary: { [key: string]: ChainInfo } = {
     secrett: { name: "Secret Testnet", icon: "/icons/secret.png" },
     secret2: { name: "Secret", icon: "/icons/secret.png" },
     secret2t: { name: "Secret Testnet", icon: "/icons/secret.png" },
+    hyperliquid: { name: "Hyperliquid", icon: "/icons/HL-green.svg" },
+    hyperliquidt: { name: "Hyperliquid Testnet", icon: "/icons/HL-green.svg" },
 };

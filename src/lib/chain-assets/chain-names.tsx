@@ -106,6 +106,8 @@ const chainMapping: Record<string, string> = {
     ARBITRUMS: "Arbitrum Sepolia Testnet",
     BASESP: "Base Sepolia Testnet",
     FVMT: "Filecoin Testnet",
+    HYPERLIQUID: "Hyperliquid Mainnet",
+    HYPERLIQUIDT: "Hyperliquid Testnet",
 };
 
 /**
