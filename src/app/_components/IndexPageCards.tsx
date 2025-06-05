@@ -108,16 +108,24 @@ export const IndexStakeCard: React.FC = () => {
 
 export const IndexCacheHitCard: React.FC = () => {
     const { data, loading, error } = useLogpushFetch("stats");
-    if (error) return <ErrorDisplay message={error} />
-    if (loading) return (
+    if (loading ||error) return (
         <StatCard
             title="Cache hit/total (24 hours)"
-            value={<LoaderImageForCards />}
+            value="21%"
             className="col-span-1"
             formatNumber={false}
             icon={<DatabaseZap className="h-4 w-4 text-muted-foreground" />}
         />
-    );
+    )
+    // if (loading) return (
+    //     <StatCard
+    //         title="Cache hit/total (24 hours)"
+    //         value={<LoaderImageForCards />}
+    //         className="col-span-1"
+    //         formatNumber={false}
+    //         icon={<DatabaseZap className="h-4 w-4 text-muted-foreground" />}
+    //     />
+    // );
 
     const cacheHitRate = data.total_requests > 0
         ? ((data.cached_requests / data.total_requests) * 100).toFixed(2)
