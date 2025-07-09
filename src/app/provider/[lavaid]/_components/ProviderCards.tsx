@@ -246,7 +246,7 @@ const RewardsCards: React.FC<{ addr: string }> = ({ addr }) => {
                     title="Monthly LAVA Rewards"
                     value={
                         <div className="flex items-end">
-                            <span className="text-2xl font-bold">{FormatNumber(Number(lava) / 1000000)}</span>
+                            <span className="text-2xl font-bold">{FormatNumber(Number(lava))}</span>
                             <span className="text-lg ml-2" style={{ marginBottom: '1px' }}>LAVA</span>
                         </div>
                     }
