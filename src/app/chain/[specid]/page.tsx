@@ -15,6 +15,7 @@ import Image from 'next/image';
 import { chainDictionary } from '@jsinfo/lib/chain-assets/chain-icons';
 import ChainOptimizerMetricsChart from "./_components/ChainOptimizerMetricsChart";
 import ChainStakesV2 from "./_components/ChainStakesV2";
+import { getChainMaybeReplacedShortName } from '@jsinfo/lib/chain-utils';
 
 export default function Spec({ params }: { params: { specid: string } }) {
 
@@ -51,7 +52,7 @@ export default function Spec({ params }: { params: { specid: string } }) {
             />
           </div>
         )}
-        <h1 className="text-3xl font-bold mb-4">{decodedSpecId}</h1>
+        <h1 className="text-3xl font-bold mb-4">{getChainMaybeReplacedShortName(decodedSpecId)}</h1>
       </div>
 
       <div style={{ marginTop: '5px' }}></div>

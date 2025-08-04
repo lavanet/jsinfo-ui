@@ -19,6 +19,22 @@ import LavaWithTooltip from '@jsinfo/components/modern/LavaWithTooltip';
 import { FormatNumber } from '@jsinfo/lib/formatting';
 import ModernTooltip from '@jsinfo/components/modern/ModernTooltip';
 import { GeoLocationToString } from '@jsinfo/lib/convertors';
+import { getChainMaybeReplacedShortName } from '@jsinfo/lib/chain-utils';
+import { chainDictionary } from '@jsinfo/lib/chain-assets/chain-icons';
+
+// Helper to get chain icon with better fallback
+const getChainIcon = (stake: ProviderStakeData): string | undefined => {
+    // First try the provided chainIcon
+    if (stake.chainIcon) return stake.chainIcon;
+    
+    // Try exact lowercase match
+    const lowerSpecId = stake.specId.toLowerCase();
+    if (chainDictionary[lowerSpecId]?.icon) {
+        return chainDictionary[lowerSpecId].icon;
+    }
+    
+    return undefined;
+};
 
 interface ProviderStakeData {
     stake: string;
@@ -366,27 +382,43 @@ export default function ProviderStakesV2({ providerId }: { providerId: string })
                                     <TableRow key={index}>
                                         <TableCell>
                                             <div className="flex items-center space-x-2">
-                                                {stake.chainIcon && (
-                                                    <div className={`w-6 h-6 relative flex-shrink-0 rounded-full overflow-hidden ${(activeFilter as string) === 'inactive' ? 'opacity-70' : ''}`}>
-                                                        <img
-                                                            src={stake.chainIcon}
-                                                            alt={stake.chainName}
-                                                            width={24}
-                                                            height={24}
-                                                            style={{ objectFit: 'contain', filter: (activeFilter as string) === 'inactive' ? 'grayscale(30%)' : 'none' }}
-                                                        />
-                                                    </div>
-                                                )}
+                                                {(() => {
+                                                    const iconUrl = getChainIcon(stake);
+                                                    // Always try to show an icon placeholder
+                                                    return (
+                                                        <div className={`w-6 h-6 relative flex-shrink-0 rounded-full overflow-hidden ${(activeFilter as string) === 'inactive' ? 'opacity-70' : ''}`}>
+                                                            {iconUrl ? (
+                                                                <img
+                                                                    src={iconUrl}
+                                                                    alt={stake.chainName || chainDictionary[stake.specId.toLowerCase()]?.name || stake.specId}
+                                                                    width={24}
+                                                                    height={24}
+                                                                    style={{ objectFit: 'contain', filter: (activeFilter as string) === 'inactive' ? 'grayscale(30%)' : 'none' }}
+                                                                />
+                                                            ) : (
+                                                                <div className="w-full h-full bg-gray-600 flex items-center justify-center text-xs text-white">
+                                                                    {stake.specId.charAt(0)}
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    );
+                                                })()}
                                                 <div>
                                                     <div className="font-medium">
                                                         <a
                                                             href={`/chain/${stake.specId}`}
                                                             className="text-orange-700 hover:text-orange-800 hover:underline"
+                                                            style={{ color: '#c2410c' }}
                                                         >
-                                                            {stake.chainName}
+                                                            {(() => {
+                                                                // If chainName is empty, use the chain name from our mapping
+                                                                const displayName = stake.chainName || chainDictionary[stake.specId.toLowerCase()]?.name || stake.specId;
+                                                                // Replace Binance Smart Chain with BNB Chain
+                                                                return displayName.includes('Binance Smart Chain') ? displayName.replace('Binance Smart Chain', 'BNB Chain') : displayName;
+                                                            })()}
                                                         </a>
                                                     </div>
-                                                    <div className="text-xs text-gray-500">{stake.specId}</div>
+                                                    <div className="text-xs text-gray-500">{getChainMaybeReplacedShortName(stake.specId)}</div>
                                                 </div>
                                             </div>
                                         </TableCell>
@@ -500,27 +532,43 @@ export default function ProviderStakesV2({ providerId }: { providerId: string })
                                     <TableRow key={index}>
                                         <TableCell>
                                             <div className="flex items-center space-x-2">
-                                                {stake.chainIcon && (
-                                                    <div className={`w-6 h-6 relative flex-shrink-0 rounded-full overflow-hidden ${(activeFilter as string) === 'inactive' ? 'opacity-70' : ''}`}>
-                                                        <img
-                                                            src={stake.chainIcon}
-                                                            alt={stake.chainName}
-                                                            width={24}
-                                                            height={24}
-                                                            style={{ objectFit: 'contain', filter: (activeFilter as string) === 'inactive' ? 'grayscale(30%)' : 'none' }}
-                                                        />
-                                                    </div>
-                                                )}
+                                                {(() => {
+                                                    const iconUrl = getChainIcon(stake);
+                                                    // Always try to show an icon placeholder
+                                                    return (
+                                                        <div className={`w-6 h-6 relative flex-shrink-0 rounded-full overflow-hidden ${(activeFilter as string) === 'inactive' ? 'opacity-70' : ''}`}>
+                                                            {iconUrl ? (
+                                                                <img
+                                                                    src={iconUrl}
+                                                                    alt={stake.chainName || chainDictionary[stake.specId.toLowerCase()]?.name || stake.specId}
+                                                                    width={24}
+                                                                    height={24}
+                                                                    style={{ objectFit: 'contain', filter: (activeFilter as string) === 'inactive' ? 'grayscale(30%)' : 'none' }}
+                                                                />
+                                                            ) : (
+                                                                <div className="w-full h-full bg-gray-600 flex items-center justify-center text-xs text-white">
+                                                                    {stake.specId.charAt(0)}
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    );
+                                                })()}
                                                 <div>
                                                     <div className="font-medium">
                                                         <a
                                                             href={`/chain/${stake.specId}`}
                                                             className="text-orange-700 hover:text-orange-800 hover:underline"
+                                                            style={{ color: '#c2410c' }}
                                                         >
-                                                            {stake.chainName}
+                                                            {(() => {
+                                                                // If chainName is empty, use the chain name from our mapping
+                                                                const displayName = stake.chainName || chainDictionary[stake.specId.toLowerCase()]?.name || stake.specId;
+                                                                // Replace Binance Smart Chain with BNB Chain
+                                                                return displayName.includes('Binance Smart Chain') ? displayName.replace('Binance Smart Chain', 'BNB Chain') : displayName;
+                                                            })()}
                                                         </a>
                                                     </div>
-                                                    <div className="text-xs text-gray-500">{stake.specId}</div>
+                                                    <div className="text-xs text-gray-500">{getChainMaybeReplacedShortName(stake.specId)}</div>
                                                 </div>
                                             </div>
                                         </TableCell>
@@ -658,27 +706,43 @@ export default function ProviderStakesV2({ providerId }: { providerId: string })
                                     <TableRow key={index}>
                                         <TableCell>
                                             <div className="flex items-center space-x-2">
-                                                {stake.chainIcon && (
-                                                    <div className={`w-6 h-6 relative flex-shrink-0 rounded-full overflow-hidden ${(activeFilter as string) === 'inactive' ? 'opacity-70' : ''}`}>
-                                                        <img
-                                                            src={stake.chainIcon}
-                                                            alt={stake.chainName}
-                                                            width={24}
-                                                            height={24}
-                                                            style={{ objectFit: 'contain', filter: (activeFilter as string) === 'inactive' ? 'grayscale(30%)' : 'none' }}
-                                                        />
-                                                    </div>
-                                                )}
+                                                {(() => {
+                                                    const iconUrl = getChainIcon(stake);
+                                                    // Always try to show an icon placeholder
+                                                    return (
+                                                        <div className={`w-6 h-6 relative flex-shrink-0 rounded-full overflow-hidden ${(activeFilter as string) === 'inactive' ? 'opacity-70' : ''}`}>
+                                                            {iconUrl ? (
+                                                                <img
+                                                                    src={iconUrl}
+                                                                    alt={stake.chainName || chainDictionary[stake.specId.toLowerCase()]?.name || stake.specId}
+                                                                    width={24}
+                                                                    height={24}
+                                                                    style={{ objectFit: 'contain', filter: (activeFilter as string) === 'inactive' ? 'grayscale(30%)' : 'none' }}
+                                                                />
+                                                            ) : (
+                                                                <div className="w-full h-full bg-gray-600 flex items-center justify-center text-xs text-white">
+                                                                    {stake.specId.charAt(0)}
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    );
+                                                })()}
                                                 <div>
                                                     <div className="font-medium">
                                                         <a
                                                             href={`/chain/${stake.specId}`}
                                                             className="text-orange-700 hover:text-orange-800 hover:underline"
+                                                            style={{ color: '#c2410c' }}
                                                         >
-                                                            {stake.chainName}
+                                                            {(() => {
+                                                                // If chainName is empty, use the chain name from our mapping
+                                                                const displayName = stake.chainName || chainDictionary[stake.specId.toLowerCase()]?.name || stake.specId;
+                                                                // Replace Binance Smart Chain with BNB Chain
+                                                                return displayName.includes('Binance Smart Chain') ? displayName.replace('Binance Smart Chain', 'BNB Chain') : displayName;
+                                                            })()}
                                                         </a>
                                                     </div>
-                                                    <div className="text-xs text-gray-500">{stake.specId}</div>
+                                                    <div className="text-xs text-gray-500">{getChainMaybeReplacedShortName(stake.specId)}</div>
                                                 </div>
                                             </div>
                                         </TableCell>
@@ -792,27 +856,43 @@ export default function ProviderStakesV2({ providerId }: { providerId: string })
                                     <TableRow key={index}>
                                         <TableCell>
                                             <div className="flex items-center space-x-2">
-                                                {stake.chainIcon && (
-                                                    <div className={`w-6 h-6 relative flex-shrink-0 rounded-full overflow-hidden ${(activeFilter as string) === 'inactive' ? 'opacity-70' : ''}`}>
-                                                        <img
-                                                            src={stake.chainIcon}
-                                                            alt={stake.chainName}
-                                                            width={24}
-                                                            height={24}
-                                                            style={{ objectFit: 'contain', filter: (activeFilter as string) === 'inactive' ? 'grayscale(30%)' : 'none' }}
-                                                        />
-                                                    </div>
-                                                )}
+                                                {(() => {
+                                                    const iconUrl = getChainIcon(stake);
+                                                    // Always try to show an icon placeholder
+                                                    return (
+                                                        <div className={`w-6 h-6 relative flex-shrink-0 rounded-full overflow-hidden ${(activeFilter as string) === 'inactive' ? 'opacity-70' : ''}`}>
+                                                            {iconUrl ? (
+                                                                <img
+                                                                    src={iconUrl}
+                                                                    alt={stake.chainName || chainDictionary[stake.specId.toLowerCase()]?.name || stake.specId}
+                                                                    width={24}
+                                                                    height={24}
+                                                                    style={{ objectFit: 'contain', filter: (activeFilter as string) === 'inactive' ? 'grayscale(30%)' : 'none' }}
+                                                                />
+                                                            ) : (
+                                                                <div className="w-full h-full bg-gray-600 flex items-center justify-center text-xs text-white">
+                                                                    {stake.specId.charAt(0)}
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    );
+                                                })()}
                                                 <div>
                                                     <div className="font-medium">
                                                         <a
                                                             href={`/chain/${stake.specId}`}
                                                             className="text-orange-700 hover:text-orange-800 hover:underline"
+                                                            style={{ color: '#c2410c' }}
                                                         >
-                                                            {stake.chainName}
+                                                            {(() => {
+                                                                // If chainName is empty, use the chain name from our mapping
+                                                                const displayName = stake.chainName || chainDictionary[stake.specId.toLowerCase()]?.name || stake.specId;
+                                                                // Replace Binance Smart Chain with BNB Chain
+                                                                return displayName.includes('Binance Smart Chain') ? displayName.replace('Binance Smart Chain', 'BNB Chain') : displayName;
+                                                            })()}
                                                         </a>
                                                     </div>
-                                                    <div className="text-xs text-gray-500">{stake.specId}</div>
+                                                    <div className="text-xs text-gray-500">{getChainMaybeReplacedShortName(stake.specId)}</div>
                                                 </div>
                                             </div>
                                         </TableCell>

@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { chainDictionary } from '@jsinfo/lib/chain-assets/chain-icons';
+import { getChainMaybeReplacedShortName } from '@jsinfo/lib/chain-utils';
 
 interface ChainWithIconLinkProps {
     chainId: string;
@@ -27,7 +28,7 @@ const ChainWithIconLink: React.FC<ChainWithIconLinkProps> = ({ chainId, classNam
                     />
                 </div>
             )}
-            <span>{chainId}</span>
+            <span>{getChainMaybeReplacedShortName(chainId)}</span>
         </Link>
     );
 };
