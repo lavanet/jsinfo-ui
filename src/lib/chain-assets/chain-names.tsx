@@ -110,6 +110,7 @@ const chainMapping: Record<string, string> = {
     FVMT: "Filecoin Testnet",
     HYPERLIQUID: "Hyperliquid Mainnet",
     HYPERLIQUIDT: "Hyperliquid Testnet",
+    HEDERA: "Hedera",
 };
 
 /**
