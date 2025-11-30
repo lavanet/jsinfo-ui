@@ -87,6 +87,7 @@ export const chainDictionary: { [key: string]: ChainInfo } = {
     gnosis: { name: "Gnosis", icon: "/icons/gnosis.svg" },
     gravity: { name: "Gravity", icon: "/icons/gravity.svg" },
     hedera: { name: "Hedera Hashgraph", icon: "/icons/hedera-hashgraph.svg" },
+    hederat: { name: "Hedera Testnet", icon: "/icons/hedera-hashgraph.svg" },
     hubble: { name: "Hubble Exchange", icon: "/icons/hubble-exchange.svg" },
     immutable: { name: "Immutable", icon: "/icons/immutable.svg" },
     injective: { name: "Injective", icon: "/icons/injective.svg" },

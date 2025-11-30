@@ -111,6 +111,7 @@ const chainMapping: Record<string, string> = {
     HYPERLIQUID: "Hyperliquid Mainnet",
     HYPERLIQUIDT: "Hyperliquid Testnet",
     HEDERA: "Hedera",
+    HEDERAT: "Hedera Testnet",
 };
 
 /**
