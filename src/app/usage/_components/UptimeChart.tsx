@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import incidentsData from '../../../../critical-major-incidents.json';
+import incidentsData from '../../../../all-blockchain-incidents.json';
 
 interface Incident {
   provider: string;
