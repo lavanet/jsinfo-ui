@@ -34,3 +34,5 @@ env.sh
 
 ./pics/**
 pics/*
+start-testnet-remote.ps1
+start-testnet.ps1

@@ -42,6 +42,9 @@ export default function Navigation() {
       >
         <span className="whitespace-nowrap">Network Stats</span>
       </Link>
+      <Link href="/usage" className={`nav-link ${isActive('/usage') ? 'nav-link-selected' : ''}`}>
+        Usage
+      </Link>
     </nav>
   );
 }

@@ -60,6 +60,9 @@ export default function MobileNavigation() {
           >
             Network Stats
           </Link>
+          <Link href="/usage" className={`nav-link ${isActive('/usage') ? 'nav-link-selected' : ''}`} onClick={closeMenu}>
+            Usage
+          </Link>
         </nav>
       </SheetContent>
     </Sheet>
