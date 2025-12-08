@@ -50,12 +50,9 @@
     "react-search-autocomplete": "^8.5.2",
     "recharts": "^2.12.7",
     "rsuite": "^5.60.1",
-    "styles": "link:@mui/material/styles",
-    "styles\n": "link:@mui/material/styles\n",
     "swr": "^2.2.5",
     "tailwind-merge": "^2.5.2",
-    "tailwindcss-animate": "^1.0.7",
-    "types": "link:@mui/x-charts/types"
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@types/node": "^20",
