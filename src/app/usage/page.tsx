@@ -72,7 +72,7 @@ export default function UsagePage() {
           <p className="font-semibold mb-1">📊 Data Insights:</p>
           <ul className="space-y-1 list-disc list-inside">
             <li><span className="font-medium text-green-400">Lava Network</span>: Zero downtime, 100% uptime maintained</li>
-            <li><span className="font-medium text-pink-400">Blockchain RPCs</span>: Aggregated incidents from major RPC providers (Infura, Alchemy, QuickNode, GetBlock, Blockdaemon) - chains affected shown on hover</li>
+            <li><span className="font-medium text-pink-400">Blockchain RPCs</span>: Aggregated incidents from major RPC providers - chains affected shown on hover</li>
             <li>Cloud providers data represents typical infrastructure reliability patterns</li>
           </ul>
         </div>

@@ -13,41 +13,43 @@ interface ServiceStats {
   color: string;
 }
 
+// Calculated from UptimeChart data (30-day average)
+// Formula: (sum of daily uptime) / 30 days
 const servicesData: ServiceStats[] = [
   {
     name: 'Lava Network',
-    uptime: 100,
+    uptime: 100,              // 30 days × 100% = 100%
     incidents: 0,
     lastIncident: null,
     color: 'text-green-500',
   },
   {
-    name: 'AWS',
-    uptime: 99.2,
-    incidents: 3,
-    lastIncident: '8 days ago',
-    color: 'text-amber-500',
+    name: 'Cloudflare',
+    uptime: 99.93,            // (28×100 + 99.1 + 98.8) / 30 = 99.93%
+    incidents: 2,             // Days 12, 28
+    lastIncident: '2 days ago',
+    color: 'text-red-500',
   },
   {
     name: 'Google Cloud',
-    uptime: 99.5,
-    incidents: 2,
+    uptime: 99.88,            // (28×100 + 98.5 + 97.9) / 30 = 99.88%
+    incidents: 2,             // Days 10, 20
     lastIncident: '10 days ago',
     color: 'text-blue-500',
   },
   {
-    name: 'Azure',
-    uptime: 98.9,
-    incidents: 4,
-    lastIncident: '5 days ago',
-    color: 'text-purple-500',
+    name: 'AWS',
+    uptime: 99.75,            // (27×100 + 97.5 + 98.2 + 96.8) / 30 = 99.75%
+    incidents: 3,             // Days 5, 15, 22
+    lastIncident: '8 days ago',
+    color: 'text-amber-500',
   },
   {
-    name: 'Cloudflare',
-    uptime: 99.6,
-    incidents: 2,
-    lastIncident: '2 days ago',
-    color: 'text-red-500',
+    name: 'Azure',
+    uptime: 99.69,            // (27×100 + 95.5 + 97.2 + 98.1) / 30 = 99.69%
+    incidents: 3,             // Days 8, 18, 25
+    lastIncident: '5 days ago',
+    color: 'text-purple-500',
   },
 ];
 
