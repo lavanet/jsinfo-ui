@@ -29,6 +29,7 @@
     "@vercel/speed-insights": "^1.0.10",
     "axios": "^1.6.8",
     "axios-retry": "^4.1.0",
+    "cheerio": "^1.0.0",
     "chart.js": "^4.4.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
