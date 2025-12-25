@@ -19,6 +19,22 @@
         },
         {
             "provider": "DRPC",
+            "date": "2025-12-25",
+            "timestamp": "2025-12-25",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "DRPC Service Incident"
+        },
+        {
+            "provider": "GetBlock",
+            "date": "2025-12-24",
+            "timestamp": "2025-12-24",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "GetBlock Service Incident"
+        },
+        {
+            "provider": "DRPC",
             "date": "2025-12-24",
             "timestamp": "2025-12-24",
             "impact": "minor",
@@ -48,14 +64,6 @@
             "impact": "maintenance",
             "chain": "Solana",
             "name": "[Scheduled] [Solana] Scheduled Maintenaince"
-        },
-        {
-            "provider": "GetBlock",
-            "date": "2025-12-23",
-            "timestamp": "2025-12-23",
-            "impact": "minor",
-            "chain": "Other",
-            "name": "GetBlock Service Incident"
         },
         {
             "provider": "DRPC",
@@ -256,6 +264,14 @@
             "impact": "minor",
             "chain": "Polygon",
             "name": "Polygon Mainnet Archive Erigon degraded performance"
+        },
+        {
+            "provider": "GetBlock",
+            "date": "2025-12-18",
+            "timestamp": "2025-12-18",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "GetBlock Service Incident"
         },
         {
             "provider": "DRPC",
@@ -464,14 +480,6 @@
             "impact": "minor",
             "chain": "Sepolia",
             "name": "Blast Sepolia Peer-to-peer Network partial outage"
-        },
-        {
-            "provider": "GetBlock",
-            "date": "2025-12-16",
-            "timestamp": "2025-12-16",
-            "impact": "minor",
-            "chain": "Other",
-            "name": "GetBlock Service Incident"
         },
         {
             "provider": "DRPC",
@@ -1562,6 +1570,14 @@
             "name": "[Scheduled] *Urgent* [XLayer] - Jovian Sepolia Testnet Hardfork"
         },
         {
+            "provider": "GetBlock",
+            "date": "2025-11-28",
+            "timestamp": "2025-11-28",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "GetBlock Service Incident"
+        },
+        {
             "provider": "DRPC",
             "date": "2025-11-28",
             "timestamp": "2025-11-28",
@@ -1608,14 +1624,6 @@
             "impact": "maintenance",
             "chain": "Celo",
             "name": "[Scheduled] **Urgent**[Celo] - Internal Maintenance"
-        },
-        {
-            "provider": "GetBlock",
-            "date": "2025-11-27",
-            "timestamp": "2025-11-27",
-            "impact": "minor",
-            "chain": "Other",
-            "name": "GetBlock Service Incident"
         },
         {
             "provider": "DRPC",
@@ -1746,14 +1754,6 @@
             "name": "[Scheduled] [Core] - Hermes Hard Fork"
         },
         {
-            "provider": "DRPC",
-            "date": "2025-11-25",
-            "timestamp": "2025-11-25",
-            "impact": "minor",
-            "chain": "Other",
-            "name": "DRPC Service Incident"
-        },
-        {
             "provider": "Alchemy",
             "date": "2025-11-24",
             "timestamp": "2025-11-24T21:42:00Z",
@@ -1858,6 +1858,14 @@
             "name": "[Cardano network Instability]"
         },
         {
+            "provider": "GetBlock",
+            "date": "2025-11-21",
+            "timestamp": "2025-11-21",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "GetBlock Service Incident"
+        },
+        {
             "provider": "Blockdaemon",
             "date": "2025-11-20",
             "timestamp": "2025-11-20T16:00:00Z",
@@ -1896,14 +1904,6 @@
             "impact": "maintenance",
             "chain": "Polygon",
             "name": "[Scheduled] [Polygon Testnet] - Madhugiri Hardfork"
-        },
-        {
-            "provider": "GetBlock",
-            "date": "2025-11-20",
-            "timestamp": "2025-11-20",
-            "impact": "minor",
-            "chain": "Other",
-            "name": "GetBlock Service Incident"
         },
         {
             "provider": "QuickNode",
@@ -2114,6 +2114,14 @@
             "name": "Elevated Latency on Hyperliquid Mainnet"
         },
         {
+            "provider": "GetBlock",
+            "date": "2025-11-18",
+            "timestamp": "2025-11-18",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "GetBlock Service Incident"
+        },
+        {
             "provider": "QuickNode",
             "date": "2025-11-17",
             "timestamp": "2025-11-17T19:11:00Z",
@@ -2256,14 +2264,6 @@
             "impact": "maintenance",
             "chain": "Other",
             "name": "[Scheduled] [Babylon] - Internal Maintenance"
-        },
-        {
-            "provider": "GetBlock",
-            "date": "2025-11-17",
-            "timestamp": "2025-11-17",
-            "impact": "minor",
-            "chain": "Other",
-            "name": "GetBlock Service Incident"
         },
         {
             "provider": "QuickNode",
@@ -3250,6 +3250,14 @@
             "name": "Block Height Stall: Polygon zkEVM-Mainnet"
         },
         {
+            "provider": "GetBlock",
+            "date": "2025-10-28",
+            "timestamp": "2025-10-28",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "GetBlock Service Incident"
+        },
+        {
             "provider": "Blockdaemon",
             "date": "2025-10-27",
             "timestamp": "2025-10-27T16:30:00Z",
@@ -3328,14 +3336,6 @@
             "impact": "minor",
             "chain": "Mainnet",
             "name": "Degraded performance for Sei Mainnet HTTPS JSON-RPC API"
-        },
-        {
-            "provider": "GetBlock",
-            "date": "2025-10-26",
-            "timestamp": "2025-10-26",
-            "impact": "minor",
-            "chain": "Other",
-            "name": "GetBlock Service Incident"
         },
         {
             "provider": "QuickNode",
@@ -3714,6 +3714,22 @@
             "name": "[Scheduled] [Urgent] Scheduled: Sui Mainnet - Upgrade sui-node to mainnet-v1.58.3"
         },
         {
+            "provider": "GetBlock",
+            "date": "2025-10-16",
+            "timestamp": "2025-10-16",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "GetBlock Service Incident"
+        },
+        {
+            "provider": "GetBlock",
+            "date": "2025-10-16",
+            "timestamp": "2025-10-16",
+            "impact": "critical",
+            "chain": "Ethereum",
+            "name": "--brand-color: #FFFFFF;"
+        },
+        {
             "provider": "Infura",
             "date": "2025-10-15",
             "timestamp": "2025-10-15T17:04:00Z",
@@ -3784,22 +3800,6 @@
             "impact": "maintenance",
             "chain": "Mainnet",
             "name": "[Scheduled] [Critical] Scheduled: Sonic Mainnet - Upgrade sonic to v2.1.2"
-        },
-        {
-            "provider": "GetBlock",
-            "date": "2025-10-15",
-            "timestamp": "2025-10-15",
-            "impact": "minor",
-            "chain": "Other",
-            "name": "GetBlock Service Incident"
-        },
-        {
-            "provider": "GetBlock",
-            "date": "2025-10-15",
-            "timestamp": "2025-10-15",
-            "impact": "critical",
-            "chain": "Ethereum",
-            "name": "--brand-color: #FFFFFF;"
         },
         {
             "provider": "QuickNode",
@@ -4626,6 +4626,14 @@
             "name": "[Scheduled] [Internal maintenance] Ubiquity Native endpoints"
         },
         {
+            "provider": "GetBlock",
+            "date": "2025-09-26",
+            "timestamp": "2025-09-26",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "GetBlock Service Incident"
+        },
+        {
             "provider": "Chainstack",
             "date": "2025-09-25",
             "timestamp": "2025-09-25T20:29:02.870Z",
@@ -4760,14 +4768,6 @@
             "impact": "maintenance",
             "chain": "Other",
             "name": "[Scheduled] [dYdX] - upgrade to v9.1.0"
-        },
-        {
-            "provider": "GetBlock",
-            "date": "2025-09-24",
-            "timestamp": "2025-09-24",
-            "impact": "minor",
-            "chain": "Other",
-            "name": "GetBlock Service Incident"
         },
         {
             "provider": "Chainstack",
@@ -4954,6 +4954,14 @@
             "name": "[Scheduled] [Internal maintenance] Ubiquity Native endpoints"
         },
         {
+            "provider": "GetBlock",
+            "date": "2025-09-19",
+            "timestamp": "2025-09-19",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "GetBlock Service Incident"
+        },
+        {
             "provider": "QuickNode",
             "date": "2025-09-18",
             "timestamp": "2025-09-18T16:00:00Z",
@@ -5032,14 +5040,6 @@
             "impact": "maintenance",
             "chain": "Sui",
             "name": "[Scheduled] [Urgent] Scheduled: Sui Mainnet - Upgrade sui-node to v1.56.2"
-        },
-        {
-            "provider": "GetBlock",
-            "date": "2025-09-18",
-            "timestamp": "2025-09-18",
-            "impact": "minor",
-            "chain": "Other",
-            "name": "GetBlock Service Incident"
         },
         {
             "provider": "QuickNode",
@@ -5458,6 +5458,14 @@
             "name": "Solana Mainnet : Degraded Performance"
         },
         {
+            "provider": "GetBlock",
+            "date": "2025-09-10",
+            "timestamp": "2025-09-10",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "GetBlock Service Incident"
+        },
+        {
             "provider": "Infura",
             "date": "2025-09-09",
             "timestamp": "2025-09-09T21:13:00Z",
@@ -5506,14 +5514,6 @@
             "name": "[Scheduled] Scheduled: Polygon - Upgrade heimdall-v2 to v0.3.0"
         },
         {
-            "provider": "GetBlock",
-            "date": "2025-09-09",
-            "timestamp": "2025-09-09",
-            "impact": "minor",
-            "chain": "Other",
-            "name": "GetBlock Service Incident"
-        },
-        {
             "provider": "QuickNode",
             "date": "2025-09-08",
             "timestamp": "2025-09-08T16:56:00Z",
@@ -5547,16 +5547,16 @@
         },
         {
             "provider": "GetBlock",
-            "date": "2025-09-07",
-            "timestamp": "2025-09-07",
+            "date": "2025-09-08",
+            "timestamp": "2025-09-08",
             "impact": "minor",
             "chain": "Other",
             "name": "GetBlock Service Incident"
         },
         {
             "provider": "GetBlock",
-            "date": "2025-09-06",
-            "timestamp": "2025-09-06",
+            "date": "2025-09-07",
+            "timestamp": "2025-09-07",
             "impact": "minor",
             "chain": "Other",
             "name": "GetBlock Service Incident"
@@ -5834,6 +5834,14 @@
             "name": "[Scheduled] [Standard] Scheduled: Story - Upgrade story-geth to v1.1.2"
         },
         {
+            "provider": "GetBlock",
+            "date": "2025-09-02",
+            "timestamp": "2025-09-02",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "GetBlock Service Incident"
+        },
+        {
             "provider": "QuickNode",
             "date": "2025-09-01",
             "timestamp": "2025-09-01T19:00:00Z",
@@ -5882,14 +5890,6 @@
             "name": "Stuck Network - zkEVM mainnet at block 25,194,190"
         },
         {
-            "provider": "GetBlock",
-            "date": "2025-09-01",
-            "timestamp": "2025-09-01",
-            "impact": "minor",
-            "chain": "Other",
-            "name": "GetBlock Service Incident"
-        },
-        {
             "provider": "QuickNode",
             "date": "2025-08-31",
             "timestamp": "2025-08-31T23:15:00Z",
@@ -5936,6 +5936,14 @@
             "impact": "maintenance",
             "chain": "Testnet",
             "name": "[Scheduled] **Urgent**[XLayer] - Testnet Migration"
+        },
+        {
+            "provider": "GetBlock",
+            "date": "2025-08-29",
+            "timestamp": "2025-08-29",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "GetBlock Service Incident"
         },
         {
             "provider": "Chainstack",
@@ -6120,14 +6128,6 @@
             "impact": "minor",
             "chain": "Other",
             "name": "Connectivity issues in the APAC region : We noticed short-lived cross-region connectivity issues in the APAC region, affecting multiple chains from 4.20 UTC - 6.20 UTC"
-        },
-        {
-            "provider": "GetBlock",
-            "date": "2025-08-26",
-            "timestamp": "2025-08-26",
-            "impact": "minor",
-            "chain": "Other",
-            "name": "GetBlock Service Incident"
         },
         {
             "provider": "QuickNode",
@@ -6378,6 +6378,14 @@
             "name": "[Scheduled] Scheduled: Stacks Blockchain API – Upgrade to v8.12.0"
         },
         {
+            "provider": "GetBlock",
+            "date": "2025-08-20",
+            "timestamp": "2025-08-20",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "GetBlock Service Incident"
+        },
+        {
             "provider": "Infura",
             "date": "2025-08-19",
             "timestamp": "2025-08-19T15:51:00Z",
@@ -6408,14 +6416,6 @@
             "impact": "none",
             "chain": "Mainnet",
             "name": "Ink Mainnet: block height stalled at 22,107,792"
-        },
-        {
-            "provider": "GetBlock",
-            "date": "2025-08-19",
-            "timestamp": "2025-08-19",
-            "impact": "minor",
-            "chain": "Other",
-            "name": "GetBlock Service Incident"
         },
         {
             "provider": "QuickNode",
@@ -7754,6 +7754,14 @@
             "name": "Morph Mainnet - block height stalled at 12,628,833"
         },
         {
+            "provider": "GetBlock",
+            "date": "2025-07-16",
+            "timestamp": "2025-07-16",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "GetBlock Service Incident"
+        },
+        {
             "provider": "Blockdaemon",
             "date": "2025-07-15",
             "timestamp": "2025-07-15T16:27:00Z",
@@ -7808,14 +7816,6 @@
             "impact": "maintenance",
             "chain": "Solana",
             "name": "[Scheduled] [Solana] - Mainnet to v2.2.19"
-        },
-        {
-            "provider": "GetBlock",
-            "date": "2025-07-15",
-            "timestamp": "2025-07-15",
-            "impact": "minor",
-            "chain": "Other",
-            "name": "GetBlock Service Incident"
         },
         {
             "provider": "Alchemy",
@@ -8002,6 +8002,14 @@
             "name": "Finalized Block Stalled on Unichain Mainnet"
         },
         {
+            "provider": "GetBlock",
+            "date": "2025-07-09",
+            "timestamp": "2025-07-09",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "GetBlock Service Incident"
+        },
+        {
             "provider": "Alchemy",
             "date": "2025-07-08",
             "timestamp": "2025-07-08T16:51:00Z",
@@ -8104,14 +8112,6 @@
             "impact": "minor",
             "chain": "Solana",
             "name": "Solana-Mainnet: Degraded Performance"
-        },
-        {
-            "provider": "GetBlock",
-            "date": "2025-07-07",
-            "timestamp": "2025-07-07",
-            "impact": "minor",
-            "chain": "Other",
-            "name": "GetBlock Service Incident"
         },
         {
             "provider": "QuickNode",
@@ -8258,6 +8258,22 @@
             "name": "Stuck Network - NEAR Testnet"
         },
         {
+            "provider": "GetBlock",
+            "date": "2025-07-03",
+            "timestamp": "2025-07-03",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "GetBlock Service Incident"
+        },
+        {
+            "provider": "GetBlock",
+            "date": "2025-07-03",
+            "timestamp": "2025-07-03",
+            "impact": "critical",
+            "chain": "Ethereum",
+            "name": "--brand-color: #FFFFFF;"
+        },
+        {
             "provider": "QuickNode",
             "date": "2025-07-02",
             "timestamp": "2025-07-02T18:22:00Z",
@@ -8336,22 +8352,6 @@
             "impact": "minor",
             "chain": "Arbitrum",
             "name": "Degraded performance for Arbitrum Archive Mainnet HTTPS JSON-RPC API"
-        },
-        {
-            "provider": "GetBlock",
-            "date": "2025-07-02",
-            "timestamp": "2025-07-02",
-            "impact": "minor",
-            "chain": "Other",
-            "name": "GetBlock Service Incident"
-        },
-        {
-            "provider": "GetBlock",
-            "date": "2025-07-02",
-            "timestamp": "2025-07-02",
-            "impact": "critical",
-            "chain": "Ethereum",
-            "name": "--brand-color: #FFFFFF;"
         },
         {
             "provider": "QuickNode",
@@ -8794,6 +8794,14 @@
             "name": "Swell Testnet Peer-to-peer Network outage"
         },
         {
+            "provider": "GetBlock",
+            "date": "2025-06-22",
+            "timestamp": "2025-06-22",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "GetBlock Service Incident"
+        },
+        {
             "provider": "Chainstack",
             "date": "2025-06-21",
             "timestamp": "2025-06-21T20:10:11.625Z",
@@ -8989,8 +8997,8 @@
             "provider": "GetBlock",
             "date": "2025-06-18",
             "timestamp": "2025-06-18",
-            "impact": "minor",
-            "chain": "Other",
+            "impact": "critical",
+            "chain": "Ethereum",
             "name": "GetBlock Service Incident"
         },
         {
@@ -9024,14 +9032,6 @@
             "impact": "maintenance",
             "chain": "Solana",
             "name": "[Scheduled] *Urgent* [Solana] - Devnet upgrade to v2.2.16"
-        },
-        {
-            "provider": "GetBlock",
-            "date": "2025-06-17",
-            "timestamp": "2025-06-17",
-            "impact": "critical",
-            "chain": "Ethereum",
-            "name": "GetBlock Service Incident"
         },
         {
             "provider": "Blockdaemon",
@@ -9362,20 +9362,20 @@
             "name": "Hyperliquid network stuck at block 5219420"
         },
         {
+            "provider": "GetBlock",
+            "date": "2025-06-08",
+            "timestamp": "2025-06-08",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "GetBlock Service Incident"
+        },
+        {
             "provider": "QuickNode",
             "date": "2025-06-07",
             "timestamp": "2025-06-07T03:45:00Z",
             "impact": "maintenance",
             "chain": "Aptos",
             "name": "[Scheduled] 🚨 Urgent: Aptos Mainnet - Upgrade aptos-node to v1.30.4"
-        },
-        {
-            "provider": "GetBlock",
-            "date": "2025-06-07",
-            "timestamp": "2025-06-07",
-            "impact": "minor",
-            "chain": "Other",
-            "name": "GetBlock Service Incident"
         },
         {
             "provider": "QuickNode",
@@ -9416,6 +9416,14 @@
             "impact": "maintenance",
             "chain": "Mainnet",
             "name": "[Scheduled] Scheduled: Ton Mainnet - Upgrade ton-http-api to v2.0.57"
+        },
+        {
+            "provider": "GetBlock",
+            "date": "2025-06-06",
+            "timestamp": "2025-06-06",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "GetBlock Service Incident"
         },
         {
             "provider": "Infura",
@@ -9472,14 +9480,6 @@
             "impact": "none",
             "chain": "Testnet",
             "name": "Hemi-Testnet: Data Inconsistencies"
-        },
-        {
-            "provider": "GetBlock",
-            "date": "2025-06-05",
-            "timestamp": "2025-06-05",
-            "impact": "minor",
-            "chain": "Other",
-            "name": "GetBlock Service Incident"
         },
         {
             "provider": "QuickNode",
@@ -9706,6 +9706,14 @@
             "name": "[Network Wide] Unichain Sepolia Stalled on Block 21818269"
         },
         {
+            "provider": "GetBlock",
+            "date": "2025-05-31",
+            "timestamp": "2025-05-31",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "GetBlock Service Incident"
+        },
+        {
             "provider": "QuickNode",
             "date": "2025-05-30",
             "timestamp": "2025-05-30T17:30:00Z",
@@ -9792,14 +9800,6 @@
             "impact": "maintenance",
             "chain": "Bsc",
             "name": "[Scheduled] [BSC] - upgrade mainnet to v1.5.13"
-        },
-        {
-            "provider": "GetBlock",
-            "date": "2025-05-29",
-            "timestamp": "2025-05-29",
-            "impact": "minor",
-            "chain": "Other",
-            "name": "GetBlock Service Incident"
         },
         {
             "provider": "Blockdaemon",
@@ -10490,6 +10490,14 @@
             "name": "[Scheduled] [Cardano] - Upgrade to v10.3.1"
         },
         {
+            "provider": "GetBlock",
+            "date": "2025-05-13",
+            "timestamp": "2025-05-13",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "GetBlock Service Incident"
+        },
+        {
             "provider": "QuickNode",
             "date": "2025-05-12",
             "timestamp": "2025-05-12T18:18:00Z",
@@ -10504,14 +10512,6 @@
             "impact": "maintenance",
             "chain": "Testnet",
             "name": "[Scheduled] Scheduled: Omni Mainnet/Testnet - Upgrade halo to v0.14.1"
-        },
-        {
-            "provider": "GetBlock",
-            "date": "2025-05-12",
-            "timestamp": "2025-05-12",
-            "impact": "minor",
-            "chain": "Other",
-            "name": "GetBlock Service Incident"
         },
         {
             "provider": "QuickNode",
@@ -10954,6 +10954,14 @@
             "name": "[Scheduled] Scheduled: Ethereum Mainnet - Upgrade Clients for Pectra hardfork"
         },
         {
+            "provider": "GetBlock",
+            "date": "2025-05-01",
+            "timestamp": "2025-05-01",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "GetBlock Service Incident"
+        },
+        {
             "provider": "Chainstack",
             "date": "2025-04-30",
             "timestamp": "2025-04-30T19:42:43.304Z",
@@ -11098,14 +11106,6 @@
             "name": "[Scheduled] [BSC] - Lorentz Mainnet Hard Fork"
         },
         {
-            "provider": "GetBlock",
-            "date": "2025-04-29",
-            "timestamp": "2025-04-29",
-            "impact": "minor",
-            "chain": "Other",
-            "name": "GetBlock Service Incident"
-        },
-        {
             "provider": "Alchemy",
             "date": "2025-04-28",
             "timestamp": "2025-04-28T13:33:00Z",
@@ -11144,6 +11144,14 @@
             "impact": "maintenance",
             "chain": "Other",
             "name": "[Scheduled] Universal API (Tezos) Maintenance"
+        },
+        {
+            "provider": "GetBlock",
+            "date": "2025-04-26",
+            "timestamp": "2025-04-26",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "GetBlock Service Incident"
         },
         {
             "provider": "QuickNode",
@@ -11210,14 +11218,6 @@
             "name": "[Scheduled] Scheduled: Cyber Mainnet - Upgrade op-geth to v1.101503.1 and op-node to v1.12.2"
         },
         {
-            "provider": "GetBlock",
-            "date": "2025-04-24",
-            "timestamp": "2025-04-24",
-            "impact": "minor",
-            "chain": "Other",
-            "name": "GetBlock Service Incident"
-        },
-        {
             "provider": "QuickNode",
             "date": "2025-04-23",
             "timestamp": "2025-04-23T16:00:00Z",
@@ -11264,6 +11264,14 @@
             "impact": "maintenance",
             "chain": "Starknet",
             "name": "[Scheduled] Scheduled:  Starknet Pathfinder Mainnet and Testnet - Upgrade to v0.16.4"
+        },
+        {
+            "provider": "GetBlock",
+            "date": "2025-04-23",
+            "timestamp": "2025-04-23",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "GetBlock Service Incident"
         },
         {
             "provider": "QuickNode",
@@ -11330,6 +11338,14 @@
             "name": "GetBlock Service Incident"
         },
         {
+            "provider": "GetBlock",
+            "date": "2025-04-22",
+            "timestamp": "2025-04-22",
+            "impact": "critical",
+            "chain": "Ethereum",
+            "name": "--brand-color: #FFFFFF;"
+        },
+        {
             "provider": "Alchemy",
             "date": "2025-04-21",
             "timestamp": "2025-04-21T13:57:00Z",
@@ -11360,22 +11376,6 @@
             "impact": "major",
             "chain": "Bnb",
             "name": "opBNB Mainnet HTTPS JSON-RPC API partial outage"
-        },
-        {
-            "provider": "GetBlock",
-            "date": "2025-04-21",
-            "timestamp": "2025-04-21",
-            "impact": "minor",
-            "chain": "Other",
-            "name": "GetBlock Service Incident"
-        },
-        {
-            "provider": "GetBlock",
-            "date": "2025-04-21",
-            "timestamp": "2025-04-21",
-            "impact": "critical",
-            "chain": "Ethereum",
-            "name": "--brand-color: #FFFFFF;"
         },
         {
             "provider": "QuickNode",
@@ -12130,6 +12130,14 @@
             "name": "[Scheduled] [Stellar] - API Internal Maintenance"
         },
         {
+            "provider": "GetBlock",
+            "date": "2025-03-27",
+            "timestamp": "2025-03-27",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "GetBlock Service Incident"
+        },
+        {
             "provider": "Chainstack",
             "date": "2025-03-26",
             "timestamp": "2025-03-26T16:24:33.145Z",
@@ -12312,14 +12320,6 @@
             "impact": "maintenance",
             "chain": "Other",
             "name": "[Scheduled] Scheduled: Matic - Upgrade bor to v2.0.1"
-        },
-        {
-            "provider": "GetBlock",
-            "date": "2025-03-25",
-            "timestamp": "2025-03-25",
-            "impact": "minor",
-            "chain": "Other",
-            "name": "GetBlock Service Incident"
         },
         {
             "provider": "Alchemy",
@@ -12882,6 +12882,14 @@
             "name": "[Scheduled] Scheduled: Stacks Mainnet and Testnet - Upgrade stacks-core and stacks-blockchain-api"
         },
         {
+            "provider": "GetBlock",
+            "date": "2025-03-12",
+            "timestamp": "2025-03-12",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "GetBlock Service Incident"
+        },
+        {
             "provider": "Alchemy",
             "date": "2025-03-11",
             "timestamp": "2025-03-11T20:25:00Z",
@@ -12944,14 +12952,6 @@
             "impact": "maintenance",
             "chain": "Optimism",
             "name": "[Scheduled] [Optimism] - Urgent Internal Maintenance"
-        },
-        {
-            "provider": "GetBlock",
-            "date": "2025-03-11",
-            "timestamp": "2025-03-11",
-            "impact": "minor",
-            "chain": "Other",
-            "name": "GetBlock Service Incident"
         },
         {
             "provider": "Alchemy",
@@ -13387,8 +13387,8 @@
         },
         {
             "provider": "GetBlock",
-            "date": "2025-03-01",
-            "timestamp": "2025-03-01",
+            "date": "2025-03-02",
+            "timestamp": "2025-03-02",
             "impact": "minor",
             "chain": "Other",
             "name": "GetBlock Service Incident"
@@ -13530,6 +13530,14 @@
             "name": "Stuck Network - Berachain bArtio Testnet is Stuck at Block 10994467"
         },
         {
+            "provider": "GetBlock",
+            "date": "2025-02-27",
+            "timestamp": "2025-02-27",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "GetBlock Service Incident"
+        },
+        {
             "provider": "Alchemy",
             "date": "2025-02-26",
             "timestamp": "2025-02-26T20:52:00Z",
@@ -13592,14 +13600,6 @@
             "impact": "maintenance",
             "chain": "Sui",
             "name": "[Scheduled] Scheduled: Sui Mainnet - Upgrade sui-node to v1.43.1"
-        },
-        {
-            "provider": "GetBlock",
-            "date": "2025-02-26",
-            "timestamp": "2025-02-26",
-            "impact": "minor",
-            "chain": "Other",
-            "name": "GetBlock Service Incident"
         },
         {
             "provider": "Alchemy",
@@ -13778,20 +13778,20 @@
             "name": "Degraded Performance on Flow Testnet"
         },
         {
+            "provider": "GetBlock",
+            "date": "2025-02-22",
+            "timestamp": "2025-02-22",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "GetBlock Service Incident"
+        },
+        {
             "provider": "QuickNode",
             "date": "2025-02-21",
             "timestamp": "2025-02-21T21:04:00Z",
             "impact": "minor",
             "chain": "Mainnet",
             "name": "Omni mainnet stalled at block @ 6379536"
-        },
-        {
-            "provider": "GetBlock",
-            "date": "2025-02-21",
-            "timestamp": "2025-02-21",
-            "impact": "minor",
-            "chain": "Other",
-            "name": "GetBlock Service Incident"
         },
         {
             "provider": "QuickNode",
@@ -14651,8 +14651,8 @@
         },
         {
             "provider": "GetBlock",
-            "date": "2025-01-23",
-            "timestamp": "2025-01-23",
+            "date": "2025-01-24",
+            "timestamp": "2025-01-24",
             "impact": "minor",
             "chain": "Other",
             "name": "GetBlock Service Incident"
@@ -15090,6 +15090,14 @@
             "name": "[Scheduled] Scheduled: TON Mainnet - Upgrade TON to v2024.12-1"
         },
         {
+            "provider": "GetBlock",
+            "date": "2025-01-08",
+            "timestamp": "2025-01-08",
+            "impact": "minor",
+            "chain": "Other",
+            "name": "GetBlock Service Incident"
+        },
+        {
             "provider": "QuickNode",
             "date": "2025-01-07",
             "timestamp": "2025-01-07T15:21:00Z",
@@ -15130,14 +15138,6 @@
             "name": "[Scheduled] Scheduled: XRP Mainnet/Testnet - Upgrade clio/rippled to 2.3.0"
         },
         {
-            "provider": "GetBlock",
-            "date": "2025-01-07",
-            "timestamp": "2025-01-07",
-            "impact": "minor",
-            "chain": "Other",
-            "name": "GetBlock Service Incident"
-        },
-        {
             "provider": "QuickNode",
             "date": "2025-01-06",
             "timestamp": "2025-01-06T15:30:00Z",
@@ -15171,16 +15171,16 @@
         },
         {
             "provider": "GetBlock",
-            "date": "2025-01-04",
-            "timestamp": "2025-01-04",
+            "date": "2025-01-05",
+            "timestamp": "2025-01-05",
             "impact": "minor",
             "chain": "Other",
             "name": "GetBlock Service Incident"
         },
         {
             "provider": "GetBlock",
-            "date": "2025-01-04",
-            "timestamp": "2025-01-04",
+            "date": "2025-01-05",
+            "timestamp": "2025-01-05",
             "impact": "critical",
             "chain": "Ethereum",
             "name": "--brand-color: #FFFFFF;"
@@ -15246,7 +15246,7 @@
             "Tenderly"
         ],
         "description": "All RPC provider incidents for 2025",
-        "generated": "2025-12-25T17:20:04.904Z",
+        "generated": "2025-12-25T17:24:44.008Z",
         "year": 2025
     }
 }
