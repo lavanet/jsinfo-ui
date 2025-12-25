@@ -1,8 +1,8 @@
 name: Generate Incidents JSON
 
 on:
-  # schedule:
-  #   - cron: '0 0 * * *'  # Everyday at midnight (UTC)
+  schedule:
+    - cron: '0 0 * * *'  # Everyday at midnight (UTC)
   workflow_dispatch: {}
 
 jobs:
