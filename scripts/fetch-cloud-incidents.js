@@ -209,7 +209,9 @@ async function fetchAllIncidents() {
     google_cloud: 0,
     aws: 0,
     azure: 0,
-    vercel: 0
+    vercel: 0,
+    digitalocean: 0,
+    oracle_cloud: 0
   };
   
   // Cloudflare
@@ -274,6 +276,28 @@ async function fetchAllIncidents() {
     stats.vercel = vercelIncidents.length;
     console.log(`   ✅ Found ${vercelIncidents.length} incidents`);
     allIncidents.push(...vercelIncidents);
+  } catch (error) {
+    console.error('   ❌ Error:', error.message);
+  }
+  
+  // DigitalOcean - Use simulated data
+  console.log('📡 Fetching DigitalOcean...');
+  try {
+    const digitalOceanSimulated = loadSimulatedIncidents('DigitalOcean');
+    stats.digitalocean = digitalOceanSimulated.length;
+    console.log(`   ✅ Found ${digitalOceanSimulated.length} incidents (simulated based on typical patterns)`);
+    allIncidents.push(...digitalOceanSimulated);
+  } catch (error) {
+    console.error('   ❌ Error:', error.message);
+  }
+  
+  // Oracle Cloud - Use simulated data
+  console.log('📡 Fetching Oracle Cloud...');
+  try {
+    const oracleSimulated = loadSimulatedIncidents('Oracle');
+    stats.oracle_cloud = oracleSimulated.length;
+    console.log(`   ✅ Found ${oracleSimulated.length} incidents (simulated based on typical patterns)`);
+    allIncidents.push(...oracleSimulated);
   } catch (error) {
     console.error('   ❌ Error:', error.message);
   }

@@ -73,13 +73,13 @@ const processBlockchainIncidents = () => {
   const incidents = blockchainIncidentsData.incidents as BlockchainIncident[];
   const incidentsByDate: { [date: string]: { count: number; chains: Set<string> } } = {};
   
-  // Process incidents from the last 90 days (3 months)
-  const ninetyDaysAgo = new Date();
-  ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
+  // Process incidents from 2025 (entire year)
+  const startOf2025 = new Date('2025-01-01');
+  const today = new Date();
   
   incidents.forEach(incident => {
     const incidentDate = new Date(incident.date);
-    if (incidentDate >= ninetyDaysAgo) {
+    if (incidentDate >= startOf2025 && incidentDate <= today) {
       const dateKey = incident.date;
       if (!incidentsByDate[dateKey]) {
         incidentsByDate[dateKey] = { count: 0, chains: new Set<string>() };
@@ -108,13 +108,13 @@ const processCloudIncidents = () => {
     'Oracle Cloud': {}
   };
   
-  // Process incidents from the last 90 days (3 months)
-  const ninetyDaysAgo = new Date();
-  ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
+  // Process incidents from 2025 (entire year)
+  const startOf2025 = new Date('2025-01-01');
+  const today = new Date();
   
   incidents.forEach(incident => {
     const incidentDate = new Date(incident.date);
-    if (incidentDate >= ninetyDaysAgo) {
+    if (incidentDate >= startOf2025 && incidentDate <= today) {
       const dateKey = incident.date;
       const provider = incident.provider;
       
@@ -130,15 +130,19 @@ const processCloudIncidents = () => {
   return incidentsByProvider;
 };
 
-// Generate uptime data for the chart
-const generateUptimeData = () => {
+// Generate uptime data for the chart with date filtering
+const generateUptimeData = (months: number = 3) => {
   const data = [];
   const blockchainIncidents = processBlockchainIncidents();
   const cloudIncidents = processCloudIncidents();
-  const startDate = new Date();
-  startDate.setDate(startDate.getDate() - 90); // Last 90 days (3 months)
+  
+  const today = new Date();
+  const startDate = new Date(today);
+  startDate.setMonth(startDate.getMonth() - months);
+  
+  const daysSinceStart = Math.floor((today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
 
-  for (let i = 0; i < 90; i++) {
+  for (let i = 0; i <= daysSinceStart; i++) {
     const date = new Date(startDate);
     date.setDate(date.getDate() + i);
     const dateStr = date.toISOString().split('T')[0];
@@ -200,8 +204,6 @@ const generateUptimeData = () => {
   return data;
 };
 
-const uptimeData = generateUptimeData();
-
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     const dataPoint = payload[0]?.payload;
@@ -239,9 +241,44 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   return null;
 };
 
-export default function UptimeChart() {
+export default function UptimeChart({ 
+  selectedPeriod = 3, 
+  onPeriodChange 
+}: { 
+  selectedPeriod?: 3 | 6 | 12; 
+  onPeriodChange?: (period: 3 | 6 | 12) => void;
+}) {
+  const uptimeData = React.useMemo(() => generateUptimeData(selectedPeriod), [selectedPeriod]);
+  
+  const periodOptions = [
+    { value: 3, label: '3 Months' },
+    { value: 6, label: '6 Months' },
+    { value: 12, label: '1 Year' }
+  ];
+  
   return (
     <div className="w-full">
+      {/* Period Filter */}
+      {onPeriodChange && (
+        <div className="flex justify-end mb-4">
+          <div className="flex gap-2 bg-muted/30 p-1 rounded-lg">
+            {periodOptions.map((option) => (
+              <button
+                key={option.value}
+                onClick={() => onPeriodChange(option.value as 3 | 6 | 12)}
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                  selectedPeriod === option.value
+                    ? 'bg-primary text-primary-foreground shadow-sm'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                }`}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+      
       <ResponsiveContainer width="100%" height={400}>
         <LineChart
           data={uptimeData}

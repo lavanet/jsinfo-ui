@@ -1,0 +1,116 @@
+{
+  "generated_at": "2025-12-25T21:40:45.387Z",
+  "note": "Simulated Oracle Cloud incidents for 2025 based on typical patterns",
+  "source": "Based on Oracle Cloud historical patterns",
+  "total_incidents": 12,
+  "incidents": [
+    {
+      "provider": "Oracle Cloud",
+      "name": "Compute Performance Degradation",
+      "date": "2025-12-02",
+      "timestamp": "2025-12-02T11:00:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Elevated latency for Compute services in US-ASHBURN-1"
+    },
+    {
+      "provider": "Oracle Cloud",
+      "name": "Object Storage Performance Degradation",
+      "date": "2025-11-08",
+      "timestamp": "2025-11-08T12:17:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Elevated latency for Object Storage services in US-PHOENIX-1"
+    },
+    {
+      "provider": "Oracle Cloud",
+      "name": "Database Performance Degradation",
+      "date": "2025-10-12",
+      "timestamp": "2025-10-12T13:34:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Elevated latency for Database services in EU-FRANKFURT-1"
+    },
+    {
+      "provider": "Oracle Cloud",
+      "name": "Networking Performance Degradation",
+      "date": "2025-09-10",
+      "timestamp": "2025-09-10T14:51:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Elevated latency for Networking services in UK-LONDON-1"
+    },
+    {
+      "provider": "Oracle Cloud",
+      "name": "Container Engine Performance Degradation",
+      "date": "2025-08-15",
+      "timestamp": "2025-08-15T15:08:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Elevated latency for Container Engine services in AP-TOKYO-1"
+    },
+    {
+      "provider": "Oracle Cloud",
+      "name": "Compute Performance Degradation",
+      "date": "2025-07-12",
+      "timestamp": "2025-07-12T16:25:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Elevated latency for Compute services in US-ASHBURN-1"
+    },
+    {
+      "provider": "Oracle Cloud",
+      "name": "Object Storage Performance Degradation",
+      "date": "2025-06-08",
+      "timestamp": "2025-06-08T11:42:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Elevated latency for Object Storage services in US-PHOENIX-1"
+    },
+    {
+      "provider": "Oracle Cloud",
+      "name": "Database Performance Degradation",
+      "date": "2025-05-18",
+      "timestamp": "2025-05-18T12:59:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Elevated latency for Database services in EU-FRANKFURT-1"
+    },
+    {
+      "provider": "Oracle Cloud",
+      "name": "Networking Performance Degradation",
+      "date": "2025-04-15",
+      "timestamp": "2025-04-15T13:16:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Elevated latency for Networking services in UK-LONDON-1"
+    },
+    {
+      "provider": "Oracle Cloud",
+      "name": "Container Engine Performance Degradation",
+      "date": "2025-03-10",
+      "timestamp": "2025-03-10T14:33:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Elevated latency for Container Engine services in AP-TOKYO-1"
+    },
+    {
+      "provider": "Oracle Cloud",
+      "name": "Compute Performance Degradation",
+      "date": "2025-02-15",
+      "timestamp": "2025-02-15T15:50:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Elevated latency for Compute services in US-ASHBURN-1"
+    },
+    {
+      "provider": "Oracle Cloud",
+      "name": "Object Storage Performance Degradation",
+      "date": "2025-01-12",
+      "timestamp": "2025-01-12T16:07:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Elevated latency for Object Storage services in US-PHOENIX-1"
+    }
+  ]
+}

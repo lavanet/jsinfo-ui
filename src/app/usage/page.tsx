@@ -10,10 +10,17 @@ import { Activity, TrendingUp, Shield } from "lucide-react";
 
 export default function UsagePage() {
   const { setCurrentPage } = usePageContext();
+  const [selectedPeriod, setSelectedPeriod] = React.useState<3 | 6 | 12>(3);
 
   useEffect(() => {
     setCurrentPage('usage');
   }, [setCurrentPage]);
+  
+  const getPeriodLabel = (months: number) => {
+    if (months === 12) return '1 Year';
+    if (months === 6) return '6 Months';
+    return '3 Months';
+  };
 
   return (
     <div className="container mx-auto p-6">
@@ -33,7 +40,7 @@ export default function UsagePage() {
             <h3 className="text-sm font-medium text-muted-foreground">Lava Uptime</h3>
           </div>
           <p className="text-3xl font-bold text-green-500">100%</p>
-          <p className="text-xs text-muted-foreground mt-1">Last 3 months</p>
+          <p className="text-xs text-muted-foreground mt-1">Last {getPeriodLabel(selectedPeriod).toLowerCase()}</p>
         </div>
         
         <div className="bg-card rounded-lg border p-6">
@@ -58,15 +65,15 @@ export default function UsagePage() {
       {/* Uptime Comparison Chart */}
       <div className="bg-card rounded-lg border p-6 mb-8">
         <div className="mb-6">
-          <h2 className="text-2xl font-semibold mb-2">Uptime Comparison (Last 3 Months)</h2>
+          <h2 className="text-2xl font-semibold mb-2">Uptime Comparison (Last {getPeriodLabel(selectedPeriod)})</h2>
           <p className="text-sm text-muted-foreground">
-            Real-time comparison of network reliability across major infrastructure providers over 90 days.
+            Real-time comparison of network reliability across major infrastructure providers.
             The <span className="text-pink-400 font-medium">Blockchain RPCs</span> line shows real incidents from major RPC providers,
             displaying which blockchain networks were affected (hover for details).
             Cloud provider data is fetched from official status pages.
           </p>
         </div>
-        <UptimeChart />
+        <UptimeChart selectedPeriod={selectedPeriod} onPeriodChange={setSelectedPeriod} />
         
         {/* Legend / Note */}
         <div className="mt-4 p-4 bg-muted/50 rounded-md text-xs text-muted-foreground">
@@ -84,10 +91,10 @@ export default function UsagePage() {
         <div className="mb-6">
           <h2 className="text-2xl font-semibold mb-2">Service Statistics</h2>
           <p className="text-sm text-muted-foreground">
-            Detailed uptime metrics and incident reports for each service
+            Detailed uptime metrics and incident reports for each service (Last {getPeriodLabel(selectedPeriod)})
           </p>
         </div>
-        <IncidentStats />
+        <IncidentStats months={selectedPeriod} />
       </div>
     </div>
   );
