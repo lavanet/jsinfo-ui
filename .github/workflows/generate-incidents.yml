@@ -1,27 +1,37 @@
 name: Generate Incidents JSON
 
 on:
-#  schedule:
-#    - cron: '0 0 * * *'  # Everyday at midnight
-  workflow_dispatch:      # manual
+  # schedule:
+  #   - cron: '0 0 * * *'  # Everyday at midnight (UTC)
+  workflow_dispatch: {}
 
 jobs:
   generate:
     runs-on: ubuntu-latest
-    
+
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v6
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
         with:
           node-version: 24
-      - run: node script.js
-   
-      
-    #  - name: Commit and push if changed
-    #    run: |
-    #      git config --local user.email "action@github.com"
-    #      git config --local user.name "GitHub Action"
-    #      git add all-blockchain-incidents-*.json
-     #     git diff --staged --quiet || git commit -m "Update incidents JSON $(date +%Y-%m-%d)"
-   #       git push
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run generator
+        run: node generate-incidents.js
+
+      # - name: Commit and push if changed
+      #   run: |
+      #     git config --local user.email "action@github.com"
+      #     git config --local user.name "GitHub Action"
+      #     git add all-blockchain-incidents-*.json
+      #     git diff --staged --quiet || git commit -m "Update incidents JSON $(date -u +%Y-%m-%d)"
+      #     git push
 
