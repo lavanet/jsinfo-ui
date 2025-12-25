@@ -8,6 +8,8 @@ on:
 jobs:
   generate:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout repository
@@ -27,11 +29,15 @@ jobs:
       - name: Run generator
         run: node generate-incidents.js
 
-      # - name: Commit and push if changed
-      #   run: |
-      #     git config --local user.email "action@github.com"
-      #     git config --local user.name "GitHub Action"
-      #     git add all-blockchain-incidents-*.json
-      #     git diff --staged --quiet || git commit -m "Update incidents JSON $(date -u +%Y-%m-%d)"
-      #     git push
+      - name: Commit and push if changed
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add all-blockchain-incidents.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update incidents JSON $(date -u +%Y-%m-%d)"
+            git push
+          fi
 
