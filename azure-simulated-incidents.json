@@ -1,63 +1,224 @@
 {
-  "generated_at": "2025-12-25T22:00:00.000Z",
-  "note": "Simulated Azure incidents based on typical patterns",
+  "generated_at": "2025-12-25T21:40:45.382Z",
+  "note": "Simulated Azure incidents for 2025 based on typical patterns (2 per month)",
   "source": "Based on Azure historical incident patterns",
-  "total_incidents": 6,
+  "total_incidents": 24,
   "incidents": [
     {
       "provider": "Azure",
-      "name": "Virtual Machines - Deployment Issues",
+      "name": "Virtual Machines - Degraded Performance",
       "date": "2025-12-12",
-      "timestamp": "2025-12-12T10:15:00Z",
+      "timestamp": "2025-12-12T10:00:00Z",
       "impact": "minor",
       "status": "resolved",
-      "description": "Some customers experienced issues deploying VMs in West Europe"
+      "description": "Performance degradation affecting Virtual Machines in West Europe"
     },
     {
       "provider": "Azure",
-      "name": "Storage Performance Degradation",
+      "name": "Storage - Degraded Performance",
       "date": "2025-11-20",
-      "timestamp": "2025-11-20T15:40:00Z",
+      "timestamp": "2025-11-20T11:11:00Z",
       "impact": "minor",
       "status": "resolved",
-      "description": "Degraded performance for Azure Storage in North Europe"
+      "description": "Performance degradation affecting Storage in North Europe"
     },
     {
       "provider": "Azure",
-      "name": "Azure AD Authentication Delays",
+      "name": "Azure AD - Degraded Performance",
       "date": "2025-11-05",
-      "timestamp": "2025-11-05T12:25:00Z",
+      "timestamp": "2025-11-05T12:22:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance degradation affecting Azure AD in East US"
+    },
+    {
+      "provider": "Azure",
+      "name": "App Service - Service Outage",
+      "date": "2025-10-28",
+      "timestamp": "2025-10-28T13:33:00Z",
       "impact": "major",
       "status": "resolved",
-      "description": "Elevated latency for Azure AD authentication requests"
+      "description": "Service unavailability affecting App Service in West US 2"
     },
     {
       "provider": "Azure",
-      "name": "App Service Connection Issues",
-      "date": "2025-10-28",
-      "timestamp": "2025-10-28T09:50:00Z",
-      "impact": "minor",
-      "status": "resolved",
-      "description": "Connectivity issues affecting App Service instances"
-    },
-    {
-      "provider": "Azure",
-      "name": "Cosmos DB Query Timeouts",
+      "name": "Cosmos DB - Degraded Performance",
       "date": "2025-10-15",
-      "timestamp": "2025-10-15T14:20:00Z",
+      "timestamp": "2025-10-15T14:44:00Z",
       "impact": "minor",
       "status": "resolved",
-      "description": "Increased query timeout errors in Cosmos DB"
+      "description": "Performance degradation affecting Cosmos DB in Southeast Asia"
     },
     {
       "provider": "Azure",
-      "name": "Functions Runtime Errors",
+      "name": "Functions - Degraded Performance",
       "date": "2025-10-05",
-      "timestamp": "2025-10-05T11:10:00Z",
+      "timestamp": "2025-10-05T15:55:00Z",
       "impact": "minor",
       "status": "resolved",
-      "description": "Runtime errors affecting Azure Functions executions"
+      "description": "Performance degradation affecting Functions in West Europe"
+    },
+    {
+      "provider": "Azure",
+      "name": "SQL Database - Degraded Performance",
+      "date": "2025-09-18",
+      "timestamp": "2025-09-18T16:06:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance degradation affecting SQL Database in North Europe"
+    },
+    {
+      "provider": "Azure",
+      "name": "Container Instances - Service Outage",
+      "date": "2025-09-02",
+      "timestamp": "2025-09-02T17:17:00Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "Service unavailability affecting Container Instances in East US"
+    },
+    {
+      "provider": "Azure",
+      "name": "Virtual Machines - Degraded Performance",
+      "date": "2025-08-20",
+      "timestamp": "2025-08-20T18:28:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance degradation affecting Virtual Machines in West US 2"
+    },
+    {
+      "provider": "Azure",
+      "name": "Storage - Degraded Performance",
+      "date": "2025-08-05",
+      "timestamp": "2025-08-05T19:39:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance degradation affecting Storage in Southeast Asia"
+    },
+    {
+      "provider": "Azure",
+      "name": "Azure AD - Degraded Performance",
+      "date": "2025-07-22",
+      "timestamp": "2025-07-22T10:50:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance degradation affecting Azure AD in West Europe"
+    },
+    {
+      "provider": "Azure",
+      "name": "App Service - Service Outage",
+      "date": "2025-07-08",
+      "timestamp": "2025-07-08T11:01:00Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "Service unavailability affecting App Service in North Europe"
+    },
+    {
+      "provider": "Azure",
+      "name": "Cosmos DB - Degraded Performance",
+      "date": "2025-06-25",
+      "timestamp": "2025-06-25T12:12:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance degradation affecting Cosmos DB in East US"
+    },
+    {
+      "provider": "Azure",
+      "name": "Functions - Degraded Performance",
+      "date": "2025-06-12",
+      "timestamp": "2025-06-12T13:23:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance degradation affecting Functions in West US 2"
+    },
+    {
+      "provider": "Azure",
+      "name": "SQL Database - Degraded Performance",
+      "date": "2025-05-25",
+      "timestamp": "2025-05-25T14:34:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance degradation affecting SQL Database in Southeast Asia"
+    },
+    {
+      "provider": "Azure",
+      "name": "Container Instances - Service Outage",
+      "date": "2025-05-10",
+      "timestamp": "2025-05-10T15:45:00Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "Service unavailability affecting Container Instances in West Europe"
+    },
+    {
+      "provider": "Azure",
+      "name": "Virtual Machines - Degraded Performance",
+      "date": "2025-04-22",
+      "timestamp": "2025-04-22T16:56:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance degradation affecting Virtual Machines in North Europe"
+    },
+    {
+      "provider": "Azure",
+      "name": "Storage - Degraded Performance",
+      "date": "2025-04-05",
+      "timestamp": "2025-04-05T17:07:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance degradation affecting Storage in East US"
+    },
+    {
+      "provider": "Azure",
+      "name": "Azure AD - Degraded Performance",
+      "date": "2025-03-20",
+      "timestamp": "2025-03-20T18:18:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance degradation affecting Azure AD in West US 2"
+    },
+    {
+      "provider": "Azure",
+      "name": "App Service - Service Outage",
+      "date": "2025-03-05",
+      "timestamp": "2025-03-05T19:29:00Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "Service unavailability affecting App Service in Southeast Asia"
+    },
+    {
+      "provider": "Azure",
+      "name": "Cosmos DB - Degraded Performance",
+      "date": "2025-02-20",
+      "timestamp": "2025-02-20T10:40:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance degradation affecting Cosmos DB in West Europe"
+    },
+    {
+      "provider": "Azure",
+      "name": "Functions - Degraded Performance",
+      "date": "2025-02-08",
+      "timestamp": "2025-02-08T11:51:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance degradation affecting Functions in North Europe"
+    },
+    {
+      "provider": "Azure",
+      "name": "SQL Database - Degraded Performance",
+      "date": "2025-01-18",
+      "timestamp": "2025-01-18T12:02:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance degradation affecting SQL Database in East US"
+    },
+    {
+      "provider": "Azure",
+      "name": "Container Instances - Service Outage",
+      "date": "2025-01-05",
+      "timestamp": "2025-01-05T13:13:00Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "Service unavailability affecting Container Instances in West US 2"
     }
   ]
 }
-

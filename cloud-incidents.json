@@ -1,12 +1,14 @@
 {
-  "generated_at": "2025-12-25T20:22:10.795Z",
-  "total_incidents": 336,
+  "generated_at": "2025-12-25T21:41:07.752Z",
+  "total_incidents": 406,
   "providers": {
     "cloudflare": 250,
     "google_cloud": 22,
-    "aws": 8,
-    "azure": 6,
-    "vercel": 50
+    "aws": 30,
+    "azure": 24,
+    "vercel": 50,
+    "digitalocean": 18,
+    "oracle_cloud": 12
   },
   "incidents": [
     {
@@ -370,103 +372,103 @@
       "description": "This incident has been resolved."
     },
     {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Zero Trust: Gateway Issues",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T12:15:15.138Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Zero Trust: Gateway Issues",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T12:15:15.138Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Zero Trust: Gateway Issues",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T12:15:15.138Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Zero Trust: Gateway Issues",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T12:15:15.138Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Zero Trust: Gateway Issues",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T12:15:15.138Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Error Logging Issues",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T12:00:00.000Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "Customers using our Last Mile Insights / Network Error Logging feature will observe missing report data between 2025-12-18 11:00 and 11:50 UTC due to an outage impacting the report delivery pipeline."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Error Logging Issues",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T12:00:00.000Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "Customers using our Last Mile Insights / Network Error Logging feature will observe missing report data between 2025-12-18 11:00 and 11:50 UTC due to an outage impacting the report delivery pipeline."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Error Logging Issues",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T12:00:00.000Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "Customers using our Last Mile Insights / Network Error Logging feature will observe missing report data between 2025-12-18 11:00 and 11:50 UTC due to an outage impacting the report delivery pipeline."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Error Logging Issues",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T12:00:00.000Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "Customers using our Last Mile Insights / Network Error Logging feature will observe missing report data between 2025-12-18 11:00 and 11:50 UTC due to an outage impacting the report delivery pipeline."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Error Logging Issues",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T12:00:00.000Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "Customers using our Last Mile Insights / Network Error Logging feature will observe missing report data between 2025-12-18 11:00 and 11:50 UTC due to an outage impacting the report delivery pipeline."
+    },
+    {
       "provider": "AWS",
-      "name": "Increased Error Rates - EC2 US-EAST-1",
+      "name": "EC2 Performance Issues - US-EAST-1",
       "date": "2025-12-18",
-      "timestamp": "2025-12-18T14:23:00Z",
+      "timestamp": "2025-12-18T08:00:00Z",
       "impact": "minor",
       "status": "resolved",
-      "description": "Elevated error rates for EC2 API calls in US-EAST-1 region"
-    },
-    {
-      "provider": "Cloudflare",
-      "name": "Cloudflare Zero Trust: Gateway Issues",
-      "date": "2025-12-18",
-      "timestamp": "2025-12-18T12:15:15.138Z",
-      "impact": "minor",
-      "status": "resolved",
-      "description": "This incident has been resolved."
-    },
-    {
-      "provider": "Cloudflare",
-      "name": "Cloudflare Zero Trust: Gateway Issues",
-      "date": "2025-12-18",
-      "timestamp": "2025-12-18T12:15:15.138Z",
-      "impact": "minor",
-      "status": "resolved",
-      "description": "This incident has been resolved."
-    },
-    {
-      "provider": "Cloudflare",
-      "name": "Cloudflare Zero Trust: Gateway Issues",
-      "date": "2025-12-18",
-      "timestamp": "2025-12-18T12:15:15.138Z",
-      "impact": "minor",
-      "status": "resolved",
-      "description": "This incident has been resolved."
-    },
-    {
-      "provider": "Cloudflare",
-      "name": "Cloudflare Zero Trust: Gateway Issues",
-      "date": "2025-12-18",
-      "timestamp": "2025-12-18T12:15:15.138Z",
-      "impact": "minor",
-      "status": "resolved",
-      "description": "This incident has been resolved."
-    },
-    {
-      "provider": "Cloudflare",
-      "name": "Cloudflare Zero Trust: Gateway Issues",
-      "date": "2025-12-18",
-      "timestamp": "2025-12-18T12:15:15.138Z",
-      "impact": "minor",
-      "status": "resolved",
-      "description": "This incident has been resolved."
-    },
-    {
-      "provider": "Cloudflare",
-      "name": "Network Error Logging Issues",
-      "date": "2025-12-18",
-      "timestamp": "2025-12-18T12:00:00.000Z",
-      "impact": "none",
-      "status": "resolved",
-      "description": "Customers using our Last Mile Insights / Network Error Logging feature will observe missing report data between 2025-12-18 11:00 and 11:50 UTC due to an outage impacting the report delivery pipeline."
-    },
-    {
-      "provider": "Cloudflare",
-      "name": "Network Error Logging Issues",
-      "date": "2025-12-18",
-      "timestamp": "2025-12-18T12:00:00.000Z",
-      "impact": "none",
-      "status": "resolved",
-      "description": "Customers using our Last Mile Insights / Network Error Logging feature will observe missing report data between 2025-12-18 11:00 and 11:50 UTC due to an outage impacting the report delivery pipeline."
-    },
-    {
-      "provider": "Cloudflare",
-      "name": "Network Error Logging Issues",
-      "date": "2025-12-18",
-      "timestamp": "2025-12-18T12:00:00.000Z",
-      "impact": "none",
-      "status": "resolved",
-      "description": "Customers using our Last Mile Insights / Network Error Logging feature will observe missing report data between 2025-12-18 11:00 and 11:50 UTC due to an outage impacting the report delivery pipeline."
-    },
-    {
-      "provider": "Cloudflare",
-      "name": "Network Error Logging Issues",
-      "date": "2025-12-18",
-      "timestamp": "2025-12-18T12:00:00.000Z",
-      "impact": "none",
-      "status": "resolved",
-      "description": "Customers using our Last Mile Insights / Network Error Logging feature will observe missing report data between 2025-12-18 11:00 and 11:50 UTC due to an outage impacting the report delivery pipeline."
-    },
-    {
-      "provider": "Cloudflare",
-      "name": "Network Error Logging Issues",
-      "date": "2025-12-18",
-      "timestamp": "2025-12-18T12:00:00.000Z",
-      "impact": "none",
-      "status": "resolved",
-      "description": "Customers using our Last Mile Insights / Network Error Logging feature will observe missing report data between 2025-12-18 11:00 and 11:50 UTC due to an outage impacting the report delivery pipeline."
+      "description": "Increased latency and intermittent errors for EC2 in US-EAST-1 region"
     },
     {
       "provider": "Cloudflare",
@@ -893,12 +895,12 @@
     },
     {
       "provider": "Azure",
-      "name": "Virtual Machines - Deployment Issues",
+      "name": "Virtual Machines - Degraded Performance",
       "date": "2025-12-12",
-      "timestamp": "2025-12-12T10:15:00Z",
+      "timestamp": "2025-12-12T10:00:00Z",
       "impact": "minor",
       "status": "resolved",
-      "description": "Some customers experienced issues deploying VMs in West Europe"
+      "description": "Performance degradation affecting Virtual Machines in West Europe"
     },
     {
       "provider": "Cloudflare",
@@ -1198,6 +1200,15 @@
       "description": "This incident has been resolved."
     },
     {
+      "provider": "DigitalOcean",
+      "name": "Droplets Issues - NYC1",
+      "date": "2025-12-08",
+      "timestamp": "2025-12-08T09:00:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance issues affecting Droplets in NYC1 region"
+    },
+    {
       "provider": "Vercel",
       "name": "Speed Insights elevated errors",
       "date": "2025-12-07",
@@ -1343,12 +1354,12 @@
     },
     {
       "provider": "AWS",
-      "name": "S3 Performance Degradation",
+      "name": "S3 Performance Issues - US-WEST-2",
       "date": "2025-12-05",
-      "timestamp": "2025-12-05T09:15:00Z",
+      "timestamp": "2025-12-05T09:07:00Z",
       "impact": "minor",
       "status": "resolved",
-      "description": "Degraded performance for S3 operations in multiple regions"
+      "description": "Increased latency and intermittent errors for S3 in US-WEST-2 region"
     },
     {
       "provider": "Cloudflare",
@@ -1934,6 +1945,15 @@
       "impact": "minor",
       "status": "resolved",
       "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Oracle Cloud",
+      "name": "Compute Performance Degradation",
+      "date": "2025-12-02",
+      "timestamp": "2025-12-02T11:00:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Elevated latency for Compute services in US-ASHBURN-1"
     },
     {
       "provider": "Vercel",
@@ -2215,58 +2235,58 @@
       "description": "This incident has been resolved."
     },
     {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Workers Issues",
+      "date": "2025-11-28",
+      "timestamp": "2025-11-28T15:11:11.323Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Workers Issues",
+      "date": "2025-11-28",
+      "timestamp": "2025-11-28T15:11:11.323Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Workers Issues",
+      "date": "2025-11-28",
+      "timestamp": "2025-11-28T15:11:11.323Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Workers Issues",
+      "date": "2025-11-28",
+      "timestamp": "2025-11-28T15:11:11.323Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Workers Issues",
+      "date": "2025-11-28",
+      "timestamp": "2025-11-28T15:11:11.323Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
       "provider": "AWS",
-      "name": "RDS Connection Issues - EU-WEST-1",
+      "name": "RDS Performance Issues - EU-WEST-1",
       "date": "2025-11-28",
-      "timestamp": "2025-11-28T16:45:00Z",
+      "timestamp": "2025-11-28T10:14:00Z",
       "impact": "minor",
       "status": "resolved",
-      "description": "Connectivity issues affecting RDS instances in EU-WEST-1"
-    },
-    {
-      "provider": "Cloudflare",
-      "name": "Cloudflare Workers Issues",
-      "date": "2025-11-28",
-      "timestamp": "2025-11-28T15:11:11.323Z",
-      "impact": "minor",
-      "status": "resolved",
-      "description": "This incident has been resolved."
-    },
-    {
-      "provider": "Cloudflare",
-      "name": "Cloudflare Workers Issues",
-      "date": "2025-11-28",
-      "timestamp": "2025-11-28T15:11:11.323Z",
-      "impact": "minor",
-      "status": "resolved",
-      "description": "This incident has been resolved."
-    },
-    {
-      "provider": "Cloudflare",
-      "name": "Cloudflare Workers Issues",
-      "date": "2025-11-28",
-      "timestamp": "2025-11-28T15:11:11.323Z",
-      "impact": "minor",
-      "status": "resolved",
-      "description": "This incident has been resolved."
-    },
-    {
-      "provider": "Cloudflare",
-      "name": "Cloudflare Workers Issues",
-      "date": "2025-11-28",
-      "timestamp": "2025-11-28T15:11:11.323Z",
-      "impact": "minor",
-      "status": "resolved",
-      "description": "This incident has been resolved."
-    },
-    {
-      "provider": "Cloudflare",
-      "name": "Cloudflare Workers Issues",
-      "date": "2025-11-28",
-      "timestamp": "2025-11-28T15:11:11.323Z",
-      "impact": "minor",
-      "status": "resolved",
-      "description": "This incident has been resolved."
+      "description": "Increased latency and intermittent errors for RDS in EU-WEST-1 region"
     },
     {
       "provider": "Cloudflare",
@@ -2369,12 +2389,12 @@
     },
     {
       "provider": "Azure",
-      "name": "Storage Performance Degradation",
+      "name": "Storage - Degraded Performance",
       "date": "2025-11-20",
-      "timestamp": "2025-11-20T15:40:00Z",
+      "timestamp": "2025-11-20T11:11:00Z",
       "impact": "minor",
       "status": "resolved",
-      "description": "Degraded performance for Azure Storage in North Europe"
+      "description": "Performance degradation affecting Storage in North Europe"
     },
     {
       "provider": "Vercel",
@@ -2405,12 +2425,12 @@
     },
     {
       "provider": "AWS",
-      "name": "Lambda Invocation Delays",
+      "name": "Lambda Performance Issues - EU-CENTRAL-1",
       "date": "2025-11-15",
-      "timestamp": "2025-11-15T11:30:00Z",
+      "timestamp": "2025-11-15T11:21:00Z",
       "impact": "minor",
       "status": "resolved",
-      "description": "Increased latency for Lambda function invocations"
+      "description": "Increased latency and intermittent errors for Lambda in EU-CENTRAL-1 region"
     },
     {
       "provider": "Vercel",
@@ -2431,6 +2451,15 @@
       "description": "A change was merged to the Vercel dashboard that introduced a bug in the query for runtime logs in some situations. Upon being alerted, the dashboard was rolled back, which restored the ability to see runtime logs. The change was then reverted. Data was still being collected and no logs are missing."
     },
     {
+      "provider": "DigitalOcean",
+      "name": "Load Balancers Issues - NYC3",
+      "date": "2025-11-12",
+      "timestamp": "2025-11-12T10:13:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance issues affecting Load Balancers in NYC3 region"
+    },
+    {
       "provider": "Vercel",
       "name": "Builds and Deployments are Currently in a Queued State",
       "date": "2025-11-11",
@@ -2440,13 +2469,22 @@
       "description": "This incident has been resolved."
     },
     {
-      "provider": "Azure",
-      "name": "Azure AD Authentication Delays",
-      "date": "2025-11-05",
-      "timestamp": "2025-11-05T12:25:00Z",
-      "impact": "major",
+      "provider": "Oracle Cloud",
+      "name": "Object Storage Performance Degradation",
+      "date": "2025-11-08",
+      "timestamp": "2025-11-08T12:17:00Z",
+      "impact": "minor",
       "status": "resolved",
-      "description": "Elevated latency for Azure AD authentication requests"
+      "description": "Elevated latency for Object Storage services in US-PHOENIX-1"
+    },
+    {
+      "provider": "Azure",
+      "name": "Azure AD - Degraded Performance",
+      "date": "2025-11-05",
+      "timestamp": "2025-11-05T12:22:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance degradation affecting Azure AD in East US"
     },
     {
       "provider": "Vercel",
@@ -2468,12 +2506,12 @@
     },
     {
       "provider": "AWS",
-      "name": "DynamoDB Elevated Latency",
+      "name": "DynamoDB Service Disruption - AP-SOUTHEAST-1",
       "date": "2025-11-02",
-      "timestamp": "2025-11-02T08:20:00Z",
-      "impact": "minor",
+      "timestamp": "2025-11-02T12:28:00Z",
+      "impact": "major",
       "status": "resolved",
-      "description": "Higher than normal latency for DynamoDB operations"
+      "description": "Elevated error rates and service unavailability for DynamoDB in AP-SOUTHEAST-1 region"
     },
     {
       "provider": "Vercel",
@@ -2495,12 +2533,12 @@
     },
     {
       "provider": "Azure",
-      "name": "App Service Connection Issues",
+      "name": "App Service - Service Outage",
       "date": "2025-10-28",
-      "timestamp": "2025-10-28T09:50:00Z",
-      "impact": "minor",
+      "timestamp": "2025-10-28T13:33:00Z",
+      "impact": "major",
       "status": "resolved",
-      "description": "Connectivity issues affecting App Service instances"
+      "description": "Service unavailability affecting App Service in West US 2"
     },
     {
       "provider": "Vercel",
@@ -2522,12 +2560,12 @@
     },
     {
       "provider": "AWS",
-      "name": "CloudFront Cache Misses",
+      "name": "CloudFront Performance Issues - AP-NORTHEAST-1",
       "date": "2025-10-22",
-      "timestamp": "2025-10-22T13:10:00Z",
+      "timestamp": "2025-10-22T13:35:00Z",
       "impact": "minor",
       "status": "resolved",
-      "description": "Increased cache miss rate affecting CloudFront performance"
+      "description": "Increased latency and intermittent errors for CloudFront in AP-NORTHEAST-1 region"
     },
     {
       "provider": "Vercel",
@@ -2546,6 +2584,15 @@
       "impact": "critical",
       "status": "resolved",
       "description": "This incident has been resolved."
+    },
+    {
+      "provider": "DigitalOcean",
+      "name": "Managed Databases Issues - SFO3",
+      "date": "2025-10-20",
+      "timestamp": "2025-10-20T11:26:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance issues affecting Managed Databases in SFO3 region"
     },
     {
       "provider": "Vercel",
@@ -2567,21 +2614,30 @@
     },
     {
       "provider": "Azure",
-      "name": "Cosmos DB Query Timeouts",
+      "name": "Cosmos DB - Degraded Performance",
       "date": "2025-10-15",
-      "timestamp": "2025-10-15T14:20:00Z",
+      "timestamp": "2025-10-15T14:44:00Z",
       "impact": "minor",
       "status": "resolved",
-      "description": "Increased query timeout errors in Cosmos DB"
+      "description": "Performance degradation affecting Cosmos DB in Southeast Asia"
+    },
+    {
+      "provider": "Oracle Cloud",
+      "name": "Database Performance Degradation",
+      "date": "2025-10-12",
+      "timestamp": "2025-10-12T13:34:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Elevated latency for Database services in EU-FRANKFURT-1"
     },
     {
       "provider": "AWS",
-      "name": "EC2 Launch Failures - AP-SOUTHEAST-1",
+      "name": "Route53 Performance Issues - US-EAST-1",
       "date": "2025-10-10",
-      "timestamp": "2025-10-10T19:05:00Z",
-      "impact": "major",
+      "timestamp": "2025-10-10T14:42:00Z",
+      "impact": "minor",
       "status": "resolved",
-      "description": "EC2 instance launch failures in AP-SOUTHEAST-1 region"
+      "description": "Increased latency and intermittent errors for Route53 in US-EAST-1 region"
     },
     {
       "provider": "Vercel",
@@ -2594,12 +2650,12 @@
     },
     {
       "provider": "Azure",
-      "name": "Functions Runtime Errors",
+      "name": "Functions - Degraded Performance",
       "date": "2025-10-05",
-      "timestamp": "2025-10-05T11:10:00Z",
+      "timestamp": "2025-10-05T15:55:00Z",
       "impact": "minor",
       "status": "resolved",
-      "description": "Runtime errors affecting Azure Functions executions"
+      "description": "Performance degradation affecting Functions in West Europe"
     },
     {
       "provider": "Vercel",
@@ -2611,13 +2667,22 @@
       "description": "Some customers may have experienced delays in builds for deployments between 10:58 and 12:35 UTC.\nThese deployments appeared as Queued within the incident window."
     },
     {
-      "provider": "AWS",
-      "name": "Route53 DNS Resolution Delays",
-      "date": "2025-10-01",
-      "timestamp": "2025-10-01T07:30:00Z",
+      "provider": "DigitalOcean",
+      "name": "Kubernetes Issues - LON1",
+      "date": "2025-10-02",
+      "timestamp": "2025-10-02T12:39:00Z",
       "impact": "minor",
       "status": "resolved",
-      "description": "Intermittent delays in DNS resolution for Route53"
+      "description": "Performance issues affecting Kubernetes in LON1 region"
+    },
+    {
+      "provider": "AWS",
+      "name": "ECS Performance Issues - US-WEST-2",
+      "date": "2025-10-01",
+      "timestamp": "2025-10-01T15:49:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Increased latency and intermittent errors for ECS in US-WEST-2 region"
     },
     {
       "provider": "Vercel",
@@ -2638,6 +2703,24 @@
       "description": "This incident has been resolved."
     },
     {
+      "provider": "AWS",
+      "name": "EKS Performance Issues - EU-WEST-1",
+      "date": "2025-09-20",
+      "timestamp": "2025-09-20T16:56:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Increased latency and intermittent errors for EKS in EU-WEST-1 region"
+    },
+    {
+      "provider": "Azure",
+      "name": "SQL Database - Degraded Performance",
+      "date": "2025-09-18",
+      "timestamp": "2025-09-18T16:06:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance degradation affecting SQL Database in North Europe"
+    },
+    {
       "provider": "Vercel",
       "name": "DNS record updates are delayed for domains using Vercel Nameservers",
       "date": "2025-09-16",
@@ -2647,6 +2730,24 @@
       "description": "This incident has been resolved."
     },
     {
+      "provider": "DigitalOcean",
+      "name": "Spaces Issues - AMS3",
+      "date": "2025-09-15",
+      "timestamp": "2025-09-15T13:52:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance issues affecting Spaces in AMS3 region"
+    },
+    {
+      "provider": "Oracle Cloud",
+      "name": "Networking Performance Degradation",
+      "date": "2025-09-10",
+      "timestamp": "2025-09-10T14:51:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Elevated latency for Networking services in UK-LONDON-1"
+    },
+    {
       "provider": "Vercel",
       "name": "Elevated 5xx errors and latency in gru1 (São Paulo, Brazil)",
       "date": "2025-09-09",
@@ -2654,6 +2755,15 @@
       "impact": "none",
       "status": "resolved",
       "description": "We investigated elevated reports of 5xx errors and latency in the gru1 (São Paulo, Brazil) region between Sep 10, 3:45 AM – Sep 10, 3:48 AM UTC.\n\nThe issue has been resolved."
+    },
+    {
+      "provider": "AWS",
+      "name": "API Gateway Service Disruption - EU-CENTRAL-1",
+      "date": "2025-09-08",
+      "timestamp": "2025-09-08T17:03:00Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "Elevated error rates and service unavailability for API Gateway in EU-CENTRAL-1 region"
     },
     {
       "provider": "Vercel",
@@ -2674,6 +2784,24 @@
       "description": "This incident has been resolved."
     },
     {
+      "provider": "Azure",
+      "name": "Container Instances - Service Outage",
+      "date": "2025-09-02",
+      "timestamp": "2025-09-02T17:17:00Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "Service unavailability affecting Container Instances in East US"
+    },
+    {
+      "provider": "DigitalOcean",
+      "name": "Droplets Issues - SGP1",
+      "date": "2025-08-28",
+      "timestamp": "2025-08-28T14:05:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance issues affecting Droplets in SGP1 region"
+    },
+    {
       "provider": "Vercel",
       "name": "Secure Compute builds failing to start",
       "date": "2025-08-26",
@@ -2681,6 +2809,15 @@
       "impact": "major",
       "status": "resolved",
       "description": "This incident has been resolved."
+    },
+    {
+      "provider": "AWS",
+      "name": "EC2 Performance Issues - AP-SOUTHEAST-1",
+      "date": "2025-08-25",
+      "timestamp": "2025-08-25T18:10:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Increased latency and intermittent errors for EC2 in AP-SOUTHEAST-1 region"
     },
     {
       "provider": "Vercel",
@@ -2701,6 +2838,33 @@
       "description": "This incident has been resolved."
     },
     {
+      "provider": "Azure",
+      "name": "Virtual Machines - Degraded Performance",
+      "date": "2025-08-20",
+      "timestamp": "2025-08-20T18:28:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance degradation affecting Virtual Machines in West US 2"
+    },
+    {
+      "provider": "Oracle Cloud",
+      "name": "Container Engine Performance Degradation",
+      "date": "2025-08-15",
+      "timestamp": "2025-08-15T15:08:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Elevated latency for Container Engine services in AP-TOKYO-1"
+    },
+    {
+      "provider": "AWS",
+      "name": "S3 Performance Issues - AP-NORTHEAST-1",
+      "date": "2025-08-12",
+      "timestamp": "2025-08-12T19:17:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Increased latency and intermittent errors for S3 in AP-NORTHEAST-1 region"
+    },
+    {
       "provider": "Vercel",
       "name": "Intermittent deployment failures and elevated dashboard latency",
       "date": "2025-08-12",
@@ -2710,6 +2874,15 @@
       "description": "This incident has been resolved."
     },
     {
+      "provider": "DigitalOcean",
+      "name": "Load Balancers Issues - NYC1",
+      "date": "2025-08-10",
+      "timestamp": "2025-08-10T15:18:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance issues affecting Load Balancers in NYC1 region"
+    },
+    {
       "provider": "Vercel",
       "name": "Elevated error rate for builds",
       "date": "2025-08-06",
@@ -2717,6 +2890,15 @@
       "impact": "major",
       "status": "resolved",
       "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Azure",
+      "name": "Storage - Degraded Performance",
+      "date": "2025-08-05",
+      "timestamp": "2025-08-05T19:39:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance degradation affecting Storage in Southeast Asia"
     },
     {
       "provider": "Vercel",
@@ -2737,6 +2919,15 @@
       "description": "This incident has been resolved. The issue originated from a disruption on GitLab’s side. For more information, please refer to their incident report: https://gitlab.com/gitlab-com/gl-infra/production/-/issues/20290"
     },
     {
+      "provider": "AWS",
+      "name": "RDS Performance Issues - US-EAST-1",
+      "date": "2025-07-30",
+      "timestamp": "2025-07-30T08:24:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Increased latency and intermittent errors for RDS in US-EAST-1 region"
+    },
+    {
       "provider": "Vercel",
       "name": "Elevated MODULE_NOT_FOUND Errors While Deploying",
       "date": "2025-07-29",
@@ -2744,6 +2935,24 @@
       "impact": "minor",
       "status": "resolved",
       "description": "This incident has been resolved."
+    },
+    {
+      "provider": "DigitalOcean",
+      "name": "Managed Databases Issues - NYC3",
+      "date": "2025-07-25",
+      "timestamp": "2025-07-25T16:31:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance issues affecting Managed Databases in NYC3 region"
+    },
+    {
+      "provider": "Azure",
+      "name": "Azure AD - Degraded Performance",
+      "date": "2025-07-22",
+      "timestamp": "2025-07-22T10:50:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance degradation affecting Azure AD in West Europe"
     },
     {
       "provider": "Vercel",
@@ -2771,6 +2980,51 @@
       "impact": "medium",
       "status": "resolved",
       "description": "## \\# Incident Report\n## \\#\\# Summary\nOn Friday, 18 July 2025 07:50 US/Pacific, several Google Cloud Platform (GCP) and Google Workspace (GWS) products experienced elevated latencies and error rates in the us-east1 region for a duration of up to 1 hour and 57 minutes.\n**GCP Impact Duration:** 18 July 2025 07:50 \\- 09:47 US/Pacific : 1 hour 57 minutes\n**GWS Impact Duration:** 18 July 2025 07:50 \\- 08:40 US/Pacific : 50 minutes\nWe sincerely apologize for this incident, which does not reflect the level of quality and reliability we strive to offer. We are taking immediate steps to improve the platform’s performance and availability.\n##\n## \\#\\# Root Cause\nThe service interruption was triggered by a procedural error during a planned hardware replacement in our datacenter. An incorrect physical disconnection was made to the active network switch serving our control plane, rather than the redundant unit scheduled for removal. The redundant unit had been properly de-configured as part of the procedure, and the combination of these two events led to partitioning of the network control plane. Our network is designed to withstand this type of control plane failure by failing open, continuing operation.\nHowever, an operational topology change while the network control plane was in a failed open state caused our network fabric's topology information to become stale. This led to packet loss and service disruption until services were moved away from the fabric and control plane connectivity was restored.\n## \\#\\# Remediation and Prevention\nGoogle engineers were alerted to the outage by our monitoring system on 18 July 2025 07:06 US/Pacific and immediately started an investigation. The following timeline details the remediation and restoration efforts:\n* **07:39 US/Pacific**: The underlying root cause (device disconnect) was identified and onsite technicians were engaged to reconnect the control plane device and restore control plane connectivity. At that moment, network failure open mechanisms worked as expected and no impact was observed.\n* **07:50 US/Pacific**: A topology change led to traffic being routed suboptimally, due to the network being in a fail open state. This caused congestion on the subset of links, packet loss, and latency to customer traffic. Engineers made a decision to move traffic away from the affected fabric, which mitigated the impact for the majority of the services.\n* **08:40 US/Pacific**: Engineers mitigated Workspace impact by shifting traffic away from the affected region.\n* **09:47 US/Pacific**: Onsite technicians reconnected the device, control plane connectivity was fully restored and all services were back to stable state.\nGoogle is committed to preventing a repeat of the issue in the future, and is completing the following actions:\n* Pause non-critical workflows until safety controls are implemented (complete).\n* Strengthen safety controls for hardware upgrade workflows by end of Q3 2025\\.\n* Design and implement a mechanism to prevent control plane partitioning in case of dual failure of upstream routers by end of Q4 2025\\.\n## \\#\\# Detailed Description of Impact\n\\#\\#\\# GCP Impact:\nMultiple products in us-east1 were affected by the loss of network connectivity, with the most significant impacts seen in us-east1-b. Other regions were not affected.\nThe outage caused a range of issues for customers with zonal resources in the region, including packet loss across VPC networks, increased error rates and latency, service unavailable (503) errors, and slow or stuck operations up to loss of networking connectivity. While regional products were briefly impacted, they recovered quickly by failing over to unaffected zones.\nA small number (0.1%) of Persistent Disks in us-east1-b were unavailable for the duration of the outage: these disks became available once the outage was mitigated, with no customer data loss.\n\\#\\#\\# GWS Impact:\nA small subset of Workspace users, primarily around the Southeast US, experienced varying degrees of unavailability and increased delays across multiple products, including Gmail, Google Meet, Google Drive, Google Chat, Google Calendar, Google Groups, Google Doc/Editors, and Google Voice."
+    },
+    {
+      "provider": "AWS",
+      "name": "Lambda Performance Issues - US-WEST-2",
+      "date": "2025-07-18",
+      "timestamp": "2025-07-18T09:31:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Increased latency and intermittent errors for Lambda in US-WEST-2 region"
+    },
+    {
+      "provider": "Oracle Cloud",
+      "name": "Compute Performance Degradation",
+      "date": "2025-07-12",
+      "timestamp": "2025-07-12T16:25:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Elevated latency for Compute services in US-ASHBURN-1"
+    },
+    {
+      "provider": "Azure",
+      "name": "App Service - Service Outage",
+      "date": "2025-07-08",
+      "timestamp": "2025-07-08T11:01:00Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "Service unavailability affecting App Service in North Europe"
+    },
+    {
+      "provider": "DigitalOcean",
+      "name": "Kubernetes Issues - SFO3",
+      "date": "2025-07-08",
+      "timestamp": "2025-07-08T09:44:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance issues affecting Kubernetes in SFO3 region"
+    },
+    {
+      "provider": "AWS",
+      "name": "DynamoDB Service Disruption - EU-WEST-1",
+      "date": "2025-07-05",
+      "timestamp": "2025-07-05T10:38:00Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "Elevated error rates and service unavailability for DynamoDB in EU-WEST-1 region"
     },
     {
       "provider": "Vercel",
@@ -2818,6 +3072,24 @@
       "description": "Between 22:58 and 23:33 UTC, an internal service degradation caused deployments triggered by GitHub to not be properly processed. Service has been fully restored, but impacted customers need to re-trigger deployments attempted during this interval."
     },
     {
+      "provider": "Azure",
+      "name": "Cosmos DB - Degraded Performance",
+      "date": "2025-06-25",
+      "timestamp": "2025-06-25T12:12:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance degradation affecting Cosmos DB in East US"
+    },
+    {
+      "provider": "AWS",
+      "name": "CloudFront Performance Issues - EU-CENTRAL-1",
+      "date": "2025-06-22",
+      "timestamp": "2025-06-22T11:45:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Increased latency and intermittent errors for CloudFront in EU-CENTRAL-1 region"
+    },
+    {
       "provider": "Vercel",
       "name": "Increased 5xx errors in multiple regions",
       "date": "2025-06-18",
@@ -2825,6 +3097,15 @@
       "impact": "minor",
       "status": "resolved",
       "description": "This incident has been resolved."
+    },
+    {
+      "provider": "DigitalOcean",
+      "name": "Spaces Issues - LON1",
+      "date": "2025-06-18",
+      "timestamp": "2025-06-18T10:57:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance issues affecting Spaces in LON1 region"
     },
     {
       "provider": "Vercel",
@@ -2854,6 +3135,60 @@
       "description": "# Incident Report\n## **Summary**\n*Google Cloud, Google Workspace and Google Security Operations products experienced increased 503 errors in external API requests, impacting customers.*\n***We deeply apologize for the impact this outage has had. Google Cloud customers and their users trust their businesses to Google, and we will do better. We apologize for the impact this has had not only on our customers’ businesses and their users but also on the trust of our systems. We are committed to making improvements to help avoid outages like this moving forward.***\n### **What happened?**\nGoogle and Google Cloud APIs are served through our Google API management and control planes. Distributed regionally, these management and control planes are responsible for ensuring each API request that comes in is authorized, has the policy and appropriate checks (like quota) to meet their endpoints. The core binary that is part of this policy check system is known as Service Control. Service Control is a regional service that has a regional datastore that it reads quota and policy information from. This datastore metadata gets replicated almost instantly globally to manage quota policies for Google Cloud and our customers.\nOn May 29, 2025, a new feature was added to Service Control for additional quota policy checks. This code change and binary release went through our region by region rollout, but the code path that failed was never exercised during this rollout due to needing a policy change that would trigger the code. As a safety precaution, this code change came with a red-button to turn off that particular policy serving path. The issue with this change was that it did not have appropriate error handling nor was it feature flag protected. Without the appropriate error handling, the null pointer caused the binary to crash. Feature flags are used to gradually enable the feature region by region per project, starting with internal projects, to enable us to catch issues. If this had been flag protected, the issue would have been caught in staging.\nOn June 12, 2025 at \\~10:45am PDT, a policy change was inserted into the regional Spanner tables that Service Control uses for policies. Given the global nature of quota management, this metadata was replicated globally within seconds. This policy data contained unintended blank fields. Service Control, then regionally exercised quota checks on policies in each regional datastore. This pulled in blank fields for this respective policy change and exercised the code path that hit the null pointer causing the binaries to go into a crash loop. This occurred globally given each regional deployment.\nWithin 2 minutes, our Site Reliability Engineering team was triaging the incident. Within 10 minutes, the root cause was identified and the red-button (to disable the serving path) was being put in place. The red-button was ready to roll out \\~25 minutes from the start of the incident. Within 40 minutes of the incident, the red-button rollout was completed, and we started seeing recovery across regions, starting with the smaller ones first.\nWithin some of our larger regions, such as us-central-1, as Service Control tasks restarted, it created a herd effect on the underlying infrastructure it depends on (i.e. that Spanner table), overloading the infrastructure. Service Control did not have the appropriate randomized exponential backoff implemented to avoid this. It took up to \\~2h 40 mins to fully resolve in us-central-1 as we throttled task creation to minimize the impact on the underlying infrastructure and routed traffic to multi-regional databases to reduce the load. At that point, Service Control and API serving was fully recovered across all regions. Corresponding Google and Google Cloud products started recovering with some taking longer depending upon their architecture.\n### **What is our immediate path forward?**\nImmediately upon recovery, we froze all changes to the Service Control stack and manual policy pushes until we can completely remediate the system.\n### **How did we communicate?**\nWe posted our first incident report to Cloud Service Health about \\~1h after the start of the crashes, due to the Cloud Service Health infrastructure being down due to this outage. For some customers, the monitoring infrastructure they had running on Google Cloud was also failing, leaving them without a signal of the incident or an understanding of the impact to their business and/or infrastructure. We will address this going forward.\n### **What’s our approach moving forward?**\nBeyond freezing the system as mentioned above, we will prioritize and safely complete the following:\n* We will modularize Service Control’s architecture, so the functionality is isolated and fails open. Thus, if a corresponding check fails, Service Control can still serve API requests.\n* We will audit all systems that consume globally replicated data. Regardless of the business need for near instantaneous consistency of the data globally (i.e. quota management settings are global), data replication needs to be propagated incrementally with sufficient time to validate and detect issues.\n* We will enforce all changes to critical binaries to be feature flag protected and disabled by default.\n* We will improve our static analysis and testing practices to correctly handle errors and if need be fail open.\n* We will audit and ensure our systems employ randomized exponential backoff.\n* We will improve our external communications, both automated and human, so our customers get the information they need asap to react to issues, manage their systems and help their customers.\n* We'll ensure our monitoring and communication infrastructure remains operational to serve customers even when Google Cloud and our primary monitoring products are down, ensuring business continuity.\n-------"
     },
     {
+      "provider": "Azure",
+      "name": "Functions - Degraded Performance",
+      "date": "2025-06-12",
+      "timestamp": "2025-06-12T13:23:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance degradation affecting Functions in West US 2"
+    },
+    {
+      "provider": "AWS",
+      "name": "Route53 Performance Issues - AP-SOUTHEAST-1",
+      "date": "2025-06-10",
+      "timestamp": "2025-06-10T12:52:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Increased latency and intermittent errors for Route53 in AP-SOUTHEAST-1 region"
+    },
+    {
+      "provider": "Oracle Cloud",
+      "name": "Object Storage Performance Degradation",
+      "date": "2025-06-08",
+      "timestamp": "2025-06-08T11:42:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Elevated latency for Object Storage services in US-PHOENIX-1"
+    },
+    {
+      "provider": "DigitalOcean",
+      "name": "Droplets Issues - AMS3",
+      "date": "2025-05-30",
+      "timestamp": "2025-05-30T11:10:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance issues affecting Droplets in AMS3 region"
+    },
+    {
+      "provider": "AWS",
+      "name": "ECS Performance Issues - AP-NORTHEAST-1",
+      "date": "2025-05-28",
+      "timestamp": "2025-05-28T13:59:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Increased latency and intermittent errors for ECS in AP-NORTHEAST-1 region"
+    },
+    {
+      "provider": "Azure",
+      "name": "SQL Database - Degraded Performance",
+      "date": "2025-05-25",
+      "timestamp": "2025-05-25T14:34:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance degradation affecting SQL Database in Southeast Asia"
+    },
+    {
       "provider": "Google Cloud",
       "name": "Google Compute Engine (GCE) issue impacting multiple dependent GCP services across zones",
       "date": "2025-05-20",
@@ -2861,6 +3196,114 @@
       "impact": "medium",
       "status": "resolved",
       "description": "# Incident Report\n## Summary\nOn 19 May 2025, Google Compute Engine (GCE) encountered problems affecting Spot VM termination globally, and performance degradation and timeouts of reservation consumption / VM creation in us-central1 and us-east4 for a duration of 8 hours, 42 minutes. Consequently, multiple other Google Cloud Platform (GCP) products relying on GCE also experienced increased latencies and timeouts.\nTo our customers who were impacted during this disruption, we sincerely apologize. This is not the level of quality and reliability we strive to offer you, and we are taking immediate steps to improve the platform’s performance and availability.\n## Root Cause\nA recently deployed configuration change to a Google Compute Engine (GCE) component mistakenly disabled a feature flag that controlled how VM instance states are reported to other components. Safety checks intended to ensure gradual rollout of this type of change failed to be triggered, resulting in an unplanned rapid rollout of the change.\nThis caused Spot VMs to be stuck in an unexpected state. Consequently, Spot VMs that had initiated their standard termination process due to preemption began to accumulate as they failed to complete termination, creating a backlog that degraded performance for all VM types in some regions.\n## Remediation and Prevention\nGoogle engineers were alerted to the outage via internal monitoring on 19 May 2025, at 21:08 US/Pacific, and immediately started an investigation. Once the nature and scope of the issue became clear, Google engineers initiated a rollback of the change on 20 May 2025 at 03:29 US/Pacific.\nThe rollback completed at 03:55 US/Pacific, mitigating the impact.\nGoogle is committed to preventing a repeat of this issue in the future and is completing the following actions:\n* Google Cloud employs a robust and well-defined methodology for production updates, including a phased rollout approach as standard practice to avoid rapid global changes. This phased approach is meant to ensure that changes are introduced into production gradually and as safely as possible, however, in this case, the safety checks were not enforced. We have paused further feature flag rollouts for the affected system, while we undertake a comprehensive audit of safety checks and fix any exposed gaps that led to the unplanned rapid rollout of this change.\n* We will review and address scalability issues encountered by GCE during the incident.\n* We will improve monitoring coverage of Spot VM deletion workflows.\nGoogle is committed to quickly and continually improving our technology and operations to prevent service disruptions. We appreciate your patience and apologize again for the impact to your organization. We thank you for your business.\n## Detailed Description of Impact\nCustomers experienced increased latency for VM control plane operations in us-central1 and us-east4. VM control plane operations include creating, modifying, or deleting VMs. For some customers, Spot VM instances became stuck while terminating. Customers were not billed for Spot VM instances in this state. Furthermore, running virtual machines and the data plane were not impacted.\nVM control plane latency in the us-central1 and us-east4 regions began increasing at the start of the incident (19 May 2025 20:23 US/Pacific), and peaked around 20 May 2025 03:40 US/Pacific. At peak, median latency went from seconds to minutes, and tail latency went from minutes to hours. Several other regions experienced increased tail latency during the outage, but most operations in these regions completed as normal. Once mitigations took effect, median and tail latencies started falling and returned to normal by 05:15 US/Pacific.\nCustomers may have experienced similar latency increases in products which create, modify, failover or delete VM instances: GCE, GKE, Dataflow, Cloud SQL, Google Cloud Dataproc, Google App Engine, Cloud Deploy, Memorystore, Redis, Cloud Filestore, among others."
+    },
+    {
+      "provider": "Oracle Cloud",
+      "name": "Database Performance Degradation",
+      "date": "2025-05-18",
+      "timestamp": "2025-05-18T12:59:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Elevated latency for Database services in EU-FRANKFURT-1"
+    },
+    {
+      "provider": "AWS",
+      "name": "EKS Performance Issues - US-EAST-1",
+      "date": "2025-05-15",
+      "timestamp": "2025-05-15T14:06:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Increased latency and intermittent errors for EKS in US-EAST-1 region"
+    },
+    {
+      "provider": "DigitalOcean",
+      "name": "Load Balancers Issues - SGP1",
+      "date": "2025-05-12",
+      "timestamp": "2025-05-12T12:23:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance issues affecting Load Balancers in SGP1 region"
+    },
+    {
+      "provider": "Azure",
+      "name": "Container Instances - Service Outage",
+      "date": "2025-05-10",
+      "timestamp": "2025-05-10T15:45:00Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "Service unavailability affecting Container Instances in West Europe"
+    },
+    {
+      "provider": "AWS",
+      "name": "API Gateway Service Disruption - US-WEST-2",
+      "date": "2025-05-02",
+      "timestamp": "2025-05-02T15:13:00Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "Elevated error rates and service unavailability for API Gateway in US-WEST-2 region"
+    },
+    {
+      "provider": "DigitalOcean",
+      "name": "Managed Databases Issues - NYC1",
+      "date": "2025-04-25",
+      "timestamp": "2025-04-25T13:36:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance issues affecting Managed Databases in NYC1 region"
+    },
+    {
+      "provider": "Azure",
+      "name": "Virtual Machines - Degraded Performance",
+      "date": "2025-04-22",
+      "timestamp": "2025-04-22T16:56:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance degradation affecting Virtual Machines in North Europe"
+    },
+    {
+      "provider": "AWS",
+      "name": "EC2 Performance Issues - EU-WEST-1",
+      "date": "2025-04-20",
+      "timestamp": "2025-04-20T16:20:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Increased latency and intermittent errors for EC2 in EU-WEST-1 region"
+    },
+    {
+      "provider": "Oracle Cloud",
+      "name": "Networking Performance Degradation",
+      "date": "2025-04-15",
+      "timestamp": "2025-04-15T13:16:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Elevated latency for Networking services in UK-LONDON-1"
+    },
+    {
+      "provider": "AWS",
+      "name": "S3 Performance Issues - EU-CENTRAL-1",
+      "date": "2025-04-08",
+      "timestamp": "2025-04-08T17:27:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Increased latency and intermittent errors for S3 in EU-CENTRAL-1 region"
+    },
+    {
+      "provider": "DigitalOcean",
+      "name": "Kubernetes Issues - NYC3",
+      "date": "2025-04-08",
+      "timestamp": "2025-04-08T14:49:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance issues affecting Kubernetes in NYC3 region"
+    },
+    {
+      "provider": "Azure",
+      "name": "Storage - Degraded Performance",
+      "date": "2025-04-05",
+      "timestamp": "2025-04-05T17:07:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance degradation affecting Storage in East US"
     },
     {
       "provider": "Google Cloud",
@@ -2872,6 +3315,60 @@
       "description": "# Incident Report\n## Summary:\nOn Saturday, 29 March 2025, multiple Google Cloud Services in the us-east5-c zone experienced degraded service or unavailability for a duration of 6 hours and 10 minutes. To our Google Cloud customers whose services were impacted during this disruption, we sincerely apologize. This is not the level of quality and reliability we strive to offer you, and we are taking immediate steps to improve the platform’s performance and availability.\n## Root Cause:\nThe root cause of the service disruption was a loss of utility power in the affected zone. This power outage triggered a cascading failure within the uninterruptible power supply (UPS) system responsible for maintaining power to the zone during such events. The UPS system, which relies on batteries to bridge the gap between utility power loss and generator power activation, experienced a critical battery failure.\nThis failure rendered the UPS unable to perform its core function of ensuring continuous power to the system. As a direct consequence of the UPS failure, virtual machine instances within the affected zone lost power and went offline, resulting in service downtime for customers. The power outage and subsequent UPS failure also triggered a series of secondary issues, including packet loss within the us-east5-c zone, which impacted network communication and performance. Additionally, a limited number of storage disks within the zone became unavailable during the outage.\n## Remediation and Prevention:\nGoogle engineers were alerted to the incident from our internal monitoring alerts at 12:54 US/Pacific on Saturday, 29 March and immediately started an investigation.\nGoogle engineers diverted traffic away from the impacted location to partially mitigate impact for some services that did not have zonal resource dependencies. Engineers bypassed the failed UPS and restored power via generator by 14:49 US/Pacific on Saturday, 29 March. The majority of Google Cloud services recovered shortly thereafter. A few services experienced longer restoration times as manual actions were required in some cases to complete full recovery.\nGoogle is committed to preventing a repeat of this issue in the future and is completing the following actions:\n* Harden cluster power failure and recovery path to achieve a predictable and faster time-to-serving after power is restored.\n* Audit systems that did not automatically failover and close any gaps that prevented this function.\n* Work with our uninterruptible power supply (UPS) vendor to understand and remediate issues in the battery backup system.\nGoogle is committed to quickly and continually improving our technology and operations to prevent service disruptions. We appreciate your patience and apologize again for the impact to your organization. We thank you for your business.\n## Detailed Description of Impact:\nCustomers experienced degraded service or unavailability for multiple Google Cloud products in the us-east5-c zone of varying impact and severity as noted below:\n**AlloyDB for PostgreSQL:** A few clusters experienced transient unavailability during the failover. Two impacted clusters did not failover automatically and required manual intervention from Google engineers to do the failover.\n**BigQuery:** A few customers in the impacted region experienced brief unavailability of the product between 12:57 US/Pacific until 13:19 US/Pacific.\n**Cloud Bigtable:** The outage resulted in increased errors and latency for a few customers between 12:47 US/Pacific to 19:37 US/Pacific.\n**Cloud Composer:** External streaming jobs for a few customers experienced increased latency for a period of 16 minutes.\n**Cloud Dataflow:** Streaming and batch jobs saw brief periods of performance degradation. 17% of streaming jobs experienced degradation from 12:52 US/Pacific to 13:08 US/Pacific, while 14% of batch jobs experienced degradation from 15:42 US/Pacific to 16:00 US/Pacific.\n**Cloud Filestore:** All basic, high scale and zonal instances in us-east5-c were unavailable and all enterprise and regional instances in us-east5 were operating in degraded mode from 12:54 to 18:47 US/Pacific on Saturday, 29 March 2025\\.\n**Cloud Firestore:** Limited impact of approximately 2 minutes where customers experienced elevated unavailability and latency, as jobs were being rerouted automatically.\n**Cloud Identity and Access Management:** A few customers experienced slight latency or errors while retrying for a short period of time.\n**Cloud Interconnect:** All us-east5 attachments connected to zone1 were unavailable for a duration of 2 hours, 7 minutes.\n**Cloud Key Management Service:** Customers experienced 5XX errors for a brief period of time (less than 4 mins). Google engineers rerouted the traffic to healthy cells shortly after the power loss to mitigate the impact.\n**Cloud Kubernetes Engine:** Customers experienced terminations of their nodes in us-east5-c. Some zonal clusters in us-east5-c experienced loss of connectivity to their control plane. No impact was observed for nodes or control planes outside of us-east5-c.\n**Cloud NAT:** Transient control plane outage affecting new VM creation processes and/or dynamic port allocation.\n**Cloud Router:** Cloud Router was unavailable for up to 30 seconds while leadership shifted to other clusters. This downtime was within the thresholds of most customer's graceful restart configuration (60 seconds).\n**Cloud SQL:** Based on monitoring data, 318 zonal instances experienced 3h of downtime in the us-east5-c zone. All external high-availability instances successfully failed out of the impacted zone.\n**Cloud Spanner:** Customers in the us-east5 region may have seen a few minutes of errors or latency increase during the few minutes after 12:52 US/Pacific when the cluster first failed.\n**Cloud VPN:** A few legacy customers experienced loss of connectivity of their sessions up to 5 mins.\n**Compute Engine:** Customers experienced instance unavailability and inability to manage instances in us-east5-c from 12:54 to 18:30 US/Pacific on Saturday, 29 March 2025\\.\n**Managed Service for Apache Kafka:** CreateCluster and some UpdateCluster commands (those that increased capacity config) had a 100% error rate in the region, with the symptom being INTERNAL errors or timeouts. Based on our monitoring, the impact was limited to one customer who attempted to use these methods during the incident.\n**Memorystore for Redis:** High availability instances failed over to healthy zones during the incident. 12 instances required manual intervention to bring back provisioned capacity. All instances were recovered by 19:28 US/Pacific.\n**Persistent Disk:** Customers experienced very high I/O latency, including stalled I/O operations or errors in some disks in us-east5-c from 12:54 US/Pacific to 20:45 US/Pacific on Saturday, 29 March 2025\\. Other products using PD or communicating with impacted PD devices experienced service issues with varied symptoms.\n**Secret Manager:** Customers experienced 5XX errors for a brief period of time (less than 4 mins). Google engineers rerouted the traffic to healthy cells shortly after the power loss to mitigate the impact.\n**Virtual Private Cloud:** Virtual machine instances running in the us-east5-c zone were unable to reach the network. Services were partially unavailable from the impacted zone. Customers wherever applicable were able to fail over workloads to different Cloud zones."
     },
     {
+      "provider": "AWS",
+      "name": "RDS Performance Issues - AP-SOUTHEAST-1",
+      "date": "2025-03-25",
+      "timestamp": "2025-03-25T18:34:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Increased latency and intermittent errors for RDS in AP-SOUTHEAST-1 region"
+    },
+    {
+      "provider": "Azure",
+      "name": "Azure AD - Degraded Performance",
+      "date": "2025-03-20",
+      "timestamp": "2025-03-20T18:18:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance degradation affecting Azure AD in West US 2"
+    },
+    {
+      "provider": "DigitalOcean",
+      "name": "Spaces Issues - SFO3",
+      "date": "2025-03-18",
+      "timestamp": "2025-03-18T15:02:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance issues affecting Spaces in SFO3 region"
+    },
+    {
+      "provider": "AWS",
+      "name": "Lambda Performance Issues - AP-NORTHEAST-1",
+      "date": "2025-03-12",
+      "timestamp": "2025-03-12T19:41:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Increased latency and intermittent errors for Lambda in AP-NORTHEAST-1 region"
+    },
+    {
+      "provider": "Oracle Cloud",
+      "name": "Container Engine Performance Degradation",
+      "date": "2025-03-10",
+      "timestamp": "2025-03-10T14:33:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Elevated latency for Container Engine services in AP-TOKYO-1"
+    },
+    {
+      "provider": "Azure",
+      "name": "App Service - Service Outage",
+      "date": "2025-03-05",
+      "timestamp": "2025-03-05T19:29:00Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "Service unavailability affecting App Service in Southeast Asia"
+    },
+    {
       "provider": "Google Cloud",
       "name": "Apigee customers may experience unable to login to Admin UI portal.",
       "date": "2025-03-04",
@@ -2879,6 +3376,33 @@
       "impact": "low",
       "status": "resolved",
       "description": "The issue with Apigee Hybrid, Apigee Edge Public Cloud, Apigee has been resolved for all affected users as of Tuesday, 2025-03-04 13:30 US/Pacific.\nFrom preliminary analysis root cause appears to be due certificate expiration.\nWe thank you for your patience while we worked on resolving the issue."
+    },
+    {
+      "provider": "AWS",
+      "name": "DynamoDB Service Disruption - US-EAST-1",
+      "date": "2025-03-01",
+      "timestamp": "2025-03-01T08:48:00Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "Elevated error rates and service unavailability for DynamoDB in US-EAST-1 region"
+    },
+    {
+      "provider": "DigitalOcean",
+      "name": "Droplets Issues - LON1",
+      "date": "2025-02-28",
+      "timestamp": "2025-02-28T16:15:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance issues affecting Droplets in LON1 region"
+    },
+    {
+      "provider": "Azure",
+      "name": "Cosmos DB - Degraded Performance",
+      "date": "2025-02-20",
+      "timestamp": "2025-02-20T10:40:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance degradation affecting Cosmos DB in West Europe"
     },
     {
       "provider": "Google Cloud",
@@ -2899,6 +3423,15 @@
       "description": "# Mini Incident Report\nWe apologize for the inconvenience this service disruption/outage may have caused. We would like to provide some information about this incident below. Please note, this information is based on our best knowledge at the time of posting and is subject to change as our investigation continues. If you have experienced impact outside of what is listed below, please reach out to Google Cloud Support using https://cloud.google.com/support.\n(All Times US/Pacific)\nIncident Start: 18 February 2025, 14:42\nIncident End: 18 February 2025, 18:40\nDuration: 3 hours 58 minutes\nAffected Services and Features:\n* Chronicle Security\n* Chronicle SOAR\nRegions/Zones: Global\nDescription:\nStarting on 18 February 2025 14:42 US/Pacific, Chronicle Security and Chronicle SOAR experienced an issue where customers encountered the error message \"An error occurred while loading dashboards\" when attempting to access dashboards in Google Cloud Security for a duration of 3 hours 58 minutes. From preliminary analysis, the root cause of the issue is related to a revocation of associated internal looker licenses - all revoked licenses were restored to mitigate an issue.\nCustomer Impact:\nCustomers encountered an error message \"An error occurred while loading dashboards\" when attempting to access certain security dashboards in Google Cloud."
     },
     {
+      "provider": "AWS",
+      "name": "CloudFront Performance Issues - US-WEST-2",
+      "date": "2025-02-18",
+      "timestamp": "2025-02-18T09:55:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Increased latency and intermittent errors for CloudFront in US-WEST-2 region"
+    },
+    {
       "provider": "Google Cloud",
       "name": "Vertex AI Search for commerce customers may observe 100% error rate for certain IPs.",
       "date": "2025-02-16",
@@ -2908,6 +3441,15 @@
       "description": "The issue with Vertex AI Search, Recommendation AI has been resolved for all affected users as of Sunday, 2025-02-16 07:21 US/Pacific.\nWe thank you for your patience while we worked on resolving the issue."
     },
     {
+      "provider": "Oracle Cloud",
+      "name": "Compute Performance Degradation",
+      "date": "2025-02-15",
+      "timestamp": "2025-02-15T15:50:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Elevated latency for Compute services in US-ASHBURN-1"
+    },
+    {
       "provider": "Google Cloud",
       "name": "Chronicle Security experienced issues related to feed based ingestion in europe-west2",
       "date": "2025-02-13",
@@ -2915,6 +3457,33 @@
       "impact": "low",
       "status": "resolved",
       "description": "The issue with Chronicle Security has been resolved for all affected users as of Thursday, 2025-02-13 21:38 US/Pacific.\nWe thank you for your patience while we worked on resolving the issue."
+    },
+    {
+      "provider": "DigitalOcean",
+      "name": "Load Balancers Issues - AMS3",
+      "date": "2025-02-10",
+      "timestamp": "2025-02-10T09:28:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance issues affecting Load Balancers in AMS3 region"
+    },
+    {
+      "provider": "Azure",
+      "name": "Functions - Degraded Performance",
+      "date": "2025-02-08",
+      "timestamp": "2025-02-08T11:51:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance degradation affecting Functions in North Europe"
+    },
+    {
+      "provider": "AWS",
+      "name": "Route53 Performance Issues - EU-WEST-1",
+      "date": "2025-02-05",
+      "timestamp": "2025-02-05T10:02:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Increased latency and intermittent errors for Route53 in EU-WEST-1 region"
     },
     {
       "provider": "Google Cloud",
@@ -2962,6 +3531,24 @@
       "description": "# Incident Report\n## Summary\nOn Friday, 24 January 2025, AppSheet customers were unable to load AppSheet apps with the app editor or the app load page due to ‘500’ errors and timeouts. Around 60% of the requests were impacted in us-east4 and europe-west4 for a duration of 1 hour and 50 minutes.\nWe sincerely apologize to our Google Cloud customers for the disruption you experienced.\n## Root Cause\nA database schema migration in production triggered a cascading incident. The migration caused failures and timeouts on the primary database, disrupting most AppSheet operations and preventing apps loading for users in us-east4 and europe-west4. The sustained outage occurred due to a surge of retries, overloading the secondary authentication database and rendering it completely unresponsive for requests to the affected regions. The authentication database is responsible for storing user authentication tokens.\nTraffic was migrated to the us-central1 and us-west1 regions, after which issues pertaining to user auth tokens were resolved.\nHowever, this triggered an increase in load on our service for validating users’ Workspace license entitlements, due to that information no longer being available in cache. The request rate went up significantly, triggering aggressive load shedding, resulting in elevated latency for 95% of the traffic. This further aggravated latency after traffic migration to us-central1 and us-west1 was performed.\n## Remediation and Prevention\nGoogle engineers were alerted to the outage via an automated alert on 24 January 2025 09:42 US/Pacific and immediately started an investigation. To mitigate the impact, engineers redirected the traffic from us-east4 and europe-west4, to us-central1 and us-west1.\nThe resultant load shedding that occurred on the licensing server recovered by 11:20 US/Pacific, once we restored our authentication database and gradually reverted traffic to us-east4 and europe-west4.\nGoogle is committed to preventing a repeat of this issue in the future and is completing the following actions: - Improve alerting and monitoring of on license server traffic to reduce impact on latencies when traffic migration happens. - Gradually reduce dependency on licensing servers to avoid failures arising from either increased traffic, or unavailability of licensing servers. - We are reviewing measures to increase the stability of our authentication database, to ensure optimal handling of any surge in requests.\n## Detailed Description of Impact\nOn Friday, 24 January 2025, from 09:30 to 11:20 US/Pacific, approximately 60% of the AppSheet requests in us-east4 and europe-west4 may have failed. - Affected customers were unable to load AppSheet apps with the app editor or the app load page. - Affected customers experienced elevated ‘500’ errors and timeouts. - Some customers may also have observed intermittent latency."
     },
     {
+      "provider": "AWS",
+      "name": "ECS Performance Issues - EU-CENTRAL-1",
+      "date": "2025-01-22",
+      "timestamp": "2025-01-22T11:09:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Increased latency and intermittent errors for ECS in EU-CENTRAL-1 region"
+    },
+    {
+      "provider": "Azure",
+      "name": "SQL Database - Degraded Performance",
+      "date": "2025-01-18",
+      "timestamp": "2025-01-18T12:02:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance degradation affecting SQL Database in East US"
+    },
+    {
       "provider": "Google Cloud",
       "name": "Chronicle Security experienced elevated timeout errors across US regions.",
       "date": "2025-01-15",
@@ -2971,6 +3558,24 @@
       "description": "The issue with Chronicle Security has been resolved for all affected users as of Wednesday, 2025-01-15 15:30 US/Pacific.\nWe thank you for your patience while we worked on resolving the issue."
     },
     {
+      "provider": "DigitalOcean",
+      "name": "Managed Databases Issues - SGP1",
+      "date": "2025-01-15",
+      "timestamp": "2025-01-15T10:41:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Performance issues affecting Managed Databases in SGP1 region"
+    },
+    {
+      "provider": "Oracle Cloud",
+      "name": "Object Storage Performance Degradation",
+      "date": "2025-01-12",
+      "timestamp": "2025-01-12T16:07:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Elevated latency for Object Storage services in US-PHOENIX-1"
+    },
+    {
       "provider": "Google Cloud",
       "name": "Vertex Gemini API customers are experiencing elevated errors on Gemini 1.5 Flash 002 model",
       "date": "2025-01-10",
@@ -2978,6 +3583,15 @@
       "impact": "low",
       "status": "resolved",
       "description": "The issue with Vertex Gemini API has been resolved for all affected projects as of Monday, 2025-01-13 06:16 US/Pacific.\nWe thank you for your patience while we worked on resolving the issue."
+    },
+    {
+      "provider": "AWS",
+      "name": "EKS Performance Issues - AP-SOUTHEAST-1",
+      "date": "2025-01-10",
+      "timestamp": "2025-01-10T12:16:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Increased latency and intermittent errors for EKS in AP-SOUTHEAST-1 region"
     },
     {
       "provider": "Google Cloud",
@@ -3032,6 +3646,24 @@
       "impact": "low",
       "status": "resolved",
       "description": "The issue with Google Cloud Console, Google Cloud Support has been resolved for all affected users as of Monday, 2025-01-06 11:45 US/Pacific.\nOnly a few chat instances were impacted during the incident.\nWe thank you for your patience while we worked on resolving the issue."
+    },
+    {
+      "provider": "Azure",
+      "name": "Container Instances - Service Outage",
+      "date": "2025-01-05",
+      "timestamp": "2025-01-05T13:13:00Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "Service unavailability affecting Container Instances in West US 2"
+    },
+    {
+      "provider": "AWS",
+      "name": "API Gateway Service Disruption - AP-NORTHEAST-1",
+      "date": "2025-01-03",
+      "timestamp": "2025-01-03T13:23:00Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "Elevated error rates and service unavailability for API Gateway in AP-NORTHEAST-1 region"
     }
   ]
 }

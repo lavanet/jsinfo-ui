@@ -23,10 +23,11 @@ interface CloudIncident {
 }
 
 // Calculate service statistics from real cloud incident data
-const calculateServiceStats = (): ServiceStats[] => {
+const calculateServiceStats = (months: number = 3): ServiceStats[] => {
   const incidents = cloudIncidentsData.incidents as CloudIncident[];
-  const ninetyDaysAgo = new Date();
-  ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90); // Last 90 days (3 months)
+  const today = new Date();
+  const startDate = new Date(today);
+  startDate.setMonth(startDate.getMonth() - months);
   
   const providers = ['Lava Network', 'Cloudflare', 'Google Cloud', 'AWS', 'Azure', 'Vercel', 'DigitalOcean', 'Oracle Cloud'];
   const colors = ['text-green-500', 'text-red-500', 'text-blue-500', 'text-amber-500', 'text-purple-500', 'text-cyan-500', 'text-teal-500', 'text-orange-600'];
@@ -42,10 +43,10 @@ const calculateServiceStats = (): ServiceStats[] => {
       };
     }
     
-    // Filter incidents for this provider in the last 90 days
+    // Filter incidents for this provider in the selected period
     const providerIncidents = incidents.filter(inc => {
       const incDate = new Date(inc.date);
-      return inc.provider === provider && incDate >= ninetyDaysAgo;
+      return inc.provider === provider && incDate >= startDate;
     });
     
     // Calculate uptime (each incident reduces uptime by 2% for most, 0.5% for Cloudflare due to high volume)
@@ -87,9 +88,15 @@ const calculateServiceStats = (): ServiceStats[] => {
   });
 };
 
-const servicesData = calculateServiceStats();
-
-export default function IncidentStats() {
+export default function IncidentStats({ months = 3 }: { months?: number }) {
+  const servicesData = React.useMemo(() => calculateServiceStats(months), [months]);
+  
+  const getPeriodLabel = (months: number) => {
+    if (months === 12) return '1 Year';
+    if (months === 6) return '6 Months';
+    return '3 Months';
+  };
+  
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       {servicesData.map((service) => (
@@ -108,7 +115,7 @@ export default function IncidentStats() {
 
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">Uptime (3 months)</span>
+              <span className="text-sm text-muted-foreground">Uptime ({getPeriodLabel(months)})</span>
               <span className={`font-bold ${service.color}`}>
                 {service.uptime}%
               </span>
