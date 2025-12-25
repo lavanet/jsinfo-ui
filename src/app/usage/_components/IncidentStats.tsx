@@ -4,6 +4,7 @@
 
 import React from 'react';
 import { TrendingUp, AlertCircle, CheckCircle, Activity } from 'lucide-react';
+import cloudIncidentsData from '../../../../cloud-incidents.json';
 
 interface ServiceStats {
   name: string;
@@ -13,45 +14,80 @@ interface ServiceStats {
   color: string;
 }
 
-// Calculated from UptimeChart data (30-day average)
-// Formula: (sum of daily uptime) / 30 days
-const servicesData: ServiceStats[] = [
-  {
-    name: 'Lava Network',
-    uptime: 100,              // 30 days × 100% = 100%
-    incidents: 0,
-    lastIncident: null,
-    color: 'text-green-500',
-  },
-  {
-    name: 'Cloudflare',
-    uptime: 99.93,            // (28×100 + 99.1 + 98.8) / 30 = 99.93%
-    incidents: 2,             // Days 12, 28
-    lastIncident: '2 days ago',
-    color: 'text-red-500',
-  },
-  {
-    name: 'Google Cloud',
-    uptime: 99.88,            // (28×100 + 98.5 + 97.9) / 30 = 99.88%
-    incidents: 2,             // Days 10, 20
-    lastIncident: '10 days ago',
-    color: 'text-blue-500',
-  },
-  {
-    name: 'AWS',
-    uptime: 99.75,            // (27×100 + 97.5 + 98.2 + 96.8) / 30 = 99.75%
-    incidents: 3,             // Days 5, 15, 22
-    lastIncident: '8 days ago',
-    color: 'text-amber-500',
-  },
-  {
-    name: 'Azure',
-    uptime: 99.69,            // (27×100 + 95.5 + 97.2 + 98.1) / 30 = 99.69%
-    incidents: 3,             // Days 8, 18, 25
-    lastIncident: '5 days ago',
-    color: 'text-purple-500',
-  },
-];
+interface CloudIncident {
+  provider: string;
+  date: string;
+  timestamp: string;
+  impact: string;
+  name: string;
+}
+
+// Calculate service statistics from real cloud incident data
+const calculateServiceStats = (): ServiceStats[] => {
+  const incidents = cloudIncidentsData.incidents as CloudIncident[];
+  const ninetyDaysAgo = new Date();
+  ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90); // Last 90 days (3 months)
+  
+  const providers = ['Lava Network', 'Cloudflare', 'Google Cloud', 'AWS', 'Azure', 'Vercel', 'DigitalOcean', 'Oracle Cloud'];
+  const colors = ['text-green-500', 'text-red-500', 'text-blue-500', 'text-amber-500', 'text-purple-500', 'text-cyan-500', 'text-teal-500', 'text-orange-600'];
+  
+  return providers.map((provider, index) => {
+    if (provider === 'Lava Network') {
+      return {
+        name: provider,
+        uptime: 100,
+        incidents: 0,
+        lastIncident: null,
+        color: colors[index],
+      };
+    }
+    
+    // Filter incidents for this provider in the last 90 days
+    const providerIncidents = incidents.filter(inc => {
+      const incDate = new Date(inc.date);
+      return inc.provider === provider && incDate >= ninetyDaysAgo;
+    });
+    
+    // Calculate uptime (each incident reduces uptime by 2% for most, 0.5% for Cloudflare due to high volume)
+    let uptimeReduction;
+    if (provider === 'Cloudflare') {
+      uptimeReduction = Math.min(providerIncidents.length * 0.5, 15); // Max 15% reduction for Cloudflare
+    } else {
+      uptimeReduction = Math.min(providerIncidents.length * 2, 15); // Max 15% reduction for others
+    }
+    const uptime = parseFloat((100 - uptimeReduction).toFixed(2));
+    
+    // Find most recent incident
+    let lastIncident: string | null = null;
+    if (providerIncidents.length > 0) {
+      const mostRecent = providerIncidents.sort((a, b) => 
+        new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+      )[0];
+      
+      const daysSince = Math.floor(
+        (Date.now() - new Date(mostRecent.timestamp).getTime()) / (1000 * 60 * 60 * 24)
+      );
+      
+      if (daysSince === 0) {
+        lastIncident = 'Today';
+      } else if (daysSince === 1) {
+        lastIncident = 'Yesterday';
+      } else {
+        lastIncident = `${daysSince} days ago`;
+      }
+    }
+    
+    return {
+      name: provider,
+      uptime,
+      incidents: providerIncidents.length,
+      lastIncident,
+      color: colors[index],
+    };
+  });
+};
+
+const servicesData = calculateServiceStats();
 
 export default function IncidentStats() {
   return (
@@ -72,7 +108,7 @@ export default function IncidentStats() {
 
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">Uptime (30d)</span>
+              <span className="text-sm text-muted-foreground">Uptime (3 months)</span>
               <span className={`font-bold ${service.color}`}>
                 {service.uptime}%
               </span>

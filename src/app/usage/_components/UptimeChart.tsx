@@ -4,9 +4,10 @@
 
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import incidentsData from '../../../../all-blockchain-incidents.json';
+import blockchainIncidentsData from '../../../../all-blockchain-incidents.json';
+import cloudIncidentsData from '../../../../cloud-incidents.json';
 
-interface Incident {
+interface BlockchainIncident {
   provider: string;
   date: string;
   timestamp: string;
@@ -15,8 +16,18 @@ interface Incident {
   name: string;
 }
 
+interface CloudIncident {
+  provider: string;
+  date: string;
+  timestamp: string;
+  impact: string;
+  name: string;
+  status?: string;
+  description?: string;
+}
+
 // Extract blockchain name from incident name or chain field
-const extractBlockchainName = (incident: Incident): string => {
+const extractBlockchainName = (incident: BlockchainIncident): string => {
   const name = incident.name.toLowerCase();
   const chain = incident.chain;
   
@@ -59,16 +70,16 @@ const extractBlockchainName = (incident: Incident): string => {
 
 // Process blockchain incidents from the JSON file
 const processBlockchainIncidents = () => {
-  const incidents = incidentsData.incidents as Incident[];
+  const incidents = blockchainIncidentsData.incidents as BlockchainIncident[];
   const incidentsByDate: { [date: string]: { count: number; chains: Set<string> } } = {};
   
-  // Only process incidents from the last 30 days
-  const thirtyDaysAgo = new Date();
-  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+  // Process incidents from the last 90 days (3 months)
+  const ninetyDaysAgo = new Date();
+  ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
   
   incidents.forEach(incident => {
     const incidentDate = new Date(incident.date);
-    if (incidentDate >= thirtyDaysAgo) {
+    if (incidentDate >= ninetyDaysAgo) {
       const dateKey = incident.date;
       if (!incidentsByDate[dateKey]) {
         incidentsByDate[dateKey] = { count: 0, chains: new Set<string>() };
@@ -84,14 +95,50 @@ const processBlockchainIncidents = () => {
   return incidentsByDate;
 };
 
-// Mock data representing uptime percentage over time
+// Process cloud provider incidents
+const processCloudIncidents = () => {
+  const incidents = cloudIncidentsData.incidents as CloudIncident[];
+  const incidentsByProvider: { [provider: string]: { [date: string]: number } } = {
+    'AWS': {},
+    'Google Cloud': {},
+    'Azure': {},
+    'Cloudflare': {},
+    'DigitalOcean': {},
+    'Vercel': {},
+    'Oracle Cloud': {}
+  };
+  
+  // Process incidents from the last 90 days (3 months)
+  const ninetyDaysAgo = new Date();
+  ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
+  
+  incidents.forEach(incident => {
+    const incidentDate = new Date(incident.date);
+    if (incidentDate >= ninetyDaysAgo) {
+      const dateKey = incident.date;
+      const provider = incident.provider;
+      
+      if (incidentsByProvider[provider]) {
+        if (!incidentsByProvider[provider][dateKey]) {
+          incidentsByProvider[provider][dateKey] = 0;
+        }
+        incidentsByProvider[provider][dateKey]++;
+      }
+    }
+  });
+  
+  return incidentsByProvider;
+};
+
+// Generate uptime data for the chart
 const generateUptimeData = () => {
   const data = [];
   const blockchainIncidents = processBlockchainIncidents();
+  const cloudIncidents = processCloudIncidents();
   const startDate = new Date();
-  startDate.setDate(startDate.getDate() - 30); // Last 30 days
+  startDate.setDate(startDate.getDate() - 90); // Last 90 days (3 months)
 
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 90; i++) {
     const date = new Date(startDate);
     date.setDate(date.getDate() + i);
     const dateStr = date.toISOString().split('T')[0];
@@ -109,8 +156,8 @@ const generateUptimeData = () => {
     const dayIncidents = blockchainIncidents[dateStr];
     if (dayIncidents) {
       // Calculate uptime degradation based on incident count and severity
-      const impactFactor = Math.min(dayIncidents.count * 0.8, 5); // Max 5% impact per day
-      dataPoint['Blockchain RPCs'] = Math.max(95, 100 - impactFactor);
+      const impactFactor = Math.min(dayIncidents.count * 0.6, 10); // Max 10% impact per day
+      dataPoint['Blockchain RPCs'] = Math.max(85, 100 - impactFactor);
       dataPoint['affectedChains'] = Array.from(dayIncidents.chains).join(', ');
       dataPoint['incidentCount'] = dayIncidents.count;
     } else {
@@ -119,17 +166,33 @@ const generateUptimeData = () => {
       dataPoint['incidentCount'] = 0;
     }
 
-    // AWS - Occasional incidents
-    dataPoint['AWS'] = i === 5 ? 97.5 : i === 15 ? 98.2 : i === 22 ? 96.8 : 100;
+    // AWS - Based on real incidents
+    const awsIncidents = cloudIncidents['AWS'][dateStr] || 0;
+    dataPoint['AWS'] = awsIncidents > 0 ? Math.max(85, 100 - (awsIncidents * 2)) : 100;
 
-    // Google Cloud - Rare incidents
-    dataPoint['Google Cloud'] = i === 10 ? 98.5 : i === 20 ? 97.9 : 100;
+    // Google Cloud - Based on real incidents
+    const gcpIncidents = cloudIncidents['Google Cloud'][dateStr] || 0;
+    dataPoint['Google Cloud'] = gcpIncidents > 0 ? Math.max(85, 100 - (gcpIncidents * 2)) : 100;
 
-    // Azure - Some incidents
-    dataPoint['Azure'] = i === 8 ? 95.5 : i === 18 ? 97.2 : i === 25 ? 98.1 : 100;
+    // Azure - Based on real incidents
+    const azureIncidents = cloudIncidents['Azure'][dateStr] || 0;
+    dataPoint['Azure'] = azureIncidents > 0 ? Math.max(85, 100 - (azureIncidents * 2)) : 100;
 
-    // Cloudflare - Minor incidents
-    dataPoint['Cloudflare'] = i === 12 ? 99.1 : i === 28 ? 98.8 : 100;
+    // Cloudflare - Based on real incidents
+    const cloudflareIncidents = cloudIncidents['Cloudflare'][dateStr] || 0;
+    dataPoint['Cloudflare'] = cloudflareIncidents > 0 ? Math.max(85, 100 - (cloudflareIncidents * 0.5)) : 100;
+
+    // Vercel - Based on real incidents
+    const vercelIncidents = cloudIncidents['Vercel'][dateStr] || 0;
+    dataPoint['Vercel'] = vercelIncidents > 0 ? Math.max(85, 100 - (vercelIncidents * 2)) : 100;
+
+    // DigitalOcean - Based on real incidents
+    const doIncidents = cloudIncidents['DigitalOcean'][dateStr] || 0;
+    dataPoint['DigitalOcean'] = doIncidents > 0 ? Math.max(85, 100 - (doIncidents * 2)) : 100;
+
+    // Oracle Cloud - Based on real incidents
+    const oracleIncidents = cloudIncidents['Oracle Cloud'][dateStr] || 0;
+    dataPoint['Oracle Cloud'] = oracleIncidents > 0 ? Math.max(85, 100 - (oracleIncidents * 2)) : 100;
 
     data.push(dataPoint);
   }
@@ -191,57 +254,89 @@ export default function UptimeChart() {
             tick={{ fill: 'currentColor' }}
           />
           <YAxis 
-            domain={[95, 100]}
+            domain={[85, 100]}
             className="text-xs"
             tick={{ fill: 'currentColor' }}
             label={{ value: 'Uptime %', angle: -90, position: 'insideLeft' }}
           />
           <Tooltip content={<CustomTooltip />} />
           <Legend />
-          <Line
-            type="monotone"
-            dataKey="Lava Network"
-            stroke="#10b981"
-            strokeWidth={3}
-            dot={{ fill: '#10b981', r: 4 }}
-            activeDot={{ r: 6 }}
-          />
-          <Line
-            type="monotone"
-            dataKey="Blockchain RPCs"
-            stroke="#ec4899"
-            strokeWidth={2.5}
-            dot={{ fill: '#ec4899', r: 3.5 }}
-            activeDot={{ r: 5 }}
-            strokeDasharray="5 5"
-          />
+          {/* Other providers first - thinner lines */}
           <Line
             type="monotone"
             dataKey="AWS"
             stroke="#f59e0b"
-            strokeWidth={2}
-            dot={{ fill: '#f59e0b', r: 3 }}
+            strokeWidth={1.5}
+            dot={{ fill: '#f59e0b', r: 2.5 }}
+            strokeOpacity={0.8}
           />
           <Line
             type="monotone"
             dataKey="Google Cloud"
             stroke="#3b82f6"
-            strokeWidth={2}
-            dot={{ fill: '#3b82f6', r: 3 }}
+            strokeWidth={1.5}
+            dot={{ fill: '#3b82f6', r: 2.5 }}
+            strokeOpacity={0.8}
           />
           <Line
             type="monotone"
             dataKey="Azure"
             stroke="#8b5cf6"
-            strokeWidth={2}
-            dot={{ fill: '#8b5cf6', r: 3 }}
+            strokeWidth={1.5}
+            dot={{ fill: '#8b5cf6', r: 2.5 }}
+            strokeOpacity={0.8}
           />
           <Line
             type="monotone"
             dataKey="Cloudflare"
             stroke="#ef4444"
+            strokeWidth={1.5}
+            dot={{ fill: '#ef4444', r: 2.5 }}
+            strokeOpacity={0.8}
+          />
+          <Line
+            type="monotone"
+            dataKey="Vercel"
+            stroke="#06b6d4"
+            strokeWidth={1.5}
+            dot={{ fill: '#06b6d4', r: 2.5 }}
+            strokeOpacity={0.8}
+          />
+          <Line
+            type="monotone"
+            dataKey="DigitalOcean"
+            stroke="#14b8a6"
+            strokeWidth={1.5}
+            dot={{ fill: '#14b8a6', r: 2.5 }}
+            strokeOpacity={0.8}
+          />
+          <Line
+            type="monotone"
+            dataKey="Oracle Cloud"
+            stroke="#ea580c"
+            strokeWidth={1.5}
+            dot={{ fill: '#ea580c', r: 2.5 }}
+            strokeOpacity={0.8}
+          />
+          <Line
+            type="monotone"
+            dataKey="Blockchain RPCs"
+            stroke="#ec4899"
             strokeWidth={2}
-            dot={{ fill: '#ef4444', r: 3 }}
+            dot={{ fill: '#ec4899', r: 3 }}
+            activeDot={{ r: 5 }}
+            strokeDasharray="5 5"
+            strokeOpacity={0.9}
+          />
+          {/* Lava Network LAST - thickest line on top */}
+          <Line
+            type="monotone"
+            dataKey="Lava Network"
+            stroke="#10b981"
+            strokeWidth={4}
+            dot={{ fill: '#10b981', r: 5, strokeWidth: 2, stroke: '#fff' }}
+            activeDot={{ r: 7, strokeWidth: 2 }}
+            strokeOpacity={1}
           />
         </LineChart>
       </ResponsiveContainer>

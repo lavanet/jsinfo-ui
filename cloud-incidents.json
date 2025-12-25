@@ -1,0 +1,3037 @@
+{
+  "generated_at": "2025-12-25T20:22:10.795Z",
+  "total_incidents": 336,
+  "providers": {
+    "cloudflare": 250,
+    "google_cloud": 22,
+    "aws": 8,
+    "azure": 6,
+    "vercel": 50
+  },
+  "incidents": [
+    {
+      "provider": "Cloudflare",
+      "name": "Incorrect IP Geolocation on Cloudflare Dashboard",
+      "date": "2025-12-23",
+      "timestamp": "2025-12-23T10:42:35.297Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Incorrect IP Geolocation on Cloudflare Dashboard",
+      "date": "2025-12-23",
+      "timestamp": "2025-12-23T10:42:35.297Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Incorrect IP Geolocation on Cloudflare Dashboard",
+      "date": "2025-12-23",
+      "timestamp": "2025-12-23T10:42:35.297Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Incorrect IP Geolocation on Cloudflare Dashboard",
+      "date": "2025-12-23",
+      "timestamp": "2025-12-23T10:42:35.297Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Incorrect IP Geolocation on Cloudflare Dashboard",
+      "date": "2025-12-23",
+      "timestamp": "2025-12-23T10:42:35.297Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Route Leak in South America",
+      "date": "2025-12-23",
+      "timestamp": "2025-12-23T05:54:13.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Route Leak in South America",
+      "date": "2025-12-23",
+      "timestamp": "2025-12-23T05:54:13.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Route Leak in South America",
+      "date": "2025-12-23",
+      "timestamp": "2025-12-23T05:54:13.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Route Leak in South America",
+      "date": "2025-12-23",
+      "timestamp": "2025-12-23T05:54:13.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Route Leak in South America",
+      "date": "2025-12-23",
+      "timestamp": "2025-12-23T05:54:13.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Workers AI experiencing degraded availability in some models",
+      "date": "2025-12-22",
+      "timestamp": "2025-12-22T14:59:58.297Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Workers AI experiencing degraded availability in some models",
+      "date": "2025-12-22",
+      "timestamp": "2025-12-22T14:59:58.297Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Workers AI experiencing degraded availability in some models",
+      "date": "2025-12-22",
+      "timestamp": "2025-12-22T14:59:58.297Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Workers AI experiencing degraded availability in some models",
+      "date": "2025-12-22",
+      "timestamp": "2025-12-22T14:59:58.297Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Workers AI experiencing degraded availability in some models",
+      "date": "2025-12-22",
+      "timestamp": "2025-12-22T14:59:58.297Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Elevated number of 5xx errors in BOM",
+      "date": "2025-12-22",
+      "timestamp": "2025-12-22T06:00:00.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Between 06:16-06:33 UTC, customers reaching Mumbai, IN, may have experienced an elevated number of 5xx errors and increased latency due to congestion."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Elevated number of 5xx errors in BOM",
+      "date": "2025-12-22",
+      "timestamp": "2025-12-22T06:00:00.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Between 06:16-06:33 UTC, customers reaching Mumbai, IN, may have experienced an elevated number of 5xx errors and increased latency due to congestion."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Elevated number of 5xx errors in BOM",
+      "date": "2025-12-22",
+      "timestamp": "2025-12-22T06:00:00.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Between 06:16-06:33 UTC, customers reaching Mumbai, IN, may have experienced an elevated number of 5xx errors and increased latency due to congestion."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Elevated number of 5xx errors in BOM",
+      "date": "2025-12-22",
+      "timestamp": "2025-12-22T06:00:00.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Between 06:16-06:33 UTC, customers reaching Mumbai, IN, may have experienced an elevated number of 5xx errors and increased latency due to congestion."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Elevated number of 5xx errors in BOM",
+      "date": "2025-12-22",
+      "timestamp": "2025-12-22T06:00:00.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Between 06:16-06:33 UTC, customers reaching Mumbai, IN, may have experienced an elevated number of 5xx errors and increased latency due to congestion."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Degradation in time to acquire Containers",
+      "date": "2025-12-19",
+      "timestamp": "2025-12-19T17:23:24.082Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Degradation in time to acquire Containers",
+      "date": "2025-12-19",
+      "timestamp": "2025-12-19T17:23:24.082Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Degradation in time to acquire Containers",
+      "date": "2025-12-19",
+      "timestamp": "2025-12-19T17:23:24.082Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Degradation in time to acquire Containers",
+      "date": "2025-12-19",
+      "timestamp": "2025-12-19T17:23:24.082Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Degradation in time to acquire Containers",
+      "date": "2025-12-19",
+      "timestamp": "2025-12-19T17:23:24.082Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues",
+      "date": "2025-12-19",
+      "timestamp": "2025-12-19T15:06:24.000Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues",
+      "date": "2025-12-19",
+      "timestamp": "2025-12-19T15:06:24.000Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues",
+      "date": "2025-12-19",
+      "timestamp": "2025-12-19T15:06:24.000Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues",
+      "date": "2025-12-19",
+      "timestamp": "2025-12-19T15:06:24.000Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues",
+      "date": "2025-12-19",
+      "timestamp": "2025-12-19T15:06:24.000Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues",
+      "date": "2025-12-19",
+      "timestamp": "2025-12-19T11:19:04.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues",
+      "date": "2025-12-19",
+      "timestamp": "2025-12-19T11:19:04.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues",
+      "date": "2025-12-19",
+      "timestamp": "2025-12-19T11:19:04.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues",
+      "date": "2025-12-19",
+      "timestamp": "2025-12-19T11:19:04.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues",
+      "date": "2025-12-19",
+      "timestamp": "2025-12-19T11:19:04.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues in Haikou, China (HAK)",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T15:04:27.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues in Haikou, China (HAK)",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T15:04:27.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues in Haikou, China (HAK)",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T15:04:27.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues in Haikou, China (HAK)",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T15:04:27.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues in Haikou, China (HAK)",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T15:04:27.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "AWS",
+      "name": "Increased Error Rates - EC2 US-EAST-1",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T14:23:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Elevated error rates for EC2 API calls in US-EAST-1 region"
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Zero Trust: Gateway Issues",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T12:15:15.138Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Zero Trust: Gateway Issues",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T12:15:15.138Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Zero Trust: Gateway Issues",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T12:15:15.138Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Zero Trust: Gateway Issues",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T12:15:15.138Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Zero Trust: Gateway Issues",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T12:15:15.138Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Error Logging Issues",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T12:00:00.000Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "Customers using our Last Mile Insights / Network Error Logging feature will observe missing report data between 2025-12-18 11:00 and 11:50 UTC due to an outage impacting the report delivery pipeline."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Error Logging Issues",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T12:00:00.000Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "Customers using our Last Mile Insights / Network Error Logging feature will observe missing report data between 2025-12-18 11:00 and 11:50 UTC due to an outage impacting the report delivery pipeline."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Error Logging Issues",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T12:00:00.000Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "Customers using our Last Mile Insights / Network Error Logging feature will observe missing report data between 2025-12-18 11:00 and 11:50 UTC due to an outage impacting the report delivery pipeline."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Error Logging Issues",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T12:00:00.000Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "Customers using our Last Mile Insights / Network Error Logging feature will observe missing report data between 2025-12-18 11:00 and 11:50 UTC due to an outage impacting the report delivery pipeline."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Error Logging Issues",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T12:00:00.000Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "Customers using our Last Mile Insights / Network Error Logging feature will observe missing report data between 2025-12-18 11:00 and 11:50 UTC due to an outage impacting the report delivery pipeline."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Elevated number of 5xx errors in MAD",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T06:00:00.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Between 6:15-6:20 UTC, customers reaching Madrid, ES would have experienced an elevated number of 4xx/5xx errors and latency."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Elevated number of 5xx errors in MAD",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T06:00:00.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Between 6:15-6:20 UTC, customers reaching Madrid, ES would have experienced an elevated number of 4xx/5xx errors and latency."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Elevated number of 5xx errors in MAD",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T06:00:00.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Between 6:15-6:20 UTC, customers reaching Madrid, ES would have experienced an elevated number of 4xx/5xx errors and latency."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Elevated number of 5xx errors in MAD",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T06:00:00.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Between 6:15-6:20 UTC, customers reaching Madrid, ES would have experienced an elevated number of 4xx/5xx errors and latency."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Elevated number of 5xx errors in MAD",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T06:00:00.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Between 6:15-6:20 UTC, customers reaching Madrid, ES would have experienced an elevated number of 4xx/5xx errors and latency."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Congestion",
+      "date": "2025-12-17",
+      "timestamp": "2025-12-17T19:55:39.695Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Congestion",
+      "date": "2025-12-17",
+      "timestamp": "2025-12-17T19:55:39.695Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Congestion",
+      "date": "2025-12-17",
+      "timestamp": "2025-12-17T19:55:39.695Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Congestion",
+      "date": "2025-12-17",
+      "timestamp": "2025-12-17T19:55:39.695Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Congestion",
+      "date": "2025-12-17",
+      "timestamp": "2025-12-17T19:55:39.695Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Issues with DNS resolution in China",
+      "date": "2025-12-17",
+      "timestamp": "2025-12-17T12:14:27.629Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Issues with DNS resolution in China",
+      "date": "2025-12-17",
+      "timestamp": "2025-12-17T12:14:27.629Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Issues with DNS resolution in China",
+      "date": "2025-12-17",
+      "timestamp": "2025-12-17T12:14:27.629Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Issues with DNS resolution in China",
+      "date": "2025-12-17",
+      "timestamp": "2025-12-17T12:14:27.629Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Issues with DNS resolution in China",
+      "date": "2025-12-17",
+      "timestamp": "2025-12-17T12:14:27.629Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues in Dallas",
+      "date": "2025-12-17",
+      "timestamp": "2025-12-17T10:35:43.210Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues in Dallas",
+      "date": "2025-12-17",
+      "timestamp": "2025-12-17T10:35:43.210Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues in Dallas",
+      "date": "2025-12-17",
+      "timestamp": "2025-12-17T10:35:43.210Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues in Dallas",
+      "date": "2025-12-17",
+      "timestamp": "2025-12-17T10:35:43.210Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues in Dallas",
+      "date": "2025-12-17",
+      "timestamp": "2025-12-17T10:35:43.210Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Elevated number of 5xx errors in BKK",
+      "date": "2025-12-16",
+      "timestamp": "2025-12-16T14:30:00.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Between 14:36-14:44 UTC, customers reaching Bangkok, TH may have experienced an elevated number of 5xx errors."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Elevated number of 5xx errors in BKK",
+      "date": "2025-12-16",
+      "timestamp": "2025-12-16T14:30:00.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Between 14:36-14:44 UTC, customers reaching Bangkok, TH may have experienced an elevated number of 5xx errors."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Elevated number of 5xx errors in BKK",
+      "date": "2025-12-16",
+      "timestamp": "2025-12-16T14:30:00.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Between 14:36-14:44 UTC, customers reaching Bangkok, TH may have experienced an elevated number of 5xx errors."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Elevated number of 5xx errors in BKK",
+      "date": "2025-12-16",
+      "timestamp": "2025-12-16T14:30:00.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Between 14:36-14:44 UTC, customers reaching Bangkok, TH may have experienced an elevated number of 5xx errors."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Elevated number of 5xx errors in BKK",
+      "date": "2025-12-16",
+      "timestamp": "2025-12-16T14:30:00.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Between 14:36-14:44 UTC, customers reaching Bangkok, TH may have experienced an elevated number of 5xx errors."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cache Purging Delays in Western Europe",
+      "date": "2025-12-16",
+      "timestamp": "2025-12-16T12:28:17.435Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cache Purging Delays in Western Europe",
+      "date": "2025-12-16",
+      "timestamp": "2025-12-16T12:28:17.435Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cache Purging Delays in Western Europe",
+      "date": "2025-12-16",
+      "timestamp": "2025-12-16T12:28:17.435Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cache Purging Delays in Western Europe",
+      "date": "2025-12-16",
+      "timestamp": "2025-12-16T12:28:17.435Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cache Purging Delays in Western Europe",
+      "date": "2025-12-16",
+      "timestamp": "2025-12-16T12:28:17.435Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "GraphQL Issues",
+      "date": "2025-12-16",
+      "timestamp": "2025-12-16T11:09:18.308Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "GraphQL Issues",
+      "date": "2025-12-16",
+      "timestamp": "2025-12-16T11:09:18.308Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "GraphQL Issues",
+      "date": "2025-12-16",
+      "timestamp": "2025-12-16T11:09:18.308Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "GraphQL Issues",
+      "date": "2025-12-16",
+      "timestamp": "2025-12-16T11:09:18.308Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "GraphQL Issues",
+      "date": "2025-12-16",
+      "timestamp": "2025-12-16T11:09:18.308Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Increased Error Rates Accessing R2 from ENAM",
+      "date": "2025-12-16",
+      "timestamp": "2025-12-16T08:55:07.728Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Increased Error Rates Accessing R2 from ENAM",
+      "date": "2025-12-16",
+      "timestamp": "2025-12-16T08:55:07.728Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Increased Error Rates Accessing R2 from ENAM",
+      "date": "2025-12-16",
+      "timestamp": "2025-12-16T08:55:07.728Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Increased Error Rates Accessing R2 from ENAM",
+      "date": "2025-12-16",
+      "timestamp": "2025-12-16T08:55:07.728Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Increased Error Rates Accessing R2 from ENAM",
+      "date": "2025-12-16",
+      "timestamp": "2025-12-16T08:55:07.728Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Connectivity Degradation in Mumbai",
+      "date": "2025-12-15",
+      "timestamp": "2025-12-15T04:00:00.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Between 4:10 and 4:47 UTC today, 2025-12-15, customers may have observed network connectivity degradation for traffic through our Mumbai (BOM) facility."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Connectivity Degradation in Mumbai",
+      "date": "2025-12-15",
+      "timestamp": "2025-12-15T04:00:00.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Between 4:10 and 4:47 UTC today, 2025-12-15, customers may have observed network connectivity degradation for traffic through our Mumbai (BOM) facility."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Connectivity Degradation in Mumbai",
+      "date": "2025-12-15",
+      "timestamp": "2025-12-15T04:00:00.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Between 4:10 and 4:47 UTC today, 2025-12-15, customers may have observed network connectivity degradation for traffic through our Mumbai (BOM) facility."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Connectivity Degradation in Mumbai",
+      "date": "2025-12-15",
+      "timestamp": "2025-12-15T04:00:00.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Between 4:10 and 4:47 UTC today, 2025-12-15, customers may have observed network connectivity degradation for traffic through our Mumbai (BOM) facility."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Connectivity Degradation in Mumbai",
+      "date": "2025-12-15",
+      "timestamp": "2025-12-15T04:00:00.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Between 4:10 and 4:47 UTC today, 2025-12-15, customers may have observed network connectivity degradation for traffic through our Mumbai (BOM) facility."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Errors creating Support Center cases",
+      "date": "2025-12-12",
+      "timestamp": "2025-12-12T13:12:34.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Web Analytics and Speed insights data not recorded on some projects",
+      "date": "2025-12-12",
+      "timestamp": "2025-12-12T10:17:37.509Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Azure",
+      "name": "Virtual Machines - Deployment Issues",
+      "date": "2025-12-12",
+      "timestamp": "2025-12-12T10:15:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Some customers experienced issues deploying VMs in West Europe"
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cache Purging Delays in Eastern North America",
+      "date": "2025-12-11",
+      "timestamp": "2025-12-11T21:01:37.809Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident is now resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cache Purging Delays in Eastern North America",
+      "date": "2025-12-11",
+      "timestamp": "2025-12-11T21:01:37.809Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident is now resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cache Purging Delays in Eastern North America",
+      "date": "2025-12-11",
+      "timestamp": "2025-12-11T21:01:37.809Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident is now resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cache Purging Delays in Eastern North America",
+      "date": "2025-12-11",
+      "timestamp": "2025-12-11T21:01:37.809Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident is now resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cache Purging Delays in Eastern North America",
+      "date": "2025-12-11",
+      "timestamp": "2025-12-11T21:01:37.809Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident is now resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues in Brazil",
+      "date": "2025-12-11",
+      "timestamp": "2025-12-11T09:08:26.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues in Brazil",
+      "date": "2025-12-11",
+      "timestamp": "2025-12-11T09:08:26.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues in Brazil",
+      "date": "2025-12-11",
+      "timestamp": "2025-12-11T09:08:26.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues in Brazil",
+      "date": "2025-12-11",
+      "timestamp": "2025-12-11T09:08:26.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues in Brazil",
+      "date": "2025-12-11",
+      "timestamp": "2025-12-11T09:08:26.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Abuse form Issues",
+      "date": "2025-12-11",
+      "timestamp": "2025-12-11T08:56:38.405Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Abuse form Issues",
+      "date": "2025-12-11",
+      "timestamp": "2025-12-11T08:56:38.405Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Abuse form Issues",
+      "date": "2025-12-11",
+      "timestamp": "2025-12-11T08:56:38.405Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Abuse form Issues",
+      "date": "2025-12-11",
+      "timestamp": "2025-12-11T08:56:38.405Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Abuse form Issues",
+      "date": "2025-12-11",
+      "timestamp": "2025-12-11T08:56:38.405Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Elevated error rates across new deployments and Vercel API",
+      "date": "2025-12-10",
+      "timestamp": "2025-12-10T06:16:10.000Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "Vercel API errors have been resolved and dashboard access is restored across all regions.\n\nQueued deployments are recovering automatically, but failed deployments may need to be redeployed manually."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Pages build failure",
+      "date": "2025-12-09",
+      "timestamp": "2025-12-09T14:49:07.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Pages build failure",
+      "date": "2025-12-09",
+      "timestamp": "2025-12-09T14:49:07.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Pages build failure",
+      "date": "2025-12-09",
+      "timestamp": "2025-12-09T14:49:07.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Pages build failure",
+      "date": "2025-12-09",
+      "timestamp": "2025-12-09T14:49:07.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Pages build failure",
+      "date": "2025-12-09",
+      "timestamp": "2025-12-09T14:49:07.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Support Helpdesk Issues",
+      "date": "2025-12-09",
+      "timestamp": "2025-12-09T03:10:45.130Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Support Helpdesk Issues",
+      "date": "2025-12-09",
+      "timestamp": "2025-12-09T03:10:45.130Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Support Helpdesk Issues",
+      "date": "2025-12-09",
+      "timestamp": "2025-12-09T03:10:45.130Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Support Helpdesk Issues",
+      "date": "2025-12-09",
+      "timestamp": "2025-12-09T03:10:45.130Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Support Helpdesk Issues",
+      "date": "2025-12-09",
+      "timestamp": "2025-12-09T03:10:45.130Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Elevated errors creating deployments with Neon and Supabase integrations",
+      "date": "2025-12-09",
+      "timestamp": "2025-12-09T00:31:30.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Elevated errors loading Vercel Logs and Speed Insights",
+      "date": "2025-12-08",
+      "timestamp": "2025-12-08T21:38:00.000Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "We received reports of elevated errors loading Vercel Logs and Speed Insights at 21:15 UTC.\n\nA fix was released at 21:25 UTC, and full functionality was restored by 21:38 UTC."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Increased errors for Durable Objects and Workers/Pages builds/asset uploads",
+      "date": "2025-12-08",
+      "timestamp": "2025-12-08T10:40:21.481Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Increased errors for Durable Objects and Workers/Pages builds/asset uploads",
+      "date": "2025-12-08",
+      "timestamp": "2025-12-08T10:40:21.481Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Increased errors for Durable Objects and Workers/Pages builds/asset uploads",
+      "date": "2025-12-08",
+      "timestamp": "2025-12-08T10:40:21.481Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Increased errors for Durable Objects and Workers/Pages builds/asset uploads",
+      "date": "2025-12-08",
+      "timestamp": "2025-12-08T10:40:21.481Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Increased errors for Durable Objects and Workers/Pages builds/asset uploads",
+      "date": "2025-12-08",
+      "timestamp": "2025-12-08T10:40:21.481Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Speed Insights elevated errors",
+      "date": "2025-12-07",
+      "timestamp": "2025-12-07T23:40:11.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Increased Error Rates Accessing R2 from APAC",
+      "date": "2025-12-05",
+      "timestamp": "2025-12-05T23:20:41.491Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident is now resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Increased Error Rates Accessing R2 from APAC",
+      "date": "2025-12-05",
+      "timestamp": "2025-12-05T23:20:41.491Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident is now resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Increased Error Rates Accessing R2 from APAC",
+      "date": "2025-12-05",
+      "timestamp": "2025-12-05T23:20:41.491Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident is now resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Increased Error Rates Accessing R2 from APAC",
+      "date": "2025-12-05",
+      "timestamp": "2025-12-05T23:20:41.491Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident is now resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Increased Error Rates Accessing R2 from APAC",
+      "date": "2025-12-05",
+      "timestamp": "2025-12-05T23:20:41.491Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident is now resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Connectivity Degradation in Mumbai",
+      "date": "2025-12-05",
+      "timestamp": "2025-12-05T19:40:20.416Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "Between 19:19 and 19:30 UTC today, 2025-12-05, customers may have observed network connectivity degradation for traffic through our Mumbai (BOM) facility."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Connectivity Degradation in Mumbai",
+      "date": "2025-12-05",
+      "timestamp": "2025-12-05T19:40:20.416Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "Between 19:19 and 19:30 UTC today, 2025-12-05, customers may have observed network connectivity degradation for traffic through our Mumbai (BOM) facility."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Connectivity Degradation in Mumbai",
+      "date": "2025-12-05",
+      "timestamp": "2025-12-05T19:40:20.416Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "Between 19:19 and 19:30 UTC today, 2025-12-05, customers may have observed network connectivity degradation for traffic through our Mumbai (BOM) facility."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Connectivity Degradation in Mumbai",
+      "date": "2025-12-05",
+      "timestamp": "2025-12-05T19:40:20.416Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "Between 19:19 and 19:30 UTC today, 2025-12-05, customers may have observed network connectivity degradation for traffic through our Mumbai (BOM) facility."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Connectivity Degradation in Mumbai",
+      "date": "2025-12-05",
+      "timestamp": "2025-12-05T19:40:20.416Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "Between 19:19 and 19:30 UTC today, 2025-12-05, customers may have observed network connectivity degradation for traffic through our Mumbai (BOM) facility."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Workers Issues",
+      "date": "2025-12-05",
+      "timestamp": "2025-12-05T09:33:44.934Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been cancelled, Workers KV is operating normally."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Workers Issues",
+      "date": "2025-12-05",
+      "timestamp": "2025-12-05T09:33:44.934Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been cancelled, Workers KV is operating normally."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Workers Issues",
+      "date": "2025-12-05",
+      "timestamp": "2025-12-05T09:33:44.934Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been cancelled, Workers KV is operating normally."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Workers Issues",
+      "date": "2025-12-05",
+      "timestamp": "2025-12-05T09:33:44.934Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been cancelled, Workers KV is operating normally."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Workers Issues",
+      "date": "2025-12-05",
+      "timestamp": "2025-12-05T09:33:44.934Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been cancelled, Workers KV is operating normally."
+    },
+    {
+      "provider": "AWS",
+      "name": "S3 Performance Degradation",
+      "date": "2025-12-05",
+      "timestamp": "2025-12-05T09:15:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Degraded performance for S3 operations in multiple regions"
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Service Issues",
+      "date": "2025-12-05",
+      "timestamp": "2025-12-05T08:56:26.000Z",
+      "impact": "critical",
+      "status": "resolved",
+      "description": "This incident has been resolved.\n\nA change made to how Cloudflare's Web Application Firewall parses requests caused Cloudflare's network to be unavailable for several minutes this morning. This was not an attack; the change was deployed by our team to help mitigate the industry-wide vulnerability disclosed this week in React Server Components.\n\nMore information can be found on our blog post: https://blog.cloudflare.com/5-december-2025-outage/"
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Service Issues",
+      "date": "2025-12-05",
+      "timestamp": "2025-12-05T08:56:26.000Z",
+      "impact": "critical",
+      "status": "resolved",
+      "description": "This incident has been resolved.\n\nA change made to how Cloudflare's Web Application Firewall parses requests caused Cloudflare's network to be unavailable for several minutes this morning. This was not an attack; the change was deployed by our team to help mitigate the industry-wide vulnerability disclosed this week in React Server Components.\n\nMore information can be found on our blog post: https://blog.cloudflare.com/5-december-2025-outage/"
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Service Issues",
+      "date": "2025-12-05",
+      "timestamp": "2025-12-05T08:56:26.000Z",
+      "impact": "critical",
+      "status": "resolved",
+      "description": "This incident has been resolved.\n\nA change made to how Cloudflare's Web Application Firewall parses requests caused Cloudflare's network to be unavailable for several minutes this morning. This was not an attack; the change was deployed by our team to help mitigate the industry-wide vulnerability disclosed this week in React Server Components.\n\nMore information can be found on our blog post: https://blog.cloudflare.com/5-december-2025-outage/"
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Service Issues",
+      "date": "2025-12-05",
+      "timestamp": "2025-12-05T08:56:26.000Z",
+      "impact": "critical",
+      "status": "resolved",
+      "description": "This incident has been resolved.\n\nA change made to how Cloudflare's Web Application Firewall parses requests caused Cloudflare's network to be unavailable for several minutes this morning. This was not an attack; the change was deployed by our team to help mitigate the industry-wide vulnerability disclosed this week in React Server Components.\n\nMore information can be found on our blog post: https://blog.cloudflare.com/5-december-2025-outage/"
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Service Issues",
+      "date": "2025-12-05",
+      "timestamp": "2025-12-05T08:56:26.000Z",
+      "impact": "critical",
+      "status": "resolved",
+      "description": "This incident has been resolved.\n\nA change made to how Cloudflare's Web Application Firewall parses requests caused Cloudflare's network to be unavailable for several minutes this morning. This was not an attack; the change was deployed by our team to help mitigate the industry-wide vulnerability disclosed this week in React Server Components.\n\nMore information can be found on our blog post: https://blog.cloudflare.com/5-december-2025-outage/"
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues in Jakarta",
+      "date": "2025-12-05",
+      "timestamp": "2025-12-05T04:09:12.091Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues in Jakarta",
+      "date": "2025-12-05",
+      "timestamp": "2025-12-05T04:09:12.091Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues in Jakarta",
+      "date": "2025-12-05",
+      "timestamp": "2025-12-05T04:09:12.091Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues in Jakarta",
+      "date": "2025-12-05",
+      "timestamp": "2025-12-05T04:09:12.091Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues in Jakarta",
+      "date": "2025-12-05",
+      "timestamp": "2025-12-05T04:09:12.091Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cache Purging Delays",
+      "date": "2025-12-04",
+      "timestamp": "2025-12-04T19:08:55.651Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident is now resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cache Purging Delays",
+      "date": "2025-12-04",
+      "timestamp": "2025-12-04T19:08:55.651Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident is now resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cache Purging Delays",
+      "date": "2025-12-04",
+      "timestamp": "2025-12-04T19:08:55.651Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident is now resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cache Purging Delays",
+      "date": "2025-12-04",
+      "timestamp": "2025-12-04T19:08:55.651Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident is now resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cache Purging Delays",
+      "date": "2025-12-04",
+      "timestamp": "2025-12-04T19:08:55.651Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident is now resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Issue with DEX (Digital Experience Monitoring) in the Amsterdam region (AMS)",
+      "date": "2025-12-04",
+      "timestamp": "2025-12-04T14:43:33.194Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Issue with DEX (Digital Experience Monitoring) in the Amsterdam region (AMS)",
+      "date": "2025-12-04",
+      "timestamp": "2025-12-04T14:43:33.194Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Issue with DEX (Digital Experience Monitoring) in the Amsterdam region (AMS)",
+      "date": "2025-12-04",
+      "timestamp": "2025-12-04T14:43:33.194Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Issue with DEX (Digital Experience Monitoring) in the Amsterdam region (AMS)",
+      "date": "2025-12-04",
+      "timestamp": "2025-12-04T14:43:33.194Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Issue with DEX (Digital Experience Monitoring) in the Amsterdam region (AMS)",
+      "date": "2025-12-04",
+      "timestamp": "2025-12-04T14:43:33.194Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Increased Latency for multiple features in the Western North America region",
+      "date": "2025-12-04",
+      "timestamp": "2025-12-04T14:09:18.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Increased Latency for multiple features in the Western North America region",
+      "date": "2025-12-04",
+      "timestamp": "2025-12-04T14:09:18.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Increased Latency for multiple features in the Western North America region",
+      "date": "2025-12-04",
+      "timestamp": "2025-12-04T14:09:18.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Increased Latency for multiple features in the Western North America region",
+      "date": "2025-12-04",
+      "timestamp": "2025-12-04T14:09:18.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Increased Latency for multiple features in the Western North America region",
+      "date": "2025-12-04",
+      "timestamp": "2025-12-04T14:09:18.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issue Affecting Some Traffic Served from Frankfurt, Germany (FRA)",
+      "date": "2025-12-04",
+      "timestamp": "2025-12-04T01:49:39.958Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issue Affecting Some Traffic Served from Frankfurt, Germany (FRA)",
+      "date": "2025-12-04",
+      "timestamp": "2025-12-04T01:49:39.958Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issue Affecting Some Traffic Served from Frankfurt, Germany (FRA)",
+      "date": "2025-12-04",
+      "timestamp": "2025-12-04T01:49:39.958Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issue Affecting Some Traffic Served from Frankfurt, Germany (FRA)",
+      "date": "2025-12-04",
+      "timestamp": "2025-12-04T01:49:39.958Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issue Affecting Some Traffic Served from Frankfurt, Germany (FRA)",
+      "date": "2025-12-04",
+      "timestamp": "2025-12-04T01:49:39.958Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Dashboard Login Latency and Timeouts",
+      "date": "2025-12-03",
+      "timestamp": "2025-12-03T21:13:47.287Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident is now resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Dashboard Login Latency and Timeouts",
+      "date": "2025-12-03",
+      "timestamp": "2025-12-03T21:13:47.287Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident is now resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Dashboard Login Latency and Timeouts",
+      "date": "2025-12-03",
+      "timestamp": "2025-12-03T21:13:47.287Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident is now resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Dashboard Login Latency and Timeouts",
+      "date": "2025-12-03",
+      "timestamp": "2025-12-03T21:13:47.287Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident is now resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Dashboard Login Latency and Timeouts",
+      "date": "2025-12-03",
+      "timestamp": "2025-12-03T21:13:47.287Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident is now resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues in Newark (EWR)",
+      "date": "2025-12-03",
+      "timestamp": "2025-12-03T16:28:51.346Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues in Newark (EWR)",
+      "date": "2025-12-03",
+      "timestamp": "2025-12-03T16:28:51.346Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues in Newark (EWR)",
+      "date": "2025-12-03",
+      "timestamp": "2025-12-03T16:28:51.346Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues in Newark (EWR)",
+      "date": "2025-12-03",
+      "timestamp": "2025-12-03T16:28:51.346Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network Performance Issues in Newark (EWR)",
+      "date": "2025-12-03",
+      "timestamp": "2025-12-03T16:28:51.346Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare for SaaS: Issues with Custom Hostnames fallback origin",
+      "date": "2025-12-03",
+      "timestamp": "2025-12-03T09:17:28.732Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare for SaaS: Issues with Custom Hostnames fallback origin",
+      "date": "2025-12-03",
+      "timestamp": "2025-12-03T09:17:28.732Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare for SaaS: Issues with Custom Hostnames fallback origin",
+      "date": "2025-12-03",
+      "timestamp": "2025-12-03T09:17:28.732Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare for SaaS: Issues with Custom Hostnames fallback origin",
+      "date": "2025-12-03",
+      "timestamp": "2025-12-03T09:17:28.732Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare for SaaS: Issues with Custom Hostnames fallback origin",
+      "date": "2025-12-03",
+      "timestamp": "2025-12-03T09:17:28.732Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Bot Management Issues",
+      "date": "2025-12-03",
+      "timestamp": "2025-12-03T08:13:03.723Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Bot Management Issues",
+      "date": "2025-12-03",
+      "timestamp": "2025-12-03T08:13:03.723Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Bot Management Issues",
+      "date": "2025-12-03",
+      "timestamp": "2025-12-03T08:13:03.723Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Bot Management Issues",
+      "date": "2025-12-03",
+      "timestamp": "2025-12-03T08:13:03.723Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Bot Management Issues",
+      "date": "2025-12-03",
+      "timestamp": "2025-12-03T08:13:03.723Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Custom certificate issue",
+      "date": "2025-12-03",
+      "timestamp": "2025-12-03T06:27:15.972Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Custom certificate issue",
+      "date": "2025-12-03",
+      "timestamp": "2025-12-03T06:27:15.972Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Custom certificate issue",
+      "date": "2025-12-03",
+      "timestamp": "2025-12-03T06:27:15.972Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Custom certificate issue",
+      "date": "2025-12-03",
+      "timestamp": "2025-12-03T06:27:15.972Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Custom certificate issue",
+      "date": "2025-12-03",
+      "timestamp": "2025-12-03T06:27:15.972Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare DNS Resolver 1.1.1.1",
+      "date": "2025-12-02",
+      "timestamp": "2025-12-02T18:00:00.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Cloudflare has observed and mitigated an availability issue which potentially impacted users in multiple locations that use 1.1.1.1 public resolver. The issue was observed December 2nd from 18:09 to 18:40 UTC, and 1.0.0.1 was not impacted."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare DNS Resolver 1.1.1.1",
+      "date": "2025-12-02",
+      "timestamp": "2025-12-02T18:00:00.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Cloudflare has observed and mitigated an availability issue which potentially impacted users in multiple locations that use 1.1.1.1 public resolver. The issue was observed December 2nd from 18:09 to 18:40 UTC, and 1.0.0.1 was not impacted."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare DNS Resolver 1.1.1.1",
+      "date": "2025-12-02",
+      "timestamp": "2025-12-02T18:00:00.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Cloudflare has observed and mitigated an availability issue which potentially impacted users in multiple locations that use 1.1.1.1 public resolver. The issue was observed December 2nd from 18:09 to 18:40 UTC, and 1.0.0.1 was not impacted."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare DNS Resolver 1.1.1.1",
+      "date": "2025-12-02",
+      "timestamp": "2025-12-02T18:00:00.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Cloudflare has observed and mitigated an availability issue which potentially impacted users in multiple locations that use 1.1.1.1 public resolver. The issue was observed December 2nd from 18:09 to 18:40 UTC, and 1.0.0.1 was not impacted."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare DNS Resolver 1.1.1.1",
+      "date": "2025-12-02",
+      "timestamp": "2025-12-02T18:00:00.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Cloudflare has observed and mitigated an availability issue which potentially impacted users in multiple locations that use 1.1.1.1 public resolver. The issue was observed December 2nd from 18:09 to 18:40 UTC, and 1.0.0.1 was not impacted."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "SSL for SaaS Certificate Provisioning Delays",
+      "date": "2025-12-02",
+      "timestamp": "2025-12-02T14:37:56.027Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "SSL for SaaS Certificate Provisioning Delays",
+      "date": "2025-12-02",
+      "timestamp": "2025-12-02T14:37:56.027Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "SSL for SaaS Certificate Provisioning Delays",
+      "date": "2025-12-02",
+      "timestamp": "2025-12-02T14:37:56.027Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "SSL for SaaS Certificate Provisioning Delays",
+      "date": "2025-12-02",
+      "timestamp": "2025-12-02T14:37:56.027Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "SSL for SaaS Certificate Provisioning Delays",
+      "date": "2025-12-02",
+      "timestamp": "2025-12-02T14:37:56.027Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Elevated Error Rates for Domain Registrations",
+      "date": "2025-12-02",
+      "timestamp": "2025-12-02T09:51:53.307Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "The issue causing elevated error rates for Domain Registrations has been resolved. Domains are now successfully provisioned and available for immediate use. Some payment attempts may not have completed; we will automatically retry those payments later. No action is needed from customers."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Email Security Delays",
+      "date": "2025-12-01",
+      "timestamp": "2025-12-01T20:02:42.185Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Email Security Delays",
+      "date": "2025-12-01",
+      "timestamp": "2025-12-01T20:02:42.185Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Email Security Delays",
+      "date": "2025-12-01",
+      "timestamp": "2025-12-01T20:02:42.185Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Email Security Delays",
+      "date": "2025-12-01",
+      "timestamp": "2025-12-01T20:02:42.185Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Email Security Delays",
+      "date": "2025-12-01",
+      "timestamp": "2025-12-01T20:02:42.185Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Workers Analytics delays in EU",
+      "date": "2025-12-01",
+      "timestamp": "2025-12-01T11:48:13.901Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "This incident has been canceled as there was no observed customer impact."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Workers Analytics delays in EU",
+      "date": "2025-12-01",
+      "timestamp": "2025-12-01T11:48:13.901Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "This incident has been canceled as there was no observed customer impact."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Workers Analytics delays in EU",
+      "date": "2025-12-01",
+      "timestamp": "2025-12-01T11:48:13.901Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "This incident has been canceled as there was no observed customer impact."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Workers Analytics delays in EU",
+      "date": "2025-12-01",
+      "timestamp": "2025-12-01T11:48:13.901Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "This incident has been canceled as there was no observed customer impact."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Workers Analytics delays in EU",
+      "date": "2025-12-01",
+      "timestamp": "2025-12-01T11:48:13.901Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "This incident has been canceled as there was no observed customer impact."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Logpush Delays",
+      "date": "2025-12-01",
+      "timestamp": "2025-12-01T06:59:34.680Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Logpush Delays",
+      "date": "2025-12-01",
+      "timestamp": "2025-12-01T06:59:34.680Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Logpush Delays",
+      "date": "2025-12-01",
+      "timestamp": "2025-12-01T06:59:34.680Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Logpush Delays",
+      "date": "2025-12-01",
+      "timestamp": "2025-12-01T06:59:34.680Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Logpush Delays",
+      "date": "2025-12-01",
+      "timestamp": "2025-12-01T06:59:34.680Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network performance issues in EWR",
+      "date": "2025-12-01",
+      "timestamp": "2025-12-01T00:28:50.158Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network performance issues in EWR",
+      "date": "2025-12-01",
+      "timestamp": "2025-12-01T00:28:50.158Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network performance issues in EWR",
+      "date": "2025-12-01",
+      "timestamp": "2025-12-01T00:28:50.158Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network performance issues in EWR",
+      "date": "2025-12-01",
+      "timestamp": "2025-12-01T00:28:50.158Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Network performance issues in EWR",
+      "date": "2025-12-01",
+      "timestamp": "2025-12-01T00:28:50.158Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Issues with Custom Error Pages",
+      "date": "2025-11-29",
+      "timestamp": "2025-11-29T15:59:22.084Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Issues with Custom Error Pages",
+      "date": "2025-11-29",
+      "timestamp": "2025-11-29T15:59:22.084Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Issues with Custom Error Pages",
+      "date": "2025-11-29",
+      "timestamp": "2025-11-29T15:59:22.084Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Issues with Custom Error Pages",
+      "date": "2025-11-29",
+      "timestamp": "2025-11-29T15:59:22.084Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Issues with Custom Error Pages",
+      "date": "2025-11-29",
+      "timestamp": "2025-11-29T15:59:22.084Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Increased Errors for R2",
+      "date": "2025-11-28",
+      "timestamp": "2025-11-28T17:40:25.651Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Increased Errors for R2",
+      "date": "2025-11-28",
+      "timestamp": "2025-11-28T17:40:25.651Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Increased Errors for R2",
+      "date": "2025-11-28",
+      "timestamp": "2025-11-28T17:40:25.651Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Increased Errors for R2",
+      "date": "2025-11-28",
+      "timestamp": "2025-11-28T17:40:25.651Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Increased Errors for R2",
+      "date": "2025-11-28",
+      "timestamp": "2025-11-28T17:40:25.651Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "AWS",
+      "name": "RDS Connection Issues - EU-WEST-1",
+      "date": "2025-11-28",
+      "timestamp": "2025-11-28T16:45:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Connectivity issues affecting RDS instances in EU-WEST-1"
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Workers Issues",
+      "date": "2025-11-28",
+      "timestamp": "2025-11-28T15:11:11.323Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Workers Issues",
+      "date": "2025-11-28",
+      "timestamp": "2025-11-28T15:11:11.323Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Workers Issues",
+      "date": "2025-11-28",
+      "timestamp": "2025-11-28T15:11:11.323Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Workers Issues",
+      "date": "2025-11-28",
+      "timestamp": "2025-11-28T15:11:11.323Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Workers Issues",
+      "date": "2025-11-28",
+      "timestamp": "2025-11-28T15:11:11.323Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Elevated number of errors in NRT",
+      "date": "2025-11-28",
+      "timestamp": "2025-11-28T06:56:23.739Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "Between 06:20-06:35 UTC, customers reaching Tokyo would have experienced an elevated number of errors due to network issue."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Elevated number of errors in NRT",
+      "date": "2025-11-28",
+      "timestamp": "2025-11-28T06:56:23.739Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "Between 06:20-06:35 UTC, customers reaching Tokyo would have experienced an elevated number of errors due to network issue."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Elevated number of errors in NRT",
+      "date": "2025-11-28",
+      "timestamp": "2025-11-28T06:56:23.739Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "Between 06:20-06:35 UTC, customers reaching Tokyo would have experienced an elevated number of errors due to network issue."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Elevated number of errors in NRT",
+      "date": "2025-11-28",
+      "timestamp": "2025-11-28T06:56:23.739Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "Between 06:20-06:35 UTC, customers reaching Tokyo would have experienced an elevated number of errors due to network issue."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Elevated number of errors in NRT",
+      "date": "2025-11-28",
+      "timestamp": "2025-11-28T06:56:23.739Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "Between 06:20-06:35 UTC, customers reaching Tokyo would have experienced an elevated number of errors due to network issue."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Snippets: Issues with updates",
+      "date": "2025-11-27",
+      "timestamp": "2025-11-27T16:25:45.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Snippets: Issues with updates",
+      "date": "2025-11-27",
+      "timestamp": "2025-11-27T16:25:45.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Snippets: Issues with updates",
+      "date": "2025-11-27",
+      "timestamp": "2025-11-27T16:25:45.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Snippets: Issues with updates",
+      "date": "2025-11-27",
+      "timestamp": "2025-11-27T16:25:45.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Cloudflare",
+      "name": "Cloudflare Snippets: Issues with updates",
+      "date": "2025-11-27",
+      "timestamp": "2025-11-27T16:25:45.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Elevated errors creating deployments",
+      "date": "2025-11-26",
+      "timestamp": "2025-11-26T18:31:41.212Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Azure",
+      "name": "Storage Performance Degradation",
+      "date": "2025-11-20",
+      "timestamp": "2025-11-20T15:40:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Degraded performance for Azure Storage in North Europe"
+    },
+    {
+      "provider": "Vercel",
+      "name": "Elevated error rate for domain search and registration",
+      "date": "2025-11-18",
+      "timestamp": "2025-11-18T13:29:37.585Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Builds and Deployments were Temporarily in a Queued State",
+      "date": "2025-11-17",
+      "timestamp": "2025-11-17T10:00:00.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Builds and deployments were stuck in a queued state between 10:05 to 10:30 UTC. Our team identified the root cause and deployed a fix, and everything is now operating normally."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Builds and Deployments are Currently in a Queued State",
+      "date": "2025-11-16",
+      "timestamp": "2025-11-16T18:54:51.437Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "AWS",
+      "name": "Lambda Invocation Delays",
+      "date": "2025-11-15",
+      "timestamp": "2025-11-15T11:30:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Increased latency for Lambda function invocations"
+    },
+    {
+      "provider": "Vercel",
+      "name": "Elevated errors serving traffic in dub1 Edge Region",
+      "date": "2025-11-14",
+      "timestamp": "2025-11-14T21:01:22.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Runtime logs not showing in Dashboard",
+      "date": "2025-11-14",
+      "timestamp": "2025-11-14T06:50:00.000Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "A change was merged to the Vercel dashboard that introduced a bug in the query for runtime logs in some situations. Upon being alerted, the dashboard was rolled back, which restored the ability to see runtime logs. The change was then reverted. Data was still being collected and no logs are missing."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Builds and Deployments are Currently in a Queued State",
+      "date": "2025-11-11",
+      "timestamp": "2025-11-11T18:43:05.000Z",
+      "impact": "critical",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Azure",
+      "name": "Azure AD Authentication Delays",
+      "date": "2025-11-05",
+      "timestamp": "2025-11-05T12:25:00Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "Elevated latency for Azure AD authentication requests"
+    },
+    {
+      "provider": "Vercel",
+      "name": "AI Gateway is unavailable",
+      "date": "2025-11-04",
+      "timestamp": "2025-11-04T20:00:39.000Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Elevated errors for Edge Config",
+      "date": "2025-11-04",
+      "timestamp": "2025-11-04T18:14:04.820Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "AWS",
+      "name": "DynamoDB Elevated Latency",
+      "date": "2025-11-02",
+      "timestamp": "2025-11-02T08:20:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Higher than normal latency for DynamoDB operations"
+    },
+    {
+      "provider": "Vercel",
+      "name": "Intermittent errors affecting APIs and new builds",
+      "date": "2025-10-30",
+      "timestamp": "2025-10-30T17:15:03.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "The issue has been fully mitigated, and this incident has been resolved. No action is needed for customers with queued builds."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Intermittent failures for builds using Secure Compute or Static IPs",
+      "date": "2025-10-28",
+      "timestamp": "2025-10-28T23:15:22.842Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Azure",
+      "name": "App Service Connection Issues",
+      "date": "2025-10-28",
+      "timestamp": "2025-10-28T09:50:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Connectivity issues affecting App Service instances"
+    },
+    {
+      "provider": "Vercel",
+      "name": "On-Demand Usage Invoices Delayed",
+      "date": "2025-10-25",
+      "timestamp": "2025-10-25T01:12:24.741Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Issues upgrading v0 plans and adding v0 credits",
+      "date": "2025-10-23",
+      "timestamp": "2025-10-23T01:34:06.251Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "AWS",
+      "name": "CloudFront Cache Misses",
+      "date": "2025-10-22",
+      "timestamp": "2025-10-22T13:10:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Increased cache miss rate affecting CloudFront performance"
+    },
+    {
+      "provider": "Vercel",
+      "name": "Drains delayed in iad1",
+      "date": "2025-10-21",
+      "timestamp": "2025-10-21T17:06:38.655Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "The delay affecting data delivery to drains in the iad1 region has been resolved. All services are now operating normally."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Major outage on API, Dashboard, and Builds",
+      "date": "2025-10-20",
+      "timestamp": "2025-10-20T20:00:23.723Z",
+      "impact": "critical",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Elevated errors across multiple services",
+      "date": "2025-10-20",
+      "timestamp": "2025-10-20T07:30:44.000Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Domain details for domains owned by account scopes can't be accessed",
+      "date": "2025-10-16",
+      "timestamp": "2025-10-16T05:25:30.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Azure",
+      "name": "Cosmos DB Query Timeouts",
+      "date": "2025-10-15",
+      "timestamp": "2025-10-15T14:20:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Increased query timeout errors in Cosmos DB"
+    },
+    {
+      "provider": "AWS",
+      "name": "EC2 Launch Failures - AP-SOUTHEAST-1",
+      "date": "2025-10-10",
+      "timestamp": "2025-10-10T19:05:00Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "EC2 instance launch failures in AP-SOUTHEAST-1 region"
+    },
+    {
+      "provider": "Vercel",
+      "name": "AI SDK and Next.js Learn are unable to sign in to Vercel",
+      "date": "2025-10-10",
+      "timestamp": "2025-10-10T02:37:52.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "The incident has been resolved, and sign in is possible again."
+    },
+    {
+      "provider": "Azure",
+      "name": "Functions Runtime Errors",
+      "date": "2025-10-05",
+      "timestamp": "2025-10-05T11:10:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Runtime errors affecting Azure Functions executions"
+    },
+    {
+      "provider": "Vercel",
+      "name": "Delay in builds for deployments",
+      "date": "2025-10-05",
+      "timestamp": "2025-10-05T10:00:00.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Some customers may have experienced delays in builds for deployments between 10:58 and 12:35 UTC.\nThese deployments appeared as Queued within the incident window."
+    },
+    {
+      "provider": "AWS",
+      "name": "Route53 DNS Resolution Delays",
+      "date": "2025-10-01",
+      "timestamp": "2025-10-01T07:30:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Intermittent delays in DNS resolution for Route53"
+    },
+    {
+      "provider": "Vercel",
+      "name": "Elevated Dashboard and API Errors",
+      "date": "2025-09-23",
+      "timestamp": "2025-09-23T13:41:51.791Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Build and Deployment Errors When Creating New Deployments",
+      "date": "2025-09-23",
+      "timestamp": "2025-09-23T13:39:47.000Z",
+      "impact": "critical",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "DNS record updates are delayed for domains using Vercel Nameservers",
+      "date": "2025-09-16",
+      "timestamp": "2025-09-16T19:02:36.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Elevated 5xx errors and latency in gru1 (São Paulo, Brazil)",
+      "date": "2025-09-09",
+      "timestamp": "2025-09-09T15:30:00.000Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "We investigated elevated reports of 5xx errors and latency in the gru1 (São Paulo, Brazil) region between Sep 10, 3:45 AM – Sep 10, 3:48 AM UTC.\n\nThe issue has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Edge Config Service Degradation",
+      "date": "2025-09-05",
+      "timestamp": "2025-09-05T17:39:37.907Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "User Registration Service Degradation",
+      "date": "2025-09-03",
+      "timestamp": "2025-09-03T10:54:20.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Secure Compute builds failing to start",
+      "date": "2025-08-26",
+      "timestamp": "2025-08-26T15:44:37.000Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "npm package installs failing",
+      "date": "2025-08-21",
+      "timestamp": "2025-08-21T19:05:04.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Deployment Creation Errors from GitLab commits",
+      "date": "2025-08-21",
+      "timestamp": "2025-08-21T11:24:50.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Intermittent deployment failures and elevated dashboard latency",
+      "date": "2025-08-12",
+      "timestamp": "2025-08-12T17:24:30.912Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Elevated error rate for builds",
+      "date": "2025-08-06",
+      "timestamp": "2025-08-06T21:16:04.421Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Issues accessing Documentation, Guides, and Support Forms",
+      "date": "2025-08-05",
+      "timestamp": "2025-08-05T13:08:37.103Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "GitLab integration authentication and deployment issues",
+      "date": "2025-08-01",
+      "timestamp": "2025-08-01T05:27:41.762Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved. The issue originated from a disruption on GitLab’s side. For more information, please refer to their incident report: https://gitlab.com/gitlab-com/gl-infra/production/-/issues/20290"
+    },
+    {
+      "provider": "Vercel",
+      "name": "Elevated MODULE_NOT_FOUND Errors While Deploying",
+      "date": "2025-07-29",
+      "timestamp": "2025-07-29T20:47:54.684Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Delay in issuing SSL certificates for new deployments.",
+      "date": "2025-07-21",
+      "timestamp": "2025-07-21T19:28:46.174Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Increased 5xx errors in Vercel API, vercel.com, and v0.dev",
+      "date": "2025-07-21",
+      "timestamp": "2025-07-21T17:53:11.000Z",
+      "impact": "critical",
+      "status": "resolved",
+      "description": "We are no longer observing increased errors, and the incident should be resolved. Our team is still monitoring our health metrics closely."
+    },
+    {
+      "provider": "Google Cloud",
+      "name": "We are investigating elevated error rates with multiple products in us-east1",
+      "date": "2025-07-18",
+      "timestamp": "2025-07-18T14:42:00+00:00",
+      "impact": "medium",
+      "status": "resolved",
+      "description": "## \\# Incident Report\n## \\#\\# Summary\nOn Friday, 18 July 2025 07:50 US/Pacific, several Google Cloud Platform (GCP) and Google Workspace (GWS) products experienced elevated latencies and error rates in the us-east1 region for a duration of up to 1 hour and 57 minutes.\n**GCP Impact Duration:** 18 July 2025 07:50 \\- 09:47 US/Pacific : 1 hour 57 minutes\n**GWS Impact Duration:** 18 July 2025 07:50 \\- 08:40 US/Pacific : 50 minutes\nWe sincerely apologize for this incident, which does not reflect the level of quality and reliability we strive to offer. We are taking immediate steps to improve the platform’s performance and availability.\n##\n## \\#\\# Root Cause\nThe service interruption was triggered by a procedural error during a planned hardware replacement in our datacenter. An incorrect physical disconnection was made to the active network switch serving our control plane, rather than the redundant unit scheduled for removal. The redundant unit had been properly de-configured as part of the procedure, and the combination of these two events led to partitioning of the network control plane. Our network is designed to withstand this type of control plane failure by failing open, continuing operation.\nHowever, an operational topology change while the network control plane was in a failed open state caused our network fabric's topology information to become stale. This led to packet loss and service disruption until services were moved away from the fabric and control plane connectivity was restored.\n## \\#\\# Remediation and Prevention\nGoogle engineers were alerted to the outage by our monitoring system on 18 July 2025 07:06 US/Pacific and immediately started an investigation. The following timeline details the remediation and restoration efforts:\n* **07:39 US/Pacific**: The underlying root cause (device disconnect) was identified and onsite technicians were engaged to reconnect the control plane device and restore control plane connectivity. At that moment, network failure open mechanisms worked as expected and no impact was observed.\n* **07:50 US/Pacific**: A topology change led to traffic being routed suboptimally, due to the network being in a fail open state. This caused congestion on the subset of links, packet loss, and latency to customer traffic. Engineers made a decision to move traffic away from the affected fabric, which mitigated the impact for the majority of the services.\n* **08:40 US/Pacific**: Engineers mitigated Workspace impact by shifting traffic away from the affected region.\n* **09:47 US/Pacific**: Onsite technicians reconnected the device, control plane connectivity was fully restored and all services were back to stable state.\nGoogle is committed to preventing a repeat of the issue in the future, and is completing the following actions:\n* Pause non-critical workflows until safety controls are implemented (complete).\n* Strengthen safety controls for hardware upgrade workflows by end of Q3 2025\\.\n* Design and implement a mechanism to prevent control plane partitioning in case of dual failure of upstream routers by end of Q4 2025\\.\n## \\#\\# Detailed Description of Impact\n\\#\\#\\# GCP Impact:\nMultiple products in us-east1 were affected by the loss of network connectivity, with the most significant impacts seen in us-east1-b. Other regions were not affected.\nThe outage caused a range of issues for customers with zonal resources in the region, including packet loss across VPC networks, increased error rates and latency, service unavailable (503) errors, and slow or stuck operations up to loss of networking connectivity. While regional products were briefly impacted, they recovered quickly by failing over to unaffected zones.\nA small number (0.1%) of Persistent Disks in us-east1-b were unavailable for the duration of the outage: these disks became available once the outage was mitigated, with no customer data loss.\n\\#\\#\\# GWS Impact:\nA small subset of Workspace users, primarily around the Southeast US, experienced varying degrees of unavailability and increased delays across multiple products, including Gmail, Google Meet, Google Drive, Google Chat, Google Calendar, Google Groups, Google Doc/Editors, and Google Voice."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Reports of queued builds",
+      "date": "2025-07-04",
+      "timestamp": "2025-07-04T15:49:19.000Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "The incident has been resolved. We are still monitoring the status of our build's systems, and related services, closely."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Degraded External API Calls and Edge Config usage",
+      "date": "2025-07-03",
+      "timestamp": "2025-07-03T14:36:21.938Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "The incident was resolved. During this window (11:14 - 15:16 UTC, depending on regions), some request data, like external API calls, was not recorded due to an internal logging disruption. As a result, requests made during this period will not appear in the dashboard, logs, or analytics APIs.\n\nApplication execution was not impacted. The issue only affected the recording of observability and billing data."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Pro usage within allocation is incorrectly being reported as an on-demand charge",
+      "date": "2025-07-02",
+      "timestamp": "2025-07-02T15:03:01.451Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Intermittent Issues Affecting Team Creation and Billing Details Access",
+      "date": "2025-06-30",
+      "timestamp": "2025-06-30T15:37:48.860Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "GitHub deployments degraded",
+      "date": "2025-06-27",
+      "timestamp": "2025-06-27T23:13:03.429Z",
+      "impact": "none",
+      "status": "resolved",
+      "description": "Between 22:58 and 23:33 UTC, an internal service degradation caused deployments triggered by GitHub to not be properly processed. Service has been fully restored, but impacted customers need to re-trigger deployments attempted during this interval."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Increased 5xx errors in multiple regions",
+      "date": "2025-06-18",
+      "timestamp": "2025-06-18T13:55:46.926Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "Service Disruption: Billing, Team Management, and Plan Upgrades",
+      "date": "2025-06-17",
+      "timestamp": "2025-06-17T15:57:19.727Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Vercel",
+      "name": "npm package installs failing with 5xx errors",
+      "date": "2025-06-12",
+      "timestamp": "2025-06-12T18:29:58.357Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "This incident has been resolved."
+    },
+    {
+      "provider": "Google Cloud",
+      "name": "Multiple GCP products are experiencing Service issues.",
+      "date": "2025-06-12",
+      "timestamp": "2025-06-12T17:51:00+00:00",
+      "impact": "high",
+      "status": "resolved",
+      "description": "# Incident Report\n## **Summary**\n*Google Cloud, Google Workspace and Google Security Operations products experienced increased 503 errors in external API requests, impacting customers.*\n***We deeply apologize for the impact this outage has had. Google Cloud customers and their users trust their businesses to Google, and we will do better. We apologize for the impact this has had not only on our customers’ businesses and their users but also on the trust of our systems. We are committed to making improvements to help avoid outages like this moving forward.***\n### **What happened?**\nGoogle and Google Cloud APIs are served through our Google API management and control planes. Distributed regionally, these management and control planes are responsible for ensuring each API request that comes in is authorized, has the policy and appropriate checks (like quota) to meet their endpoints. The core binary that is part of this policy check system is known as Service Control. Service Control is a regional service that has a regional datastore that it reads quota and policy information from. This datastore metadata gets replicated almost instantly globally to manage quota policies for Google Cloud and our customers.\nOn May 29, 2025, a new feature was added to Service Control for additional quota policy checks. This code change and binary release went through our region by region rollout, but the code path that failed was never exercised during this rollout due to needing a policy change that would trigger the code. As a safety precaution, this code change came with a red-button to turn off that particular policy serving path. The issue with this change was that it did not have appropriate error handling nor was it feature flag protected. Without the appropriate error handling, the null pointer caused the binary to crash. Feature flags are used to gradually enable the feature region by region per project, starting with internal projects, to enable us to catch issues. If this had been flag protected, the issue would have been caught in staging.\nOn June 12, 2025 at \\~10:45am PDT, a policy change was inserted into the regional Spanner tables that Service Control uses for policies. Given the global nature of quota management, this metadata was replicated globally within seconds. This policy data contained unintended blank fields. Service Control, then regionally exercised quota checks on policies in each regional datastore. This pulled in blank fields for this respective policy change and exercised the code path that hit the null pointer causing the binaries to go into a crash loop. This occurred globally given each regional deployment.\nWithin 2 minutes, our Site Reliability Engineering team was triaging the incident. Within 10 minutes, the root cause was identified and the red-button (to disable the serving path) was being put in place. The red-button was ready to roll out \\~25 minutes from the start of the incident. Within 40 minutes of the incident, the red-button rollout was completed, and we started seeing recovery across regions, starting with the smaller ones first.\nWithin some of our larger regions, such as us-central-1, as Service Control tasks restarted, it created a herd effect on the underlying infrastructure it depends on (i.e. that Spanner table), overloading the infrastructure. Service Control did not have the appropriate randomized exponential backoff implemented to avoid this. It took up to \\~2h 40 mins to fully resolve in us-central-1 as we throttled task creation to minimize the impact on the underlying infrastructure and routed traffic to multi-regional databases to reduce the load. At that point, Service Control and API serving was fully recovered across all regions. Corresponding Google and Google Cloud products started recovering with some taking longer depending upon their architecture.\n### **What is our immediate path forward?**\nImmediately upon recovery, we froze all changes to the Service Control stack and manual policy pushes until we can completely remediate the system.\n### **How did we communicate?**\nWe posted our first incident report to Cloud Service Health about \\~1h after the start of the crashes, due to the Cloud Service Health infrastructure being down due to this outage. For some customers, the monitoring infrastructure they had running on Google Cloud was also failing, leaving them without a signal of the incident or an understanding of the impact to their business and/or infrastructure. We will address this going forward.\n### **What’s our approach moving forward?**\nBeyond freezing the system as mentioned above, we will prioritize and safely complete the following:\n* We will modularize Service Control’s architecture, so the functionality is isolated and fails open. Thus, if a corresponding check fails, Service Control can still serve API requests.\n* We will audit all systems that consume globally replicated data. Regardless of the business need for near instantaneous consistency of the data globally (i.e. quota management settings are global), data replication needs to be propagated incrementally with sufficient time to validate and detect issues.\n* We will enforce all changes to critical binaries to be feature flag protected and disabled by default.\n* We will improve our static analysis and testing practices to correctly handle errors and if need be fail open.\n* We will audit and ensure our systems employ randomized exponential backoff.\n* We will improve our external communications, both automated and human, so our customers get the information they need asap to react to issues, manage their systems and help their customers.\n* We'll ensure our monitoring and communication infrastructure remains operational to serve customers even when Google Cloud and our primary monitoring products are down, ensuring business continuity.\n-------"
+    },
+    {
+      "provider": "Google Cloud",
+      "name": "Google Compute Engine (GCE) issue impacting multiple dependent GCP services across zones",
+      "date": "2025-05-20",
+      "timestamp": "2025-05-20T03:23:00+00:00",
+      "impact": "medium",
+      "status": "resolved",
+      "description": "# Incident Report\n## Summary\nOn 19 May 2025, Google Compute Engine (GCE) encountered problems affecting Spot VM termination globally, and performance degradation and timeouts of reservation consumption / VM creation in us-central1 and us-east4 for a duration of 8 hours, 42 minutes. Consequently, multiple other Google Cloud Platform (GCP) products relying on GCE also experienced increased latencies and timeouts.\nTo our customers who were impacted during this disruption, we sincerely apologize. This is not the level of quality and reliability we strive to offer you, and we are taking immediate steps to improve the platform’s performance and availability.\n## Root Cause\nA recently deployed configuration change to a Google Compute Engine (GCE) component mistakenly disabled a feature flag that controlled how VM instance states are reported to other components. Safety checks intended to ensure gradual rollout of this type of change failed to be triggered, resulting in an unplanned rapid rollout of the change.\nThis caused Spot VMs to be stuck in an unexpected state. Consequently, Spot VMs that had initiated their standard termination process due to preemption began to accumulate as they failed to complete termination, creating a backlog that degraded performance for all VM types in some regions.\n## Remediation and Prevention\nGoogle engineers were alerted to the outage via internal monitoring on 19 May 2025, at 21:08 US/Pacific, and immediately started an investigation. Once the nature and scope of the issue became clear, Google engineers initiated a rollback of the change on 20 May 2025 at 03:29 US/Pacific.\nThe rollback completed at 03:55 US/Pacific, mitigating the impact.\nGoogle is committed to preventing a repeat of this issue in the future and is completing the following actions:\n* Google Cloud employs a robust and well-defined methodology for production updates, including a phased rollout approach as standard practice to avoid rapid global changes. This phased approach is meant to ensure that changes are introduced into production gradually and as safely as possible, however, in this case, the safety checks were not enforced. We have paused further feature flag rollouts for the affected system, while we undertake a comprehensive audit of safety checks and fix any exposed gaps that led to the unplanned rapid rollout of this change.\n* We will review and address scalability issues encountered by GCE during the incident.\n* We will improve monitoring coverage of Spot VM deletion workflows.\nGoogle is committed to quickly and continually improving our technology and operations to prevent service disruptions. We appreciate your patience and apologize again for the impact to your organization. We thank you for your business.\n## Detailed Description of Impact\nCustomers experienced increased latency for VM control plane operations in us-central1 and us-east4. VM control plane operations include creating, modifying, or deleting VMs. For some customers, Spot VM instances became stuck while terminating. Customers were not billed for Spot VM instances in this state. Furthermore, running virtual machines and the data plane were not impacted.\nVM control plane latency in the us-central1 and us-east4 regions began increasing at the start of the incident (19 May 2025 20:23 US/Pacific), and peaked around 20 May 2025 03:40 US/Pacific. At peak, median latency went from seconds to minutes, and tail latency went from minutes to hours. Several other regions experienced increased tail latency during the outage, but most operations in these regions completed as normal. Once mitigations took effect, median and tail latencies started falling and returned to normal by 05:15 US/Pacific.\nCustomers may have experienced similar latency increases in products which create, modify, failover or delete VM instances: GCE, GKE, Dataflow, Cloud SQL, Google Cloud Dataproc, Google App Engine, Cloud Deploy, Memorystore, Redis, Cloud Filestore, among others."
+    },
+    {
+      "provider": "Google Cloud",
+      "name": "Customers are experiencing connectivity issues with multiple Google Cloud services in zone us-east5-c",
+      "date": "2025-03-29",
+      "timestamp": "2025-03-29T19:53:00+00:00",
+      "impact": "high",
+      "status": "resolved",
+      "description": "# Incident Report\n## Summary:\nOn Saturday, 29 March 2025, multiple Google Cloud Services in the us-east5-c zone experienced degraded service or unavailability for a duration of 6 hours and 10 minutes. To our Google Cloud customers whose services were impacted during this disruption, we sincerely apologize. This is not the level of quality and reliability we strive to offer you, and we are taking immediate steps to improve the platform’s performance and availability.\n## Root Cause:\nThe root cause of the service disruption was a loss of utility power in the affected zone. This power outage triggered a cascading failure within the uninterruptible power supply (UPS) system responsible for maintaining power to the zone during such events. The UPS system, which relies on batteries to bridge the gap between utility power loss and generator power activation, experienced a critical battery failure.\nThis failure rendered the UPS unable to perform its core function of ensuring continuous power to the system. As a direct consequence of the UPS failure, virtual machine instances within the affected zone lost power and went offline, resulting in service downtime for customers. The power outage and subsequent UPS failure also triggered a series of secondary issues, including packet loss within the us-east5-c zone, which impacted network communication and performance. Additionally, a limited number of storage disks within the zone became unavailable during the outage.\n## Remediation and Prevention:\nGoogle engineers were alerted to the incident from our internal monitoring alerts at 12:54 US/Pacific on Saturday, 29 March and immediately started an investigation.\nGoogle engineers diverted traffic away from the impacted location to partially mitigate impact for some services that did not have zonal resource dependencies. Engineers bypassed the failed UPS and restored power via generator by 14:49 US/Pacific on Saturday, 29 March. The majority of Google Cloud services recovered shortly thereafter. A few services experienced longer restoration times as manual actions were required in some cases to complete full recovery.\nGoogle is committed to preventing a repeat of this issue in the future and is completing the following actions:\n* Harden cluster power failure and recovery path to achieve a predictable and faster time-to-serving after power is restored.\n* Audit systems that did not automatically failover and close any gaps that prevented this function.\n* Work with our uninterruptible power supply (UPS) vendor to understand and remediate issues in the battery backup system.\nGoogle is committed to quickly and continually improving our technology and operations to prevent service disruptions. We appreciate your patience and apologize again for the impact to your organization. We thank you for your business.\n## Detailed Description of Impact:\nCustomers experienced degraded service or unavailability for multiple Google Cloud products in the us-east5-c zone of varying impact and severity as noted below:\n**AlloyDB for PostgreSQL:** A few clusters experienced transient unavailability during the failover. Two impacted clusters did not failover automatically and required manual intervention from Google engineers to do the failover.\n**BigQuery:** A few customers in the impacted region experienced brief unavailability of the product between 12:57 US/Pacific until 13:19 US/Pacific.\n**Cloud Bigtable:** The outage resulted in increased errors and latency for a few customers between 12:47 US/Pacific to 19:37 US/Pacific.\n**Cloud Composer:** External streaming jobs for a few customers experienced increased latency for a period of 16 minutes.\n**Cloud Dataflow:** Streaming and batch jobs saw brief periods of performance degradation. 17% of streaming jobs experienced degradation from 12:52 US/Pacific to 13:08 US/Pacific, while 14% of batch jobs experienced degradation from 15:42 US/Pacific to 16:00 US/Pacific.\n**Cloud Filestore:** All basic, high scale and zonal instances in us-east5-c were unavailable and all enterprise and regional instances in us-east5 were operating in degraded mode from 12:54 to 18:47 US/Pacific on Saturday, 29 March 2025\\.\n**Cloud Firestore:** Limited impact of approximately 2 minutes where customers experienced elevated unavailability and latency, as jobs were being rerouted automatically.\n**Cloud Identity and Access Management:** A few customers experienced slight latency or errors while retrying for a short period of time.\n**Cloud Interconnect:** All us-east5 attachments connected to zone1 were unavailable for a duration of 2 hours, 7 minutes.\n**Cloud Key Management Service:** Customers experienced 5XX errors for a brief period of time (less than 4 mins). Google engineers rerouted the traffic to healthy cells shortly after the power loss to mitigate the impact.\n**Cloud Kubernetes Engine:** Customers experienced terminations of their nodes in us-east5-c. Some zonal clusters in us-east5-c experienced loss of connectivity to their control plane. No impact was observed for nodes or control planes outside of us-east5-c.\n**Cloud NAT:** Transient control plane outage affecting new VM creation processes and/or dynamic port allocation.\n**Cloud Router:** Cloud Router was unavailable for up to 30 seconds while leadership shifted to other clusters. This downtime was within the thresholds of most customer's graceful restart configuration (60 seconds).\n**Cloud SQL:** Based on monitoring data, 318 zonal instances experienced 3h of downtime in the us-east5-c zone. All external high-availability instances successfully failed out of the impacted zone.\n**Cloud Spanner:** Customers in the us-east5 region may have seen a few minutes of errors or latency increase during the few minutes after 12:52 US/Pacific when the cluster first failed.\n**Cloud VPN:** A few legacy customers experienced loss of connectivity of their sessions up to 5 mins.\n**Compute Engine:** Customers experienced instance unavailability and inability to manage instances in us-east5-c from 12:54 to 18:30 US/Pacific on Saturday, 29 March 2025\\.\n**Managed Service for Apache Kafka:** CreateCluster and some UpdateCluster commands (those that increased capacity config) had a 100% error rate in the region, with the symptom being INTERNAL errors or timeouts. Based on our monitoring, the impact was limited to one customer who attempted to use these methods during the incident.\n**Memorystore for Redis:** High availability instances failed over to healthy zones during the incident. 12 instances required manual intervention to bring back provisioned capacity. All instances were recovered by 19:28 US/Pacific.\n**Persistent Disk:** Customers experienced very high I/O latency, including stalled I/O operations or errors in some disks in us-east5-c from 12:54 US/Pacific to 20:45 US/Pacific on Saturday, 29 March 2025\\. Other products using PD or communicating with impacted PD devices experienced service issues with varied symptoms.\n**Secret Manager:** Customers experienced 5XX errors for a brief period of time (less than 4 mins). Google engineers rerouted the traffic to healthy cells shortly after the power loss to mitigate the impact.\n**Virtual Private Cloud:** Virtual machine instances running in the us-east5-c zone were unable to reach the network. Services were partially unavailable from the impacted zone. Customers wherever applicable were able to fail over workloads to different Cloud zones."
+    },
+    {
+      "provider": "Google Cloud",
+      "name": "Apigee customers may experience unable to login to Admin UI portal.",
+      "date": "2025-03-04",
+      "timestamp": "2025-03-04T20:04:19+00:00",
+      "impact": "low",
+      "status": "resolved",
+      "description": "The issue with Apigee Hybrid, Apigee Edge Public Cloud, Apigee has been resolved for all affected users as of Tuesday, 2025-03-04 13:30 US/Pacific.\nFrom preliminary analysis root cause appears to be due certificate expiration.\nWe thank you for your patience while we worked on resolving the issue."
+    },
+    {
+      "provider": "Google Cloud",
+      "name": "Cloud Asset Inventory customers' queries may not return result",
+      "date": "2025-02-19",
+      "timestamp": "2025-02-19T09:14:00+00:00",
+      "impact": "low",
+      "status": "resolved",
+      "description": "The issue with Cloud Asset Inventory has been resolved for all affected users as of Wednesday, 2025-02-19 23:20 US/Pacific.\nWe thank you for your patience while we worked on resolving the issue."
+    },
+    {
+      "provider": "Google Cloud",
+      "name": "SIEM Dashboards and SOAR Advanced Dashboards for Google Security Operations (SecOps) were unavailable.",
+      "date": "2025-02-18",
+      "timestamp": "2025-02-18T22:42:52+00:00",
+      "impact": "medium",
+      "status": "resolved",
+      "description": "# Mini Incident Report\nWe apologize for the inconvenience this service disruption/outage may have caused. We would like to provide some information about this incident below. Please note, this information is based on our best knowledge at the time of posting and is subject to change as our investigation continues. If you have experienced impact outside of what is listed below, please reach out to Google Cloud Support using https://cloud.google.com/support.\n(All Times US/Pacific)\nIncident Start: 18 February 2025, 14:42\nIncident End: 18 February 2025, 18:40\nDuration: 3 hours 58 minutes\nAffected Services and Features:\n* Chronicle Security\n* Chronicle SOAR\nRegions/Zones: Global\nDescription:\nStarting on 18 February 2025 14:42 US/Pacific, Chronicle Security and Chronicle SOAR experienced an issue where customers encountered the error message \"An error occurred while loading dashboards\" when attempting to access dashboards in Google Cloud Security for a duration of 3 hours 58 minutes. From preliminary analysis, the root cause of the issue is related to a revocation of associated internal looker licenses - all revoked licenses were restored to mitigate an issue.\nCustomer Impact:\nCustomers encountered an error message \"An error occurred while loading dashboards\" when attempting to access certain security dashboards in Google Cloud."
+    },
+    {
+      "provider": "Google Cloud",
+      "name": "Vertex AI Search for commerce customers may observe 100% error rate for certain IPs.",
+      "date": "2025-02-16",
+      "timestamp": "2025-02-16T12:48:58+00:00",
+      "impact": "medium",
+      "status": "resolved",
+      "description": "The issue with Vertex AI Search, Recommendation AI has been resolved for all affected users as of Sunday, 2025-02-16 07:21 US/Pacific.\nWe thank you for your patience while we worked on resolving the issue."
+    },
+    {
+      "provider": "Google Cloud",
+      "name": "Chronicle Security experienced issues related to feed based ingestion in europe-west2",
+      "date": "2025-02-13",
+      "timestamp": "2025-02-13T20:13:52+00:00",
+      "impact": "low",
+      "status": "resolved",
+      "description": "The issue with Chronicle Security has been resolved for all affected users as of Thursday, 2025-02-13 21:38 US/Pacific.\nWe thank you for your patience while we worked on resolving the issue."
+    },
+    {
+      "provider": "Google Cloud",
+      "name": "Chronicle Security users experiencing an issue in us-multiregions",
+      "date": "2025-02-02",
+      "timestamp": "2025-02-02T02:00:00+00:00",
+      "impact": "low",
+      "status": "resolved",
+      "description": "The issue with Chronicle Security has been resolved for all affected users as of Monday, 2025-02-03 01:49 US/Pacific.\nWe thank you for your patience while we worked on resolving the issue."
+    },
+    {
+      "provider": "Google Cloud",
+      "name": "Chronicle Security - WORKSPACE_ACTIVITY data ingestion observed delays in asia-southeast1 & asia-south1 regions",
+      "date": "2025-01-31",
+      "timestamp": "2025-01-31T00:53:00+00:00",
+      "impact": "medium",
+      "status": "resolved",
+      "description": "## \\# Mini Incident Report\nWe apologize for the inconvenience this service disruption/outage may have caused. We would like to provide some information about this incident below. Please note, this information is based on our best knowledge at the time of posting and is subject to change as our investigation continues. If you have experienced impact outside of what is listed below, please reach out to Google Cloud Support using [***https://cloud.google.com/support***](https://cloud.google.com/support).\n(All Times US/Pacific)\n**Incident Start:** 30 January 2025, 16:53\n**Incident End:** 31 January 2025 06:13\n**Duration:** 13 hours, 20 minutes\n**Affected Services and Features:**\nChronicle Security\n**Regions/Zones:**\nasia-south1, asia-southeast1\n**Description:**\nChronicle Security WORKSPACE\\_ACTIVITY data ingestion observed delays in asia-southeast1 and asia-south1 regions for 13 hours, 20 minutes due to network connectivity issues between the trans-Pacific regions.\nWhile the network connectivity issues are being fixed, the data ingestion delays were mitigated by increasing the Network Quality of Service (QoS) for this traffic to ensure timely processing.\n**Customer Impact:**\n* Chronicle Security customers observed WORKSPACE\\_ACTIVITY data was delayed in the Secops instance. The impacted regions processed only around one third of the actual traffic.\n* Rule detections which depend on WORKSPACE\\_ACTIVITY data may have been delayed.\n* Search on WORKSPACE\\_ACTIVITY data may have shown fewer events due to ingestion delays."
+    },
+    {
+      "provider": "Google Cloud",
+      "name": "Cloud Translation experiencing elevated latency and error rates",
+      "date": "2025-01-28",
+      "timestamp": "2025-01-28T12:50:17+00:00",
+      "impact": "low",
+      "status": "resolved",
+      "description": "The issue with Cloud Translation has been resolved for all affected users as of Tuesday, 2025-01-28 20:53 US/Pacific.\nWe thank you for your patience while we worked on resolving the issue."
+    },
+    {
+      "provider": "Google Cloud",
+      "name": "Cloud Translation experienced elevated latency and error rates",
+      "date": "2025-01-28",
+      "timestamp": "2025-01-28T12:50:17+00:00",
+      "impact": "low",
+      "status": "resolved",
+      "description": "The issue with Cloud Translation has been resolved for all affected users as of Tuesday, 2025-01-28 14:00 US/Pacific.\nWe thank you for your patience while we worked on resolving the issue."
+    },
+    {
+      "provider": "Google Cloud",
+      "name": "Appsheet is unavailable in us-east4 and europe-west4",
+      "date": "2025-01-24",
+      "timestamp": "2025-01-24T17:30:00+00:00",
+      "impact": "high",
+      "status": "resolved",
+      "description": "# Incident Report\n## Summary\nOn Friday, 24 January 2025, AppSheet customers were unable to load AppSheet apps with the app editor or the app load page due to ‘500’ errors and timeouts. Around 60% of the requests were impacted in us-east4 and europe-west4 for a duration of 1 hour and 50 minutes.\nWe sincerely apologize to our Google Cloud customers for the disruption you experienced.\n## Root Cause\nA database schema migration in production triggered a cascading incident. The migration caused failures and timeouts on the primary database, disrupting most AppSheet operations and preventing apps loading for users in us-east4 and europe-west4. The sustained outage occurred due to a surge of retries, overloading the secondary authentication database and rendering it completely unresponsive for requests to the affected regions. The authentication database is responsible for storing user authentication tokens.\nTraffic was migrated to the us-central1 and us-west1 regions, after which issues pertaining to user auth tokens were resolved.\nHowever, this triggered an increase in load on our service for validating users’ Workspace license entitlements, due to that information no longer being available in cache. The request rate went up significantly, triggering aggressive load shedding, resulting in elevated latency for 95% of the traffic. This further aggravated latency after traffic migration to us-central1 and us-west1 was performed.\n## Remediation and Prevention\nGoogle engineers were alerted to the outage via an automated alert on 24 January 2025 09:42 US/Pacific and immediately started an investigation. To mitigate the impact, engineers redirected the traffic from us-east4 and europe-west4, to us-central1 and us-west1.\nThe resultant load shedding that occurred on the licensing server recovered by 11:20 US/Pacific, once we restored our authentication database and gradually reverted traffic to us-east4 and europe-west4.\nGoogle is committed to preventing a repeat of this issue in the future and is completing the following actions: - Improve alerting and monitoring of on license server traffic to reduce impact on latencies when traffic migration happens. - Gradually reduce dependency on licensing servers to avoid failures arising from either increased traffic, or unavailability of licensing servers. - We are reviewing measures to increase the stability of our authentication database, to ensure optimal handling of any surge in requests.\n## Detailed Description of Impact\nOn Friday, 24 January 2025, from 09:30 to 11:20 US/Pacific, approximately 60% of the AppSheet requests in us-east4 and europe-west4 may have failed. - Affected customers were unable to load AppSheet apps with the app editor or the app load page. - Affected customers experienced elevated ‘500’ errors and timeouts. - Some customers may also have observed intermittent latency."
+    },
+    {
+      "provider": "Google Cloud",
+      "name": "Chronicle Security experienced elevated timeout errors across US regions.",
+      "date": "2025-01-15",
+      "timestamp": "2025-01-15T20:30:00+00:00",
+      "impact": "low",
+      "status": "resolved",
+      "description": "The issue with Chronicle Security has been resolved for all affected users as of Wednesday, 2025-01-15 15:30 US/Pacific.\nWe thank you for your patience while we worked on resolving the issue."
+    },
+    {
+      "provider": "Google Cloud",
+      "name": "Vertex Gemini API customers are experiencing elevated errors on Gemini 1.5 Flash 002 model",
+      "date": "2025-01-10",
+      "timestamp": "2025-01-10T19:36:15+00:00",
+      "impact": "low",
+      "status": "resolved",
+      "description": "The issue with Vertex Gemini API has been resolved for all affected projects as of Monday, 2025-01-13 06:16 US/Pacific.\nWe thank you for your patience while we worked on resolving the issue."
+    },
+    {
+      "provider": "Google Cloud",
+      "name": "Data Ingestion feeds errors while using SecOps",
+      "date": "2025-01-10",
+      "timestamp": "2025-01-10T06:20:03+00:00",
+      "impact": "low",
+      "status": "resolved",
+      "description": "The issue with Chronicle Security has been resolved for all affected users as of Friday, 2025-01-10 00:30 US/Pacific.\nWe thank you for your patience while we worked on resolving the issue."
+    },
+    {
+      "provider": "Google Cloud",
+      "name": "We are experiencing an issue with Chronicle Security",
+      "date": "2025-01-08",
+      "timestamp": "2025-01-08T17:36:53+00:00",
+      "impact": "medium",
+      "status": "resolved",
+      "description": "# Mini Incident Report\nWe apologize for the inconvenience this service disruption/outage may have caused. We would like to provide some information about this incident below. Please note, this information is based on our best knowledge at the time of posting and is subject to change as our investigation continues. If you have experienced impact outside of what is listed below, please reach out to Google Cloud Support using https://cloud.google.com/support.\n(All Times US/Pacific)\n**Incident Start:** 3 January 2025 12:14\n**Incident End:** 8 January 2025 11:08\n**Duration:** 5 days, 10 hours, 55 minutes\n**Affected Services and Features:**\nGoogle SecOps (Chronicle Security) - SOAR Permissions\n**Regions/Zones:**\neurope, europe-west12, europe-west2, europe-west3, europe-west6, europe-west9, asia-northeast1, asia-south1, asia-southeast1, australia-southeast1, me-central1, me-central2, me-west1, northamerica-northeast2, southamerica-east1\n**Description:**\nGoogle SecOps (Chronicle Security) experienced an increase in permission errors for non-admin users accessing SOAR cases. From preliminary analysis, the issue was due to a software defect introduced by a recent service update that had been rolled out to non-US regions.\nThe issue was fully mitigated once the affected service update was rolled back, restoring service for all affected users.\n**Customer Impact:**\n* When a non-admin user attempted to access the SOAR cases view, they received a 403 error.\n---"
+    },
+    {
+      "provider": "Google Cloud",
+      "name": "Multiple regions completely blocked for subscribe for Pubsub",
+      "date": "2025-01-08",
+      "timestamp": "2025-01-08T14:54:00+00:00",
+      "impact": "high",
+      "status": "resolved",
+      "description": "# Incident Report\n## Summary\nOn Wednesday, 8 January 2025 06:54 to 08:07 US/Pacific, Google Cloud Pub/Sub experienced a service outage in multiple regions resulting in customers unable to publish or subscribe to the messages for a duration of 1 hour and 13 minutes.\nThis outage also resulted in an increased backlog which was identified at 8 January 2025 09:07 US/Pacific for a small subset of customer subscriptions using message ordering[1], which extended beyond the unavailability time window. These subscriptions were repaired and mitigated by 8 January 2025 23:09 US/Pacific.\nWe deeply regret the disruption this outage caused for our Google Cloud customers. This is not the level of quality and reliability we strive to offer you, and we are taking immediate steps to improve the platform’s availability.\n## Root Cause\nCloud Pub/Sub uses a regional database for the metadata state of its storage system, including information about published messages and the order in which those messages were published for ordered delivery. The regional metadata database is on the critical path of most of the Cloud Pub/Sub data plane operations. From 8 January 2025 06:54 to 07:30 US/Pacific, a bad service configuration change, which unintentionally over-restricted the permission to access this database, was rolled out to multiple regions. The issue did not surface in our pre-production environment due to a mismatch in the configuration between the two environments. In addition, the change was mistakenly rolled out to multiple regions within a short time period and did not follow the standard rollout process. This change prevented Cloud Pub/Sub from accessing the regional metadata store, leading to publish, subscribe, and backlog metrics failures and unavailability impact, which was mitigated on 8 January 2025 08:07 US/Pacific.\nThough the configuration change was rolled back and mitigated on 8 January 2025 08:07 US/Pacific, the database unavailability during the issue exposed a latent bug in the way Cloud Pub/Sub enforces ordered delivery for subscriptions with ordering enabled. In particular, when the database was unavailable for an extended period of time, the metadata pertaining to ordering became inconsistent with the metadata about published messages. This inconsistency prevented the delivery of a subset of messages until the subscriptions were repaired, and they received all backlogged messages in the proper order. Mitigation was completed by 8 January 2025 23:09 US/Pacific. Note that this did not impact ordering or guaranteed delivery.\n## Remediation and Prevention\nGoogle engineers were alerted to the outage via internal telemetry on 8 January 2025 07:03 US/Pacific, 9 minutes after impact started. The config change that caused the issue was identified and rollback completed by 8 January 2025 08:07 US/Pacific. At 8 January 2025 09:07 US/Pacific, Google engineers were alerted via internal telemetry to the fact that a small subset of ordered subscriptions were unable to consume their backlog and root caused the metadata inconsistency at 8 January 2025 12:20 US/Pacific. Google engineers worked on identifying and repairing all impacted ordered subscriptions, which was completed by 8 January 2025 23:09 US/Pacific.\nGoogle is committed to preventing a repeat of this issue in the future and is completing the following actions:\n* Our engineering team is working on implementing stronger enforcement of parity between pre-production and production environments in order to ensure the impact of configuration changes can be caught before changes move to production. ETA: 31 January 2025.\n* We are reviewing our change management process to ensure that future configuration changes roll out in a progressive fashion aligned with the priority of the change. ETA: 31 January 2025.\n* We are working on implementing additional monitoring that proactively detects ordering metadata inconsistency. ETA: 31 March 2025.\n* We are implementing a fix to the Cloud Pub/Sub ordering metadata management bug, which led to undelivered, ordered messages. ETA: 30 June 2025.\n## Detailed Description of Impact\nOn Wednesday 8 January 2025 from 06:54 to 08:07 US/Pacific Google Cloud Pub/Sub, Cloud Logging, and BigQuery Data Transfer Service experienced a service outage in europe-west10, asia-south1, europe-west1, us-central1, asia-southeast2, us-east1, us-east5, asia-south2, us-south1, me-central1 regions.\nCustomers publishing from other regions may have also experienced the issue if the message storage policies [2] are set to store and process the messages in the above-mentioned regions.\n#### Google Cloud Pub/Sub : Customers were unable to publish or subscribe to the messages in the impacted regions. Publishing the messages from other regions may also have been impacted, if they have any of the impacted regions in their message storage policies. Backlog metrics might have been stale or missing.\n#### Google BigQuery Data Transfer Service : Customers experienced failures with data transfers runs failing to publish to Pub/Sub for a duration of 20 minutes.\n#### Cloud Logging : All Cloud Logs customers exporting logs to Cloud Pub/Sub experienced a delay in the log export for a duration of 26 minutes.\n**Appendix:**\n* [1] https://cloud.google.com/pubsub/docs/ordering\n* [2] https://cloud.google.com/pubsub/docs/resource-location-restriction#message_storage_policy_overview"
+    },
+    {
+      "provider": "Google Cloud",
+      "name": "Elevated rate of ‘500’ errors observed on Gemini 1.5 Flash and Gemini 1.5 Pro 002",
+      "date": "2025-01-07",
+      "timestamp": "2025-01-07T21:28:20+00:00",
+      "impact": "low",
+      "status": "resolved",
+      "description": "The issue with Vertex Gemini API has been resolved for all affected users as of Tuesday, 2025-01-07 21:18 US/Pacific.\nWe thank you for your patience while we worked on resolving the issue."
+    },
+    {
+      "provider": "Google Cloud",
+      "name": "Some Apigee X customers experienced issues with logging into the integrated developer portals using SAML.",
+      "date": "2025-01-07",
+      "timestamp": "2025-01-07T20:51:40+00:00",
+      "impact": "low",
+      "status": "resolved",
+      "description": "The issue with Apigee has been resolved for all affected users as of Tuesday, 2025-01-07 15:22 US/Pacific.\nWe thank you for your patience while we worked on resolving the issue."
+    },
+    {
+      "provider": "Google Cloud",
+      "name": "Cloud Console customers trying to get support via chat may experience higher latency or errors.",
+      "date": "2025-01-06",
+      "timestamp": "2025-01-06T19:01:50+00:00",
+      "impact": "low",
+      "status": "resolved",
+      "description": "The issue with Google Cloud Console, Google Cloud Support has been resolved for all affected users as of Monday, 2025-01-06 11:45 US/Pacific.\nOnly a few chat instances were impacted during the incident.\nWe thank you for your patience while we worked on resolving the issue."
+    }
+  ]
+}
