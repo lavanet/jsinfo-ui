@@ -1,0 +1,63 @@
+{
+  "generated_at": "2025-12-25T22:00:00.000Z",
+  "note": "Simulated Azure incidents based on typical patterns",
+  "source": "Based on Azure historical incident patterns",
+  "total_incidents": 6,
+  "incidents": [
+    {
+      "provider": "Azure",
+      "name": "Virtual Machines - Deployment Issues",
+      "date": "2025-12-12",
+      "timestamp": "2025-12-12T10:15:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Some customers experienced issues deploying VMs in West Europe"
+    },
+    {
+      "provider": "Azure",
+      "name": "Storage Performance Degradation",
+      "date": "2025-11-20",
+      "timestamp": "2025-11-20T15:40:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Degraded performance for Azure Storage in North Europe"
+    },
+    {
+      "provider": "Azure",
+      "name": "Azure AD Authentication Delays",
+      "date": "2025-11-05",
+      "timestamp": "2025-11-05T12:25:00Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "Elevated latency for Azure AD authentication requests"
+    },
+    {
+      "provider": "Azure",
+      "name": "App Service Connection Issues",
+      "date": "2025-10-28",
+      "timestamp": "2025-10-28T09:50:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Connectivity issues affecting App Service instances"
+    },
+    {
+      "provider": "Azure",
+      "name": "Cosmos DB Query Timeouts",
+      "date": "2025-10-15",
+      "timestamp": "2025-10-15T14:20:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Increased query timeout errors in Cosmos DB"
+    },
+    {
+      "provider": "Azure",
+      "name": "Functions Runtime Errors",
+      "date": "2025-10-05",
+      "timestamp": "2025-10-05T11:10:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Runtime errors affecting Azure Functions executions"
+    }
+  ]
+}
+

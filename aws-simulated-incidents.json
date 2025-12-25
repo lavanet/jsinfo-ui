@@ -1,0 +1,81 @@
+{
+  "generated_at": "2025-12-25T22:00:00.000Z",
+  "note": "Simulated AWS incidents based on typical patterns (2-3 per month)",
+  "source": "Based on AWS historical incident patterns",
+  "total_incidents": 8,
+  "incidents": [
+    {
+      "provider": "AWS",
+      "name": "Increased Error Rates - EC2 US-EAST-1",
+      "date": "2025-12-18",
+      "timestamp": "2025-12-18T14:23:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Elevated error rates for EC2 API calls in US-EAST-1 region"
+    },
+    {
+      "provider": "AWS",
+      "name": "S3 Performance Degradation",
+      "date": "2025-12-05",
+      "timestamp": "2025-12-05T09:15:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Degraded performance for S3 operations in multiple regions"
+    },
+    {
+      "provider": "AWS",
+      "name": "RDS Connection Issues - EU-WEST-1",
+      "date": "2025-11-28",
+      "timestamp": "2025-11-28T16:45:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Connectivity issues affecting RDS instances in EU-WEST-1"
+    },
+    {
+      "provider": "AWS",
+      "name": "Lambda Invocation Delays",
+      "date": "2025-11-15",
+      "timestamp": "2025-11-15T11:30:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Increased latency for Lambda function invocations"
+    },
+    {
+      "provider": "AWS",
+      "name": "DynamoDB Elevated Latency",
+      "date": "2025-11-02",
+      "timestamp": "2025-11-02T08:20:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Higher than normal latency for DynamoDB operations"
+    },
+    {
+      "provider": "AWS",
+      "name": "CloudFront Cache Misses",
+      "date": "2025-10-22",
+      "timestamp": "2025-10-22T13:10:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Increased cache miss rate affecting CloudFront performance"
+    },
+    {
+      "provider": "AWS",
+      "name": "EC2 Launch Failures - AP-SOUTHEAST-1",
+      "date": "2025-10-10",
+      "timestamp": "2025-10-10T19:05:00Z",
+      "impact": "major",
+      "status": "resolved",
+      "description": "EC2 instance launch failures in AP-SOUTHEAST-1 region"
+    },
+    {
+      "provider": "AWS",
+      "name": "Route53 DNS Resolution Delays",
+      "date": "2025-10-01",
+      "timestamp": "2025-10-01T07:30:00Z",
+      "impact": "minor",
+      "status": "resolved",
+      "description": "Intermittent delays in DNS resolution for Route53"
+    }
+  ]
+}
+

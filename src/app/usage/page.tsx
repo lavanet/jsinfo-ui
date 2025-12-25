@@ -33,7 +33,7 @@ export default function UsagePage() {
             <h3 className="text-sm font-medium text-muted-foreground">Lava Uptime</h3>
           </div>
           <p className="text-3xl font-bold text-green-500">100%</p>
-          <p className="text-xs text-muted-foreground mt-1">Last 30 days</p>
+          <p className="text-xs text-muted-foreground mt-1">Last 3 months</p>
         </div>
         
         <div className="bg-card rounded-lg border p-6">
@@ -58,11 +58,12 @@ export default function UsagePage() {
       {/* Uptime Comparison Chart */}
       <div className="bg-card rounded-lg border p-6 mb-8">
         <div className="mb-6">
-          <h2 className="text-2xl font-semibold mb-2">Uptime Comparison (Last 30 Days)</h2>
+          <h2 className="text-2xl font-semibold mb-2">Uptime Comparison (Last 3 Months)</h2>
           <p className="text-sm text-muted-foreground">
-            Real-time comparison of network reliability across major infrastructure providers.
+            Real-time comparison of network reliability across major infrastructure providers over 90 days.
             The <span className="text-pink-400 font-medium">Blockchain RPCs</span> line shows real incidents from major RPC providers,
             displaying which blockchain networks were affected (hover for details).
+            Cloud provider data is fetched from official status pages.
           </p>
         </div>
         <UptimeChart />
