@@ -487,7 +487,7 @@ export function ProviderOptimizerMetricsChart({ providerId }: { providerId: stri
                     Scores
                   </button>
                   </div>
-                  <span className="text-[9px] font-semibold text-red-500 leading-none">New</span>
+                  <span className="text-[9px] font-semibold text-emerald-400 leading-none">New</span>
                 </div>
               </div>
             </div>
