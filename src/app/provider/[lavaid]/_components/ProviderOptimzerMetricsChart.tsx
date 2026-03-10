@@ -462,19 +462,19 @@ export function ProviderOptimizerMetricsChart({ providerId }: { providerId: stri
                 <CardDescription>
                   Provider score and rank as reported from the lava consumer's side
                 </CardDescription>
-                <div className="inline-flex items-center rounded-md border border-border text-xs">
-                  <button
-                    className={cn(
-                      "relative px-2.5 py-1 rounded-l-md transition-colors duration-200",
-                      metricMode === 'wrs'
-                        ? "bg-primary text-primary-foreground"
-                        : "hover:bg-muted"
-                    )}
-                    onClick={() => setMetricMode('wrs')}
-                  >
-                    WRS
-                    <span className="absolute -top-2 -right-1.5 text-[9px] font-semibold text-red-500">New</span>
-                  </button>
+                <div className="inline-flex items-center gap-1.5">
+                  <div className="inline-flex items-center rounded-md border border-border text-xs">
+                    <button
+                      className={cn(
+                        "px-2.5 py-1 rounded-l-md transition-colors duration-200",
+                        metricMode === 'wrs'
+                          ? "bg-primary text-primary-foreground"
+                          : "hover:bg-muted"
+                      )}
+                      onClick={() => setMetricMode('wrs')}
+                    >
+                      WRS
+                    </button>
                   <button
                     className={cn(
                       "px-2.5 py-1 rounded-r-md transition-colors duration-200",
@@ -486,6 +486,8 @@ export function ProviderOptimizerMetricsChart({ providerId }: { providerId: stri
                   >
                     Scores
                   </button>
+                  </div>
+                  <span className="text-[9px] font-semibold text-red-500 leading-none">New</span>
                 </div>
               </div>
             </div>
