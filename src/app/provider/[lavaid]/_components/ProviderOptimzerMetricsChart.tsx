@@ -61,6 +61,11 @@ interface ChartDataPoint {
   node_error_rate: number;
   entry_index: number;
   generic_score: number;
+  selection_availability: number;
+  selection_latency: number;
+  selection_sync: number;
+  selection_stake: number;
+  selection_composite: number;
 }
 
 interface MetricDefinition {
@@ -104,9 +109,39 @@ const METRICS_CONFIG = {
   }
 } as const;
 
+// WRS normalized selection scores config
+const WRS_METRICS_CONFIG = {
+  selection_latency: {
+    label: "Latency Score",
+    color: "#0082FB",
+    description: "Higher is better. Normalized latency score for WRS (0-1)"
+  },
+  selection_availability: {
+    label: "Availability Score",
+    color: "#00D7B0",
+    description: "Higher is better. Normalized availability score for WRS (0-1)"
+  },
+  selection_sync: {
+    label: "Sync Score",
+    color: "#0EBA53",
+    description: "Higher is better. Normalized sync score for WRS (0-1)"
+  },
+  selection_stake: {
+    label: "Stake Score",
+    color: "#7679FF",
+    description: "Higher is better. Normalized stake weight for WRS (0-1)"
+  },
+  selection_composite: {
+    label: "Composite Score",
+    color: "#E76678",
+    description: "Higher is better. Composite WRS score (0-1)"
+  }
+} as const;
+
 // Combine base and tier metrics configs
 const ALL_METRICS_CONFIG = {
   ...METRICS_CONFIG,
+  ...WRS_METRICS_CONFIG,
   tier_average: {
     label: "Tier Average",
     color: "#EC25F4",      // Changed to magenta
@@ -168,6 +203,8 @@ export function ProviderOptimizerMetricsChart({ providerId }: { providerId: stri
     }), {} as Record<MetricKey, boolean>);
   });
 
+  const [metricMode, setMetricMode] = useState<'wrs' | 'scores'>('wrs');
+
   const searchParams = useSearchParams();
   const key = searchParams.get('key');
   const [isFullMode, setIsFullMode] = useState(false);
@@ -202,6 +239,11 @@ export function ProviderOptimizerMetricsChart({ providerId }: { providerId: stri
         node_error_rate: parseFloat(metric.node_error_rate.toString()),
         entry_index: parseFloat(metric.entry_index.toString()),
         generic_score: parseFloat(metric.generic_score.toString()),
+        selection_availability: parseFloat((metric.selection_availability ?? 0).toString()),
+        selection_latency: parseFloat((metric.selection_latency ?? 0).toString()),
+        selection_sync: parseFloat((metric.selection_sync ?? 0).toString()),
+        selection_stake: parseFloat((metric.selection_stake ?? 0).toString()),
+        selection_composite: parseFloat((metric.selection_composite ?? 0).toString()),
       };
 
       // Add tier data if it exists in the response
@@ -367,9 +409,11 @@ export function ProviderOptimizerMetricsChart({ providerId }: { providerId: stri
   };
 
   const getVisibleMetricKeys = () => {
-    const baseMetrics = ['latency_score', 'availability_score', 'sync_score', 'node_error_rate', 'entry_index', 'generic_score'];
+    const scoreMetrics = ['latency_score', 'availability_score', 'sync_score', 'node_error_rate', 'entry_index', 'generic_score'];
+    const wrsMetrics = ['selection_latency', 'selection_availability', 'selection_sync', 'selection_stake', 'selection_composite'];
     const tierMetrics = ['tier_average', 'tier0', 'tier1', 'tier2', 'tier3'];
 
+    const baseMetrics = metricMode === 'wrs' ? wrsMetrics : scoreMetrics;
     return isFullMode ? [...baseMetrics, ...tierMetrics] : baseMetrics;
   };
 
@@ -396,20 +440,54 @@ export function ProviderOptimizerMetricsChart({ providerId }: { providerId: stri
           <div className="flex items-center gap-2">
             <div className="flex flex-col">
               <CardTitle>Provider's Consumer Optimizer Metrics
-                <ModernTooltip title={[
-                  "Scores range from 0 to 1, where lower scores are better for latency and sync,",
-                  "while availability should be close to 1.",
-                  "The Relative Placement shows this provider's rank compared to other providers,",
-                  "where 1 represents the best performing provider."
-                ].join('\n')}>
+                <ModernTooltip title={metricMode === 'wrs'
+                  ? [
+                    "WRS normalized selection scores range from 0 to 1, where higher is better.",
+                    "These scores reflect how the provider is weighted in the Weighted Random Selection algorithm.",
+                    "Composite is the overall combined score used for provider selection."
+                  ].join('\n')
+                  : [
+                    "Scores range from 0 to 1, where lower scores are better for latency and sync,",
+                    "while availability should be close to 1.",
+                    "The Relative Placement shows this provider's rank compared to other providers,",
+                    "where 1 represents the best performing provider."
+                  ].join('\n')
+                }>
                   <InfoCircledIcon
                     className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors duration-200 cursor-pointer ml-2"
                   />
                 </ModernTooltip>
               </CardTitle>
-              <CardDescription>
-                Provider score and rank as reported from the lava consumer's side
-              </CardDescription>
+              <div className="flex items-center gap-2 mt-1">
+                <CardDescription>
+                  Provider score and rank as reported from the lava consumer's side
+                </CardDescription>
+                <div className="inline-flex items-center rounded-md border border-border text-xs">
+                  <button
+                    className={cn(
+                      "relative px-2.5 py-1 rounded-l-md transition-colors duration-200",
+                      metricMode === 'wrs'
+                        ? "bg-primary text-primary-foreground"
+                        : "hover:bg-muted"
+                    )}
+                    onClick={() => setMetricMode('wrs')}
+                  >
+                    WRS
+                    <span className="absolute -top-2 -right-1.5 text-[9px] font-semibold text-red-500">New</span>
+                  </button>
+                  <button
+                    className={cn(
+                      "px-2.5 py-1 rounded-r-md transition-colors duration-200",
+                      metricMode === 'scores'
+                        ? "bg-primary text-primary-foreground"
+                        : "hover:bg-muted"
+                    )}
+                    onClick={() => setMetricMode('scores')}
+                  >
+                    Scores
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
           <div className="grid grid-cols-1 [&>*:last-child]:col-span-1 min-[1000px]:grid-cols-3 min-[1200px]:flex min-[1200px]:gap-4 gap-2">
