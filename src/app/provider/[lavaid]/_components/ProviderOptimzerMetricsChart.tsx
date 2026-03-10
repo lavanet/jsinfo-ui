@@ -473,7 +473,7 @@ export function ProviderOptimizerMetricsChart({ providerId }: { providerId: stri
                     onClick={() => setMetricMode('wrs')}
                   >
                     WRS
-                    <span className="absolute -top-2 -right-1.5 text-[9px] font-semibold text-red-500">New</span>
+                    <span className="absolute -top-2 -right-1.5 text-[9px] font-semibold text-emerald-400">New</span>
                   </button>
                   <button
                     className={cn(
