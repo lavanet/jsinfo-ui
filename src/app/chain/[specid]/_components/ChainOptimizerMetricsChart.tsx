@@ -97,8 +97,12 @@ const CustomTooltip = ({ active, payload, label }: any) => {
     );
 };
 
+const SCORE_METRIC_KEYS = ['latency_score', 'availability_score', 'sync_score', 'generic_score', 'node_error_rate', 'entry_index'];
+const WRS_METRIC_KEYS = ['selection_latency', 'selection_availability', 'selection_sync', 'selection_stake', 'selection_composite'];
+
 export function ChainOptimizerMetricsChart({ specId }: ChainOptimizerMetricsChartProps) {
-    const [selectedMetric, setSelectedMetric] = useState<string>('generic_score');
+    const [metricMode, setMetricMode] = useState<'wrs' | 'scores'>('wrs');
+    const [selectedMetric, setSelectedMetric] = useState<string>('selection_composite');
     const [selectedProviders, setSelectedProviders] = useState<string[]>([]);
     const [selectedConsumer, setSelectedConsumer] = useState<string>('all');
     const [uiDateRange, setUiDateRange] = useState<DateRange>({
@@ -133,22 +137,25 @@ export function ChainOptimizerMetricsChart({ specId }: ChainOptimizerMetricsChar
     const metricOptions = useMemo(() => {
         if (!rawData?.filters?.options?.metrics) return [];
 
-        const baseMetrics = Object.entries(rawData.filters.options.metrics).map(([value, label]) => ({
+        const allMetrics = Object.entries(rawData.filters.options.metrics).map(([value, label]) => ({
             value,
             label
         }));
 
-        if (!isFullMode) return baseMetrics;
+        const activeKeys = metricMode === 'wrs' ? WRS_METRIC_KEYS : SCORE_METRIC_KEYS;
+        const filtered = allMetrics.filter(m => activeKeys.includes(m.value));
+
+        if (!isFullMode) return filtered;
 
         return [
-            ...baseMetrics,
+            ...filtered,
             { value: 'tier_average', label: 'Tier Average' },
             { value: 'tier_chances_tier0', label: 'Tier 0 Chance' },
             { value: 'tier_chances_tier1', label: 'Tier 1 Chance' },
             { value: 'tier_chances_tier2', label: 'Tier 2 Chance' },
             { value: 'tier_chances_tier3', label: 'Tier 3 Chance' }
         ];
-    }, [rawData, isFullMode]);
+    }, [rawData, isFullMode, metricMode]);
 
     const consumerOptions = useMemo<ConsumerOption[]>(() => {
         if (!rawData?.filters?.options?.consumers) return [];
@@ -270,13 +277,49 @@ export function ChainOptimizerMetricsChart({ specId }: ChainOptimizerMetricsChar
                     <div className="flex items-center gap-2">
                         <div className="flex flex-col">
                             <CardTitle>Chain's Consumer Optimizer Metrics
-                                <ModernTooltip title="Metrics showing provider performance for this chain">
+                                <ModernTooltip title={metricMode === 'wrs'
+                                    ? "WRS normalized selection scores range from 0 to 1, where higher is better. These scores reflect how providers are weighted in the Weighted Random Selection algorithm."
+                                    : "Metrics showing provider performance for this chain"
+                                }>
                                     <InfoCircledIcon className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors duration-200 cursor-pointer ml-2" />
                                 </ModernTooltip>
                             </CardTitle>
-                            <CardDescription>
-                                Provider scores and ranks as reported from the chain's consumers
-                            </CardDescription>
+                            <div className="flex items-center gap-2 mt-1">
+                                <CardDescription>
+                                    Provider scores and ranks as reported from the chain's consumers
+                                </CardDescription>
+                                <div className="inline-flex items-center rounded-md border border-border text-xs">
+                                    <button
+                                        className={cn(
+                                            "px-2.5 py-1 rounded-l-md transition-colors duration-200",
+                                            metricMode === 'scores'
+                                                ? "bg-primary text-primary-foreground"
+                                                : "hover:bg-muted"
+                                        )}
+                                        onClick={() => {
+                                            setMetricMode('scores');
+                                            setSelectedMetric('generic_score');
+                                        }}
+                                    >
+                                        Scores
+                                    </button>
+                                    <button
+                                        className={cn(
+                                            "relative px-2.5 py-1 rounded-r-md transition-colors duration-200",
+                                            metricMode === 'wrs'
+                                                ? "bg-primary text-primary-foreground"
+                                                : "hover:bg-muted"
+                                        )}
+                                        onClick={() => {
+                                            setMetricMode('wrs');
+                                            setSelectedMetric('selection_composite');
+                                        }}
+                                    >
+                                        WRS
+                                        <span className="absolute -top-2 -right-1.5 text-[9px] font-semibold text-emerald-400">New</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className="grid grid-cols-1 gap-4">
