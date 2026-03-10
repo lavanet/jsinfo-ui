@@ -465,7 +465,18 @@ export function ProviderOptimizerMetricsChart({ providerId }: { providerId: stri
                 <div className="inline-flex items-center rounded-md border border-border text-xs">
                   <button
                     className={cn(
-                      "relative px-2.5 py-1 rounded-l-md transition-colors duration-200",
+                      "px-2.5 py-1 rounded-l-md transition-colors duration-200",
+                      metricMode === 'scores'
+                        ? "bg-primary text-primary-foreground"
+                        : "hover:bg-muted"
+                    )}
+                    onClick={() => setMetricMode('scores')}
+                  >
+                    Scores
+                  </button>
+                  <button
+                    className={cn(
+                      "relative px-2.5 py-1 rounded-r-md transition-colors duration-200",
                       metricMode === 'wrs'
                         ? "bg-primary text-primary-foreground"
                         : "hover:bg-muted"
@@ -474,17 +485,6 @@ export function ProviderOptimizerMetricsChart({ providerId }: { providerId: stri
                   >
                     WRS
                     <span className="absolute -top-2 -right-1.5 text-[9px] font-semibold text-emerald-400">New</span>
-                  </button>
-                  <button
-                    className={cn(
-                      "px-2.5 py-1 rounded-r-md transition-colors duration-200",
-                      metricMode === 'scores'
-                        ? "bg-primary text-primary-foreground"
-                        : "hover:bg-muted"
-                    )}
-                    onClick={() => setMetricMode('scores')}
-                  >
-                    Scores
                   </button>
                 </div>
               </div>
