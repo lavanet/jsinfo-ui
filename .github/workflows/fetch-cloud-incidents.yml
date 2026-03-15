@@ -1,9 +1,9 @@
-name: Generate Cloud Incidents JSON
+name: Fetch Cloud Incidents
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 0 * * *"   # midnight UTC
 
 permissions:
   contents: write
@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Setup Node
@@ -21,18 +21,16 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install script dependencies
-        run: |
-          npm init -y
-          npm install xml2js
+      - name: Install xml2js
+        run: npm install xml2js --legacy-peer-deps --no-save
 
       - name: Run script
         run: node scripts/fetch-cloud-incidents.js
 
-      - name: Commit incidents file
+      - name: Commit results
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add cloud-incidents.json
-          git commit -m "Update incidents data" || echo "No changes"
+          git commit -m "Update cloud incidents data" || echo "No changes"
           git push
