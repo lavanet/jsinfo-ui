@@ -1,42 +1,38 @@
 name: Generate Cloud Incidents JSON
 
 on:
+  workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *'  # Everyday at midnight (UTC)
-  workflow_dispatch: {}
+    - cron: "0 0 * * *" # every midnight
+
+permissions:
+  contents: write
 
 jobs:
-  generate:
+  fetch-incidents:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          node-version: 24
-          cache: npm
+          node-version: 20
 
       - name: Install dependencies
-        run: npm ci --legacy-peer-deps
-
-      - name: Run generator
-        run: node scripts/fetch-cloud-incidents.js
-
-      - name: Commit and push if changed
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add all-blockchain-incidents.json
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "Update incidents JSON $(date -u +%Y-%m-%d)"
-            git push
-          fi
+          npm install xml2js
+
+      - name: Run incident fetcher
+        run: |
+          node scripts/fetch-cloud-incidents.js
+
+      - name: Commit updated incidents file
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add cloud-incidents.json
+          git commit -m "Update cloud incidents data" || echo "No changes"
+          git push
