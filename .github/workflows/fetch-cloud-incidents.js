@@ -1,4 +1,4 @@
-name: Generate Incidents JSON
+name: Generate Cloud Incidents JSON
 
 on:
 #  schedule:
