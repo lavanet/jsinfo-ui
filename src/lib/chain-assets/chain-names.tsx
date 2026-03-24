@@ -112,6 +112,13 @@ const chainMapping: Record<string, string> = {
     HYPERLIQUIDT: "Hyperliquid Testnet",
     HEDERA: "Hedera",
     HEDERAT: "Hedera Testnet",
+    XLM: "Stellar Mainnet",
+    XLMT: "Stellar Testnet",
+    SONIC: "Sonic Mainnet",
+    BTC: "Bitcoin Mainnet",
+    BTCT: "Bitcoin Testnet",
+    BCH: "Bitcoin Cash Mainnet",
+    BCHT: "Bitcoin Cash Testnet",
 };
 
 /**
