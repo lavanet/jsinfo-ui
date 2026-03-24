@@ -180,4 +180,13 @@ export const chainDictionary: { [key: string]: ChainInfo } = {
     secret2t: { name: "Secret Testnet", icon: "/icons/secret.png" },
     hyperliquid: { name: "Hyperliquid", icon: "/icons/HL-green.svg" },
     hyperliquidt: { name: "Hyperliquid Testnet", icon: "/icons/HL-green.svg" },
+    xlm: { name: "Stellar", icon: "/icons/stellar.svg" },
+    xlmt: { name: "Stellar Testnet", icon: "/icons/stellar.svg" },
+    sonic: { name: "Sonic", icon: "/icons/sonic.svg" },
+    union: { name: "Union", icon: "/icons/union.svg" },
+    uniont: { name: "Union Testnet", icon: "/icons/union.svg" },
+    btct: { name: "Bitcoin Testnet", icon: "/icons/bitcoin.svg" },
+    bch: { name: "Bitcoin Cash", icon: "/icons/bitcoincash.svg" },
+    bcht: { name: "Bitcoin Cash Testnet", icon: "/icons/bitcoincash.svg" },
+    avaxt: { name: "Avalanche Testnet", icon: "/icons/avalanche.svg" },
 };
